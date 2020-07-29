@@ -1,0 +1,5 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Fonts/Arial.spritefont","C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/bin/Windows/Fonts/Arial.xnb","FontDescriptionProcessor","SpriteFontContent",2008,21521,0.9747142
+"C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Load/SplashScreen.xml","C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/bin/Windows\Load/SplashScreen.xml","CopyItem","File",204,204,0.002992
+"C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/SplashScreen/Image.png","C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/bin/Windows/SplashScreen/Image.xnb","TextureProcessor","Texture2DContent",42999,3686485,0.7608961
+"C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/SplashScreen/Image1.png","C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/bin/Windows/SplashScreen/Image1.xnb","TextureProcessor","Texture2DContent",66315,3686485,0.6508119
