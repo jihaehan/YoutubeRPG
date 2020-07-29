@@ -11,6 +11,11 @@ namespace YoutubeRPG
     public class XmlManager<T> //create a generic class
     {
         public Type Type;
+        
+        public XmlManager()
+        {
+            Type = typeof(T); //if the type isn't currently set to anything, this will set Type to whatever the generic class is set to
+        }
         public T Load(string path)
         {
             T instance;

@@ -9,7 +9,7 @@ namespace YoutubeRPG
 {
     public class ImageEffect
     {
-        protected Image image;
+        protected Image Image;
         public bool IsActive;
         public ImageEffect()
         {
@@ -17,7 +17,7 @@ namespace YoutubeRPG
         }
         public virtual void LoadContent(ref Image Image)
         {
-            this.image = Image;
+            this.Image = Image;
         }
         public virtual void UnloadContent()
         {

@@ -16,9 +16,13 @@ namespace YoutubeRPG
         protected ContentManager content;
         [XmlIgnore]
         public Type Type;
+
+        public string XmlPath; 
+
         public GameScreen()
         {
             Type = this.GetType(); //whatever class we have, this is going to pass the type into it
+            XmlPath = "Content/Load/" + Type.ToString().Replace("YoutubeRPG.", "") + ".xml";
         }
 
         public virtual void LoadContent()

@@ -62,7 +62,6 @@ namespace YoutubeRPG
 
         public Image()
         {
-            
             Path = Text = Effects = String.Empty;
             FontName = "Fonts/Arial";
             Position = Vector2.Zero;
@@ -81,8 +80,6 @@ namespace YoutubeRPG
                 Texture = content.Load<Texture2D>(Path);
 
             font = content.Load<SpriteFont>(FontName);
-
-
             Vector2 dimensions = Vector2.Zero;
 
             if (Texture != null)

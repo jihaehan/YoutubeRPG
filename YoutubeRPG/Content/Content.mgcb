@@ -20,8 +20,23 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Arial.spritefont
 
+#begin Load/ScreenManager.xml
+/copy:Load/ScreenManager.xml
+
 #begin Load/SplashScreen.xml
 /copy:Load/SplashScreen.xml
+
+#begin ScreenManager/FadeImage.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:ScreenManager/FadeImage.png
 
 #begin SplashScreen/Image.png
 /importer:TextureImporter
