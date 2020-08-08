@@ -27,6 +27,9 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Arial.spritefont
 
+#begin Load/Menu/TestMenu.xml
+/copy:Load/Menu/TestMenu.xml
+
 #begin Load/Menu/TitleMenu.xml
 /copy:Load/Menu/TitleMenu.xml
 

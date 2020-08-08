@@ -17,9 +17,14 @@ namespace YoutubeRPG
 
         public string Axis, Effects;
         [XmlElement("Item")]
-        public List<MenuItem> Items;        
+        public List<MenuItem> Items;
         int itemNumber;
         string id;
+
+        public int ItemNumber
+        {
+            get { return itemNumber; }
+        }
 
         public string ID
         { 
@@ -30,6 +35,19 @@ namespace YoutubeRPG
                 OnMenuChanged(this, null);
             }
         }
+        public void Transition(float alpha)
+        {
+            foreach(MenuItem item in Items)
+            {
+                item.Image.IsActive = true;
+                item.Image.Alpha = alpha;
+                if (alpha == 0.0f)
+                    item.Image.FadeEffect.Increase = true;
+                else
+                    item.Image.FadeEffect.Increase = false;
+            }
+        }
+
         void AlignMenuItems()
         {
             Vector2 dimensions = Vector2.Zero;
@@ -52,6 +70,7 @@ namespace YoutubeRPG
                     item.Image.SourceRect.Height);
             }
         }
+
         public Menu()
         {
             id = String.Empty;
