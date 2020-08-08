@@ -2,43 +2,41 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Xml.Serialization;
-using System.IO;
+using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace YoutubeRPG
 {
-    
-    public class SplashScreen : GameScreen
+    public class TitleScreen : GameScreen
     {
-        public Image Image; 
+        MenuManager menuManager;
 
+        public TitleScreen()
+        {
+            menuManager = new MenuManager();
+        }
         public override void LoadContent()
         {
             base.LoadContent();
-            Image.LoadContent();
+            menuManager.LoadContent("Content/Load/Menu/TitleMenu.xml");
         }
         public override void UnloadContent()
         {
             base.UnloadContent();
-            Image.UnloadContent();
+            menuManager.UnloadContent();
         }
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            Image.Update(gameTime);
-
-            if (InputManager.Instance.KeyPressed(Keys.Enter, Keys.Z))
-                ScreenManager.Instance.ChangeScreens("TitleScreen");
+            menuManager.Update(gameTime);
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            Image.Draw(spriteBatch);
+            menuManager.Draw(spriteBatch);
         }
+
     }
 }

@@ -1,5 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<XnaContent xmlns:ns="Microsoft.Xna.Framework">
-  <Asset Type="Object">
-  </Asset>
-</XnaContent>
+<ScreenManager>
+  <Image>
+    <Path>ScreenManager/FadeImage</Path>
+    <Effects>FadeEffect</Effects>
+    <Scale>
+      <X>1280</X>
+      <Y>720</Y>
+    </Scale>
+  </Image>
+</ScreenManager>

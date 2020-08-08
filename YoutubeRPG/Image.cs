@@ -63,7 +63,7 @@ namespace YoutubeRPG
         public Image()
         {
             Path = Text = Effects = String.Empty;
-            FontName = "Fonts/Arial";
+            FontName = "Fonts/AgencyFB";
             Position = Vector2.Zero;
             Scale = Vector2.One;
             Alpha = 1.0f;
@@ -84,7 +84,8 @@ namespace YoutubeRPG
 
             if (Texture != null)
                 dimensions.X += Texture.Width;
-            dimensions.X += font.MeasureString(Text).X;
+            else
+                dimensions.X += font.MeasureString(Text).X;
 
             if (Texture != null)
                 dimensions.Y = Math.Max(Texture.Height, font.MeasureString(Text).Y);
@@ -96,15 +97,13 @@ namespace YoutubeRPG
 
             renderTarget = new RenderTarget2D(ScreenManager.Instance.GraphicsDevice,
                 (int)dimensions.X, (int)dimensions.Y);
-
             ScreenManager.Instance.GraphicsDevice.SetRenderTarget(renderTarget); //the screen is the render target
             ScreenManager.Instance.GraphicsDevice.Clear(Color.Transparent);
             ScreenManager.Instance.SpriteBatch.Begin();
             if (Texture != null)
                 ScreenManager.Instance.SpriteBatch.Draw(
-                    Texture, Vector2.Zero, Color.White
-                    );
-            ScreenManager.Instance.SpriteBatch.DrawString(font, Text, Vector2.Zero, Color.White);
+                    Texture, Vector2.Zero, Color.White);
+            ScreenManager.Instance.SpriteBatch.DrawString(font, Text, Vector2.Zero /*dimensions/2*/, Color.White);
             ScreenManager.Instance.SpriteBatch.End();
 
             Texture = renderTarget;

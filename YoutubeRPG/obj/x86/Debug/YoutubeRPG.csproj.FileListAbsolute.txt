@@ -46,3 +46,8 @@ C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x
 C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Fonts\Arial.xnb
 C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Load\ScreenManager.xml
 C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\ScreenManager\FadeImage.xnb
+C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Load\TitleMenu.xml
+C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Load\Menu\TitleMenu.xml
+C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\TitleScreen\menuscreen.xnb
+C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Load\TitleScreen.xml
+C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Fonts\AgencyFB.xnb
