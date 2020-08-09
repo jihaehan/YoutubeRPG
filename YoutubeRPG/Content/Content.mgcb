@@ -51,6 +51,9 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Arial.spritefont
 
+#begin Load/Gameplay/Map/Map1.xml
+/copy:Load/Gameplay/Map/Map1.xml
+
 #begin Load/Gameplay/Player.xml
 /copy:Load/Gameplay/Player.xml
 

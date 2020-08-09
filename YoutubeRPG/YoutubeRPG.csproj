@@ -51,6 +51,8 @@
     <Compile Include="Image.cs" />
     <Compile Include="ImageEffect.cs" />
     <Compile Include="InputManager.cs" />
+    <Compile Include="Layer.cs" />
+    <Compile Include="Map.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="MenuItem.cs" />
     <Compile Include="MenuManager.cs" />
@@ -60,6 +62,7 @@
     <Compile Include="ScreenManager.cs" />
     <Compile Include="SplashScreen.cs" />
     <Compile Include="SpriteSheetEffect.cs" />
+    <Compile Include="Tile.cs" />
     <Compile Include="TitleScreen.cs" />
     <Compile Include="XmlManager.cs" />
   </ItemGroup>

@@ -3,6 +3,9 @@
   <Image>
     <Path>Characters/player</Path>  
     <Effects>SpriteSheetEffect</Effects>
+    <SpriteSheetEffect>
+      <SwitchFrame>200</SwitchFrame>
+    </SpriteSheetEffect>
   </Image>
-  <MoveSpeed>100</MoveSpeed>
+  <MoveSpeed>200</MoveSpeed>
 </Player>
