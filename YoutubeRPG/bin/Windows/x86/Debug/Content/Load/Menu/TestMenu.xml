@@ -14,19 +14,19 @@
     <LinkType>Screen</LinkType>
     <LinkID>SplashScreen</LinkID>
     <Image>
-      <Text>Fun</Text>
+      <Text>Home</Text>
     </Image>
   </Item>
 
   <Item>
     <Image>
-      <Text>Stuff</Text>
+      <Text>Unlinked1</Text>
     </Image>
   </Item>
 
   <Item>
     <Image>
-      <Text>Hahaha</Text>
+      <Text>Unlinked2</Text>
     </Image>
   </Item>
 </Menu>

@@ -6,25 +6,27 @@
     <LinkType>Menu</LinkType>
     <LinkID>Content/Load/Menu/TitleMenu.xml</LinkID>
     <Image>
-      <Text>Blah</Text>
+      <Text>Back</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Screen</LinkType>
+    <LinkID>SplashScreen</LinkID>
+    <Image>
+      <Text>Home</Text>
     </Image>
   </Item>
 
   <Item>
     <Image>
-      <Text>Fun</Text>
+      <Text>Unlinked1</Text>
     </Image>
   </Item>
 
   <Item>
     <Image>
-      <Text>Stuff</Text>
-    </Image>
-  </Item>
-
-  <Item>
-    <Image>
-      <Text>Hahaha</Text>
+      <Text>Unlinked2</Text>
     </Image>
   </Item>
 </Menu>

@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Player>
+  <Image>
+    <Path>Characters/player</Path>  
+    <Effects>SpriteSheetEffect</Effects>
+    <SpriteSheetEffect>
+      <SwitchFrame>200</SwitchFrame>
+    </SpriteSheetEffect>
+  </Image>
+  <MoveSpeed>200</MoveSpeed>
+</Player>

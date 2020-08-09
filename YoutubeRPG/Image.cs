@@ -19,7 +19,7 @@ namespace YoutubeRPG
         public Rectangle SourceRect;
         public bool IsActive;
 
-        Texture2D Texture;
+        Texture2D texture;
         Vector2 origin;
         ContentManager content;
         RenderTarget2D renderTarget;
@@ -29,6 +29,12 @@ namespace YoutubeRPG
         public String Effects;
 
         public FadeEffect FadeEffect;
+        public SpriteSheetEffect SpriteSheetEffect;
+
+        public Texture2D Texture
+        {
+            get { return texture; }
+        }
 
         void SetEffect<T>(ref T effect)
         {
@@ -95,7 +101,7 @@ namespace YoutubeRPG
                 ScreenManager.Instance.Content.ServiceProvider, "Content");
 
             if (Path != String.Empty)
-                Texture = content.Load<Texture2D>(Path);
+                texture = content.Load<Texture2D>(Path);
 
             font = content.Load<SpriteFont>(FontName);
             Vector2 dimensions = Vector2.Zero;
@@ -124,12 +130,14 @@ namespace YoutubeRPG
             ScreenManager.Instance.SpriteBatch.DrawString(font, Text, Vector2.Zero /*dimensions/2*/, Color.White);
             ScreenManager.Instance.SpriteBatch.End();
 
-            Texture = renderTarget;
+            texture = renderTarget;
 
             ScreenManager.Instance.GraphicsDevice.SetRenderTarget(null);
 
             //Set Image Effects
             SetEffect<FadeEffect>(ref FadeEffect);
+            SetEffect<SpriteSheetEffect>(ref SpriteSheetEffect); 
+
             if (Effects != String.Empty)
             {
                 string[] split = Effects.Split(':');
