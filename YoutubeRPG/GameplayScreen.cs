@@ -37,7 +37,7 @@ namespace YoutubeRPG
         {
             base.Update(gameTime);
             player.Update(gameTime);
-            map.Update(gameTime);
+            map.Update(gameTime, ref player);
         }
         public override void Draw(SpriteBatch spriteBatch)
         {

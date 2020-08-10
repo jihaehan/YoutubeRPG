@@ -105,6 +105,18 @@
 /processorParam:TextureFormat=Color
 /build:SplashScreen/Image1.png
 
+#begin TileSheets/tilesheet1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:TileSheets/tilesheet1.png
+
 #begin TitleScreen/menuscreen.png
 /importer:TextureImporter
 /processor:TextureProcessor

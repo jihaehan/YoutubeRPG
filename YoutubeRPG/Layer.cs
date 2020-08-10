@@ -25,39 +25,74 @@ namespace YoutubeRPG
 
         [XmlElement("TileMap")]
         public TileMap Tile;
-        List<Tile> tiles; 
+        public Image Image;
+        public string SolidTiles;
+        List<Tile> tiles;
+        string state; 
+
         public Layer()
         {
-
+            Image = new Image();
+            tiles = new List<Tile>();
+            SolidTiles = String.Empty;
         }
 
         public void LoadContent(Vector2 tileDimensions)
         {
-            foreach(string row in Tile.Row)
+            Image.LoadContent();
+            Vector2 position = -tileDimensions; //tileDimensions - new Vector2(128,128)
+
+            foreach (string row in Tile.Row)
             {
                 string[] split = row.Split(']');
+                position.X = -tileDimensions.X;
+                position.Y += tileDimensions.Y;
                 foreach(string s in split)
                 {
                     if (s!= String.Empty)
                     {
-                        string str = s.Replace("[", String.Empty);
-                        int value1 = int.Parse(str.Substring(0, str.IndexOf(':')));
-                        int value2 = int.Parse(str.Substring(str.IndexOf(':') + 1));
+                        position.X += tileDimensions.X;
+                        if (!s.Contains("x"))
+                        {
+                            state = "Passive";
+                            tiles.Add(new Tile());
+
+                            string str = s.Replace("[", String.Empty);
+                            int value1 = int.Parse(str.Substring(0, str.IndexOf(':')));
+                            int value2 = int.Parse(str.Substring(str.IndexOf(':') + 1));
+
+                            if (SolidTiles.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
+                                state = "Solid";
+                            //other tile types here:    
+                            /* if (SolidTiles.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
+                                state = "Solid"; */
+
+                            tiles[tiles.Count - 1].LoadContent(position, new Rectangle(
+                                (int)(value1 * tileDimensions.X), (int)(value2 * tileDimensions.Y),
+                                (int)tileDimensions.X, (int)tileDimensions.Y), state); 
+                        }
                     }
                 }
             }
         }
         public void UnloadContent()
         {
-
+            Image.UnloadContent();
         }
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, ref Player player)
         {
-
+            foreach (Tile tile in tiles)
+                tile.Update(gameTime, ref player);
+            Image.Update(gameTime);
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-
+            foreach (Tile tile in tiles)
+            {
+                Image.Position = tile.Position;
+                Image.SourceRect = tile.SourceRect;
+                Image.Draw(spriteBatch);
+            }
         }
     }
 }
