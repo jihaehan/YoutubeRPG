@@ -28,12 +28,14 @@ namespace YoutubeRPG
         public Image Image;
         public string SolidTiles;
         List<Tile> tiles;
-        string state; 
+        List<int> tilesCount;
+        TileCollision state;
 
         public Layer()
         {
             Image = new Image();
             tiles = new List<Tile>();
+            tilesCount = new List<int>();
             SolidTiles = String.Empty;
         }
 
@@ -47,25 +49,24 @@ namespace YoutubeRPG
                 string[] split = row.Split(']');
                 position.X = -tileDimensions.X;
                 position.Y += tileDimensions.Y;
+                tilesCount.Add(split.Length-1);
                 foreach(string s in split)
                 {
                     if (s!= String.Empty)
                     {
                         position.X += tileDimensions.X;
+                        state = TileCollision.Passive;
+                        tiles.Add(new Tile());
+
                         if (!s.Contains("x"))
                         {
-                            state = "Passive";
-                            tiles.Add(new Tile());
-
                             string str = s.Replace("[", String.Empty);
                             int value1 = int.Parse(str.Substring(0, str.IndexOf(':')));
                             int value2 = int.Parse(str.Substring(str.IndexOf(':') + 1));
 
+                            //Set TileTypes
                             if (SolidTiles.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
-                                state = "Solid";
-                            //other tile types here:    
-                            /* if (SolidTiles.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
-                                state = "Solid"; */
+                                state = TileCollision.Solid;
 
                             tiles[tiles.Count - 1].LoadContent(position, new Rectangle(
                                 (int)(value1 * tileDimensions.X), (int)(value2 * tileDimensions.Y),
@@ -79,10 +80,10 @@ namespace YoutubeRPG
         {
             Image.UnloadContent();
         }
-        public void Update(GameTime gameTime, ref Player player)
+        public void Update(GameTime gameTime)
         {
             foreach (Tile tile in tiles)
-                tile.Update(gameTime, ref player);
+                tile.Update(gameTime);
             Image.Update(gameTime);
         }
         public void Draw(SpriteBatch spriteBatch)
@@ -94,5 +95,15 @@ namespace YoutubeRPG
                 Image.Draw(spriteBatch);
             }
         }
+        public Tile GetTile(int x, int y)
+        {
+            int count = y * tilesCount[0] + x;
+            if (count < 0)
+                count = 0;
+            if (count > tiles.Count() -1)
+                count = tiles.Count() - 1;
+            return tiles[count];
+        }
+
     }
 }

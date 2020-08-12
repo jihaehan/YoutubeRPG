@@ -9,11 +9,29 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace YoutubeRPG
 {
+    public enum TileCollision
+    {
+        Passive = 0,
+        Solid = 1,
+        Portal = 2,
+        Random = 3, 
+        Water = 4,
+        UV = 5, 
+        Heat = 6,
+        LeftEdge = 7,
+        RightEdge = 8,
+        TopEdge = 9,
+        BottomEdge = 10,
+        NWCorner = 11,
+        NECorner = 12,
+        SWCorner = 13,
+        SECorner = 14,
+    }
     public class Tile
     {
         Vector2 position;
         Rectangle sourceRect;
-        string state; 
+        TileCollision state; 
 
         public Rectangle SourceRect
         {
@@ -23,8 +41,11 @@ namespace YoutubeRPG
         {
             get { return position; }
         }
-
-        public void LoadContent(Vector2 position, Rectangle sourceRect, string state)
+        public TileCollision State
+        {
+            get { return state; }
+        }
+        public void LoadContent(Vector2 position, Rectangle sourceRect, TileCollision state)
         {
             this.position = position;
             this.sourceRect = sourceRect;
@@ -34,31 +55,11 @@ namespace YoutubeRPG
         {
 
         }
-        public void Update(GameTime gameTime, ref Player player)
-        {
-            if (state == "Solid")
-            {
-                Rectangle tileRect = new Rectangle((int)Position.X, (int)Position.Y, sourceRect.Width, sourceRect.Height);
-                Rectangle playerRect = new Rectangle((int)player.Image.Position.X, (int)player.Image.Position.Y,    player.Image.SourceRect.Width, player.Image.SourceRect.Height);
-
-                if (playerRect.Intersects(tileRect))
-                {
-                    if (player.Velocity.X < 0)
-                        player.Image.Position.X = tileRect.Right;
-                    else if (player.Velocity.X > 0)
-                        player.Image.Position.X = tileRect.Left - player.Image.SourceRect.Width;
-                    else if (player.Velocity.Y < 0)
-                        player.Image.Position.Y = tileRect.Bottom;
-                    else
-                        player.Image.Position.Y = tileRect.Top - player.Image.SourceRect.Height;
-
-                    player.Velocity = Vector2.Zero;
-                }
-            }
+        public void Update(GameTime gameTime)
+        {            
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-
         }
     }
 }

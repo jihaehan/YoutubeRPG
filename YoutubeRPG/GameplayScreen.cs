@@ -36,14 +36,15 @@ namespace YoutubeRPG
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            player.Update(gameTime);
-            map.Update(gameTime, ref player);
+            player.Update(gameTime, map.Layer[1]); 
+            map.Update(gameTime);
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
             map.Draw(spriteBatch);
             player.Draw(spriteBatch);
+
         }
     }
 }

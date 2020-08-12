@@ -26,9 +26,9 @@
     <Image>
       <Path>TileSheets/tilesheet1</Path>
     </Image>
-    <SolidTiles>[0:3][1:3][4:0][6:0][7:0]</SolidTiles>
+    <SolidTiles>[0:2][1:3][4:0][6:0][7:0]</SolidTiles>
     <TileMap>
-      <Row>[x:x][0:2][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
+      <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
       <Row>[x:x][x:x][6:0][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
