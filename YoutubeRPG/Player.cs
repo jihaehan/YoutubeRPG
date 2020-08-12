@@ -33,7 +33,6 @@ namespace YoutubeRPG
         {
             Image.IsActive = true;
 
-            Velocity = Vector2.Zero;
             HandleMovement(gameTime);
             if (Velocity != Vector2.Zero)   
                 HandleCollisions(collisionLayer);
@@ -47,7 +46,6 @@ namespace YoutubeRPG
         }
         void HandleMovement(GameTime gameTime)
         {
-
             if (InputManager.Instance.KeyDown(Keys.S))
             {
                 if (Velocity.X == 0)
@@ -129,25 +127,24 @@ namespace YoutubeRPG
             {
                 for (int x = leftTile; x <= rightTile; ++x)
                 {
-                    Tile tile = layer.GetTile(x, y);
+                    TileCollision tileCollision = layer.GetTile(x, y);
                     List<Rectangle> rectCollisions = new List<Rectangle>();
                     //List<Triangle> triCollisions = new List<Triangle>();
 
-                    switch (tile.State)
+                    switch (tileCollision)
                     {
-                        case TileCollision.Passive:
-                            break;
                         case TileCollision.Solid:
-                            rectCollisions.Add(new Rectangle((int)tile.Position.X, (int)tile.Position.Y, tile.SourceRect.Width, tile.SourceRect.Height));
+                            rectCollisions.Add(new Rectangle(x * 128, y * 128, 128, 128));
                             break;
                         default:
-                            throw new NotSupportedException(String.Format("Unsupported tile enum type '{0}' at position {1}, {2},", tile.State, x, y));
+                            break;
                     }
 
                     foreach (Rectangle r in rectCollisions)
                     {
                         if (boundingCircle.Intersects(r))
                         {
+                            //Consider removing "sticky" walls
                             Velocity = Vector2.Zero;
                             break;
                         }

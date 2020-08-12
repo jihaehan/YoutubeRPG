@@ -26,6 +26,7 @@ namespace YoutubeRPG
         NECorner = 12,
         SWCorner = 13,
         SECorner = 14,
+        Overlay = 15,
     }
     public class Tile
     {

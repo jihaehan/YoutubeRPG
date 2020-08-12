@@ -38,10 +38,10 @@ namespace YoutubeRPG
             foreach (Layer l in Layer)
                 l.Update(gameTime);
         }
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, string drawType)
         {
             foreach (Layer l in Layer)
-                l.Draw(spriteBatch);
+                l.Draw(spriteBatch, drawType);
         }
 
     }

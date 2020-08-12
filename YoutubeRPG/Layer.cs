@@ -26,17 +26,21 @@ namespace YoutubeRPG
         [XmlElement("TileMap")]
         public TileMap Tile;
         public Image Image;
-        public string SolidTiles;
-        List<Tile> tiles;
-        List<int> tilesCount;
-        TileCollision state;
+        public string SolidTiles, OverlayTiles;
+        List<Tile> underlayTiles;
+        List<Tile> overlayTiles; 
+        List<TileCollision> tilesCount;
+        int rowLength;
 
         public Layer()
         {
             Image = new Image();
-            tiles = new List<Tile>();
-            tilesCount = new List<int>();
+            underlayTiles = new List<Tile>();
+            overlayTiles = new List<Tile>();
+
+            tilesCount = new List<TileCollision>();
             SolidTiles = String.Empty;
+            OverlayTiles = String.Empty;
         }
 
         public void LoadContent(Vector2 tileDimensions)
@@ -49,28 +53,34 @@ namespace YoutubeRPG
                 string[] split = row.Split(']');
                 position.X = -tileDimensions.X;
                 position.Y += tileDimensions.Y;
-                tilesCount.Add(split.Length-1);
+                rowLength = split.Length-1;
                 foreach(string s in split)
                 {
                     if (s!= String.Empty)
                     {
                         position.X += tileDimensions.X;
-                        state = TileCollision.Passive;
-                        tiles.Add(new Tile());
+                        tilesCount.Add(TileCollision.Passive);
 
                         if (!s.Contains("x"))
                         {
+                            Tile tile = new Tile();
                             string str = s.Replace("[", String.Empty);
                             int value1 = int.Parse(str.Substring(0, str.IndexOf(':')));
                             int value2 = int.Parse(str.Substring(str.IndexOf(':') + 1));
 
                             //Set TileTypes
                             if (SolidTiles.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
-                                state = TileCollision.Solid;
+                                tilesCount[tilesCount.Count() - 1] = TileCollision.Solid;
 
-                            tiles[tiles.Count - 1].LoadContent(position, new Rectangle(
+                            tile.LoadContent(position, new Rectangle(
                                 (int)(value1 * tileDimensions.X), (int)(value2 * tileDimensions.Y),
-                                (int)tileDimensions.X, (int)tileDimensions.Y), state); 
+                                (int)tileDimensions.X, (int)tileDimensions.Y), tilesCount[tilesCount.Count() - 1]);
+
+                            if (OverlayTiles.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
+                                overlayTiles.Add(tile);
+                            else
+                                underlayTiles.Add(tile); 
+
                         }
                     }
                 }
@@ -82,12 +92,20 @@ namespace YoutubeRPG
         }
         public void Update(GameTime gameTime)
         {
-            foreach (Tile tile in tiles)
+            foreach (Tile tile in underlayTiles)
+                tile.Update(gameTime);
+            foreach (Tile tile in overlayTiles)
                 tile.Update(gameTime);
             Image.Update(gameTime);
         }
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, string drawType)
         {
+            List<Tile> tiles;
+            if (drawType == "Underlay")
+                tiles = underlayTiles;
+            else
+                tiles = overlayTiles;
+
             foreach (Tile tile in tiles)
             {
                 Image.Position = tile.Position;
@@ -95,14 +113,14 @@ namespace YoutubeRPG
                 Image.Draw(spriteBatch);
             }
         }
-        public Tile GetTile(int x, int y)
+        public TileCollision GetTile(int x, int y)
         {
-            int count = y * tilesCount[0] + x;
+            int count = y * rowLength + x;
             if (count < 0)
                 count = 0;
-            if (count > tiles.Count() -1)
-                count = tiles.Count() - 1;
-            return tiles[count];
+            if (count > tilesCount.Count() -1)
+                count = tilesCount.Count() - 1;
+            return tilesCount[count];
         }
 
     }
