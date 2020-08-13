@@ -16,10 +16,12 @@ namespace YoutubeRPG
         public Image Image;
         public Vector2 Velocity;
         public float MoveSpeed;
+        public int TileLength; 
         
         public Player()
         {
             Velocity = Vector2.Zero;
+            TileLength = 128; 
         }
         public void LoadContent()
         {
@@ -129,12 +131,39 @@ namespace YoutubeRPG
                 {
                     TileCollision tileCollision = layer.GetTile(x, y);
                     List<Rectangle> rectCollisions = new List<Rectangle>();
-                    //List<Triangle> triCollisions = new List<Triangle>();
+                    List<Triangle> triCollisions = new List<Triangle>();
 
                     switch (tileCollision)
                     {
                         case TileCollision.Solid:
-                            rectCollisions.Add(new Rectangle(x * 128, y * 128, 128, 128));
+                            rectCollisions.Add(new Rectangle(x * TileLength, y * TileLength, TileLength, TileLength));
+                            break;
+                        case TileCollision.LeftEdge:
+                            rectCollisions.Add(new Rectangle(x * TileLength + TileLength / 3, y * TileLength, TileLength * 2 / 3, TileLength));
+                            break;
+                        case TileCollision.RightEdge:
+                            rectCollisions.Add(new Rectangle(x * TileLength, y * TileLength, TileLength * 2 / 3, TileLength));
+                            break;
+                        case TileCollision.TopEdge:
+                            rectCollisions.Add(new Rectangle(x * TileLength, y * TileLength, TileLength, TileLength / 2));
+                            break;
+                        case TileCollision.LeftCorner:
+                            rectCollisions.Add(new Rectangle(x * TileLength + TileLength / 3, y * TileLength, TileLength * 2 / 3, TileLength / 2));
+                            break;
+                        case TileCollision.RightCorner:
+                            rectCollisions.Add(new Rectangle(x * TileLength, y * TileLength, TileLength * 2 / 3, TileLength / 2));
+                            break;
+                        case TileCollision.NWCorner:
+                            triCollisions.Add(new Triangle(x * TileLength, y * TileLength, TileLength / 4, TileLength / 4, -1));
+                            break;
+                        case TileCollision.NECorner:
+                            triCollisions.Add(new Triangle((x + 1) * TileLength, y * TileLength, -TileLength * 3 / 4, TileLength / 4, 1));
+                            break;
+                        case TileCollision.SECorner:
+                            triCollisions.Add(new Triangle((x + 1) * TileLength, (y + 1) * TileLength, -TileLength, TileLength, -1));
+                            break;
+                        case TileCollision.SWCorner:
+                            triCollisions.Add(new Triangle(x * TileLength, (y + 1) * TileLength, -TileLength, TileLength, 1));
                             break;
                         default:
                             break;

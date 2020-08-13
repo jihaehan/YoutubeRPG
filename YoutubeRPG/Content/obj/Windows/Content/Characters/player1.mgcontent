@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Characters/player1.png</SourceFile>
-  <SourceTime>2020-08-09T02:44:32.8264626+01:00</SourceTime>
+  <SourceTime>2020-08-13T14:50:43.9703164+01:00</SourceTime>
   <DestFile>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/bin/Windows/Content/Characters/player1.xnb</DestFile>
-  <DestTime>2020-08-09T12:28:04.0930191+01:00</DestTime>
+  <DestTime>2020-08-13T14:51:34.024559+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2018-12-08T16:35:54+00:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

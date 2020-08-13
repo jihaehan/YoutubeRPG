@@ -21,12 +21,13 @@ namespace YoutubeRPG
         LeftEdge = 7,
         RightEdge = 8,
         TopEdge = 9,
-        BottomEdge = 10,
-        NWCorner = 11,
-        NECorner = 12,
-        SWCorner = 13,
-        SECorner = 14,
-        Overlay = 15,
+        LeftCorner = 10,
+        RightCorner = 11,
+        NWCorner = 12,
+        NECorner = 13,
+        SWCorner = 14,
+        SECorner = 15,
+
     }
     public class Tile
     {
