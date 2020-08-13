@@ -57,6 +57,9 @@
 #begin Load/Gameplay/Player.xml
 /copy:Load/Gameplay/Player.xml
 
+#begin Load/Gameplay/World/Intro.xml
+/copy:Load/Gameplay/World/Intro.xml
+
 #begin Load/Menu/TestMenu.xml
 /copy:Load/Menu/TestMenu.xml
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace YoutubeRPG
 {
@@ -35,23 +36,39 @@ namespace YoutubeRPG
             speed = 4f;
             Position = position;
         }
-        public void LockCamera(Layer map, Rectangle viewport)
+        public void LoadContent()
+        {
+
+        }
+        public void UnloadContent()
+        {
+
+        }
+        public void Update(GameTime gameTime)
+        {
+
+        }
+        public void Draw(SpriteBatch spriteBatch)
+        {
+
+        }
+        public void LockCamera(Layer layer, Rectangle viewport)
         /*clamp the X and Y coordinates between 0 and the width of the map minus the width of the viewport
          for width and 0 and the height of the map minus the height of the viewport for height.*/
         {
-            /*
+            
             position.X = MathHelper.Clamp(position.X,
-            0, map.WidthInPixels - viewport.Width);
+            0, layer.Width() - viewport.Width);
             position.Y = MathHelper.Clamp(position.Y,
-            0, map.HeightInPixels - viewport.Height); */
+            0, layer.Height() - viewport.Height); 
         }
-        public void LockToSprite(Layer map, Image sprite, Rectangle viewport)
+        public void LockToSprite(Layer layer, Image image, Rectangle viewport)
         {
-            position.X = (sprite.Position.X + sprite.SourceRect.Width / 2)
+            position.X = (image.Position.X + image.SourceRect.Width / 2)
             - (viewport.Width / 2);
-            position.Y = (sprite.Position.Y + sprite.SourceRect.Height / 2)
+            position.Y = (image.Position.Y + image.SourceRect.Height / 2)
             - (viewport.Height / 2);
-            LockCamera(map, viewport);
+            LockCamera(layer, viewport);
         }
 
     }

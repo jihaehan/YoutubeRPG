@@ -14,37 +14,39 @@ namespace YoutubeRPG
     public class GameplayScreen : GameScreen
     {
         Player player;
-        Map map; 
+        World world; 
+        //Camera camera;
 
         public override void LoadContent()
         {
             base.LoadContent();
             XmlManager<Player> playerLoader = new XmlManager<Player>();
-            XmlManager<Map> mapLoader = new XmlManager<Map>();
+            XmlManager<World> worldLoader = new XmlManager<World>();
             player = playerLoader.Load("Content/Load/Gameplay/Player.xml");
-            map = mapLoader.Load("Content/Load/Gameplay/Map/Map1.xml");
             player.LoadContent();
-            map.LoadContent();
+            world = worldLoader.Load("Content/Load/Gameplay/World/Intro.xml");
+            world.LoadContent();
 
         }
         public override void UnloadContent()
         {
             base.UnloadContent();
             player.UnloadContent();
-            map.UnloadContent();
+            world.UnloadContent();
         }
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            player.Update(gameTime, map.Layer[1]); 
-            map.Update(gameTime);
+            player.Update(gameTime, world.CurrentMap.Layer[1]); //collision layer
+            world.Update(gameTime);
+
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            map.Draw(spriteBatch, "Underlay");
+            world.Draw(spriteBatch, "Underlay");
             player.Draw(spriteBatch);
-            map.Draw(spriteBatch, "Overlay");
+            world.Draw(spriteBatch, "Overlay");
 
         }
     }

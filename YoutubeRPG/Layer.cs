@@ -31,6 +31,7 @@ namespace YoutubeRPG
         List<Tile> overlayTiles; 
         List<TileCollision> tilesCount;
         int rowLength;
+        int tileLength;
 
         public Layer()
         {
@@ -79,8 +80,9 @@ namespace YoutubeRPG
                             if (OverlayTiles.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
                                 overlayTiles.Add(tile);
                             else
-                                underlayTiles.Add(tile); 
+                                underlayTiles.Add(tile);
 
+                            tileLength = tile.SourceRect.Width;
                         }
                     }
                 }
@@ -122,6 +124,13 @@ namespace YoutubeRPG
                 count = tilesCount.Count() - 1;
             return tilesCount[count];
         }
-
+        public int Width()
+        {
+            return rowLength * tileLength;
+        }
+        public int Height()
+        {
+            return Tile.Row.Count() * tileLength;
+        }
     }
 }

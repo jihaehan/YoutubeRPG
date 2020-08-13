@@ -44,6 +44,7 @@
     <StartupObject>YoutubeRPG.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Camera.cs" />
     <Compile Include="FadeEffect.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameplayScreen.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="SpriteSheetEffect.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="TitleScreen.cs" />
+    <Compile Include="World.cs" />
     <Compile Include="XmlManager.cs" />
   </ItemGroup>
   <ItemGroup>
