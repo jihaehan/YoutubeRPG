@@ -37,3 +37,5 @@ C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\obj\x86\Relea
 C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\obj\x86\Release\YoutubeRPG.csproj.CopyComplete
 C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\obj\x86\Release\YoutubeRPG.exe
 C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\obj\x86\Release\YoutubeRPG.pdb
+C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Release\Content\Load\Gameplay\World\Intro.xml
+C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Release\Content\Load\Gameplay\Map\Room1.xml

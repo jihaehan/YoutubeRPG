@@ -4,13 +4,14 @@
     <X>128</X>
     <Y>128</Y>
   </TileDimensions>
-  
   <Layer>
     <Image>
-      <Path>TileSheets/tilesheet1</Path>
+      <Path>TileSheets/interior1</Path>
     </Image>
+    <SolidTiles>[7:6]</SolidTiles>
     <TileMap>
-      <Row>[0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0]</Row>
+      <Row>[7:6][7:6][7:6][7:6]
+      </Row>
       <Row>[0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0]</Row>
       <Row>[0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0]</Row>
       <Row>[0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0]</Row>
@@ -25,7 +26,7 @@
 
 <Layer>
     <Image>
-      <Path>TileSheets/tilesheet1</Path>
+      <Path>TileSheets/interior2</Path>
     </Image>
     <SolidTiles>[0:2][1:3][4:0][6:0][7:0][0:6]</SolidTiles>
     <OverlayTiles>[0:4][0:5]</OverlayTiles>

@@ -172,15 +172,34 @@ namespace YoutubeRPG
                             if ((r.Center.X > boundingBox.Center.X && Velocity.X > 0)
                                 ||(r.Center.X < boundingBox.Center.X && Velocity.X < 0))
                                 Velocity.X = 0;
+                            
                             if ((r.Center.Y > boundingBox.Center.Y && Velocity.Y > 0)
                                 || (r.Center.Y < boundingBox.Center.Y && Velocity.Y < 0))
-                                Velocity.Y = 0; 
-                            //break;
+                                Velocity.Y = 0;
+                           
                         }
                     }
+                    
+                    foreach (Triangle t in triCollisions)
+                    {
+                        if (RectangleIntersectTriangle(boundingBox, t))
+                            Velocity = Vector2.Zero;
+                    }
+                    
                 }
             }
         }
+        private bool RectangleIntersectTriangle(Rectangle rectangle, Triangle triangle)
+        {
+            Vector2 rCenter = new Vector2(rectangle.Center.X, rectangle.Center.Y);
+            Vector2 v = rCenter - triangle.Corner;
+            Vector2 vi = v - (v / v.Length() * rectangle.Width);
+            Vector2 vii = new Vector2(vi.X, triangle.Offset + (triangle.Slope) * vi.X);
 
+            float distanceSquared = vi.LengthSquared();
+            float internalSquared = vii.LengthSquared();
+
+            return (distanceSquared < triangle.Length * triangle.Length && distanceSquared <= internalSquared);
+        }
     }
 }
