@@ -40,7 +40,6 @@ namespace YoutubeRPG
         public virtual void Update(GameTime gameTime)
         {
             InputManager.Update();
-            //InputManager.Instance.Update();
         }
         public virtual void Draw(SpriteBatch spriteBatch)
         {

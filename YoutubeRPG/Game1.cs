@@ -55,9 +55,9 @@ namespace YoutubeRPG
         {
             GraphicsDevice.Clear(Color.Black);
 
-            spriteBatch.Begin();
+            //spriteBatch.Begin();
             ScreenManager.Instance.Draw(spriteBatch);
-            spriteBatch.End();
+            //spriteBatch.End();
 
             base.Draw(gameTime);
         }

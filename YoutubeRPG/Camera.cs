@@ -36,39 +36,23 @@ namespace YoutubeRPG
             speed = 4f;
             Position = position;
         }
-        public void LoadContent()
-        {
-
-        }
-        public void UnloadContent()
-        {
-
-        }
-        public void Update(GameTime gameTime)
-        {
-
-        }
-        public void Draw(SpriteBatch spriteBatch)
-        {
-
-        }
-        public void LockCamera(Layer layer, Rectangle viewport)
+        
+        public void LockCamera(Layer layer)
         /*clamp the X and Y coordinates between 0 and the width of the map minus the width of the viewport
          for width and 0 and the height of the map minus the height of the viewport for height.*/
         {
-            
             position.X = MathHelper.Clamp(position.X,
-            0, layer.Width() - viewport.Width);
+            0, layer.Width() - ScreenManager.Instance.Dimensions.X);
             position.Y = MathHelper.Clamp(position.Y,
-            0, layer.Height() - viewport.Height); 
+            0, layer.Height() - ScreenManager.Instance.Dimensions.Y); 
         }
-        public void LockToSprite(Layer layer, Image image, Rectangle viewport)
+        public void LockToSprite(Layer layer, Image image)
         {
             position.X = (image.Position.X + image.SourceRect.Width / 2)
-            - (viewport.Width / 2);
+             - (ScreenManager.Instance.Dimensions.X / 2);
             position.Y = (image.Position.Y + image.SourceRect.Height / 2)
-            - (viewport.Height / 2);
-            LockCamera(layer, viewport);
+             - (ScreenManager.Instance.Dimensions.Y / 2);
+            LockCamera(layer);
         }
 
     }

@@ -47,7 +47,7 @@ namespace YoutubeRPG
         public ScreenManager()
         {
             Dimensions = new Vector2(1280, 720);
-            currentScreen = new GameplayScreen(); //new SplashScreen();
+            currentScreen = new GameplayScreen();
             //currentScreen = new SplashScreen();
             xmlGameScreenManager = new XmlManager<GameScreen>();
             xmlGameScreenManager.Type = currentScreen.Type;
@@ -102,8 +102,10 @@ namespace YoutubeRPG
         public void Draw(SpriteBatch spriteBatch)
         {
             currentScreen.Draw(spriteBatch);
+            spriteBatch.Begin();
             if (IsTransitioning)
                 Image.Draw(spriteBatch);
+            spriteBatch.End();
         }
     }
 }

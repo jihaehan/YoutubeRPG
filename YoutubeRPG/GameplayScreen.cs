@@ -16,7 +16,7 @@ namespace YoutubeRPG
     {
         Player player;
         World world; 
-        //Camera camera;
+        Camera camera;
 
         public override void LoadContent()
         {
@@ -27,6 +27,8 @@ namespace YoutubeRPG
             player.LoadContent();
             world = worldLoader.Load("Content/Load/Gameplay/World/Intro.xml");
             world.LoadContent();
+
+            camera = new Camera();
 
             InitializeBindings();
 
@@ -44,14 +46,26 @@ namespace YoutubeRPG
             player.Update(gameTime, world.CurrentMap.Layer[1]); //collision layer
             world.Update(gameTime);
 
+            camera.LockToSprite(world.CurrentMap.Layer[0], player.Image);
+
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+
+            spriteBatch.Begin(SpriteSortMode.Deferred,
+                BlendState.AlphaBlend,
+                SamplerState.PointClamp,
+                null,
+                null,
+                null,
+                camera.Transformation);
+
             world.Draw(spriteBatch, "Underlay");
             player.Draw(spriteBatch);
             world.Draw(spriteBatch, "Overlay");
 
+            spriteBatch.End();
         }
         private void InitializeBindings()
         {

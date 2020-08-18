@@ -37,7 +37,10 @@ namespace YoutubeRPG
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+
+            spriteBatch.Begin();
             menuManager.Draw(spriteBatch);
+            spriteBatch.End();
         }
         private void InitializeBindings()
         {
