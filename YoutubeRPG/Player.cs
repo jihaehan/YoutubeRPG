@@ -106,14 +106,10 @@ namespace YoutubeRPG
         }
 
         void HandleCollisions(Layer layer)
-        {
-            Circle boundingCircle = new Circle(new Vector2(
-                (int)Image.Position.X + Image.SourceRect.Width / 2 + Velocity.X,
-                (int)Image.Position.Y + Image.SourceRect.Height / 2 + Velocity.Y),
-                (int)Image.SourceRect.Width/2 + (Velocity.X + Velocity.Y)/2);
+        {            
             Rectangle boundingBox = new Rectangle(
                 (int)Math.Floor(Image.Position.X + Image.SourceRect.Width/4 + Velocity.X), 
-                (int)Math.Floor(Image.Position.Y + Image.SourceRect.Height/2 + Velocity.Y),
+                (int)Math.Floor(Image.Position.Y + Image.SourceRect.Height/2 + Velocity.Y * 1.1f),
                 Image.SourceRect.Width/2, Image.SourceRect.Height/2);
 
             int leftTile = (int)Math.Floor((float) (Image.Position.X)/ Image.SourceRect.Width);
