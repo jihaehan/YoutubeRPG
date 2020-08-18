@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace YoutubeRPG
 {
@@ -21,6 +22,7 @@ namespace YoutubeRPG
         {
             base.LoadContent();
             menuManager.LoadContent("Content/Load/Menu/TitleMenu.xml");
+            InitializeBindings();
         }
         public override void UnloadContent()
         {
@@ -36,6 +38,14 @@ namespace YoutubeRPG
         {
             base.Draw(spriteBatch);
             menuManager.Draw(spriteBatch);
+        }
+        private void InitializeBindings()
+        {
+            InputManager.AddKeyboardBinding(Keys.Enter, menuManager.MenuSelect);
+            InputManager.AddKeyboardBinding(Keys.W, menuManager.SelectUp);
+            InputManager.AddKeyboardBinding(Keys.S, menuManager.SelectDown);
+            InputManager.AddKeyboardBinding(Keys.A, menuManager.SelectLeft);
+            InputManager.AddKeyboardBinding(Keys.D, menuManager.SelectRight);
         }
 
     }

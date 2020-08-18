@@ -44,9 +44,9 @@ namespace YoutubeRPG
 
         private void InitializeBindings()
         {
-            InputManager.AddKeyboardBinding(Keys.Z, ChangeScreen);
+            InputManager.AddKeyboardBinding(Keys.Enter, ChangeScreen);
         }
-        public void ChangeScreen(eButtonState buttonstate)
+        private void ChangeScreen(eButtonState buttonstate)
         {
             if (buttonstate == eButtonState.DOWN)
             {

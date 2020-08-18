@@ -43,7 +43,7 @@ namespace YoutubeRPG
         {
             foreach (Keys key in KeyList)
             {
-                if (CurrentKeyboardState.IsKeyDown(key))
+                if (PrevKeyboardState.IsKeyUp(key) && CurrentKeyboardState.IsKeyDown(key))
                 {
                     if (OnKeyDown != null)
                         OnKeyDown(this, new KeyboardEventArgs(key, CurrentKeyboardState, PrevKeyboardState));
@@ -56,7 +56,7 @@ namespace YoutubeRPG
                 }
 
 
-                if (PrevKeyboardState.IsKeyUp(key) && CurrentKeyboardState.IsKeyDown(key))
+                if (PrevKeyboardState.IsKeyDown(key) && CurrentKeyboardState.IsKeyDown(key))
                 {
                     if (OnKeyPressed != null)
                         OnKeyPressed(this, new KeyboardEventArgs(key, CurrentKeyboardState, PrevKeyboardState));

@@ -69,7 +69,15 @@ namespace YoutubeRPG
         {
             if (!isTransitioning)
                menu.Update(gameTime);
-            if (/*InputManager.Instance.KeyPressed(Keys.Enter) &&*/ !isTransitioning)
+            Transition(gameTime);
+        }
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            menu.Draw(spriteBatch);
+        }
+        public void MenuSelect(eButtonState buttonState)
+        {
+            if (buttonState == eButtonState.DOWN && !isTransitioning)
             {
                 if (menu.Items[menu.ItemNumber].LinkType == "Screen")
                     ScreenManager.Instance.ChangeScreens(menu.Items[menu.ItemNumber].LinkID);
@@ -84,11 +92,26 @@ namespace YoutubeRPG
                     }
                 }
             }
-            Transition(gameTime);
         }
-        public void Draw(SpriteBatch spriteBatch)
+        public void SelectRight(eButtonState buttonState)
         {
-            menu.Draw(spriteBatch);
+            if (menu.Axis == "X" && buttonState == eButtonState.DOWN)
+                menu.ItemNumber++;
+        }
+        public void SelectLeft(eButtonState buttonState)
+        {
+            if (menu.Axis == "X" && buttonState == eButtonState.DOWN)
+                menu.ItemNumber--;
+        }
+        public void SelectDown(eButtonState buttonState)
+        {
+            if (menu.Axis == "Y" && buttonState == eButtonState.DOWN)
+                menu.ItemNumber++;
+        }
+        public void SelectUp(eButtonState buttonState)
+        {
+            if (menu.Axis == "Y" && buttonState == eButtonState.DOWN)
+                menu.ItemNumber--;
         }
     }
 }

@@ -18,13 +18,16 @@ namespace YoutubeRPG
         public string Axis, Effects;
         [XmlElement("Item")]
         public List<MenuItem> Items;
-        int itemNumber;
+        public int ItemNumber;
+        //int itemNumber;
         string id;
 
+        /*
         public int ItemNumber
         {
             get { return itemNumber; }
-        }
+            set { itemNumber = value; }
+        }*/
 
         public string ID
         { 
@@ -74,7 +77,8 @@ namespace YoutubeRPG
         public Menu()
         {
             id = String.Empty;
-            itemNumber = 0;
+            ItemNumber = 0;
+            //itemNumber = 0;
             Effects = String.Empty;
             Axis = "Y";
             Items = new List<MenuItem>();
@@ -98,29 +102,29 @@ namespace YoutubeRPG
         }
         public void Update(GameTime gameTime)
         {
-           
             /*if (Axis == "X")
             {
-                if (InputManager.Instance.KeyPressed(Keys.Right))
-                    itemNumber++;
-                else if (InputManager.Instance.KeyPressed(Keys.Left))
-                    itemNumber--;
+            if (InputManager.Instance.KeyPressed(Keys.Right))
+            itemNumber++;
+            else if (InputManager.Instance.KeyPressed(Keys.Left))
+            itemNumber--;
             }
             else if (Axis == "Y")
             {
-                if (InputManager.Instance.KeyPressed(Keys.Down))
-                    itemNumber++;
-                else if (InputManager.Instance.KeyPressed(Keys.Up))
-                    itemNumber--;
+            if (InputManager.Instance.KeyPressed(Keys.Down))
+            itemNumber++;
+            else if (InputManager.Instance.KeyPressed(Keys.Up))
+            itemNumber--;
             }*/
-            if (itemNumber < 0)
-                itemNumber = 0;
-            else if (itemNumber > Items.Count - 1)
-                itemNumber = Items.Count - 1;
+
+            if (ItemNumber < 0) //itemNumber
+                ItemNumber = 0; //itemNumber
+            else if (ItemNumber > Items.Count - 1) //itemNumber
+                ItemNumber = Items.Count - 1; //itemNumber
 
             for (int i = 0; i < Items.Count; i++)
             {
-                if (i == itemNumber)
+                if (i == ItemNumber) //itemNumber
                     Items[i].Image.IsActive = true; 
                 else 
                     Items[i].Image.IsActive = false;
@@ -134,5 +138,27 @@ namespace YoutubeRPG
                 item.Image.Draw(spriteBatch);
         }
 
+        /*
+        public void SelectRight(eButtonState buttonState)
+        {
+            if (Axis == "X" && buttonState == eButtonState.DOWN)
+                itemNumber++;
+        }
+        public void SelectLeft(eButtonState buttonState)
+        {
+            if (Axis == "X" && buttonState == eButtonState.DOWN)
+                itemNumber--;
+        }
+        public void SelectUp(eButtonState buttonState)
+        {
+            if (Axis == "Y" && buttonState == eButtonState.DOWN)
+                itemNumber++;
+        }
+        public void SelectDown(eButtonState buttonState)
+        {
+            if (Axis == "Y" && buttonState == eButtonState.DOWN)
+                itemNumber--;
+        }
+        */
     }
 }

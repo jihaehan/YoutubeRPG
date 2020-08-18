@@ -53,7 +53,7 @@ namespace YoutubeRPG
 
         public void MoveDown(eButtonState buttonState)
         {
-            if (buttonState == eButtonState.DOWN)
+            if (buttonState == eButtonState.PRESSED)
             {
                 Velocity.Y = 1;
                 if (Velocity.X == 0)
@@ -66,7 +66,7 @@ namespace YoutubeRPG
         }
         public void MoveUp(eButtonState buttonState)
         {
-            if (buttonState == eButtonState.DOWN)
+            if (buttonState == eButtonState.PRESSED)
             {
                 Velocity.Y = -1;
                 if (Velocity.X == 0)
@@ -80,7 +80,7 @@ namespace YoutubeRPG
 
         public void MoveLeft(eButtonState buttonState)
         {
-            if (buttonState == eButtonState.DOWN)
+            if (buttonState == eButtonState.PRESSED)
             {
                 Velocity.X = -1;
                 if (Velocity.Y == 0)
@@ -93,7 +93,7 @@ namespace YoutubeRPG
         }
         public void MoveRight(eButtonState buttonState)
         {
-            if (buttonState == eButtonState.DOWN)
+            if (buttonState == eButtonState.PRESSED)
             {
                 Velocity.X = 1;
                 if (Velocity.Y == 0)
@@ -112,8 +112,8 @@ namespace YoutubeRPG
                 (int)Image.Position.Y + Image.SourceRect.Height / 2 + Velocity.Y),
                 (int)Image.SourceRect.Width/2 + (Velocity.X + Velocity.Y)/2);
             Rectangle boundingBox = new Rectangle(
-                (int)(Image.Position.X + Image.SourceRect.Width/4 + Velocity.X), 
-                (int)(Image.Position.Y + Image.SourceRect.Height/2 + Velocity.Y),
+                (int)Math.Floor(Image.Position.X + Image.SourceRect.Width/4 + Velocity.X), 
+                (int)Math.Floor(Image.Position.Y + Image.SourceRect.Height/2 + Velocity.Y),
                 Image.SourceRect.Width/2, Image.SourceRect.Height/2);
 
             int leftTile = (int)Math.Floor((float) (Image.Position.X)/ Image.SourceRect.Width);
@@ -175,8 +175,7 @@ namespace YoutubeRPG
                             if ((r.Center.Y > boundingBox.Center.Y && Velocity.Y > 0)
                                 || (r.Center.Y < boundingBox.Center.Y && Velocity.Y < 0))
                                 Velocity.Y = 0; 
-                            //Velocity = Vector2.Zero;
-                            break;
+                            //break;
                         }
                     }
                 }
