@@ -16,12 +16,12 @@ namespace YoutubeRPG
         public Image Image;
         public Vector2 Velocity;
         public float MoveSpeed;
-        public int TileLength; 
+        public int TileLength;
         
         public Player()
         {
             Velocity = Vector2.Zero;
-            TileLength = 128; 
+            TileLength = 128;
         }
         public void LoadContent()
         {
@@ -33,92 +33,88 @@ namespace YoutubeRPG
         }
         public void Update(GameTime gameTime, Layer collisionLayer)
         {
-            Image.IsActive = true;
-
-            HandleMovement(gameTime);
-            if (Velocity != Vector2.Zero)   
+            if (Velocity != Vector2.Zero)
+            {
+                Image.IsActive = true;
+                Velocity.Normalize();
+                Velocity *= (MoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
                 HandleCollisions(collisionLayer);
+                Image.Position += Velocity;
+            }
+            else
+                Image.IsActive = false;
 
             Image.Update(gameTime);
-            Image.Position += Velocity; 
         }
         public void Draw(SpriteBatch spriteBatch)
         {
             Image.Draw(spriteBatch);
         }
-        void HandleMovement(GameTime gameTime)
+
+        public void MoveDown(eButtonState buttonState)
         {
-            if (InputManager.Instance.KeyDown(Keys.S))
+            if (buttonState == eButtonState.DOWN)
             {
+                Velocity.Y = 1;
                 if (Velocity.X == 0)
-                {
-                    Velocity.Y = MoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     Image.SpriteSheetEffect.CurrentFrame.Y = 1;
-                }
-                else
-                {
-                    Velocity.Y = 0.7071f * MoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    if (Velocity.X > 0)
-                        Image.SpriteSheetEffect.CurrentFrame.Y = 5;
-                    else if (Velocity.X < 0)
-                        Image.SpriteSheetEffect.CurrentFrame.Y = 4;
-                }
+                else if (Velocity.X > 0)
+                    Image.SpriteSheetEffect.CurrentFrame.Y = 5;
+                else if (Velocity.X < 0)
+                    Image.SpriteSheetEffect.CurrentFrame.Y = 4;
             }
-            else if (InputManager.Instance.KeyDown(Keys.W))
-            {
-                if (Velocity.X == 0)
-                {
-                    Velocity.Y = -MoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    Image.SpriteSheetEffect.CurrentFrame.Y = 0;
-                }
-                else
-                {
-                    Velocity.Y = -0.7071f * MoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    if (Velocity.X > 0)
-                        Image.SpriteSheetEffect.CurrentFrame.Y = 7;
-                    else if (Velocity.X < 0)
-                        Image.SpriteSheetEffect.CurrentFrame.Y = 6;
-
-                }
-            }
-            else
-                Velocity.Y = 0;
-
-            if (InputManager.Instance.KeyDown(Keys.D))
-            {
-                if (Velocity.Y == 0)
-                {
-                    Velocity.X = MoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    Image.SpriteSheetEffect.CurrentFrame.Y = 2;
-                }
-                else
-                    Velocity.X = 0.7071f * MoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-            else if (InputManager.Instance.KeyDown(Keys.A))
-            {
-                if (Velocity.Y == 0)
-                {
-                    Velocity.X = -MoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    Image.SpriteSheetEffect.CurrentFrame.Y = 3;
-                }
-                else
-                    Velocity.X = -0.7071f * MoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-            else
-                Velocity.X = 0;
-
-            if (Velocity.X == 0 && Velocity.Y == 0)
-                Image.IsActive = false;
         }
+        public void MoveUp(eButtonState buttonState)
+        {
+            if (buttonState == eButtonState.DOWN)
+            {
+                Velocity.Y = -1;
+                if (Velocity.X == 0)
+                    Image.SpriteSheetEffect.CurrentFrame.Y = 0;
+                else if (Velocity.X > 0)
+                    Image.SpriteSheetEffect.CurrentFrame.Y = 7;
+                else if (Velocity.X < 0)
+                    Image.SpriteSheetEffect.CurrentFrame.Y = 6;
+            }
+        }
+
+        public void MoveLeft(eButtonState buttonState)
+        {
+            if (buttonState == eButtonState.DOWN)
+            {
+                Velocity.X = -1;
+                if (Velocity.Y == 0)
+                    Image.SpriteSheetEffect.CurrentFrame.Y = 3;
+                else if (Velocity.Y > 0)
+                    Image.SpriteSheetEffect.CurrentFrame.Y = 4;
+                else if (Velocity.Y < 0)
+                    Image.SpriteSheetEffect.CurrentFrame.Y = 6;
+            }
+        }
+        public void MoveRight(eButtonState buttonState)
+        {
+            if (buttonState == eButtonState.DOWN)
+            {
+                Velocity.X = 1;
+                if (Velocity.Y == 0)
+                    Image.SpriteSheetEffect.CurrentFrame.Y = 2;
+                else if (Velocity.Y > 0)
+                    Image.SpriteSheetEffect.CurrentFrame.Y = 5;
+                else if (Velocity.Y < 0)
+                    Image.SpriteSheetEffect.CurrentFrame.Y = 7;
+            }
+        }
+
         void HandleCollisions(Layer layer)
         {
             Circle boundingCircle = new Circle(new Vector2(
-                Image.Position.X + Image.SourceRect.Width / 2 + Velocity.X,
-                Image.Position.Y + Image.SourceRect.Height / 2 + Velocity.Y),
-                Image.SourceRect.Width/2);
+                (int)Image.Position.X + Image.SourceRect.Width / 2 + Velocity.X,
+                (int)Image.Position.Y + Image.SourceRect.Height / 2 + Velocity.Y),
+                (int)Image.SourceRect.Width/2 + (Velocity.X + Velocity.Y)/2);
             Rectangle boundingBox = new Rectangle(
-                (int)(Image.Position.X + Velocity.X), (int)(Image.Position.Y + Velocity.Y),
-                Image.SourceRect.Width, Image.SourceRect.Height);
+                (int)(Image.Position.X + Image.SourceRect.Width/4 + Velocity.X), 
+                (int)(Image.Position.Y + Image.SourceRect.Height/2 + Velocity.Y),
+                Image.SourceRect.Width/2, Image.SourceRect.Height/2);
 
             int leftTile = (int)Math.Floor((float) (Image.Position.X)/ Image.SourceRect.Width);
             int rightTile = (int)Math.Ceiling((float) (Image.SourceRect.Width + Image.Position.X) / Image.SourceRect.Width);
@@ -171,10 +167,15 @@ namespace YoutubeRPG
 
                     foreach (Rectangle r in rectCollisions)
                     {
-                        if (boundingCircle.Intersects(r))
+                        if (boundingBox.Intersects(r))
                         {
-                            //Consider removing "sticky" walls
-                            Velocity = Vector2.Zero;
+                            if ((r.Center.X > boundingBox.Center.X && Velocity.X > 0)
+                                ||(r.Center.X < boundingBox.Center.X && Velocity.X < 0))
+                                Velocity.X = 0;
+                            if ((r.Center.Y > boundingBox.Center.Y && Velocity.Y > 0)
+                                || (r.Center.Y < boundingBox.Center.Y && Velocity.Y < 0))
+                                Velocity.Y = 0; 
+                            //Velocity = Vector2.Zero;
                             break;
                         }
                     }

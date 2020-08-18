@@ -15,12 +15,13 @@ namespace YoutubeRPG
     
     public class SplashScreen : GameScreen
     {
-        public Image Image; 
+        public Image Image;
 
         public override void LoadContent()
         {
             base.LoadContent();
             Image.LoadContent();
+            InitializeBindings();
         }
         public override void UnloadContent()
         {
@@ -32,13 +33,26 @@ namespace YoutubeRPG
             base.Update(gameTime);
             Image.Update(gameTime);
 
-            if (InputManager.Instance.KeyPressed(Keys.Enter, Keys.Z))
-                ScreenManager.Instance.ChangeScreens("TitleScreen");
+            //if (InputManager.Instance.KeyPressed(Keys.Enter, Keys.Z))
+                //ScreenManager.Instance.ChangeScreens("TitleScreen");
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
             Image.Draw(spriteBatch);
         }
+
+        private void InitializeBindings()
+        {
+            InputManager.AddKeyboardBinding(Keys.Z, ChangeScreen);
+        }
+        public void ChangeScreen(eButtonState buttonstate)
+        {
+            if (buttonstate == eButtonState.DOWN)
+            {
+                ScreenManager.Instance.ChangeScreens("TitleScreen");
+            }
+        }
+
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 
 
@@ -27,6 +28,8 @@ namespace YoutubeRPG
             world = worldLoader.Load("Content/Load/Gameplay/World/Intro.xml");
             world.LoadContent();
 
+            InitializeBindings();
+
         }
         public override void UnloadContent()
         {
@@ -36,6 +39,7 @@ namespace YoutubeRPG
         }
         public override void Update(GameTime gameTime)
         {
+            player.Velocity = Vector2.Zero;
             base.Update(gameTime);
             player.Update(gameTime, world.CurrentMap.Layer[1]); //collision layer
             world.Update(gameTime);
@@ -48,6 +52,13 @@ namespace YoutubeRPG
             player.Draw(spriteBatch);
             world.Draw(spriteBatch, "Overlay");
 
+        }
+        private void InitializeBindings()
+        {
+            InputManager.AddKeyboardBinding(Keys.W, player.MoveUp);
+            InputManager.AddKeyboardBinding(Keys.S, player.MoveDown);
+            InputManager.AddKeyboardBinding(Keys.A, player.MoveLeft);
+            InputManager.AddKeyboardBinding(Keys.D, player.MoveRight);
         }
     }
 }

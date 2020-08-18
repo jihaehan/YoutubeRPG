@@ -168,5 +168,15 @@ namespace YoutubeRPG
                 0.0f, origin, Scale, SpriteEffects.None, 0.0f); 
         }
 
+        //overloading the Draw method for world movement
+        public void Draw(SpriteBatch spriteBatch, Camera camera) 
+        {
+            Vector2 position = new Vector2(camera.Position.X, camera.Position.Y);
+            origin = new Vector2(SourceRect.Width / 2, SourceRect.Height / 2);
+            spriteBatch.Draw(
+                Texture, position + origin, SourceRect, Color.White * Alpha,
+                0.0f, origin, Scale, SpriteEffects.None, 0.0f);
+        }
+
     }
 }

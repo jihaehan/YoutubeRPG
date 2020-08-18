@@ -98,7 +98,8 @@ namespace YoutubeRPG
         }
         public void Update(GameTime gameTime)
         {
-            if (Axis == "X")
+           
+            /*if (Axis == "X")
             {
                 if (InputManager.Instance.KeyPressed(Keys.Right))
                     itemNumber++;
@@ -111,7 +112,7 @@ namespace YoutubeRPG
                     itemNumber++;
                 else if (InputManager.Instance.KeyPressed(Keys.Up))
                     itemNumber--;
-            }
+            }*/
             if (itemNumber < 0)
                 itemNumber = 0;
             else if (itemNumber > Items.Count - 1)
@@ -127,7 +128,6 @@ namespace YoutubeRPG
                 Items[i].Image.Update(gameTime);
             }
         }
-        
         public void Draw(SpriteBatch spriteBatch)
         {
             foreach (MenuItem item in Items)
