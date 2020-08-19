@@ -46,7 +46,9 @@
   <ItemGroup>
     <Compile Include="ButtonState.cs" />
     <Compile Include="Camera.cs" />
+    <Compile Include="Conversation.cs" />
     <Compile Include="ConversationItem.cs" />
+    <Compile Include="ConversationManager.cs" />
     <Compile Include="ConversationScene.cs" />
     <Compile Include="FadeEffect.cs" />
     <Compile Include="Game1.cs" />
