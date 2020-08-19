@@ -18,6 +18,7 @@ namespace YoutubeRPG
         public Vector2 Position, Scale;
         public Rectangle SourceRect;
         public bool IsActive;
+        public Color TextColor; 
 
         Texture2D texture;
         Vector2 origin;
@@ -30,6 +31,7 @@ namespace YoutubeRPG
 
         public FadeEffect FadeEffect;
         public SpriteSheetEffect SpriteSheetEffect;
+        public HighlightEffect HighlightEffect;
 
         public Texture2D Texture
         {
@@ -93,6 +95,7 @@ namespace YoutubeRPG
             Alpha = 1.0f;
             SourceRect = Rectangle.Empty;
             effectList = new Dictionary<string, ImageEffect>();
+            TextColor = Color.White;
         }
 
         public void LoadContent()
@@ -127,7 +130,7 @@ namespace YoutubeRPG
             if (Texture != null)
                 ScreenManager.Instance.SpriteBatch.Draw(
                     Texture, Vector2.Zero, Color.White);
-            ScreenManager.Instance.SpriteBatch.DrawString(font, Text, Vector2.Zero /*dimensions/2*/, Color.White);
+            ScreenManager.Instance.SpriteBatch.DrawString(font, Text, Vector2.Zero /*dimensions/2*/, TextColor);
             ScreenManager.Instance.SpriteBatch.End();
 
             texture = renderTarget;
@@ -136,7 +139,8 @@ namespace YoutubeRPG
 
             //Set Image Effects
             SetEffect<FadeEffect>(ref FadeEffect);
-            SetEffect<SpriteSheetEffect>(ref SpriteSheetEffect); 
+            SetEffect<SpriteSheetEffect>(ref SpriteSheetEffect);
+            SetEffect<HighlightEffect>(ref HighlightEffect);
 
             if (Effects != String.Empty)
             {

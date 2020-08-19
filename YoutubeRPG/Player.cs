@@ -17,11 +17,13 @@ namespace YoutubeRPG
         public Vector2 Velocity;
         public float MoveSpeed;
         public int TileLength;
+        public bool IsConversation;
         
         public Player()
         {
             Velocity = Vector2.Zero;
             TileLength = 128;
+            IsConversation = false; 
         }
         public void LoadContent()
         {
@@ -53,7 +55,7 @@ namespace YoutubeRPG
 
         public void MoveDown(eButtonState buttonState)
         {
-            if (buttonState == eButtonState.PRESSED)
+            if (buttonState == eButtonState.PRESSED && !IsConversation)
             {
                 Velocity.Y = 1;
                 if (Velocity.X == 0)
@@ -66,7 +68,7 @@ namespace YoutubeRPG
         }
         public void MoveUp(eButtonState buttonState)
         {
-            if (buttonState == eButtonState.PRESSED)
+            if (buttonState == eButtonState.PRESSED && !IsConversation)
             {
                 Velocity.Y = -1;
                 if (Velocity.X == 0)
@@ -80,7 +82,7 @@ namespace YoutubeRPG
 
         public void MoveLeft(eButtonState buttonState)
         {
-            if (buttonState == eButtonState.PRESSED)
+            if (buttonState == eButtonState.PRESSED && !IsConversation)
             {
                 Velocity.X = -1;
                 if (Velocity.Y == 0)
@@ -93,7 +95,7 @@ namespace YoutubeRPG
         }
         public void MoveRight(eButtonState buttonState)
         {
-            if (buttonState == eButtonState.PRESSED)
+            if (buttonState == eButtonState.PRESSED && !IsConversation)
             {
                 Velocity.X = 1;
                 if (Velocity.Y == 0)
@@ -109,7 +111,7 @@ namespace YoutubeRPG
         {            
             Rectangle boundingBox = new Rectangle(
                 (int)Math.Floor(Image.Position.X + Image.SourceRect.Width/4 + Velocity.X), 
-                (int)Math.Floor(Image.Position.Y + Image.SourceRect.Height/2 + Velocity.Y * 1.1f),
+                (int)Math.Floor(Image.Position.Y + Image.SourceRect.Height/2 + Velocity.Y),
                 Image.SourceRect.Width/2, Image.SourceRect.Height/2);
 
             int leftTile = (int)Math.Floor((float) (Image.Position.X)/ Image.SourceRect.Width);

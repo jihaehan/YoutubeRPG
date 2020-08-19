@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace YoutubeRPG
 {
@@ -38,8 +37,6 @@ namespace YoutubeRPG
         }
         
         public void LockCamera(Layer layer)
-        /*clamp the X and Y coordinates between 0 and the width of the map minus the width of the viewport
-         for width and 0 and the height of the map minus the height of the viewport for height.*/
         {
             position.X = MathHelper.Clamp(position.X,
             0, layer.Width() - ScreenManager.Instance.Dimensions.X);

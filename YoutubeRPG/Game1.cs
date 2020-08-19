@@ -4,9 +4,6 @@ using Microsoft.Xna.Framework.Input;
 
 namespace YoutubeRPG
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
@@ -29,7 +26,6 @@ namespace YoutubeRPG
         }
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             ScreenManager.Instance.GraphicsDevice = GraphicsDevice;
             ScreenManager.Instance.SpriteBatch = spriteBatch;
@@ -39,7 +35,6 @@ namespace YoutubeRPG
         {
             ScreenManager.Instance.UnloadContent();
         }
-
 
         protected override void Update(GameTime gameTime)
         {
@@ -54,11 +49,7 @@ namespace YoutubeRPG
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-
-            //spriteBatch.Begin();
             ScreenManager.Instance.Draw(spriteBatch);
-            //spriteBatch.End();
-
             base.Draw(gameTime);
         }
     }

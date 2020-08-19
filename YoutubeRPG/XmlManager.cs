@@ -34,5 +34,6 @@ namespace YoutubeRPG
                 xml.Serialize(writer, obj);
                 }
         }
+
     }
 }
