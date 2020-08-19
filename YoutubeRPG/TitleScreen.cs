@@ -12,6 +12,7 @@ namespace YoutubeRPG
 {
     public class TitleScreen : GameScreen
     {
+        public Image Image;
         MenuManager menuManager;
 
         public TitleScreen()
@@ -21,17 +22,20 @@ namespace YoutubeRPG
         public override void LoadContent()
         {
             base.LoadContent();
+            Image.LoadContent();
             menuManager.LoadContent("Content/Load/Menu/TitleMenu.xml");
             InitializeBindings();
         }
         public override void UnloadContent()
         {
             base.UnloadContent();
+            Image.UnloadContent();
             menuManager.UnloadContent();
         }
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            Image.Update(gameTime);
             menuManager.Update(gameTime);
         }
         public override void Draw(SpriteBatch spriteBatch)
@@ -39,6 +43,7 @@ namespace YoutubeRPG
             base.Draw(spriteBatch);
 
             spriteBatch.Begin();
+            Image.Draw(spriteBatch);
             menuManager.Draw(spriteBatch);
             spriteBatch.End();
         }
