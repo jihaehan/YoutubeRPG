@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/ScreenManager/FadeImage.png</SourceFile>
-  <SourceTime>2020-07-29T19:29:59.9571232+01:00</SourceTime>
-  <DestFile>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/bin/Windows/ScreenManager/FadeImage.xnb</DestFile>
-  <DestTime>2020-08-19T17:30:14.6399716+01:00</DestTime>
+  <SourceFile>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/ScreenBackground/background.png</SourceFile>
+  <SourceTime>2020-04-04T18:04:39.5187305+01:00</SourceTime>
+  <DestFile>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/bin/Windows/ScreenBackground/background.xnb</DestFile>
+  <DestTime>2020-08-19T17:49:59.8848587+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2018-12-08T16:35:54+00:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

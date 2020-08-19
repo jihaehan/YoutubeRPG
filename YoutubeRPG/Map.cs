@@ -15,25 +15,32 @@ namespace YoutubeRPG
         [XmlElement("Layer")]
         public List<Layer> Layer;
         public Vector2 TileDimensions;
+        public Vector2 StartingPoint;
+        public Image Image;
 
         public Map()
         {
             Layer = new List<Layer>();
             TileDimensions = Vector2.Zero;
+            StartingPoint = Vector2.Zero;
         }
 
         public void LoadContent()
         {
+            Image.LoadContent();
+            StartingPoint = new Vector2(StartingPoint.X * TileDimensions.X, StartingPoint.Y * TileDimensions.Y);
             foreach (Layer l in Layer)
                 l.LoadContent(TileDimensions);
         }
         public void UnloadContent()
         {
+            Image.UnloadContent();
             foreach (Layer l in Layer)
                 l.UnloadContent();
         }
         public void Update(GameTime gameTime)
         {
+            Image.Update(gameTime);
             foreach (Layer l in Layer)
                 l.Update(gameTime);
         }
@@ -41,6 +48,10 @@ namespace YoutubeRPG
         {
             foreach (Layer l in Layer)
                 l.Draw(spriteBatch, drawType);
+        }
+        public void Background(SpriteBatch spriteBatch)
+        {
+            Image.Draw(spriteBatch);
         }
 
     }

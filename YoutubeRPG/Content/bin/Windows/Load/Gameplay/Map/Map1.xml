@@ -1,10 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Map>
+  <Image>
+    <Path>ScreenBackground/background</Path>
+  </Image>
   <TileDimensions>
     <X>128</X>
     <Y>128</Y>
   </TileDimensions>
-  
+  <StartingPoint>
+    <X>4</X>
+    <Y>4</Y>
+  </StartingPoint>
+
   <Layer>
     <Image>
       <Path>TileSheets/tilesheet1</Path>

@@ -60,6 +60,9 @@
 #begin Load/Gameplay/World/Intro.xml
 /copy:Load/Gameplay/World/Intro.xml
 
+#begin Load/GameplayScreen.xml
+/copy:Load/GameplayScreen.xml
+
 #begin Load/Menu/TestMenu.xml
 /copy:Load/Menu/TestMenu.xml
 
@@ -71,6 +74,18 @@
 
 #begin Load/SplashScreen.xml
 /copy:Load/SplashScreen.xml
+
+#begin ScreenBackground/background.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:ScreenBackground/background.png
 
 #begin ScreenManager/FadeImage.png
 /importer:TextureImporter

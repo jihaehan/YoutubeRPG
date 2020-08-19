@@ -17,10 +17,9 @@ namespace YoutubeRPG
         Player player;
         World world; 
         Camera camera;
-
         public override void LoadContent()
         {
-            base.LoadContent();
+            base.LoadContent();           
             XmlManager<Player> playerLoader = new XmlManager<Player>();
             XmlManager<World> worldLoader = new XmlManager<World>();
             player = playerLoader.Load("Content/Load/Gameplay/Player.xml");
@@ -29,9 +28,9 @@ namespace YoutubeRPG
             world.LoadContent();
 
             camera = new Camera();
+            player.Image.Position = world.CurrentMap.StartingPoint;
 
             InitializeBindings();
-
         }
         public override void UnloadContent()
         {
@@ -53,14 +52,11 @@ namespace YoutubeRPG
         {
             base.Draw(spriteBatch);
 
-            spriteBatch.Begin(SpriteSortMode.Deferred,
-                BlendState.AlphaBlend,
-                SamplerState.PointClamp,
-                null,
-                null,
-                null,
-                camera.Transformation);
+            spriteBatch.Begin();
+            world.CurrentMap.Background(spriteBatch);
+            spriteBatch.End();
 
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, camera.Transformation);
             world.Draw(spriteBatch, "Underlay");
             player.Draw(spriteBatch);
             world.Draw(spriteBatch, "Overlay");

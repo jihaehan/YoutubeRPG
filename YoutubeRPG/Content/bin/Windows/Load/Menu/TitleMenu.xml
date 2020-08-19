@@ -2,6 +2,14 @@
 <Menu>
   <Axis>Y</Axis>
   <Effects>FadeEffect</Effects>
+  <Spacing>
+    <X>0</X>
+    <Y>5</Y>
+  </Spacing>
+  <Alignment>
+    <X>0</X>
+    <Y>0</Y>
+  </Alignment>
   <Item>
     <LinkType>Screen</LinkType> 
     <LinkID>GameplayScreen</LinkID>
