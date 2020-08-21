@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<World>
+  <MapSource>Content/Load/Gameplay/Map/Room1_2.xml</MapSource>
+  <MapSource>Content/Load/Gameplay/Map/Map1.xml</MapSource>
+</World>

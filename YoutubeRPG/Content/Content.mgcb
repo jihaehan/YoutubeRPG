@@ -54,8 +54,23 @@
 #begin Load/Gameplay/Map/Map1.xml
 /copy:Load/Gameplay/Map/Map1.xml
 
+#begin Load/Gameplay/Map/Room1.xml
+/copy:Load/Gameplay/Map/Room1.xml
+
+#begin Load/Gameplay/Map/Room1_1.xml
+/copy:Load/Gameplay/Map/Room1_1.xml
+
+#begin Load/Gameplay/Map/Room1_2.xml
+/copy:Load/Gameplay/Map/Room1_2.xml
+
 #begin Load/Gameplay/Player.xml
 /copy:Load/Gameplay/Player.xml
+
+#begin Load/Gameplay/World/Blue.xml
+/copy:Load/Gameplay/World/Blue.xml
+
+#begin Load/Gameplay/World/Blue_Test.xml
+/copy:Load/Gameplay/World/Blue_Test.xml
 
 #begin Load/Gameplay/World/Intro.xml
 /copy:Load/Gameplay/World/Intro.xml
@@ -86,6 +101,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:ScreenBackground/background.png
+
+#begin ScreenBackground/interiorBackground1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:ScreenBackground/interiorBackground1.png
 
 #begin ScreenManager/FadeImage.png
 /importer:TextureImporter
@@ -122,6 +149,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:SplashScreen/Image1.png
+
+#begin TileSheets/interior1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:TileSheets/interior1.png
+
+#begin TileSheets/interiorFurniture1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:TileSheets/interiorFurniture1.png
 
 #begin TileSheets/tilesheet1.png
 /importer:TextureImporter

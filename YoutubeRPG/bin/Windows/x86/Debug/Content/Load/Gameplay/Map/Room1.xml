@@ -1,46 +1,74 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Map>
+  <Image>
+    <Path>ScreenBackground/interiorBackground1</Path>
+  </Image>
   <TileDimensions>
     <X>128</X>
     <Y>128</Y>
   </TileDimensions>
+  <StartingPoint>
+    <X>6</X>
+    <Y>3</Y>
+  </StartingPoint>
+
   <Layer>
     <Image>
       <Path>TileSheets/interior1</Path>
     </Image>
-    <SolidTiles>[7:6]</SolidTiles>
+    <SolidTiles>[7:6][7:0]</SolidTiles>                         
+    <LeftWall>[7:1][0:5][0:6][5:7]</LeftWall>
+    <RightWall>[6:1][4:7]</RightWall>
+    <TopWall>[4:0][5:1]</TopWall>
+    <BottomWall>[0:2][2:1]</BottomWall>
+    <BottomDoor>[1:7]</BottomDoor>
+    <SEWallCorner>[3:7]</SEWallCorner> 
     <TileMap>
-      <Row>[7:6][7:6][7:6][7:6]
-      </Row>
-      <Row>[0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0]</Row>
-      <Row>[0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0]</Row>
-      <Row>[0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0]</Row>
-      <Row>[0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0]</Row>
-      <Row>[0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0]</Row>
-      <Row>[0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0]</Row>
-      <Row>[0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0]</Row>
-      <Row>[0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0]</Row>
-      <Row>[0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0]</Row>      
+      <Row>[7:6][7:6][7:6][7:6][7:1][7:4][1:1][7:0][7:0][7:0][6:1]</Row>
+      <Row>[7:6][7:6][7:6][7:6][7:1][4:4][4:0][5:1][5:1][5:1][6:1]</Row>
+      <Row>[7:6][7:6][7:6][7:6][0:5][2:0][1:0][2:0][0:0][1:0][6:1]</Row>
+      <Row>[7:6][7:6][7:6][7:6][0:6][1:0][0:0][1:0][1:0][1:0][6:1]</Row>
+      <Row>[7:6][7:6][7:6][7:6][7:1][2:0][1:0][2:0][2:0][0:0][6:1]</Row>
+      <Row>[7:6][7:6][7:6][7:6][5:7][0:2][1:7][3:7][2:1][2:1][4:7]</Row>
+      <Row>[7:6][7:6][7:6][7:6][7:6][7:6][7:6][7:6][7:6][7:6][7:6]</Row>
     </TileMap>
   </Layer>
 
-<Layer>
+  <Layer>
     <Image>
-      <Path>TileSheets/interior2</Path>
+      <Path>TileSheets/interiorFurniture1</Path>
     </Image>
-    <SolidTiles>[0:2][1:3][4:0][6:0][7:0][0:6]</SolidTiles>
-    <OverlayTiles>[0:4][0:5]</OverlayTiles>
+    <TopWall>[0:3][6:3]</TopWall>
+    <SEWallCorner>[4:3]</SEWallCorner>
+    <RightHalf>[2:3]</RightHalf>
+    <NEWallCorner>[0:2]</NEWallCorner>
+    <LeftHalf>[6:5][5:1]</LeftHalf>
+    <OverlayTiles>[3:6][3:7][1:6][1:7]</OverlayTiles>
     <TileMap>
-      <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
-      <Row>[x:x][x:x][6:0][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
-      <Row>[x:x][x:x][x:x][0:4][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
-      <Row>[x:x][x:x][x:x][0:5][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
-      <Row>[x:x][x:x][x:x][0:6][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
-      <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
-      <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
-      <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
-      <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
-      <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
+      <Row>[x:x][x:x][x:x][x:x][x:x][3:6][0:5][0:5][x:x][x:x][x:x]</Row>
+      <Row>[x:x][x:x][x:x][x:x][x:x][3:7][0:6][0:6][6:4][0:0][x:x]</Row>
+      <Row>[x:x][x:x][x:x][x:x][x:x][1:6][x:x][x:x][x:x][4:3][x:x]</Row>
+      <Row>[x:x][x:x][x:x][x:x][x:x][1:7][x:x][x:x][x:x][2:3][x:x]</Row>
+      <Row>[x:x][x:x][x:x][x:x][x:x][6:5][x:x][0:2][0:3][6:3][x:x]</Row>
+      <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
+      <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
     </TileMap>
   </Layer>
+
+  <Layer>
+    <Image>
+      <Path>TileSheets/interiorFurniture1</Path>
+    </Image>
+    <OverlayTiles>[7:4]</OverlayTiles>
+    <TileMap>
+      <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
+      <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
+      <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][2:1][x:x]</Row>
+      <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][7:4][1:1][x:x]</Row>
+      <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][7:5][x:x][x:x]</Row>
+      <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
+      <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
+    </TileMap>
+  </Layer>
+
 </Map>

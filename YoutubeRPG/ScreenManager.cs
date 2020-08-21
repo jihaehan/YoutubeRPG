@@ -30,6 +30,8 @@ namespace YoutubeRPG
         public Image Image;
         [XmlIgnore]
         public bool IsTransitioning { get; private set; }
+        [XmlIgnore]
+        public bool IsFadeEffect { get; set; }
 
         public static ScreenManager Instance
         {
@@ -61,6 +63,13 @@ namespace YoutubeRPG
             Image.FadeEffect.Increase = true;
             Image.Alpha = 0.0f;
             IsTransitioning = true; 
+        }
+        public void FadeScreen()
+        {
+            Image.IsActive = true;
+            Image.FadeEffect.Increase = true;
+            Image.Alpha = 0.0f;
+            IsFadeEffect = true;
         }
         private void Transition(GameTime gameTime)
         {
@@ -103,7 +112,7 @@ namespace YoutubeRPG
         {
             currentScreen.Draw(spriteBatch);
             spriteBatch.Begin();
-            if (IsTransitioning)
+            if (IsTransitioning || IsFadeEffect)
                 Image.Draw(spriteBatch);
             spriteBatch.End();
         }

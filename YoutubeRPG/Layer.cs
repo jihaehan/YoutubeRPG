@@ -26,7 +26,9 @@ namespace YoutubeRPG
         [XmlElement("TileMap")]
         public TileMap Tile;
         public Image Image;
-        public string SolidTiles, OverlayTiles;
+        public string OverlayTiles;
+        public string SolidTiles, LeftEdge, RightEdge, TopEdge, LeftCorner, RightCorner, NWCorner, NECorner, SWCorner, SECorner, RightWall, LeftWall, TopWall, BottomWall, BottomDoor, SEWallCorner, SWWallCorner, NEWallCorner, NWWallCorner, LeftHalf, RightHalf; 
+        
         List<Tile> underlayTiles;
         List<Tile> overlayTiles; 
         List<TileCollision> tilesCount;
@@ -40,8 +42,9 @@ namespace YoutubeRPG
             overlayTiles = new List<Tile>();
 
             tilesCount = new List<TileCollision>();
-            SolidTiles = String.Empty;
             OverlayTiles = String.Empty;
+            
+            SolidTiles = LeftEdge = RightEdge = TopEdge = LeftCorner = RightCorner = NWCorner = NECorner = SWCorner = SECorner = RightWall = LeftWall = TopWall = BottomWall = BottomDoor = SEWallCorner = SWWallCorner = NEWallCorner = NWWallCorner = LeftHalf = RightHalf = String.Empty;
         }
 
         public void LoadContent(Vector2 tileDimensions)
@@ -72,6 +75,28 @@ namespace YoutubeRPG
                             //Set TileTypes
                             if (SolidTiles.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
                                 tilesCount[tilesCount.Count() - 1] = TileCollision.Solid;
+                            else if (LeftWall.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
+                                tilesCount[tilesCount.Count() - 1] = TileCollision.LeftWall;
+                            else if (RightWall.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
+                                tilesCount[tilesCount.Count() - 1] = TileCollision.RightWall;
+                            else if (TopWall.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
+                                tilesCount[tilesCount.Count() - 1] = TileCollision.TopWall;
+                            else if (BottomWall.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
+                                tilesCount[tilesCount.Count() - 1] = TileCollision.BottomWall;
+                            else if (BottomDoor.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
+                                tilesCount[tilesCount.Count() - 1] = TileCollision.BottomDoor;
+                            else if (SEWallCorner.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
+                                tilesCount[tilesCount.Count() - 1] = TileCollision.SEWallCorner;
+                            else if (SWWallCorner.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
+                                tilesCount[tilesCount.Count() - 1] = TileCollision.SWWallCorner;
+                            else if (NEWallCorner.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
+                                tilesCount[tilesCount.Count() - 1] = TileCollision.NEWallCorner;
+                            else if (NWWallCorner.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
+                                tilesCount[tilesCount.Count() - 1] = TileCollision.NWWallCorner;
+                            else if (RightHalf.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
+                                tilesCount[tilesCount.Count() - 1] = TileCollision.RightHalf;
+                            else if (LeftHalf.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
+                                tilesCount[tilesCount.Count() - 1] = TileCollision.LeftHalf;
 
                             tile.LoadContent(position, new Rectangle(
                                 (int)(value1 * tileDimensions.X), (int)(value2 * tileDimensions.Y),

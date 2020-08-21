@@ -70,7 +70,7 @@ namespace YoutubeRPG
                 return maps[mapName];
             return null;
         }
-        public void ChangeMap(string mapName, Rectangle portalLocation)
+        public void ChangeMap(string mapName)
         {
             if (maps.ContainsKey(mapName))
             {
