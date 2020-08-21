@@ -26,11 +26,12 @@ namespace YoutubeRPG
         [XmlElement("TileMap")]
         public TileMap Tile;
         public Image Image;
-        public string OverlayTiles;
+        public string OverlayTiles, PortalTiles;
         public string SolidTiles, LeftEdge, RightEdge, TopEdge, LeftCorner, RightCorner, NWCorner, NECorner, SWCorner, SECorner, RightWall, LeftWall, TopWall, BottomWall, BottomDoor, SEWallCorner, SWWallCorner, NEWallCorner, NWWallCorner, LeftHalf, RightHalf; 
         
         List<Tile> underlayTiles;
-        List<Tile> overlayTiles; 
+        List<Tile> overlayTiles;
+        Dictionary<Vector2, string> portalTiles;
         List<TileCollision> tilesCount;
         int rowLength;
         int tileLength;
@@ -40,9 +41,10 @@ namespace YoutubeRPG
             Image = new Image();
             underlayTiles = new List<Tile>();
             overlayTiles = new List<Tile>();
+            portalTiles = new Dictionary<Vector2, string>();
 
             tilesCount = new List<TileCollision>();
-            OverlayTiles = String.Empty;
+            OverlayTiles = PortalTiles = String.Empty;
             
             SolidTiles = LeftEdge = RightEdge = TopEdge = LeftCorner = RightCorner = NWCorner = NECorner = SWCorner = SECorner = RightWall = LeftWall = TopWall = BottomWall = BottomDoor = SEWallCorner = SWWallCorner = NEWallCorner = NWWallCorner = LeftHalf = RightHalf = String.Empty;
         }
@@ -68,10 +70,11 @@ namespace YoutubeRPG
                         if (!s.Contains("x"))
                         {
                             Tile tile = new Tile();
+                            
                             string str = s.Replace("[", String.Empty);
                             int value1 = int.Parse(str.Substring(0, str.IndexOf(':')));
                             int value2 = int.Parse(str.Substring(str.IndexOf(':') + 1));
-
+                            
                             //Set TileTypes
                             if (SolidTiles.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
                                 tilesCount[tilesCount.Count() - 1] = TileCollision.Solid;
@@ -97,6 +100,21 @@ namespace YoutubeRPG
                                 tilesCount[tilesCount.Count() - 1] = TileCollision.RightHalf;
                             else if (LeftHalf.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
                                 tilesCount[tilesCount.Count() - 1] = TileCollision.LeftHalf;
+                            else if (PortalTiles.Contains("[" + value1.ToString() + ":" + value2.ToString() + "-"))
+                            {
+                                string[] p = PortalTiles.Split(']');
+                                string value3 = String.Empty;
+                                foreach (string pstr in p)
+                                {
+                                    if (pstr.Contains("[" + value1.ToString() + ":" + value2.ToString() + "-"))
+                                    {
+                                        value3 = pstr.Substring(pstr.IndexOf('-') + 1);
+                                        tilesCount[tilesCount.Count() - 1] = TileCollision.Portal;
+                                        portalTiles.Add(new Vector2((int)Math.Floor(position.X/tileDimensions.X), 
+                                            (int)Math.Floor(position.Y/tileDimensions.Y)), value3);
+                                    }
+                                }                                
+                            }
 
                             tile.LoadContent(position, new Rectangle(
                                 (int)(value1 * tileDimensions.X), (int)(value2 * tileDimensions.Y),
@@ -148,6 +166,10 @@ namespace YoutubeRPG
             if (count > tilesCount.Count() -1)
                 count = tilesCount.Count() - 1;
             return tilesCount[count];
+        }
+        public Dictionary<Vector2, string> Portals()
+        {
+            return portalTiles;
         }
         public int Width()
         {

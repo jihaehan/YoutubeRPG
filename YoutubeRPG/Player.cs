@@ -18,12 +18,17 @@ namespace YoutubeRPG
         public float MoveSpeed;
         public int TileLength;
         public bool IsConversation;
+        public string PortalDestination;
+
+        bool isPortal;
         
         public Player()
         {
             Velocity = Vector2.Zero;
             TileLength = 128;
-            IsConversation = false; 
+            IsConversation = false;
+            isPortal = false;
+            PortalDestination = String.Empty;
         }
         public void LoadContent()
         {
@@ -33,21 +38,22 @@ namespace YoutubeRPG
         {
             Image.UnloadContent();
         }
-        public void Update(GameTime gameTime, Map collisionMap)
+        public void Update(GameTime gameTime, World world)
         {
             if (Velocity != Vector2.Zero)
             {
                 Image.IsActive = true;
                 Velocity.Normalize();
                 Velocity *= (MoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
-                for(int i = 0; i < collisionMap.Layer.Count(); ++i)
-                    HandleCollisions(collisionMap.Layer[i]);
+                for(int i = 0; i < world.CurrentMap.Layer.Count(); ++i)
+                    HandleCollisions(world.CurrentMap.Layer[i]);
                 Image.Position += Velocity;
             }
             else
                 Image.IsActive = false;
 
             Image.Update(gameTime);
+            portalTransition(gameTime, world);
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -126,6 +132,7 @@ namespace YoutubeRPG
                 {
                     TileCollision tileCollision = layer.GetTile(x, y);
                     List<Rectangle> rectCollisions = new List<Rectangle>();
+                    List<Rectangle> portalCollisions = new List<Rectangle>();
                     List<Triangle> triCollisions = new List<Triangle>();
 
                     switch (tileCollision)
@@ -170,7 +177,7 @@ namespace YoutubeRPG
                             rectCollisions.Add(new Rectangle(x * TileLength, y * TileLength, TileLength, TileLength / 2));
                             break;  
                         case TileCollision.BottomWall:
-                            rectCollisions.Add(new Rectangle(x * TileLength, y * TileLength + TileLength / 2, TileLength, TileLength / 2));
+                            rectCollisions.Add(new Rectangle((int)(x * TileLength - TileLength * .1), y * TileLength + TileLength / 2, (int)(TileLength*1.2), TileLength / 2));
                             break;
                         case TileCollision.BottomDoor:
                             rectCollisions.Add(new Rectangle(x * TileLength - TileLength/2, (int)(y * TileLength + TileLength * 0.89), TileLength * 2, (int)(TileLength * 0.11)));
@@ -193,6 +200,9 @@ namespace YoutubeRPG
                         case TileCollision.RightHalf:
                             rectCollisions.Add(new Rectangle(x * TileLength + TileLength / 2, y * TileLength, TileLength / 2, TileLength));
                             break;
+                        case TileCollision.Portal:
+                            portalCollisions.Add(new Rectangle((int)(x * TileLength + TileLength/3), (int)(y * TileLength + TileLength/3), (int)(TileLength/3), (int)(TileLength/3)));
+                            break;
                         default:
                             break;
                     }
@@ -207,21 +217,52 @@ namespace YoutubeRPG
                             
                             if ((r.Center.Y > boundingBox.Center.Y && Velocity.Y > 0)
                                 || (r.Center.Y < boundingBox.Center.Y && Velocity.Y < 0))
-                                Velocity.Y = 0;
-                           
+                                Velocity.Y = 0;                      
                         }
                     }
                     
                     foreach (Triangle t in triCollisions)
                     {
-                        if (RectangleIntersectTriangle(boundingBox, t))
+                        if (rectangleIntersectTriangle(boundingBox, t))
                             Velocity = Vector2.Zero;
+                    }
+
+                    foreach (Rectangle p in portalCollisions)
+                    {
+                        if (boundingBox.Intersects(p) && !isPortal)
+                        {
+                            if (layer.Portals().ContainsKey(new Vector2(x,y)))
+                            {
+                                PortalDestination = layer.Portals()[new Vector2(x, y)];
+                                ScreenManager.Instance.FadeScreen();
+                                isPortal = true;
+                            }
+                        }
                     }
                     
                 }
             }
         }
-        private bool RectangleIntersectTriangle(Rectangle rectangle, Triangle triangle)
+        private void portalTransition(GameTime gameTime, World world)
+        {
+            if (ScreenManager.Instance.IsFadeEffect)
+            {
+                ScreenManager.Instance.Image.Update(gameTime);
+                if (ScreenManager.Instance.Image.Alpha == 1.0f)
+                {
+                    world.ChangeMap(PortalDestination);
+                    if (world.CurrentMap.StartingPoint.X >= 0 && world.CurrentMap.StartingPoint.Y >= 0)
+                        Image.Position = world.CurrentMap.StartingPoint;
+                    isPortal = false;
+                }
+                else if (ScreenManager.Instance.Image.Alpha == 0.0f)
+                {
+                    ScreenManager.Instance.Image.IsActive = false;
+                    ScreenManager.Instance.IsFadeEffect = false;
+                }
+            }
+        }
+        private bool rectangleIntersectTriangle(Rectangle rectangle, Triangle triangle)
         {
             Vector2 rCenter = new Vector2(rectangle.Center.X, rectangle.Center.Y);
             Vector2 v = rCenter - triangle.Corner;

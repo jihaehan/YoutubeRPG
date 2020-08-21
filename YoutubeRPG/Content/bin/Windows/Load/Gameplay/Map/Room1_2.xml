@@ -21,7 +21,7 @@
     <LeftWall>[7:1][0:5][0:6][5:7]</LeftWall>
     <RightWall>[6:1][4:7]</RightWall>
     <TopWall>[4:0][5:1]</TopWall>
-    <BottomWall>[0:2][2:1]</BottomWall>
+    <BottomWall>[0:2][2:1][1:2]</BottomWall>
     <BottomDoor>[1:7]</BottomDoor>
     <SEWallCorner>[3:7]</SEWallCorner> 
     <TileMap>
@@ -68,4 +68,4 @@
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
     </TileMap>
   </Layer>
-</Map>
+</Map> 

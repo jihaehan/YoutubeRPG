@@ -14,15 +14,18 @@ namespace YoutubeRPG
     {
         [XmlElement("Layer")]
         public List<Layer> Layer;
+        //[XmlElement("NPC")]
+        //public List<NPC> NpcLayer;
         public Vector2 TileDimensions;
         public Vector2 StartingPoint;
         public Image Image;
 
+
         public Map()
         {
             Layer = new List<Layer>();
-            TileDimensions = Vector2.Zero;
-            StartingPoint = Vector2.Zero;
+            TileDimensions = new Vector2(128,128);
+            StartingPoint = new Vector2(-1,-1);
         }
 
         public void LoadContent()

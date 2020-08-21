@@ -42,34 +42,10 @@ namespace YoutubeRPG
         {
             player.Velocity = Vector2.Zero;
             base.Update(gameTime);
-            player.Update(gameTime, world.CurrentMap);
+            player.Update(gameTime, world);
             world.Update(gameTime);
 
             camera.LockToSprite(world.CurrentMap.Layer[0], player.Image);
-
-            //Leave Room to above
-            //Portal Manager
-            if (player.Image.Position.Y < 64 && world.CurrentMapName == "Room1" && leaveRoom == false)
-            {
-                ScreenManager.Instance.FadeScreen();
-                leaveRoom = true;
-            }
-            if (ScreenManager.Instance.IsFadeEffect)
-            {
-                ScreenManager.Instance.Image.Update(gameTime);
-                if (ScreenManager.Instance.Image.Alpha == 1.0f)
-                {
-                    world.ChangeMap("Room1_2");
-                    player.Image.Position = world.CurrentMap.StartingPoint + new Vector2(0, 64);
-                    player.Image.SpriteSheetEffect.CurrentFrame.Y = 0; 
-                    leaveRoom = false;
-                }
-                else if (ScreenManager.Instance.Image.Alpha == 0.0f)
-                {
-                    ScreenManager.Instance.Image.IsActive = false;
-                    ScreenManager.Instance.IsFadeEffect = false;
-                }
-            }
 
         }
         public override void Draw(SpriteBatch spriteBatch)

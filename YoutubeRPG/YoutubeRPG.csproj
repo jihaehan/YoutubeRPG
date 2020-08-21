@@ -53,7 +53,6 @@
     <Compile Include="FadeEffect.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameplayScreen.cs" />
-    <Compile Include="GameplayScreen_Intro.cs" />
     <Compile Include="GameScreen.cs" />
     <Compile Include="HighlightEffect.cs" />
     <Compile Include="Image.cs" />
