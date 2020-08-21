@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace YoutubeRPG
 {
@@ -18,8 +17,9 @@ namespace YoutubeRPG
         public float MoveSpeed;
         public int TileLength;
         public bool IsConversation;
-        public string PortalDestination;
 
+        string portalDestination; 
+        Vector2 portalArrival;
         bool isPortal;
         
         public Player()
@@ -28,7 +28,8 @@ namespace YoutubeRPG
             TileLength = 128;
             IsConversation = false;
             isPortal = false;
-            PortalDestination = String.Empty;
+            portalDestination = String.Empty;
+            portalArrival = Vector2.Zero;
         }
         public void LoadContent()
         {
@@ -46,7 +47,7 @@ namespace YoutubeRPG
                 Velocity.Normalize();
                 Velocity *= (MoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
                 for(int i = 0; i < world.CurrentMap.Layer.Count(); ++i)
-                    HandleCollisions(world.CurrentMap.Layer[i]);
+                    HandleCollisions(world.CurrentMap);
                 Image.Position += Velocity;
             }
             else
@@ -114,133 +115,150 @@ namespace YoutubeRPG
             }
         }
 
-        void HandleCollisions(Layer layer)
-        {            
-            Rectangle boundingBox = new Rectangle(
-                (int)Math.Floor(Image.Position.X + Image.SourceRect.Width/4 + Velocity.X), 
-                (int)Math.Floor(Image.Position.Y + Image.SourceRect.Height/3 + Velocity.Y * 1.1f),
-                Image.SourceRect.Width/2, (int)Image.SourceRect.Height*2/3);
-
-            int leftTile = (int)Math.Floor((float) (Image.Position.X)/ Image.SourceRect.Width);
-            int rightTile = (int)Math.Ceiling((float) (Image.SourceRect.Width + Image.Position.X) / Image.SourceRect.Width);
-            int topTile = (int)Math.Floor((float) (Image.Position.Y) / Image.SourceRect.Height);
-            int bottomTile = (int)Math.Ceiling((float) (Image.SourceRect.Height + Image.Position.Y) / Image.SourceRect.Height);
-
-            for (int y = topTile; y < bottomTile; ++y)
+        void HandleCollisions(Map map)
+        {
+            for (int i = 0; i < map.Layer.Count(); ++i)
             {
-                for (int x = leftTile; x <= rightTile; ++x)
+                Layer layer = map.Layer[i];
+
+                Rectangle boundingBox = new Rectangle(
+                    (int)Math.Floor(Image.Position.X + Image.SourceRect.Width / 4 + Velocity.X),
+                    (int)Math.Floor(Image.Position.Y + Image.SourceRect.Height / 3 + Velocity.Y * 1.1f),
+                    Image.SourceRect.Width / 2, (int)Image.SourceRect.Height * 2 / 3);
+
+                int leftTile = (int)Math.Floor((float)(Image.Position.X) / Image.SourceRect.Width);
+                int rightTile = (int)Math.Ceiling((float)(Image.SourceRect.Width + Image.Position.X) / Image.SourceRect.Width);
+                int topTile = (int)Math.Floor((float)(Image.Position.Y) / Image.SourceRect.Height);
+                int bottomTile = (int)Math.Ceiling((float)(Image.SourceRect.Height + Image.Position.Y) / Image.SourceRect.Height);
+
+                for (int y = topTile; y < bottomTile; ++y)
                 {
-                    TileCollision tileCollision = layer.GetTile(x, y);
-                    List<Rectangle> rectCollisions = new List<Rectangle>();
-                    List<Rectangle> portalCollisions = new List<Rectangle>();
-                    List<Triangle> triCollisions = new List<Triangle>();
-
-                    switch (tileCollision)
+                    for (int x = leftTile; x <= rightTile; ++x)
                     {
-                        case TileCollision.Solid:
-                            rectCollisions.Add(new Rectangle(x * TileLength, y * TileLength, TileLength, TileLength));
-                            break;
-                        case TileCollision.LeftEdge:
-                            rectCollisions.Add(new Rectangle(x * TileLength + TileLength / 3, y * TileLength, TileLength * 2 / 3, TileLength));
-                            break;
-                        case TileCollision.RightEdge:
-                            rectCollisions.Add(new Rectangle(x * TileLength, y * TileLength, TileLength * 2 / 3, TileLength));
-                            break;
-                        case TileCollision.TopEdge:
-                            rectCollisions.Add(new Rectangle(x * TileLength, y * TileLength, TileLength, TileLength / 2));
-                            break;
-                        case TileCollision.LeftCorner:
-                            rectCollisions.Add(new Rectangle(x * TileLength + TileLength / 3, y * TileLength, TileLength * 2 / 3, TileLength / 2));
-                            break;
-                        case TileCollision.RightCorner:
-                            rectCollisions.Add(new Rectangle(x * TileLength, y * TileLength, TileLength * 2 / 3, TileLength / 2));
-                            break;
-                        case TileCollision.NWCorner:
-                            triCollisions.Add(new Triangle(x * TileLength, y * TileLength, TileLength / 4, TileLength / 4, -1));
-                            break;
-                        case TileCollision.NECorner:
-                            triCollisions.Add(new Triangle((x + 1) * TileLength, y * TileLength, -TileLength * 3 / 4, TileLength / 4, 1));
-                            break;
-                        case TileCollision.SECorner:
-                            triCollisions.Add(new Triangle((x + 1) * TileLength, (y + 1) * TileLength, -TileLength, TileLength, -1));
-                            break;
-                        case TileCollision.SWCorner:
-                            triCollisions.Add(new Triangle(x * TileLength, (y + 1) * TileLength, -TileLength, TileLength, 1));
-                            break;
-                        case TileCollision.RightWall:
-                            rectCollisions.Add(new Rectangle(x * TileLength - TileLength/5, y * TileLength, (int)(TileLength * 1.2), TileLength));
-                            break;
-                        case TileCollision.LeftWall:
-                            rectCollisions.Add(new Rectangle(x * TileLength, y * TileLength, (int)(TileLength * 1.2), TileLength));
-                            break;
-                        case TileCollision.TopWall:
-                            rectCollisions.Add(new Rectangle(x * TileLength, y * TileLength, TileLength, TileLength / 2));
-                            break;  
-                        case TileCollision.BottomWall:
-                            rectCollisions.Add(new Rectangle((int)(x * TileLength - TileLength * .1), y * TileLength + TileLength / 2, (int)(TileLength*1.2), TileLength / 2));
-                            break;
-                        case TileCollision.BottomDoor:
-                            rectCollisions.Add(new Rectangle(x * TileLength - TileLength/2, (int)(y * TileLength + TileLength * 0.89), TileLength * 2, (int)(TileLength * 0.11)));
-                            break;
-                        case TileCollision.SEWallCorner:
-                            rectCollisions.Add(new Rectangle(x * TileLength + TileLength / 2, y * TileLength + TileLength / 2, TileLength / 2, TileLength / 2));
-                            break;
-                        case TileCollision.SWWallCorner:
-                            rectCollisions.Add(new Rectangle(x * TileLength, y * TileLength + TileLength / 2, TileLength / 2, TileLength / 2));
-                            break;
-                        case TileCollision.NWWallCorner:
-                            rectCollisions.Add(new Rectangle(x * TileLength, y * TileLength, TileLength / 2, TileLength / 2));
-                            break;
-                        case TileCollision.NEWallCorner:
-                            rectCollisions.Add(new Rectangle(x * TileLength + TileLength / 2, y * TileLength, TileLength / 2, TileLength / 2));
-                            break;
-                        case TileCollision.LeftHalf:
-                            rectCollisions.Add(new Rectangle(x * TileLength, y * TileLength, TileLength / 2, TileLength));
-                            break;
-                        case TileCollision.RightHalf:
-                            rectCollisions.Add(new Rectangle(x * TileLength + TileLength / 2, y * TileLength, TileLength / 2, TileLength));
-                            break;
-                        case TileCollision.Portal:
-                            portalCollisions.Add(new Rectangle((int)(x * TileLength + TileLength/3), (int)(y * TileLength + TileLength/3), (int)(TileLength/3), (int)(TileLength/3)));
-                            break;
-                        default:
-                            break;
-                    }
+                        TileCollision tileCollision = layer.GetTile(x, y);
+                        List<Rectangle> rectCollisions = new List<Rectangle>();
+                        List<Rectangle> portalCollisions = new List<Rectangle>();
+                        List<Triangle> triCollisions = new List<Triangle>();
 
-                    foreach (Rectangle r in rectCollisions)
-                    {
-                        if (boundingBox.Intersects(r))
+                        switch (tileCollision)
                         {
-                            if ((r.Center.X > boundingBox.Center.X && Velocity.X > 0)
-                                ||(r.Center.X < boundingBox.Center.X && Velocity.X < 0))
-                                Velocity.X = 0;
-                            
-                            if ((r.Center.Y > boundingBox.Center.Y && Velocity.Y > 0)
-                                || (r.Center.Y < boundingBox.Center.Y && Velocity.Y < 0))
-                                Velocity.Y = 0;                      
+                            case TileCollision.Solid:
+                                rectCollisions.Add(new Rectangle(x * TileLength, y * TileLength, TileLength, TileLength));
+                                break;
+                            case TileCollision.LeftEdge:
+                                rectCollisions.Add(new Rectangle(x * TileLength + TileLength / 3, y * TileLength, TileLength * 2 / 3, TileLength));
+                                break;
+                            case TileCollision.RightEdge:
+                                rectCollisions.Add(new Rectangle(x * TileLength, y * TileLength, TileLength * 2 / 3, TileLength));
+                                break;
+                            case TileCollision.TopEdge:
+                                rectCollisions.Add(new Rectangle(x * TileLength, y * TileLength, TileLength, TileLength / 2));
+                                break;
+                            case TileCollision.LeftCorner:
+                                rectCollisions.Add(new Rectangle(x * TileLength + TileLength / 3, y * TileLength, TileLength * 2 / 3, TileLength / 2));
+                                break;
+                            case TileCollision.RightCorner:
+                                rectCollisions.Add(new Rectangle(x * TileLength, y * TileLength, TileLength * 2 / 3, TileLength / 2));
+                                break;
+                            case TileCollision.NWCorner:
+                                triCollisions.Add(new Triangle(x * TileLength, y * TileLength, TileLength / 4, TileLength / 4, -1));
+                                break;
+                            case TileCollision.NECorner:
+                                triCollisions.Add(new Triangle((x + 1) * TileLength, y * TileLength, -TileLength * 3 / 4, TileLength / 4, 1));
+                                break;
+                            case TileCollision.SECorner:
+                                triCollisions.Add(new Triangle((x + 1) * TileLength, (y + 1) * TileLength, -TileLength, TileLength, -1));
+                                break;
+                            case TileCollision.SWCorner:
+                                triCollisions.Add(new Triangle(x * TileLength, (y + 1) * TileLength, -TileLength, TileLength, 1));
+                                break;
+                            case TileCollision.RightWall:
+                                rectCollisions.Add(new Rectangle(x * TileLength - TileLength / 5, y * TileLength, (int)(TileLength * 1.2), TileLength));
+                                break;
+                            case TileCollision.LeftWall:
+                                rectCollisions.Add(new Rectangle(x * TileLength, y * TileLength, (int)(TileLength * 1.2), TileLength));
+                                break;
+                            case TileCollision.TopWall:
+                                rectCollisions.Add(new Rectangle(x * TileLength, y * TileLength, TileLength, TileLength / 2));
+                                break;
+                            case TileCollision.BottomWall:
+                                rectCollisions.Add(new Rectangle((int)(x * TileLength - TileLength * .1), y * TileLength + TileLength / 2, (int)(TileLength * 1.2), TileLength / 2));
+                                break;
+                            case TileCollision.BottomDoor:
+                                rectCollisions.Add(new Rectangle(x * TileLength - TileLength / 2, (int)(y * TileLength + TileLength * 0.89), TileLength * 2, (int)(TileLength * 0.11)));
+                                break;
+                            case TileCollision.SEWallCorner:
+                                rectCollisions.Add(new Rectangle(x * TileLength + TileLength / 2, y * TileLength + TileLength / 2, TileLength / 2, TileLength / 2));
+                                break;
+                            case TileCollision.SWWallCorner:
+                                rectCollisions.Add(new Rectangle(x * TileLength, y * TileLength + TileLength / 2, TileLength / 2, TileLength / 2));
+                                break;
+                            case TileCollision.NWWallCorner:
+                                rectCollisions.Add(new Rectangle(x * TileLength, y * TileLength, TileLength / 2, TileLength / 2));
+                                break;
+                            case TileCollision.NEWallCorner:
+                                rectCollisions.Add(new Rectangle(x * TileLength + TileLength / 2, y * TileLength, TileLength / 2, TileLength / 2));
+                                break;
+                            case TileCollision.LeftHalf:
+                                rectCollisions.Add(new Rectangle(x * TileLength, y * TileLength, TileLength / 2, TileLength));
+                                break;
+                            case TileCollision.RightHalf:
+                                rectCollisions.Add(new Rectangle(x * TileLength + TileLength / 2, y * TileLength, TileLength / 2, TileLength));
+                                break;
+                            case TileCollision.Portal:
+                                portalCollisions.Add(new Rectangle((int)(x * TileLength + TileLength / 3), (int)(y * TileLength + TileLength / 3), (int)(TileLength / 3), (int)(TileLength / 3)));
+                                break;
+                            default:
+                                break;
                         }
-                    }
-                    
-                    foreach (Triangle t in triCollisions)
-                    {
-                        if (rectangleIntersectTriangle(boundingBox, t))
-                            Velocity = Vector2.Zero;
-                    }
 
-                    foreach (Rectangle p in portalCollisions)
-                    {
-                        if (boundingBox.Intersects(p) && !isPortal)
+                        foreach (Rectangle r in rectCollisions)
                         {
-                            if (layer.Portals().ContainsKey(new Vector2(x,y)))
+                            if (boundingBox.Intersects(r))
                             {
-                                PortalDestination = layer.Portals()[new Vector2(x, y)];
-                                ScreenManager.Instance.FadeScreen();
-                                isPortal = true;
+                                if ((r.Center.X > boundingBox.Center.X && Velocity.X > 0)
+                                    || (r.Center.X < boundingBox.Center.X && Velocity.X < 0))
+                                    Velocity.X = 0;
+
+                                if ((r.Center.Y > boundingBox.Center.Y && Velocity.Y > 0)
+                                    || (r.Center.Y < boundingBox.Center.Y && Velocity.Y < 0))
+                                    Velocity.Y = 0;
+                            }
+                        }
+
+                        foreach (Triangle t in triCollisions)
+                        {
+                            if (rectangleIntersectTriangle(boundingBox, t))
+                                Velocity = Vector2.Zero;
+                        }
+
+                        foreach (Rectangle p in portalCollisions)
+                        {
+                            if (boundingBox.Intersects(p) && !isPortal)
+                            {
+                                Vector2 portalLocation = new Vector2(x, y);
+                                if (layer.Portals().ContainsKey(portalLocation))
+                                {
+                                    portalDestination = layer.Portals()[portalLocation];
+                                    portalLocation *= TileLength;
+                                    if ((portalLocation.X + TileLength * 2) > layer.Width())
+                                        portalArrival = map.PortalRight;
+                                    else if ((portalLocation.X - TileLength) < 0)
+                                        portalArrival = map.PortalLeft;
+                                    else if ((portalLocation.Y + TileLength * 2) > layer.Height())
+                                        portalArrival = map.PortalBottom;
+                                    else if ((portalLocation.Y - TileLength < 0))
+                                        portalArrival = map.PortalTop;
+                                    portalArrival *= TileLength;
+
+                                    ScreenManager.Instance.FadeScreen();
+                                    isPortal = true;
+                                }
                             }
                         }
                     }
-                    
                 }
+
             }
         }
         private void portalTransition(GameTime gameTime, World world)
@@ -250,9 +268,9 @@ namespace YoutubeRPG
                 ScreenManager.Instance.Image.Update(gameTime);
                 if (ScreenManager.Instance.Image.Alpha == 1.0f)
                 {
-                    world.ChangeMap(PortalDestination);
+                    world.ChangeMap(portalDestination);
                     if (world.CurrentMap.StartingPoint.X >= 0 && world.CurrentMap.StartingPoint.Y >= 0)
-                        Image.Position = world.CurrentMap.StartingPoint;
+                        Image.Position = portalArrival;
                     isPortal = false;
                 }
                 else if (ScreenManager.Instance.Image.Alpha == 0.0f)

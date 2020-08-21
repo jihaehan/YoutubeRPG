@@ -16,7 +16,6 @@ namespace YoutubeRPG
         Player player;
         World world; 
         Camera camera;
-        bool leaveRoom = false;
         public override void LoadContent()
         {
             base.LoadContent();           
