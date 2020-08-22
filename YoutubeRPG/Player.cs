@@ -206,7 +206,29 @@ namespace YoutubeRPG
                                 rectCollisions.Add(new Rectangle(x * TileLength + TileLength / 2, y * TileLength, TileLength / 2, TileLength));
                                 break;
                             case TileCollision.Portal:
-                                portalCollisions.Add(new Rectangle((int)(x * TileLength + TileLength / 3), (int)(y * TileLength + TileLength / 3), (int)(TileLength / 3), (int)(TileLength / 3)));
+                                if ((x + 2) > layer.Width() / TileLength)
+                                {
+                                    portalArrival = map.PortalRight;
+                                    portalCollisions.Add(new Rectangle(x * TileLength + TileLength, y * TileLength, TileLength, TileLength));
+                                }
+                                else if (x - 1 < 0)
+                                {
+                                    portalArrival = map.PortalLeft;
+                                    portalCollisions.Add(new Rectangle(x * TileLength - TileLength, y * TileLength, TileLength, TileLength));
+                                }
+                                else if (y + 2 > layer.Height() / TileLength)
+                                {
+                                    portalArrival = map.PortalBottom;
+                                    portalCollisions.Add(new Rectangle(x * TileLength, y * TileLength + TileLength, TileLength, TileLength));
+                                }
+                                else if (y - 1 < 0)
+                                {
+                                    portalArrival = map.PortalTop;
+                                    portalCollisions.Add(new Rectangle(x * TileLength, y * TileLength - TileLength, TileLength, TileLength));
+                                }
+                                else
+                                    portalArrival = Vector2.Zero;
+                                portalArrival *= TileLength;
                                 break;
                             default:
                                 break;
@@ -240,17 +262,6 @@ namespace YoutubeRPG
                                 if (layer.Portals().ContainsKey(portalLocation))
                                 {
                                     portalDestination = layer.Portals()[portalLocation];
-                                    portalLocation *= TileLength;
-                                    if ((portalLocation.X + TileLength * 2) > layer.Width())
-                                        portalArrival = map.PortalRight;
-                                    else if ((portalLocation.X - TileLength) < 0)
-                                        portalArrival = map.PortalLeft;
-                                    else if ((portalLocation.Y + TileLength * 2) > layer.Height())
-                                        portalArrival = map.PortalBottom;
-                                    else if ((portalLocation.Y - TileLength < 0))
-                                        portalArrival = map.PortalTop;
-                                    portalArrival *= TileLength;
-
                                     ScreenManager.Instance.FadeScreen();
                                     isPortal = true;
                                 }
@@ -269,7 +280,7 @@ namespace YoutubeRPG
                 if (ScreenManager.Instance.Image.Alpha == 1.0f)
                 {
                     world.ChangeMap(portalDestination);
-                    if (world.CurrentMap.StartingPoint.X >= 0 && world.CurrentMap.StartingPoint.Y >= 0)
+                    if (portalArrival != Vector2.Zero)
                         Image.Position = portalArrival;
                     isPortal = false;
                 }

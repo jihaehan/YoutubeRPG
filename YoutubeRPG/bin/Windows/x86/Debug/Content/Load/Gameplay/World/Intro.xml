@@ -3,4 +3,5 @@
   <MapSource>Content/Load/Gameplay/Map/Room1.xml</MapSource>
   <MapSource>Content/Load/Gameplay/Map/Room1_1.xml</MapSource>
   <MapSource>Content/Load/Gameplay/Map/Room1_2.xml</MapSource>
+  <MapSource>Content/Load/Gameplay/Map/Room1_3.xml</MapSource>
 </World>

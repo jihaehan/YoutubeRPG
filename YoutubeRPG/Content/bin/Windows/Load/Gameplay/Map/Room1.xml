@@ -11,6 +11,10 @@
     <X>6</X>
     <Y>3</Y>
   </StartingPoint>
+  <PortalTop>
+    <X>5</X>
+    <Y>7.5</Y>
+  </PortalTop>
 
   <Layer>
     <Image>
@@ -21,8 +25,8 @@
     <RightWall>[6:1][4:7]</RightWall>
     <TopWall>[4:0][5:1]</TopWall>
     <BottomWall>[0:2][2:1]</BottomWall>
-    <BottomDoor>[1:7]</BottomDoor>
     <SEWallCorner>[3:7]</SEWallCorner> 
+    <BottomDoor>[1:7]</BottomDoor>
     <PortalTiles>[7:4-Room1_2]</PortalTiles>
     <TileMap>
       <Row>[7:6][7:6][7:6][7:6][7:1][7:4][1:1][7:0][7:0][7:0][6:1]</Row>

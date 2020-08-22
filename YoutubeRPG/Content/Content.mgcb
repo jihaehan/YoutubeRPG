@@ -63,6 +63,9 @@
 #begin Load/Gameplay/Map/Room1_2.xml
 /copy:Load/Gameplay/Map/Room1_2.xml
 
+#begin Load/Gameplay/Map/Room1_3.xml
+/copy:Load/Gameplay/Map/Room1_3.xml
+
 #begin Load/Gameplay/Player.xml
 /copy:Load/Gameplay/Player.xml
 
