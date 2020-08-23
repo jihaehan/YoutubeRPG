@@ -16,6 +16,7 @@ namespace YoutubeRPG
 
         public string Axis, Effects;
         public Vector2 Alignment, Spacing;
+        public Image Image;
         [XmlElement("Item")]
         public List<MenuItem> Items;
         int itemNumber;
@@ -86,6 +87,8 @@ namespace YoutubeRPG
 
         public void LoadContent()
         {
+            if (Image != null)
+                Image.LoadContent();
             string[] split = Effects.Split(':');
             foreach(MenuItem item in Items)
             {
@@ -97,11 +100,16 @@ namespace YoutubeRPG
         }
         public void UnloadContent()
         {
+            if (Image != null)
+                Image.UnloadContent();
             foreach (MenuItem item in Items)
                 item.Image.UnloadContent();
         }
         public void Update(GameTime gameTime)
         {
+            if (Image != null)
+                Image.Update(gameTime);
+
             if (itemNumber < 0) 
                 itemNumber = 0; 
             else if (itemNumber > Items.Count - 1) 
@@ -119,6 +127,8 @@ namespace YoutubeRPG
         }
         public void Draw(SpriteBatch spriteBatch)
         {
+            if (Image != null)
+                Image.Draw(spriteBatch);
             foreach (MenuItem item in Items)
                 item.Image.Draw(spriteBatch);
         }

@@ -15,6 +15,8 @@ namespace YoutubeRPG
         Player player;
         World world;
         Camera camera;
+        MenuManager menuManager;
+
         public override void LoadContent()
         {
             base.LoadContent();
@@ -27,8 +29,10 @@ namespace YoutubeRPG
             world.LoadContent();
 
             camera = new Camera();
-            player.Image.Position = world.CurrentMap.StartingPoint;
+            menuManager = new MenuManager();
+            menuManager.LoadContent("Content/Load/Menu/GameplayMenu.xml");
 
+            player.Image.Position = world.CurrentMap.StartingPoint;
             InitializeBindings();
         }
         public override void UnloadContent()
@@ -36,6 +40,7 @@ namespace YoutubeRPG
             base.UnloadContent();
             player.UnloadContent();
             world.UnloadContent();
+            menuManager.UnloadContent();
         }
         public override void Update(GameTime gameTime)
         {
@@ -43,6 +48,7 @@ namespace YoutubeRPG
             base.Update(gameTime);
             player.Update(gameTime, world);
             world.Update(gameTime);
+            menuManager.Update(gameTime);
 
             camera.LockToSprite(world.CurrentMap.Layer[0], player.Image);
 
@@ -61,7 +67,10 @@ namespace YoutubeRPG
             world.Draw(spriteBatch, "Underlay");
             player.Draw(spriteBatch);
             world.Draw(spriteBatch, "Overlay");
+            spriteBatch.End();
 
+            spriteBatch.Begin();
+            menuManager.Draw(spriteBatch);
             spriteBatch.End();
         }
         private void InitializeBindings()

@@ -70,3 +70,6 @@ C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x
 C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Load\Gameplay\World\Blue_Test.xml
 C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Load\Gameplay\Map\Room1_3.xml
 C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Misc\testtube_button.xnb
+C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Load\Menu\GameplayMenu.xml
+C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Fonts\OCRA.xnb
+C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Fonts\OCRAExt.xnb
