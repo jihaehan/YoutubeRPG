@@ -13,7 +13,7 @@
     <Y>7.5</Y>
   </StartingPoint>
   <PortalBottom>
-    <X>1</X>
+    <X>5</X>
     <Y>0</Y>
   </PortalBottom>
 
@@ -28,7 +28,7 @@
     <BottomWall>[0:2][2:1][1:2]</BottomWall>
     <BottomDoor>[1:7]</BottomDoor>
     <SEWallCorner>[3:7]</SEWallCorner> 
-    <PortalTiles>[7:4-Room1]</PortalTiles>
+    <PortalTiles>[2:4-Room1_1]</PortalTiles>
     <TileMap>
       <Row>[7:6][7:6][7:6][7:6][7:6][7:6][7:6][7:6][7:6][7:6][7:6]</Row>
       <Row>[7:6][7:6][7:6][7:6][7:6][7:6][7:6][7:6][7:6][7:6][7:6]</Row>

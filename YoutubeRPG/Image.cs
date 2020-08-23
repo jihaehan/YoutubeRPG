@@ -18,7 +18,7 @@ namespace YoutubeRPG
         public Vector2 Position, Scale;
         public Rectangle SourceRect;
         public bool IsActive;
-        public Color TextColor; 
+        public Color TextColor;
 
         Texture2D texture;
         Vector2 origin;
@@ -130,7 +130,7 @@ namespace YoutubeRPG
             if (Texture != null)
                 ScreenManager.Instance.SpriteBatch.Draw(
                     Texture, Vector2.Zero, Color.White);
-            ScreenManager.Instance.SpriteBatch.DrawString(font, Text, Vector2.Zero /*dimensions/2*/, TextColor);
+            ScreenManager.Instance.SpriteBatch.DrawString(font, Text, dimensions/2 - font.MeasureString(Text)/2, TextColor);
             ScreenManager.Instance.SpriteBatch.End();
 
             texture = renderTarget;

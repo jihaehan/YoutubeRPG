@@ -14,6 +14,7 @@
     <LinkType>Screen</LinkType> 
     <LinkID>GameplayScreen</LinkID>
     <Image>
+      <Path></Path>
       <Text>New Game</Text>
     </Image>
   </Item>

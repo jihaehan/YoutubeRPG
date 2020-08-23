@@ -25,18 +25,6 @@
 /processorParam:TextureFormat=Color
 /build:Characters/player.png
 
-#begin Characters/player1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Characters/player1.png
-
 #begin Fonts/AgencyFB.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -92,6 +80,18 @@
 
 #begin Load/SplashScreen.xml
 /copy:Load/SplashScreen.xml
+
+#begin Misc/testtube_button.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Misc/testtube_button.png
 
 #begin ScreenBackground/background.png
 /importer:TextureImporter
