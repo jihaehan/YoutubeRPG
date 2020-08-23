@@ -74,7 +74,7 @@ namespace YoutubeRPG
                             string str = s.Replace("[", String.Empty);
                             int value1 = int.Parse(str.Substring(0, str.IndexOf(':')));
                             int value2 = int.Parse(str.Substring(str.IndexOf(':') + 1));
-                            
+
                             //Set TileTypes
                             if (SolidTiles.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
                                 tilesCount[tilesCount.Count() - 1] = TileCollision.Solid;

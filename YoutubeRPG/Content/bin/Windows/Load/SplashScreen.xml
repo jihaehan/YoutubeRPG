@@ -11,7 +11,6 @@
         <X>1.0</X>
         <Y>1.0</Y>
       </Scale>
-      <Text>Hello</Text>
       <FadeEffect>
         <FadeSpeed>0.5</FadeSpeed>
       </FadeEffect>

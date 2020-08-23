@@ -4,29 +4,50 @@
   <Effects>FadeEffect</Effects>
   <Spacing>
     <X>0</X>
-    <Y>5</Y>
+    <Y>10</Y>
   </Spacing>
   <Alignment>
     <X>0</X>
     <Y>0</Y>
   </Alignment>
+
   <Item>
     <LinkType>Screen</LinkType> 
     <LinkID>GameplayScreen</LinkID>
     <Image>
-      <Path></Path>
+      <TextColor>
+        <R>100</R>
+        <G>100</G>
+        <B>100</B>
+        <A>255</A>
+      </TextColor>
+      <Path>Misc/testtube_button</Path>
       <Text>New Game</Text>
     </Image>
   </Item>
 
   <Item>
     <Image>
+      <TextColor>
+        <R>100</R>
+        <G>100</G>
+        <B>100</B>
+        <A>255</A>
+      </TextColor>
+      <Path>Misc/testtube_button</Path>
       <Text>Load Game</Text>
     </Image>
   </Item>
 
   <Item>
     <Image>
+      <TextColor>
+        <R>100</R>
+        <G>100</G>
+        <B>100</B>
+        <A>255</A>
+      </TextColor>
+      <Path>Misc/testtube_button</Path>
       <Text>Options</Text>
     </Image>
   </Item>
@@ -35,6 +56,13 @@
     <LinkType>Menu</LinkType> 
     <LinkID>Content/Load/Menu/TestMenu.xml</LinkID>
     <Image>
+      <TextColor>
+        <R>100</R>
+        <G>100</G>
+        <B>100</B>
+        <A>255</A>
+      </TextColor>
+      <Path>Misc/testtube_button</Path>
       <Text>Credits</Text>
     </Image>
   </Item>

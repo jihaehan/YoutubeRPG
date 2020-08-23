@@ -21,7 +21,13 @@ namespace YoutubeRPG
         string portalDestination; 
         Vector2 portalArrival;
         bool isPortal;
-        
+
+        public List<string> Keys
+        {
+            get { return keys; }
+            set { keys = value; }
+        } List<string> keys;
+
         public Player()
         {
             Velocity = Vector2.Zero;
@@ -30,6 +36,7 @@ namespace YoutubeRPG
             isPortal = false;
             portalDestination = String.Empty;
             portalArrival = Vector2.Zero;
+            keys = new List<string>();
         }
         public void LoadContent()
         {
@@ -227,7 +234,11 @@ namespace YoutubeRPG
                                     portalCollisions.Add(new Rectangle(x * TileLength, y * TileLength - TileLength, TileLength, TileLength));
                                 }
                                 else
+                                {
                                     portalArrival = Vector2.Zero;
+                                    portalCollisions.Add(new Rectangle(x * TileLength, y * TileLength, TileLength, TileLength));
+                                }
+
                                 portalArrival *= TileLength;
                                 break;
                             default:
@@ -262,7 +273,15 @@ namespace YoutubeRPG
                                 if (layer.Portals().ContainsKey(portalLocation))
                                 {
                                     portalDestination = layer.Portals()[portalLocation];
-                                    ScreenManager.Instance.FadeScreen();
+                                    if (portalDestination.Contains("Screen"))
+                                    {
+                                        if (keys.Contains(portalDestination))
+                                            ScreenManager.Instance.ChangeScreens(portalDestination);
+                                        else
+                                            break;
+                                    }
+                                    else
+                                        ScreenManager.Instance.FadeScreen();
                                     isPortal = true;
                                 }
                             }

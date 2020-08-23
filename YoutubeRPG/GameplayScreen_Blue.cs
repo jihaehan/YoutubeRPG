@@ -8,22 +8,22 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 
-
 namespace YoutubeRPG
 {
-    public class GameplayScreen : GameScreen
+    public class GameplayScreen_Blue : GameScreen
     {
         Player player;
-        World world; 
+        World world;
         Camera camera;
         public override void LoadContent()
         {
-            base.LoadContent();           
+            base.LoadContent();
             XmlManager<Player> playerLoader = new XmlManager<Player>();
             XmlManager<World> worldLoader = new XmlManager<World>();
             player = playerLoader.Load("Content/Load/Gameplay/Player.xml");
             player.LoadContent();
-            world = worldLoader.Load("Content/Load/Gameplay/World/Intro.xml");
+            //If player save exists, load Save files here
+            world = worldLoader.Load("Content/Load/Gameplay/World/Blue.xml");
             world.LoadContent();
 
             camera = new Camera();
@@ -70,28 +70,6 @@ namespace YoutubeRPG
             InputManager.AddKeyboardBinding(Keys.S, player.MoveDown);
             InputManager.AddKeyboardBinding(Keys.A, player.MoveLeft);
             InputManager.AddKeyboardBinding(Keys.D, player.MoveRight);
-            InputManager.AddKeyboardBinding(Keys.F1, ChangeMap1);
-            InputManager.AddKeyboardBinding(Keys.F2, ChangeMap2);
-            InputManager.AddKeyboardBinding(Keys.K, AddKey);
         }
-        private void AddKey(eButtonState buttonState)
-        {
-            player.Keys.Add("GameplayScreen_Blue");
-        }
-        private void ChangeMap1(eButtonState buttonState)
-        {
-            if (buttonState == eButtonState.DOWN)
-            {
-                world.ChangeMap("Room1_1");
-            }
-        }
-        private void ChangeMap2(eButtonState buttonState)
-        {
-            if (buttonState == eButtonState.DOWN)
-            {
-                world.ChangeMap("Room1");
-            }
-        }
-        
     }
 }

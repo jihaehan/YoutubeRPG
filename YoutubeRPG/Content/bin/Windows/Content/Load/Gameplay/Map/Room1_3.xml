@@ -41,11 +41,12 @@
     </TileMap>
   </Layer>
 
-    <Layer>
+  <Layer>
     <Image>
       <Path>TileSheets/interiorFurniture1</Path>
-      <OverlayTiles>[5:6]</OverlayTiles>
     </Image>
+    <OverlayTiles>[5:6]</OverlayTiles>
+    <PortalTiles>[7:7-GameplayScreen_Blue]</PortalTiles>
     <TileMap>
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
