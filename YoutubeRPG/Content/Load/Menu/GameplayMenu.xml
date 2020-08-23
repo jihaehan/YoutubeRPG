@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Menu>
+  <Axis>Y</Axis>
+  <Spacing>
+    <X>0</X>
+    <Y>10</Y>
+  </Spacing>
+  <Alignment>
+    <X>-500</X>
+    <Y>0</Y>
+  </Alignment>
+
+  <Item>
+    <Image>
+      <Text>Unlinked1</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <Image>
+      <Text>Unlinked2</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <Image>
+      <Text>Unlinked3</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <Image>
+      <Text>Unlinked4</Text>
+    </Image>
+  </Item>
+</Menu>

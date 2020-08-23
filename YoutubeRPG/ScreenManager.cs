@@ -49,11 +49,11 @@ namespace YoutubeRPG
         public ScreenManager()
         {
             Dimensions = new Vector2(1280, 720);
-            //currentScreen = new GameplayScreen();
-            currentScreen = new SplashScreen();
+            currentScreen = new GameplayScreen_Blue();
+            //currentScreen = new SplashScreen();
             xmlGameScreenManager = new XmlManager<GameScreen>();
             xmlGameScreenManager.Type = currentScreen.Type;
-            currentScreen = xmlGameScreenManager.Load("Content/Load/SplashScreen.xml");
+            //currentScreen = xmlGameScreenManager.Load("Content/Load/SplashScreen.xml");
 
         }
         public void ChangeScreens(string screenName)
