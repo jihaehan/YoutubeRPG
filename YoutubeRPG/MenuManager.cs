@@ -112,5 +112,12 @@ namespace YoutubeRPG
             if (menu.Axis == "Y" && buttonState == eButtonState.DOWN)
                 menu.ItemNumber--;
         }
+        public void Activate(eButtonState buttonState)
+        {
+            if (buttonState == eButtonState.DOWN)
+            {
+                
+            }
+        }
     }
 }

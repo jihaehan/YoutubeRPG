@@ -9,28 +9,39 @@
     <X>-500</X>
     <Y>0</Y>
   </Alignment>
+  <Image>
+    <Path>Misc/gameplay_menu</Path>
+    <Position>
+      <X>0</X>
+      <Y>562.5</Y>
+    </Position>
+  </Image>
 
   <Item>
     <Image>
-      <Text>Unlinked1</Text>
+      <Text>INFO</Text>
+      <FontName>Fonts/OCRA</FontName>
     </Image>
   </Item>
 
   <Item>
     <Image>
-      <Text>Unlinked2</Text>
+      <Text>ITEM</Text>
+      <FontName>Fonts/OCRA</FontName>      
     </Image>
   </Item>
 
   <Item>
     <Image>
-      <Text>Unlinked3</Text>
+      <Text>PLAN</Text>
+      <FontName>Fonts/OCRA</FontName>
     </Image>
   </Item>
 
   <Item>
     <Image>
-      <Text>Unlinked4</Text>
+      <Text>BOOK</Text>
+      <FontName>Fonts/OCRA</FontName>
     </Image>
   </Item>
 </Menu>

@@ -15,10 +15,11 @@ namespace YoutubeRPG
         public event EventHandler OnMenuChanged; //type of delegate, which calls an 'event'
 
         public string Axis, Effects;
-        public Vector2 Alignment, Spacing;
+        public Vector2 Alignment, Spacing, Grid;
         public Image Image;
         [XmlElement("Item")]
         public List<MenuItem> Items;
+        public bool Active;
         int itemNumber;
         string id;
 
@@ -61,16 +62,30 @@ namespace YoutubeRPG
             dimensions = new Vector2((ScreenManager.Instance.Dimensions.X -
                 dimensions.X) / 2, (ScreenManager.Instance.Dimensions.Y - dimensions.Y) / 2);
 
-            foreach (MenuItem item in Items)
+            if (Grid == Vector2.One)
             {
                 if (Axis == "X")
+                    Grid.X = Items.Count();
+                else if (Axis == "Y")
+                    Grid.Y = Items.Count();
+            }
+
+            foreach (MenuItem item in Items)
+            {
+                if (Axis == "X" && Grid.X > 0)
+                {
                     item.Image.Position = new Vector2(dimensions.X,
                         (ScreenManager.Instance.Dimensions.Y - item.Image.SourceRect.Height) / 2) + Alignment;
-                else if (Axis == "Y")
-                    item.Image.Position = new Vector2((ScreenManager.Instance.Dimensions.X - item.Image.SourceRect.Width) / 2,
-                        dimensions.Y) + Alignment;
+                    Grid.X--; 
+                }
+                else if (Axis == "Y" && Grid.Y > 0)
+                {
+                    item.Image.Position = new Vector2((ScreenManager.Instance.Dimensions.X - item.Image.SourceRect.Width) / 2, dimensions.Y) + Alignment;
+                    Grid.Y--;
+                }
                 dimensions += new Vector2(item.Image.SourceRect.Width,
                     item.Image.SourceRect.Height) + Spacing;
+
             }
         }
 
@@ -81,8 +96,9 @@ namespace YoutubeRPG
             Effects = String.Empty;
             Axis = "Y";
             Items = new List<MenuItem>();
-            Alignment = Vector2.Zero;
-            Spacing = Vector2.Zero;
+            Alignment = Spacing = Vector2.Zero;
+            Grid = Vector2.One;
+            Active = true;
         }
 
         public void LoadContent()
