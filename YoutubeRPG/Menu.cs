@@ -91,7 +91,7 @@ namespace YoutubeRPG
                         Grid.Y--;
                     }
                     else
-                        dimensions += new Vector2(item.Image.SourceRect.Width, item.Image.SourceRect.Height) + Spacing;
+                        dimensions += new Vector2(item.Image.SourceRect.Width + Spacing.X, item.Image.SourceRect.Height);
                 }
                 else if (Axis == "Y")
                 {
@@ -105,7 +105,7 @@ namespace YoutubeRPG
                         Grid.X--;
                     }
                     else
-                        dimensions += new Vector2(item.Image.SourceRect.Width, item.Image.SourceRect.Height) + Spacing;
+                        dimensions += new Vector2(item.Image.SourceRect.Width, item.Image.SourceRect.Height + Spacing.Y);
                 }
             }
         }
@@ -144,30 +144,36 @@ namespace YoutubeRPG
         }
         public void Update(GameTime gameTime)
         {
-            if (Image != null)
-                Image.Update(gameTime);
-
-            if (itemNumber < 0) 
-                itemNumber = 0; 
-            else if (itemNumber > Items.Count - 1) 
-                itemNumber = Items.Count - 1; 
-
-            for (int i = 0; i < Items.Count; i++)
+            if (Active)
             {
-                if (i == itemNumber) 
-                    Items[i].Image.IsActive = true; 
-                else 
-                    Items[i].Image.IsActive = false;
+                if (Image != null)
+                    Image.Update(gameTime);
 
-                Items[i].Image.Update(gameTime);
+                if (itemNumber < 0)
+                    itemNumber = 0;
+                else if (itemNumber > Items.Count - 1)
+                    itemNumber = Items.Count - 1;
+
+                for (int i = 0; i < Items.Count; i++)
+                {
+                    if (i == itemNumber)
+                        Items[i].Image.IsActive = true;
+                    else
+                        Items[i].Image.IsActive = false;
+
+                    Items[i].Image.Update(gameTime);
+                }
             }
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (Image != null)
-                Image.Draw(spriteBatch);
-            foreach (MenuItem item in Items)
-                item.Image.Draw(spriteBatch);
+            if (Active)
+            {
+                if (Image != null)
+                    Image.Draw(spriteBatch);
+                foreach (MenuItem item in Items)
+                    item.Image.Draw(spriteBatch);
+            }
         }
     }
 }
