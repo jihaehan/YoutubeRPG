@@ -62,30 +62,51 @@ namespace YoutubeRPG
             dimensions = new Vector2((ScreenManager.Instance.Dimensions.X -
                 dimensions.X) / 2, (ScreenManager.Instance.Dimensions.Y - dimensions.Y) / 2);
 
-            if (Grid == Vector2.One)
-            {
-                if (Axis == "X")
-                    Grid.X = Items.Count();
-                else if (Axis == "Y")
-                    Grid.Y = Items.Count();
-            }
 
+            int count = 0;
+            Vector2 gridPoint = dimensions;
+            if (Axis == "X")
+            {
+                Grid.X = Items.Count()/Grid.Y;
+                count = (int)Grid.X;
+            }
+            else if (Axis == "Y")
+            {
+                Grid.Y = Items.Count()/Grid.X;
+                count = (int)Grid.Y;
+            }
+            
             foreach (MenuItem item in Items)
             {
-                if (Axis == "X" && Grid.X > 0)
+                if (Axis == "X")
                 {
                     item.Image.Position = new Vector2(dimensions.X,
-                        (ScreenManager.Instance.Dimensions.Y - item.Image.SourceRect.Height) / 2) + Alignment;
-                    Grid.X--; 
+                            (ScreenManager.Instance.Dimensions.Y - item.Image.SourceRect.Height) / 2) + Alignment;
+                    Grid.X--;
+                    if (Grid.X <= 0 && Grid.Y > 1)
+                    {
+                        dimensions = gridPoint;
+                        Alignment.Y += item.Image.SourceRect.Height + Spacing.Y;
+                        Grid.X = count;
+                        Grid.Y--;
+                    }
+                    else
+                        dimensions += new Vector2(item.Image.SourceRect.Width, item.Image.SourceRect.Height) + Spacing;
                 }
-                else if (Axis == "Y" && Grid.Y > 0)
+                else if (Axis == "Y")
                 {
                     item.Image.Position = new Vector2((ScreenManager.Instance.Dimensions.X - item.Image.SourceRect.Width) / 2, dimensions.Y) + Alignment;
                     Grid.Y--;
+                    if (Grid.Y <= 0 && Grid.X > 1)
+                    {
+                        dimensions = gridPoint;
+                        Alignment.X += item.Image.SourceRect.Width + Spacing.X;
+                        Grid.Y = count;
+                        Grid.X--;
+                    }
+                    else
+                        dimensions += new Vector2(item.Image.SourceRect.Width, item.Image.SourceRect.Height) + Spacing;
                 }
-                dimensions += new Vector2(item.Image.SourceRect.Width,
-                    item.Image.SourceRect.Height) + Spacing;
-
             }
         }
 

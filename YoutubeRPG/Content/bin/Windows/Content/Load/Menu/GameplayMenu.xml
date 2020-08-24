@@ -2,13 +2,17 @@
 <Menu>
   <Axis>Y</Axis>
   <Spacing>
-    <X>0</X>
+    <X>25</X>
     <Y>10</Y>
   </Spacing>
   <Alignment>
     <X>-500</X>
     <Y>0</Y>
   </Alignment>
+  <Grid>
+    <X>2</X>
+    <Y>2</Y>
+  </Grid>
   <Image>
     <Path>Misc/gameplay_menu</Path>
     <Position>
