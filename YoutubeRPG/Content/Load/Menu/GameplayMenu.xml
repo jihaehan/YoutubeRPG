@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Menu>
+  <Active>false</Active>
   <Axis>Y</Axis>
   <Spacing>
     <X>30</X>
@@ -8,7 +9,7 @@
   <Alignment>
     <X>-555</X>
     <Y>327</Y>
-  </Alignment>
+  </Alignment> 
   <Grid>
     <X>2</X>
     <Y>2</Y>

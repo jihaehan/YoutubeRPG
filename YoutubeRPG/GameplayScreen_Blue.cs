@@ -61,9 +61,7 @@ namespace YoutubeRPG
             world.CurrentMap.Background(spriteBatch);
             spriteBatch.End();
 
-            //Matrix menuMatrix =  Matrix.CreateTranslation(new Vector3(new Vector2(-100,0), 0f)); 
-
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, camera.Transformation /* + menu.position*/);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, camera.Transformation);
             world.Draw(spriteBatch, "Underlay");
             player.Draw(spriteBatch);
             world.Draw(spriteBatch, "Overlay");
@@ -75,10 +73,40 @@ namespace YoutubeRPG
         }
         private void InitializeBindings()
         {
-            InputManager.AddKeyboardBinding(Keys.W, player.MoveUp);
-            InputManager.AddKeyboardBinding(Keys.S, player.MoveDown);
-            InputManager.AddKeyboardBinding(Keys.A, player.MoveLeft);
-            InputManager.AddKeyboardBinding(Keys.D, player.MoveRight);
+            InputManager.AddKeyboardBinding(Keys.W, Toggle_Up);
+            InputManager.AddKeyboardBinding(Keys.S, Toggle_Down);
+            InputManager.AddKeyboardBinding(Keys.A, Toggle_Left);
+            InputManager.AddKeyboardBinding(Keys.D, Toggle_Right);
+            InputManager.AddKeyboardBinding(Keys.J, menuManager.Activate);
+        }
+        
+        private void Toggle_Up(eButtonState buttonState)
+        {
+            if (menuManager.IsActive)
+                menuManager.SelectUp(buttonState);
+            else
+                player.MoveUp(buttonState);
+        }
+        private void Toggle_Down(eButtonState buttonState)
+        {
+            if (menuManager.IsActive)
+                menuManager.SelectDown(buttonState);
+            else
+                player.MoveDown(buttonState);
+        }
+        private void Toggle_Left(eButtonState buttonState)
+        {
+            if (menuManager.IsActive)
+                menuManager.SelectLeft(buttonState);
+            else
+                player.MoveLeft(buttonState);
+        }
+        private void Toggle_Right(eButtonState buttonState)
+        {
+            if (menuManager.IsActive)
+                menuManager.SelectRight(buttonState);
+            else
+                player.MoveRight(buttonState);
         }
     }
 }

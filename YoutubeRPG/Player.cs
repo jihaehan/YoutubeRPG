@@ -16,8 +16,7 @@ namespace YoutubeRPG
         public Vector2 Velocity;
         public float MoveSpeed;
         public int TileLength;
-        public bool IsConversation;
-
+        
         string portalDestination; 
         Vector2 portalArrival;
         bool isPortal;
@@ -32,7 +31,6 @@ namespace YoutubeRPG
         {
             Velocity = Vector2.Zero;
             TileLength = 128;
-            IsConversation = false;
             isPortal = false;
             portalDestination = String.Empty;
             portalArrival = Vector2.Zero;
@@ -70,7 +68,7 @@ namespace YoutubeRPG
 
         public void MoveDown(eButtonState buttonState)
         {
-            if (buttonState == eButtonState.PRESSED && !IsConversation)
+            if (buttonState == eButtonState.PRESSED)
             {
                 Velocity.Y = 1;
                 if (Velocity.X == 0)
@@ -83,7 +81,7 @@ namespace YoutubeRPG
         }
         public void MoveUp(eButtonState buttonState)
         {
-            if (buttonState == eButtonState.PRESSED && !IsConversation)
+            if (buttonState == eButtonState.PRESSED)
             {
                 Velocity.Y = -1;
                 if (Velocity.X == 0)
@@ -97,7 +95,7 @@ namespace YoutubeRPG
 
         public void MoveLeft(eButtonState buttonState)
         {
-            if (buttonState == eButtonState.PRESSED && !IsConversation)
+            if (buttonState == eButtonState.PRESSED)
             {
                 Velocity.X = -1;
                 if (Velocity.Y == 0)
@@ -110,7 +108,7 @@ namespace YoutubeRPG
         }
         public void MoveRight(eButtonState buttonState)
         {
-            if (buttonState == eButtonState.PRESSED && !IsConversation)
+            if (buttonState == eButtonState.PRESSED)
             {
                 Velocity.X = 1;
                 if (Velocity.Y == 0)

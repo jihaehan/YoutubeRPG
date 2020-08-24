@@ -55,9 +55,7 @@ namespace YoutubeRPG
             world.CurrentMap.Background(spriteBatch);
             spriteBatch.End();
 
-            //Matrix menuMatrix =  Matrix.CreateTranslation(new Vector3(new Vector2(-100,0), 0f)); 
-
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, camera.Transformation /* + menu.position*/);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, camera.Transformation);
             world.Draw(spriteBatch, "Underlay");
             player.Draw(spriteBatch);
             world.Draw(spriteBatch, "Overlay");

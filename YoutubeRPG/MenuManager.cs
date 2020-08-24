@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,7 +11,6 @@ namespace YoutubeRPG
 {
     public class MenuManager
     {
-
         Menu menu;
         bool isTransitioning; 
         
@@ -41,6 +39,10 @@ namespace YoutubeRPG
             menu = new Menu();
             menu.OnMenuChanged += menu_OnMenuChange;    //OnMenuChanged = event;
                                                         //Adds the method, "menu_OnMenuChanged" into event OnMenuChanged
+        }
+        public bool IsActive
+        {
+            get { return menu.Active; }
         }
         public void menu_OnMenuChange(object sender, EventArgs e)
         {
@@ -96,29 +98,32 @@ namespace YoutubeRPG
         }
         public void SelectRight(eButtonState buttonState)
         {
-            if (menu.Axis == "X" && buttonState == eButtonState.DOWN)
+            if (/*menu.Axis == "X" && */buttonState == eButtonState.DOWN)
                 menu.ItemNumber++;
         }
         public void SelectLeft(eButtonState buttonState)
         {
-            if (menu.Axis == "X" && buttonState == eButtonState.DOWN)
+            if (/*menu.Axis == "X" && */buttonState == eButtonState.DOWN)
                 menu.ItemNumber--;
         }
         public void SelectDown(eButtonState buttonState)
         {
-            if (menu.Axis == "Y" && buttonState == eButtonState.DOWN)
+            if (/*menu.Axis == "Y" && */buttonState == eButtonState.DOWN)
                 menu.ItemNumber++;
         }
         public void SelectUp(eButtonState buttonState)
         {
-            if (menu.Axis == "Y" && buttonState == eButtonState.DOWN)
+            if (/*menu.Axis == "Y" && */buttonState == eButtonState.DOWN)
                 menu.ItemNumber--;
         }
         public void Activate(eButtonState buttonState)
         {
             if (buttonState == eButtonState.DOWN)
             {
-                
+                if (menu.Active)
+                    menu.Active = false;
+                else
+                    menu.Active = true; 
             }
         }
     }
