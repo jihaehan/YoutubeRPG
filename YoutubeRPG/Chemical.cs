@@ -29,11 +29,12 @@ namespace YoutubeRPG
         public Series Series;
         public Halogen Halogen;
 
-        public float Health;  //sum of bond enthalpy
-        public float Damage;  //determined by moves + reactions
-        public float Defense; //non-polarity
-        public float Speed;   //evaporation point  
-        public float Solubility;
+        public float Health;        //sum of bond enthalpy
+        public float Damage;        //determined by reaction
+        public float Dodge;         //chance to dodge
+        public float Defense;       //attack mofidier
+
+        public int   Solubility;    //Environmental Factor
 
         Dictionary<Element, int> Elements;
 
@@ -47,7 +48,7 @@ namespace YoutubeRPG
             State = State.Gas;
             Series = Series.Alkane;
             Halogen = Halogen.None;
-            Health = Damage = Defense = Speed = Solubility = 0;
+            Health = Damage = Defense = Solubility = 0;
             Image.IsActive = true;
             Elements = new Dictionary<Element, int>();
         }

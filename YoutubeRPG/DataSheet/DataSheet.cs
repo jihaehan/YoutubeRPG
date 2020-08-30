@@ -17,13 +17,18 @@ namespace YoutubeRPG
         public static int C_Br = 285;
         public static int C_O = 358;
     }
+    public struct AtomicMass
+    {
+        public static float C = 12.01f;
+        public static float H = 1.01f;
+        public static float O = 16.0f;
+        public static float Br = 79.9f;
+    }
     /// <summary>
-    /// Molar Enthalpy of Combustion under 298K and 1.00 * 10^5 Pa (kJ/mol)
+    /// Experimental Molar Enthalpy of Complete Combustion under 298K and 1.00 * 10^5 Pa (kJ/mol)
     /// </summary>
     public struct CombustionEnthalpies 
     {
-        public static int hydrogen = -286;
-
         public static int methane = -891;
         public static int ethane = -1561;
         public static int propane = -2219;
@@ -34,9 +39,12 @@ namespace YoutubeRPG
         public static int octane = -5470;
 
         public static int ethene = -1411;
-
-        public static int chloroethane = -1413;
-        public static int iodoethane = -1463;
+        public static int propene = -2058;
+        public static int butene = -2717;
+        public static int pentene = -3349;
+        public static int hexene = -4001;
+        public static int heptene = -4658;
+        public static int octene = -5313;
 
         public static int methanol = -729;
         public static int ethanol = -1367;
@@ -46,6 +54,19 @@ namespace YoutubeRPG
         public static int hexanol = -3984;
         public static int heptanol = -4638;
         public static int octanol = -5286;
+
+        public static int bromoethane = -1284;
+        public static int bromopropane = -1890;
+        public static int bromobutane = -2716;
+        public static int bromopentane = -3369;
+        public static int bromohexane = -4025;
+        public static int bromoheptane = -4680;
+        public static int bromooctane = -5333;
+
+        public static int hydrogen = -286;
+        public static int chloroethane = -1413;
+        public static int iodoethane = -1463;
+
     }
     /// <summary>
     /// Enthalpy of Formation (kJ/mol)
@@ -80,9 +101,6 @@ namespace YoutubeRPG
         public static float bromoheptane    = -219;
         public static float bromooctane     = -245;
 
-        //public static float iodomethane     = -14;
-        //public static float chloroethane    = -137;
-
         public static float methanol = -239f;
         public static float ethanol = -279f;
         public static float propanol = -303f;
@@ -102,6 +120,8 @@ namespace YoutubeRPG
         public static float hydrogenchloride = -92.3f;
         public static float hydrogenfluoride = -273.3f;
         public static float hydrogeniodide = 26.5f;
+        //public static float iodomethane     = -14;
+        //public static float chloroethane    = -137;
     }
     /// <summary>
     /// Boiling point in Kelvin (K)
