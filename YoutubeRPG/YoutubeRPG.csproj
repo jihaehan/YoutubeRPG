@@ -46,10 +46,12 @@
   <ItemGroup>
     <Compile Include="ButtonState.cs" />
     <Compile Include="Camera.cs" />
+    <Compile Include="Chemical.cs" />
     <Compile Include="Conversation.cs" />
     <Compile Include="ConversationItem.cs" />
     <Compile Include="ConversationManager.cs" />
     <Compile Include="ConversationScene.cs" />
+    <Compile Include="DataSheet\DataSheet.cs" />
     <Compile Include="FadeEffect.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameplayScreen.cs" />
@@ -60,6 +62,7 @@
     <Compile Include="ImageEffect.cs" />
     <Compile Include="InputListener.cs" />
     <Compile Include="InputManager.cs" />
+    <Compile Include="Item.cs" />
     <Compile Include="KeyboardEventArgs.cs" />
     <Compile Include="Layer.cs" />
     <Compile Include="Map.cs" />

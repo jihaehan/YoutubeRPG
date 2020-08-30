@@ -53,6 +53,9 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/OCRAExt.spritefont
 
+#begin Load/Chemical/Alkane/Methane.xml
+/copy:Load/Chemical/Alkane/Methane.xml
+
 #begin Load/Gameplay/Map/Map1.xml
 /copy:Load/Gameplay/Map/Map1.xml
 
@@ -98,6 +101,18 @@
 #begin Load/SplashScreen.xml
 /copy:Load/SplashScreen.xml
 
+#begin Misc/book_menu.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Misc/book_menu.png
+
 #begin Misc/conversation_menu.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -121,6 +136,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Misc/gameplay_menu.png
+
+#begin Misc/info_menu.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Misc/info_menu.png
+
+#begin Misc/option_menu.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Misc/option_menu.png
 
 #begin Misc/testtube_button.png
 /importer:TextureImporter
