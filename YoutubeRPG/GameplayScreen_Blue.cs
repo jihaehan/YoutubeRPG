@@ -18,6 +18,7 @@ namespace YoutubeRPG
         MenuManager menuManager;
 
         Chemical chemical;
+        ChemicalManager chemicalManager;
 
         public override void LoadContent()
         {
@@ -39,9 +40,15 @@ namespace YoutubeRPG
 
             //TEST:chemical
             XmlManager<Chemical> chemicalLoader = new XmlManager<Chemical>();
-            chemical = chemicalLoader.Load("Content/Load/Chemical/Alkane/Methane.xml");
+            chemical = chemicalLoader.Load("Content/Load/Chemical/Alkane/Pentane.xml");
             chemical.LoadContent();
             chemical.Image.Position = player.Image.Position + new Vector2(128, 128);
+
+            //TEST:chemicalManager
+            XmlManager<ChemicalManager> chemicalManagerLoader = new XmlManager<ChemicalManager>();
+            //if Party saves exist, load Save files here
+            chemicalManager = chemicalManagerLoader.Load("Content/Load/Gameplay/Party.xml");
+            chemicalManager.LoadContent(player.Image.Position);
         }
         public override void UnloadContent()
         {
@@ -50,6 +57,7 @@ namespace YoutubeRPG
             chemical.UnloadContent();
             world.UnloadContent();
             menuManager.UnloadContent();
+            chemicalManager.UnloadContent();
         }
         public override void Update(GameTime gameTime)
         {
@@ -59,6 +67,7 @@ namespace YoutubeRPG
             chemical.Update(gameTime);
             world.Update(gameTime);
             menuManager.Update(gameTime);
+            chemicalManager.Update(gameTime, player);
 
             camera.LockToSprite(world.CurrentMap.Layer[0], player.Image);
 
@@ -73,6 +82,7 @@ namespace YoutubeRPG
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, camera.Transformation);
             world.Draw(spriteBatch, "Underlay");
+            chemicalManager.Draw(spriteBatch);
             player.Draw(spriteBatch);
             chemical.Draw(spriteBatch);
             world.Draw(spriteBatch, "Overlay");

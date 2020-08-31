@@ -1,10 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Chemical>
+  <Level>1</Level>
+  <Series>Alkane</Series>
   <Image>
-    <Path>Chemicals/Alkane/Methane</Path>
+    <Path>Chemical/Alkane/Methane</Path>
     <Effects>SpriteSheetEffect</Effects>
     <SpriteSheetEffect>
-      <SwitchFrame>200</SwitchFrame>
+      <AmountOfFrames>
+        <X>2</X>
+        <Y>2</Y>
+      </AmountOfFrames>
+      <SwitchFrame>500</SwitchFrame>
     </SpriteSheetEffect>
   </Image>
 </Chemical>

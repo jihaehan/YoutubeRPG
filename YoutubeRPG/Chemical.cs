@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace YoutubeRPG
@@ -21,6 +20,7 @@ namespace YoutubeRPG
     {
         public Image Image;
         public Vector2 Dimensions;
+        public Vector2 Velocity;
         public string Name;
         public string NickName;
         public int Level;
@@ -38,9 +38,9 @@ namespace YoutubeRPG
         public float Defense;       //attack mofidier
         public float Accuracy;      //chance to explode
 
-        public bool  Solubility;    //Environmental Factor
+        public bool Solubility;    //Environmental Factor
 
-        Dictionary<Element, int> Elements;  
+        Dictionary<Element, int> Elements;
         Dictionary<string, int> Products;   //products from a reaction
         Dictionary<string, int> Reactants;
         List<float> FormationEnthalpy;
@@ -48,6 +48,7 @@ namespace YoutubeRPG
         public Chemical()
         {
             Dimensions = new Vector2(128, 128);
+            Velocity = Vector2.Zero;
             Name = NickName = String.Empty;
             Level = 1;
             Experience = 0;
@@ -78,12 +79,75 @@ namespace YoutubeRPG
             Image.IsActive = true;
             Image.Update(gameTime);
         }
-        public void Update(GameTime gameTime, Player player)
+        public void Update(GameTime gameTime, Player player, Chemical chemical, int count)
         {
-            Vector2 v = player.Velocity;
+            Vector2 v, p;
+            if (count == 0)
+            {
+                v = player.Velocity;
+                p = player.Image.Position;
+            }
+            else
+            {
+                v = chemical.Velocity;
+                p = chemical.Image.Position;
+            }
             v.Normalize();
-            Image.Position = player.Image.Position - v * Dimensions.X;
+            bool right = v.X > 0 && p.X > Image.Position.X;
+            bool left = v.X < 0 && p.X < Image.Position.X;
+            bool down = v.Y > 0 && p.Y > Image.Position.Y;
+            bool up = v.Y < 0 && p.Y < Image.Position.Y;
+
+            Velocity = Vector2.Zero;
+            int padding = 5;
+            float distance = Vector2.Distance(p, Image.Position);
+            if (distance > Dimensions.X)
+            {
+                if (right && up)
+                    Velocity = new Vector2(1, -1);
+                else if (right && down)
+                    Velocity = new Vector2(1, 1);
+                else if (left && down)
+                    Velocity = new Vector2(-1, 1);
+                else if (left && up)
+                    Velocity = new Vector2(-1, -1);
+                else if (right || left)
+                {
+                    if (p.Y > (Image.Position.Y + padding))
+                        Velocity = new Vector2(0, 1);
+                    else if (p.Y < (Image.Position.Y - padding))
+                        Velocity = new Vector2(0, -1);
+                    else if (right && p.X > (Image.Position.X + Dimensions.X + padding))
+                        Velocity = new Vector2(1, 0);
+                    else if (left)
+                        Velocity = new Vector2(-1, 0);
+                }
+                else if (down || up)
+                {
+                    if (p.X > (Image.Position.X + padding))
+                        Velocity = new Vector2(1, 0);
+                    else if (p.X < (Image.Position.X - padding))
+                        Velocity = new Vector2(-1, 0);
+                    else if (down)
+                        Velocity = new Vector2(0, 1);
+                    else if (up && p.Y < (Image.Position.Y - Dimensions.Y - padding*2))
+                        Velocity = new Vector2(0, -1);
+                }
+                Image.IsActive = true;
+            }
+
+            if (Velocity != Vector2.Zero)
+            {
+                Velocity.Normalize();
+                Velocity *= (player.MoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
+                Image.Position += Velocity;
+                if (Velocity.X < 0)
+                    Image.SpriteSheetEffect.CurrentFrame.Y = 0;
+                else if (Velocity.X > 0)
+                    Image.SpriteSheetEffect.CurrentFrame.Y = 1;
+            }
             Image.Update(gameTime);
+
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -366,7 +430,7 @@ namespace YoutubeRPG
                     break;
             }
         }
-        public void Combustion() //choose what combusion
+        public void Combustion() //choose what combustion
         {
             string o = "oxygen";
             float CO2 = (float)((Elements[Element.H] / 2 + Elements[Element.C] * 2) / 2);

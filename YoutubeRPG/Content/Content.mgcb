@@ -61,6 +61,42 @@
 /processorParam:TextureFormat=Color
 /build:Characters/player.png
 
+#begin Chemical/Alkane/Butane.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alkane/Butane.png
+
+#begin Chemical/Alkane/Butane1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alkane/Butane1.png
+
+#begin Chemical/Alkane/Ethane.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alkane/Ethane.png
+
 #begin Chemical/Alkane/Methane.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -72,6 +108,54 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Chemical/Alkane/Methane.png
+
+#begin Chemical/Alkane/Pentane.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alkane/Pentane.png
+
+#begin Chemical/Alkane/Pentane1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alkane/Pentane1.png
+
+#begin Chemical/Alkane/Pentane2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alkane/Pentane2.png
+
+#begin Chemical/Alkane/Propane.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alkane/Propane.png
 
 #begin Fonts/AgencyFB.spritefont
 /importer:FontDescriptionImporter
@@ -101,8 +185,20 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/OCRAExt.spritefont
 
+#begin Load/Chemical/Alkane/Butane.xml
+/copy:Load/Chemical/Alkane/Butane.xml
+
+#begin Load/Chemical/Alkane/Ethane.xml
+/copy:Load/Chemical/Alkane/Ethane.xml
+
 #begin Load/Chemical/Alkane/Methane.xml
 /copy:Load/Chemical/Alkane/Methane.xml
+
+#begin Load/Chemical/Alkane/Pentane.xml
+/copy:Load/Chemical/Alkane/Pentane.xml
+
+#begin Load/Chemical/Alkane/Propane.xml
+/copy:Load/Chemical/Alkane/Propane.xml
 
 #begin Load/Gameplay/Map/Map1.xml
 /copy:Load/Gameplay/Map/Map1.xml
@@ -118,6 +214,9 @@
 
 #begin Load/Gameplay/Map/Room1_3.xml
 /copy:Load/Gameplay/Map/Room1_3.xml
+
+#begin Load/Gameplay/Party.xml
+/copy:Load/Gameplay/Party.xml
 
 #begin Load/Gameplay/Player.xml
 /copy:Load/Gameplay/Player.xml

@@ -38,6 +38,7 @@ namespace YoutubeRPG
         NWWallCorner,
         LeftHalf,
         RightHalf,
+        Chemical,
 
     }
     public class Tile
