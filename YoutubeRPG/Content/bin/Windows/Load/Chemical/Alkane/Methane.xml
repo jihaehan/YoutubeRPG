@@ -1,5 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<XnaContent xmlns:ns="Microsoft.Xna.Framework">
-  <Asset Type="Object">
-  </Asset>
-</XnaContent>
+<Chemical>
+  <Image>
+    <Path>Chemicals/Alkane/Methane</Path>
+    <Effects>SpriteSheetEffect</Effects>
+    <SpriteSheetEffect>
+      <SwitchFrame>200</SwitchFrame>
+    </SpriteSheetEffect>
+  </Image>
+</Chemical>

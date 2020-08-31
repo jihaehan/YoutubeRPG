@@ -22,6 +22,7 @@ namespace YoutubeRPG
         public static float C = 12.01f;
         public static float H = 1.01f;
         public static float O = 16.0f;
+        public static float Cl = 45.5f;
         public static float Br = 79.9f;
     }
     /// <summary>

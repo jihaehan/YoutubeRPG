@@ -17,6 +17,8 @@ namespace YoutubeRPG
         Camera camera;
         MenuManager menuManager;
 
+        Chemical chemical;
+
         public override void LoadContent()
         {
             base.LoadContent();
@@ -34,11 +36,18 @@ namespace YoutubeRPG
 
             player.Image.Position = world.CurrentMap.StartingPoint;
             InitializeBindings();
+
+            //TEST:chemical
+            XmlManager<Chemical> chemicalLoader = new XmlManager<Chemical>();
+            chemical = chemicalLoader.Load("Content/Load/Chemical/Alkane/Methane.xml");
+            chemical.LoadContent();
+            chemical.Image.Position = player.Image.Position + new Vector2(128, 128);
         }
         public override void UnloadContent()
         {
             base.UnloadContent();
             player.UnloadContent();
+            chemical.UnloadContent();
             world.UnloadContent();
             menuManager.UnloadContent();
         }
@@ -47,6 +56,7 @@ namespace YoutubeRPG
             player.Velocity = Vector2.Zero;
             base.Update(gameTime);
             player.Update(gameTime, world);
+            chemical.Update(gameTime);
             world.Update(gameTime);
             menuManager.Update(gameTime);
 
@@ -64,6 +74,7 @@ namespace YoutubeRPG
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, camera.Transformation);
             world.Draw(spriteBatch, "Underlay");
             player.Draw(spriteBatch);
+            chemical.Draw(spriteBatch);
             world.Draw(spriteBatch, "Overlay");
             spriteBatch.End();
 
