@@ -33,6 +33,7 @@ namespace YoutubeRPG
 
             camera = new Camera();
             menuManager = new MenuManager();
+            //menuManager.LoadContent("Content/Load/Menu/InfoMenu.xml");
             menuManager.LoadContent("Content/Load/Menu/GameplayMenu.xml");
 
             player.Image.Position = world.CurrentMap.StartingPoint;

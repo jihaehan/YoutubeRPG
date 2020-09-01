@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Menu>
+  <Active>false</Active>
+  <Axis>Y</Axis>
+  <Spacing>
+    <X>30</X>
+    <Y>12</Y>
+  </Spacing>
+  <Alignment>
+    <X>-555</X>
+    <Y>327</Y>
+  </Alignment> 
+  <Grid>
+    <X>2</X>
+    <Y>2</Y>
+  </Grid>
+  <Image>
+    <Path>Misc/gameplay_menu</Path>
+    <Position>
+      <X>0</X>
+      <Y>562.5</Y>
+    </Position>
+  </Image>
+</Menu>

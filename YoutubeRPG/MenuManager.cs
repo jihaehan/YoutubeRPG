@@ -12,7 +12,10 @@ namespace YoutubeRPG
     public class MenuManager
     {
         Menu menu;
-        bool isTransitioning; 
+        bool isTransitioning;
+
+        string prevMenuID;
+        string currentMenuID;
         
         void Transition(GameTime gameTime)
         {
@@ -24,18 +27,19 @@ namespace YoutubeRPG
                     float first = menu.Items[0].Image.Alpha;
                     float last = menu.Items[menu.Items.Count - 1].Image.Alpha;
                     if (first == 0.0f && last == 0.0f)
-                        menu.ID = menu.Items[menu.ItemNumber].LinkID;
+                        menu.ID = currentMenuID; //menu.Items[menu.ItemNumber].LinkID;
                     else if (first == 1.0f && last == 1.0f)
                     {
                         isTransitioning = false;
                         foreach (MenuItem item in menu.Items)
-                            item.Image.RestoreEffects(); 
+                            item.Image.RestoreEffects();
                     }
                 }
             }
         }
         public MenuManager()
         {
+            prevMenuID = currentMenuID = String.Empty;
             menu = new Menu();
             menu.OnMenuChanged += menu_OnMenuChange;    //OnMenuChanged = event;
                                                         //Adds the method, "menu_OnMenuChanged" into event OnMenuChanged
@@ -62,7 +66,10 @@ namespace YoutubeRPG
         public void LoadContent(string menuPath)
         {
             if (menuPath != String.Empty)
+            {
                 menu.ID = menuPath;
+                prevMenuID = currentMenuID = menuPath;
+            }
         }
         public void UnloadContent()
         {
@@ -87,12 +94,26 @@ namespace YoutubeRPG
                 else
                 {
                     isTransitioning = true;
+                    prevMenuID = currentMenuID;
+                    currentMenuID = menu.Items[menu.ItemNumber].LinkID;
                     menu.Transition(1.0f);
                     foreach (MenuItem item in menu.Items)
                     {
                         item.Image.StoreEffects();
                         item.Image.ActivateEffect("FadeEffect");
                     }
+                }
+            }
+        }
+        public void PrevMenuSelect(eButtonState buttonState)
+        {
+            if (buttonState == eButtonState.DOWN && !isTransitioning)
+            {
+                if (prevMenuID != String.Empty && prevMenuID != currentMenuID)
+                {
+                    isTransitioning = true;
+                    currentMenuID = prevMenuID;
+                    menu.Transition(1.0f);
                 }
             }
         }
