@@ -93,10 +93,10 @@ namespace YoutubeRPG
                 p = chemical.Image.Position;
             }
             v.Normalize();
-            bool right = v.X > 0 && p.X > Image.Position.X;
-            bool left = v.X < 0 && p.X < Image.Position.X;
-            bool down = v.Y > 0 && p.Y > Image.Position.Y;
-            bool up = v.Y < 0 && p.Y < Image.Position.Y;
+            bool right = v.X > 0 && p.X > (Image.Position.X);
+            bool left = v.X < 0 && p.X < (Image.Position.X);
+            bool down = v.Y > 0 && p.Y > (Image.Position.Y);
+            bool up = v.Y < 0 && p.Y < (Image.Position.Y);
 
             Velocity = Vector2.Zero;
             int padding = 5;
@@ -130,8 +130,14 @@ namespace YoutubeRPG
                         Velocity = new Vector2(-1, 0);
                     else if (down)
                         Velocity = new Vector2(0, 1);
-                    else if (up && p.Y < (Image.Position.Y - Dimensions.Y - padding*2))
-                        Velocity = new Vector2(0, -1);
+                    else if (count > 0)
+                    {
+                        if (up && p.Y < (Image.Position.Y - Dimensions.Y - padding * 2))
+                            Velocity = new Vector2(0, -1);
+                    }
+                    else if (count == 0 && up)
+                            Velocity = new Vector2(0, -1);
+              
                 }
                 Image.IsActive = true;
             }

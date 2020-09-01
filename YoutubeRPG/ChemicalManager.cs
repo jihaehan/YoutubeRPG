@@ -18,7 +18,8 @@ namespace YoutubeRPG
 
         Dictionary<string, Chemical> chemicals;
         List<string> chemicalName;
-        
+
+        int maxVisibleChemicals; 
 
         public ChemicalManager()
         {
@@ -26,6 +27,7 @@ namespace YoutubeRPG
             CurrentChemicalName = String.Empty;
             chemicals = new Dictionary<string, Chemical>();
             chemicalName = new List<string>();
+            maxVisibleChemicals = 1;
         }
 
         public Chemical CurrentChemical
@@ -63,14 +65,12 @@ namespace YoutubeRPG
         public void Update(GameTime gameTime, Player player)
         {
             Chemical chemical = new Chemical();
-
-            for (int count = 0; count < chemicalName.Count; count++ )
+            for (int count = 0; count < maxVisibleChemicals/*chemicalName.Count*/; count++)
             {
                 if (count > 0)
                     chemical = chemicals[chemicalName[count - 1]];
                 chemicals[chemicalName[count]].Update(gameTime, player, chemical, count);
-                count++;
-            }
+            } 
         }
         public void Update(GameTime gameTime)
         {
@@ -81,9 +81,9 @@ namespace YoutubeRPG
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            foreach (string name in chemicalName)
+            for (int count = 0; count < maxVisibleChemicals; count++)
             {
-                chemicals[name].Draw(spriteBatch);
+                chemicals[chemicalName[count]].Draw(spriteBatch);
             }
         }
         public Chemical GetChemical(string chemicalName)

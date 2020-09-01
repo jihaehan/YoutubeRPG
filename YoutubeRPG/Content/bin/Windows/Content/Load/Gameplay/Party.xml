@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ChemicalManager>
+  <ChemicalSource>Content/Load/Chemical/Alkane/Butane.xml</ChemicalSource>
+  <ChemicalSource>Content/Load/Chemical/Alkane/Butane.xml</ChemicalSource>
   <ChemicalSource>Content/Load/Chemical/Alkane/Ethane.xml</ChemicalSource>
-  <ChemicalSource>Content/Load/Chemical/Alkane/Methane.xml</ChemicalSource>
+  <ChemicalSource>Content/Load/Chemical/Alkane/Butane.xml</ChemicalSource>
+  <ChemicalSource>Content/Load/Chemical/Alkane/Butane.xml</ChemicalSource>
   <ChemicalSource>Content/Load/Chemical/Alkane/Butane.xml</ChemicalSource>
 </ChemicalManager>
 

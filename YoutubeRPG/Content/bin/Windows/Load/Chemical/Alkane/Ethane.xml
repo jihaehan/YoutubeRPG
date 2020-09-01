@@ -3,8 +3,8 @@
   <Level>2</Level>
   <Series>Alkane</Series>
   <Dimensions>
-    <X>50</X>
-    <Y>50</Y>
+    <X>80</X>
+    <Y>80</Y>
   </Dimensions>
   <Image>
     <Path>Chemical/Alkane/Ethane</Path>
