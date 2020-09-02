@@ -17,7 +17,7 @@ namespace YoutubeRPG
         public string CurrentChemicalName;
 
         Dictionary<string, Chemical> chemicals;
-        List<string> chemicalName;
+        public List<string> chemicalName;
 
         int maxVisibleChemicals; 
 

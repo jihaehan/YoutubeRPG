@@ -18,4 +18,41 @@
     </Position>
   </Image>
 
+  <Item>
+    <Image>
+      <Text>Methane(g)</Text>
+      <FontName>Fonts/OCRAsmall</FontName>  
+      <TextColor>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+        <A>255</A>
+      </TextColor>
+    </Image>
+  </Item>
+
+  <Item>
+    <Image>
+      <Text>Ethane(g)</Text>
+      <FontName>Fonts/OCRAsmall</FontName>  
+      <TextColor>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+        <A>255</A>
+      </TextColor>
+    </Image>
+  </Item>
+  <Item>
+    <Image>
+      <Text>Ethane(g)</Text>
+      <FontName>Fonts/OCRAsmall</FontName>  
+      <TextColor>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+        <A>255</A>
+      </TextColor>
+    </Image>
+  </Item>
 </Menu>

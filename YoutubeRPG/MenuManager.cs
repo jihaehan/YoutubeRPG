@@ -12,6 +12,7 @@ namespace YoutubeRPG
     public class MenuManager
     {
         Menu menu;
+        ChemicalManager chemicalManager;
         bool isTransitioning;
 
         string prevMenuID;
@@ -76,12 +77,21 @@ namespace YoutubeRPG
         public void UnloadContent()
         {
             menu.UnloadContent();
+            if (chemicalManager != null)
+                chemicalManager.UnloadContent();
         }
         public void Update(GameTime gameTime)
         {
             if (!isTransitioning)
+                menu.Update(gameTime);
+            Transition(gameTime);
+        }
+        public void Update(GameTime gameTime, ref ChemicalManager manager)
+        {
+            if (!isTransitioning)
                menu.Update(gameTime);
             Transition(gameTime);
+            chemicalManager = manager;
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -98,6 +108,8 @@ namespace YoutubeRPG
                     isTransitioning = true;
                     prevMenuID = currentMenuID;
                     currentMenuID = menu.Items[menu.ItemNumber].LinkID;
+                    if (menu.Items[menu.ItemNumber].LinkType == "OptionInfo")
+                        OptionInfoMenu();
                     menu.Transition(1.0f);
                     foreach (MenuItem item in menu.Items)
                     {
@@ -147,6 +159,28 @@ namespace YoutubeRPG
                     menu.Active = false;
                 else
                     menu.Active = true; 
+            }
+        }
+        public void OptionInfoMenu()
+        {
+            menu.Active = false;
+            menu.Axis = "Left";
+
+            menu.Spacing = new Vector2(0, 10);
+            menu.Alignment = new Vector2(730, 580.5f);
+            menu.Image.Path = "Misc/option_menu";
+            menu.Image.Position = new Vector2(696, 562.5f);
+
+            foreach (string chemicalName in chemicalManager.chemicalName)
+            {
+                MenuItem item = new MenuItem();
+                item.Image.Text = chemicalName;
+                string s = (chemicalManager.GetChemical(chemicalName).State).ToString();
+                item.Image.Text += "(" + s.Substring(0, 1) + ")";
+                item.Image.TextColor = Color.Black;
+                item.Image.FontName = "Fonts/OCRAsmall";
+
+                menu.Items.Add(item);
             }
         }
     }
