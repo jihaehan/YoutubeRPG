@@ -19,6 +19,7 @@ namespace YoutubeRPG
         public Rectangle SourceRect;
         public bool IsActive;
         public Color TextColor;
+        public bool IsLeft, IsRight;
 
         Texture2D texture;
         Vector2 origin;
@@ -96,6 +97,7 @@ namespace YoutubeRPG
             SourceRect = Rectangle.Empty;
             effectList = new Dictionary<string, ImageEffect>();
             TextColor = Color.White;
+            IsLeft = IsRight = false;
         }
 
         public void LoadContent()
@@ -128,9 +130,8 @@ namespace YoutubeRPG
             ScreenManager.Instance.GraphicsDevice.Clear(Color.Transparent);
             ScreenManager.Instance.SpriteBatch.Begin();
             if (Texture != null)
-                ScreenManager.Instance.SpriteBatch.Draw(
-                    Texture, Vector2.Zero, Color.White);
-            ScreenManager.Instance.SpriteBatch.DrawString(font, Text, dimensions/2 - font.MeasureString(Text)/2, TextColor);
+                ScreenManager.Instance.SpriteBatch.Draw(Texture, Vector2.Zero, Color.White);
+            ScreenManager.Instance.SpriteBatch.DrawString(font, Text, dimensions / 2 - font.MeasureString(Text) / 2, TextColor);
             ScreenManager.Instance.SpriteBatch.End();
 
             texture = renderTarget;

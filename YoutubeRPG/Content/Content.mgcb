@@ -185,6 +185,13 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/OCRAExt.spritefont
 
+#begin Fonts/OCRAsmall.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/OCRAsmall.spritefont
+
 #begin Load/Chemical/Alkane/Butane.xml
 /copy:Load/Chemical/Alkane/Butane.xml
 
@@ -235,6 +242,12 @@
 
 #begin Load/Menu/GameplayMenu.xml
 /copy:Load/Menu/GameplayMenu.xml
+
+#begin Load/Menu/InfoMenu.xml
+/copy:Load/Menu/InfoMenu.xml
+
+#begin Load/Menu/OptionMenu.xml
+/copy:Load/Menu/OptionMenu.xml
 
 #begin Load/Menu/TestMenu.xml
 /copy:Load/Menu/TestMenu.xml

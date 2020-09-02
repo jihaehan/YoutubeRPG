@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Menu>
+  <Active>false</Active>
+  <Axis>Y</Axis>
+  <Spacing>
+    <X>30</X>
+    <Y>12</Y>
+  </Spacing>
+  <Alignment>
+    <X>97</X>
+    <Y>232</Y>
+  </Alignment> 
+  <Image>
+    <Path>Misc/option_menu</Path>
+    <Position>
+      <X>696</X>
+      <Y>562.5</Y>
+    </Position>
+  </Image>
+
+  <Item>
+    <Image>
+      <Text>METHANE(g)</Text>
+      <FontName>Fonts/OCRA_small</FontName>  
+      <TextColor>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+        <A>255</A>
+      </TextColor>
+    </Image>
+  </Item>
+
+</Menu>

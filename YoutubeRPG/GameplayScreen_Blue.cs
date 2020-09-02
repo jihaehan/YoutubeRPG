@@ -15,7 +15,7 @@ namespace YoutubeRPG
         Player player;
         World world;
         Camera camera;
-        MenuManager menuManager;
+        MenuManager menuManager;        
 
         Chemical chemical;
         ChemicalManager chemicalManager;
@@ -33,8 +33,9 @@ namespace YoutubeRPG
 
             camera = new Camera();
             menuManager = new MenuManager();
+            menuManager.LoadContent("Content/Load/Menu/OptionMenu.xml");
             //menuManager.LoadContent("Content/Load/Menu/InfoMenu.xml");
-            menuManager.LoadContent("Content/Load/Menu/GameplayMenu.xml");
+            //menuManager.LoadContent("Content/Load/Menu/GameplayMenu.xml");
 
             player.Image.Position = world.CurrentMap.StartingPoint;
             InitializeBindings();
@@ -100,8 +101,9 @@ namespace YoutubeRPG
             InputManager.AddKeyboardBinding(Keys.A, Toggle_Left);
             InputManager.AddKeyboardBinding(Keys.D, Toggle_Right);
             InputManager.AddKeyboardBinding(Keys.J, menuManager.Activate);
+            InputManager.AddKeyboardBinding(Keys.X, menuManager.PrevMenuSelect);
         }
-        
+
         private void Toggle_Up(eButtonState buttonState)
         {
             if (menuManager.IsActive)

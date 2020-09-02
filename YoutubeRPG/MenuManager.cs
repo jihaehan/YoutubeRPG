@@ -16,7 +16,9 @@ namespace YoutubeRPG
 
         string prevMenuID;
         string currentMenuID;
-        
+
+        //later move into a Manager for MenuManagers
+
         void Transition(GameTime gameTime)
         {
             if (isTransitioning)

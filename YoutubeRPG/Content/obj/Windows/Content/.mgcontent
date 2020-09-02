@@ -20,6 +20,7 @@
     <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Fonts/Arial.spritefont</File>
     <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Fonts/OCRA.spritefont</File>
     <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Fonts/OCRAExt.spritefont</File>
+    <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Fonts/OCRAsmall.spritefont</File>
     <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Misc/book_menu.png</File>
     <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Misc/conversation_menu.png</File>
     <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Misc/gameplay_menu.png</File>
@@ -37,6 +38,7 @@
     <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/TitleScreen/menuscreen.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

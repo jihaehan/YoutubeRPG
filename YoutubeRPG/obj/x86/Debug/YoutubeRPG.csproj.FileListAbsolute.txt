@@ -95,3 +95,7 @@ C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x
 C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Chemical\Alkane\Pentane1.xnb
 C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Chemical\Alkane\Pentane2.xnb
 C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Chemical\Alkane\Propane.xnb
+C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Load\Menu\InfoMenu.xml
+C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Load\Menu\OptionMenu.xml
+C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Fonts\OCRA_small.xnb
+C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Fonts\OCRAsmall.xnb

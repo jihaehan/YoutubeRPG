@@ -17,6 +17,8 @@ namespace YoutubeRPG
         public string Axis, Effects;
         public Vector2 Alignment, Spacing, Grid;
         public Image Image;
+        [XmlElement("Text")]
+        public List<string> Text;
         [XmlElement("Item")]
         public List<MenuItem> Items;
         public bool Active;
@@ -51,7 +53,6 @@ namespace YoutubeRPG
                     item.Image.FadeEffect.Increase = false;
             }
         }
-
         void AlignMenuItems()
         {
             Vector2 dimensions = Vector2.Zero;
@@ -67,14 +68,16 @@ namespace YoutubeRPG
             Vector2 gridPoint = dimensions;
             if (Axis == "X")
             {
-                Grid.X = Items.Count()/Grid.Y;
+                Grid.X = Items.Count() / Grid.Y;
                 count = (int)Grid.X;
             }
             else if (Axis == "Y")
             {
-                Grid.Y = Items.Count()/Grid.X;
+                Grid.Y = Items.Count() / Grid.X;
                 count = (int)Grid.Y;
             }
+            else if (Axis == "Left")
+                dimensions = Vector2.Zero;
             
             foreach (MenuItem item in Items)
             {
@@ -107,6 +110,11 @@ namespace YoutubeRPG
                     else
                         dimensions += new Vector2(item.Image.SourceRect.Width, item.Image.SourceRect.Height + Spacing.Y);
                 }
+                else if (Axis == "Left")
+                {
+                    item.Image.Position = new Vector2(0, dimensions.Y) + Alignment;
+                    dimensions.Y += item.Image.SourceRect.Height + Spacing.Y;
+                }
             }
         }
 
@@ -120,6 +128,7 @@ namespace YoutubeRPG
             Alignment = Spacing = Vector2.Zero;
             Grid = Vector2.One;
             Active = true;
+            Text = new List<string>();
         }
 
         public void LoadContent()

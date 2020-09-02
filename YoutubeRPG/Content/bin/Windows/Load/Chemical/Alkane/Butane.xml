@@ -2,6 +2,10 @@
 <Chemical>
   <Level>4</Level>
   <Series>Alkane</Series>
+  <Dimensions>
+    <X>80</X>
+    <Y>60</Y>
+  </Dimensions>
   <Image>
     <Path>Chemical/Alkane/Butane</Path>
     <Effects>SpriteSheetEffect</Effects>
