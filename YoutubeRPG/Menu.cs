@@ -43,7 +43,14 @@ namespace YoutubeRPG
         }
         public void Transition(float alpha)
         {
-            foreach(MenuItem item in Items)
+            Image.IsActive = true;
+            Image.Alpha = alpha;
+            if (alpha == 0.0f)
+                Image.FadeEffect.Increase = true;
+            else
+                Image.FadeEffect.Increase = false;
+
+            foreach (MenuItem item in Items)
             {
                 item.Image.IsActive = true;
                 item.Image.Alpha = alpha;

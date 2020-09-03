@@ -28,14 +28,15 @@ namespace YoutubeRPG
             player = playerLoader.Load("Content/Load/Gameplay/Player.xml");
             player.LoadContent();
             //If player save exists, load Save files here
-            world = worldLoader.Load("Content/Load/Gameplay/World/Blue.xml");
+            world = worldLoader.Load("Content/Load/Gameplay/World/Blue_Test.xml");
             world.LoadContent();
 
             camera = new Camera();
             menuManager = new MenuManager();
-            menuManager.LoadContent("Content/Load/Menu/OptionMenu.xml");
+            //menuManager.LoadContent("Content/Load/Menu/OptionMenu.xml");
             //menuManager.LoadContent("Content/Load/Menu/InfoMenu.xml");
-            //menuManager.LoadContent("Content/Load/Menu/GameplayMenu.xml");
+            menuManager.LoadContent("Content/Load/Menu/GameplayMenu.xml");
+            //menuManager.LoadContent("Content/Load/Menu/TitleMenu.xml");
 
             player.Image.Position = world.CurrentMap.StartingPoint;
             InitializeBindings();
@@ -100,6 +101,7 @@ namespace YoutubeRPG
             InputManager.AddKeyboardBinding(Keys.S, Toggle_Down);
             InputManager.AddKeyboardBinding(Keys.A, Toggle_Left);
             InputManager.AddKeyboardBinding(Keys.D, Toggle_Right);
+            InputManager.AddKeyboardBinding(Keys.Enter, menuManager.MenuSelect);
             InputManager.AddKeyboardBinding(Keys.J, menuManager.Activate);
             InputManager.AddKeyboardBinding(Keys.X, menuManager.PrevMenuSelect);
         }

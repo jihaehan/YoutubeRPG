@@ -134,6 +134,7 @@ namespace YoutubeRPG
             ScreenManager.Instance.SpriteBatch.DrawString(font, Text, dimensions / 2 - font.MeasureString(Text) / 2, TextColor);
             ScreenManager.Instance.SpriteBatch.End();
 
+            
             texture = renderTarget;
 
             ScreenManager.Instance.GraphicsDevice.SetRenderTarget(null);
@@ -168,6 +169,7 @@ namespace YoutubeRPG
         public void Draw(SpriteBatch spriteBatch)
         {
             origin = new Vector2(SourceRect.Width / 2, SourceRect.Height / 2);
+
             spriteBatch.Draw(
                 Texture, Position + origin, SourceRect, Color.White * Alpha,
                 0.0f, origin, Scale, SpriteEffects.None, 0.0f); 

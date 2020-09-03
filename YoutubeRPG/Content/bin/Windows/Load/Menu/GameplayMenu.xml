@@ -23,6 +23,8 @@
   </Image>
 
   <Item>
+    <LinkType>Menu</LinkType> 
+    <LinkID>Content/Load/Menu/OptionMenu.xml</LinkID>
     <Image>
       <Text>INFO</Text>
       <FontName>Fonts/OCRA</FontName>  

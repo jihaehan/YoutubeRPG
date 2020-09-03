@@ -157,6 +157,18 @@
 /processorParam:TextureFormat=Color
 /build:Chemical/Alkane/Propane.png
 
+#begin ControlScreen/controlscreen.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:ControlScreen/controlscreen.png
+
 #begin Fonts/AgencyFB.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -207,6 +219,9 @@
 #begin Load/Chemical/Alkane/Propane.xml
 /copy:Load/Chemical/Alkane/Propane.xml
 
+#begin Load/Gameplay/Map/City1.xml
+/copy:Load/Gameplay/Map/City1.xml
+
 #begin Load/Gameplay/Map/Map1.xml
 /copy:Load/Gameplay/Map/Map1.xml
 
@@ -221,6 +236,12 @@
 
 #begin Load/Gameplay/Map/Room1_3.xml
 /copy:Load/Gameplay/Map/Room1_3.xml
+
+#begin Load/Gameplay/Map/Wild1.xml
+/copy:Load/Gameplay/Map/Wild1.xml
+
+#begin Load/Gameplay/Map/Wild2.xml
+/copy:Load/Gameplay/Map/Wild2.xml
 
 #begin Load/Gameplay/Party.xml
 /copy:Load/Gameplay/Party.xml
@@ -345,6 +366,30 @@
 /processorParam:TextureFormat=Color
 /build:ScreenBackground/background.png
 
+#begin ScreenBackground/background1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:ScreenBackground/background1.png
+
+#begin ScreenBackground/background2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:ScreenBackground/background2.png
+
 #begin ScreenBackground/interiorBackground1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -393,6 +438,18 @@
 /processorParam:TextureFormat=Color
 /build:SplashScreen/Image1.png
 
+#begin TileSheets/building1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:TileSheets/building1.png
+
 #begin TileSheets/interior1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -428,6 +485,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:TileSheets/tilesheet1.png
+
+#begin TileSheets/tilesheet2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:TileSheets/tilesheet2.png
 
 #begin TitleScreen/menuscreen.png
 /importer:TextureImporter

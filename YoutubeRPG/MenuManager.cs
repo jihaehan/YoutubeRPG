@@ -26,6 +26,7 @@ namespace YoutubeRPG
             {
                 for (int i = 0; i < menu.Items.Count; ++i)
                 {
+                    menu.Image.Update(gameTime);
                     menu.Items[i].Image.Update(gameTime);
                     float first = menu.Items[0].Image.Alpha;
                     float last = menu.Items[menu.Items.Count - 1].Image.Alpha;
@@ -34,6 +35,7 @@ namespace YoutubeRPG
                     else if (first == 1.0f && last == 1.0f)
                     {
                         isTransitioning = false;
+                        menu.Image.RestoreEffects();
                         foreach (MenuItem item in menu.Items)
                             item.Image.RestoreEffects();
                     }
@@ -60,8 +62,10 @@ namespace YoutubeRPG
             menu.OnMenuChanged += menu_OnMenuChange;
             menu.Transition(0.0f);
 
+            menu.Image.StoreEffects();
+            menu.Image.ActivateEffect("FadeEffect");
             foreach (MenuItem item in menu.Items)
-            {
+            { //Image.StoreEffects is not working :(
                 item.Image.StoreEffects();
                 item.Image.ActivateEffect("FadeEffect");
             }
@@ -108,8 +112,7 @@ namespace YoutubeRPG
                     isTransitioning = true;
                     prevMenuID = currentMenuID;
                     currentMenuID = menu.Items[menu.ItemNumber].LinkID;
-                    if (menu.Items[menu.ItemNumber].LinkType == "OptionInfo")
-                        OptionInfoMenu();
+
                     menu.Transition(1.0f);
                     foreach (MenuItem item in menu.Items)
                     {
@@ -161,19 +164,13 @@ namespace YoutubeRPG
                     menu.Active = true; 
             }
         }
-        public void OptionInfoMenu()
+        public void OptionInfoMenu(ref ChemicalManager manager)
         {
-            menu.Active = false;
-            menu.Axis = "Left";
-
-            menu.Spacing = new Vector2(0, 10);
-            menu.Alignment = new Vector2(730, 580.5f);
-            menu.Image.Path = "Misc/option_menu";
-            menu.Image.Position = new Vector2(696, 562.5f);
-
+            menu.Items.Clear();
             foreach (string chemicalName in chemicalManager.chemicalName)
             {
                 MenuItem item = new MenuItem();
+                item.Image = new Image();
                 item.Image.Text = chemicalName;
                 string s = (chemicalManager.GetChemical(chemicalName).State).ToString();
                 item.Image.Text += "(" + s.Substring(0, 1) + ")";
