@@ -14,12 +14,15 @@ namespace YoutubeRPG
     {
         public Image Image;
         public Vector2 Velocity;
+     
         public float MoveSpeed;
         public int TileLength;
         
         string portalDestination; 
         Vector2 portalArrival;
         bool isPortal;
+
+        public ChemicalManager ChemicalManager;
 
         public List<string> Keys
         {
@@ -39,10 +42,16 @@ namespace YoutubeRPG
         public void LoadContent()
         {
             Image.LoadContent();
+            //TEST:chemicalManager
+            XmlManager<ChemicalManager> chemicalManagerLoader = new XmlManager<ChemicalManager>();
+            //if Party saves exist, load Save files here
+            ChemicalManager = chemicalManagerLoader.Load("Content/Load/Gameplay/Party.xml");
+            ChemicalManager.LoadContent();
         }
         public void UnloadContent()
         {
             Image.UnloadContent();
+            ChemicalManager.UnloadContent();
         }
         public void Update(GameTime gameTime, World world)
         {
@@ -59,10 +68,12 @@ namespace YoutubeRPG
                 Image.IsActive = false;
 
             Image.Update(gameTime);
+            ChemicalManager.Update(gameTime, this);
             portalTransition(gameTime, world);
         }
         public void Draw(SpriteBatch spriteBatch)
         {
+            ChemicalManager.Draw(spriteBatch);
             Image.Draw(spriteBatch);
         }
 
@@ -92,7 +103,6 @@ namespace YoutubeRPG
                     Image.SpriteSheetEffect.CurrentFrame.Y = 6;
             }
         }
-
         public void MoveLeft(eButtonState buttonState)
         {
             if (buttonState == eButtonState.PRESSED)
@@ -231,12 +241,12 @@ namespace YoutubeRPG
                                     portalArrival = map.PortalTop;
                                     portalCollisions.Add(new Rectangle(x * TileLength, y * TileLength - TileLength, TileLength, TileLength));
                                 }
-                                else
+                                else 
                                 {
-                                    portalArrival = Vector2.Zero;
+                                    //portalArrival = Vector2.Zero;
+                                    portalArrival = map.PortalMid;
                                     portalCollisions.Add(new Rectangle(x * TileLength, y * TileLength, TileLength, TileLength));
                                 }
-
                                 portalArrival *= TileLength;
                                 break;
                             default:

@@ -27,14 +27,14 @@ namespace YoutubeRPG
             CurrentChemicalName = String.Empty;
             chemicals = new Dictionary<string, Chemical>();
             chemicalName = new List<string>();
-            maxVisibleChemicals = 1;
+            maxVisibleChemicals = 3;
         }
 
         public Chemical CurrentChemical
         {
             get { return chemicals[CurrentChemicalName]; }
         }
-        public void LoadContent(Vector2 playerPosition)
+        public void LoadContent()
         {
             XmlManager<Chemical> chemicalLoader = new XmlManager<Chemical>();
             foreach (string chemicalSource in ChemicalSource)
@@ -49,7 +49,6 @@ namespace YoutubeRPG
                     s += "*";
                 chemicalName.Add(s);
                 chemical.LoadContent();
-                chemical.Image.Position = playerPosition;
                 chemicals.Add(s, chemical);
             }
             if (chemicalName.Count() > 0)
@@ -68,7 +67,14 @@ namespace YoutubeRPG
             for (int count = 0; count < maxVisibleChemicals/*chemicalName.Count*/; count++)
             {
                 if (count > 0)
+                {
                     chemical = chemicals[chemicalName[count - 1]];
+                    if (Vector2.Distance(chemical.Image.Position, chemicals[chemicalName[count]].Image.Position) > chemicals[chemicalName[count]].Dimensions.X * 3)
+                        chemicals[chemicalName[count]].Image.Position = player.Image.Position;
+                }
+                else if (Vector2.Distance(player.Image.Position, chemicals[chemicalName[count]].Image.Position) > chemicals[chemicalName[count]].Dimensions.X * 3)
+                    chemicals[chemicalName[count]].Image.Position = player.Image.Position;
+
                 chemicals[chemicalName[count]].Update(gameTime, player, chemical, count);
             } 
         }

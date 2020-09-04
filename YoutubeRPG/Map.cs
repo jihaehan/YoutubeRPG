@@ -18,7 +18,7 @@ namespace YoutubeRPG
         //public List<NPC> NpcLayer;
         public Vector2 TileDimensions;
         public Vector2 StartingPoint;
-        public Vector2 PortalLeft, PortalRight, PortalTop, PortalBottom;
+        public Vector2 PortalLeft, PortalRight, PortalTop, PortalBottom, PortalMid;
         public Image Image;
 
 
@@ -27,7 +27,7 @@ namespace YoutubeRPG
             Layer = new List<Layer>();
             TileDimensions = new Vector2(128,128);
             StartingPoint = new Vector2(-1,-1);
-            PortalLeft = PortalRight = PortalTop = PortalBottom = Vector2.Zero;
+            PortalLeft = PortalRight = PortalTop = PortalBottom = PortalMid = Vector2.Zero;
         }
 
         public void LoadContent()

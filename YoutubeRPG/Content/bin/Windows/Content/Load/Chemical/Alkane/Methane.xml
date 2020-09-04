@@ -2,6 +2,10 @@
 <Chemical>
   <Level>1</Level>
   <Series>Alkane</Series>
+    <Dimensions>
+    <X>75</X>
+    <Y>60</Y>
+  </Dimensions>
   <Image>
     <Path>Chemical/Alkane/Methane</Path>
     <Effects>SpriteSheetEffect</Effects>
