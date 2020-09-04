@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Character>
+  <Image>
+      <Path>Characters/mark</Path>
+      <Effects>SpriteSheetEffect</Effects>
+      <SpriteSheetEffect>
+        <AmountOfFrames>
+          <X>2</X>
+          <Y>2</Y>
+        </AmountOfFrames>
+        <SwitchFrame>500</SwitchFrame>
+      </SpriteSheetEffect>
+    </Image>
+</Character>

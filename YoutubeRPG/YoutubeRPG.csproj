@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="ButtonState.cs" />
     <Compile Include="Camera.cs" />
+    <Compile Include="Character.cs" />
     <Compile Include="Chemical.cs" />
     <Compile Include="ChemicalManager.cs" />
     <Compile Include="Conversation.cs" />

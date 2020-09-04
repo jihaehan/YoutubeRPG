@@ -42,7 +42,6 @@ namespace YoutubeRPG
         public void LoadContent()
         {
             Image.LoadContent();
-            //TEST:chemicalManager
             XmlManager<ChemicalManager> chemicalManagerLoader = new XmlManager<ChemicalManager>();
             //if Party saves exist, load Save files here
             ChemicalManager = chemicalManagerLoader.Load("Content/Load/Gameplay/Party.xml");

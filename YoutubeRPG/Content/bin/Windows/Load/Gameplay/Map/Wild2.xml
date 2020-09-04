@@ -11,23 +11,31 @@
     <X>3</X>
     <Y>3</Y>
   </StartingPoint>
+  <PortalRight>
+    <X>0</X>
+    <Y>3</Y>
+  </PortalRight>
+  <PortalMid>
+    <X>11</X>
+    <Y>5</Y>
+  </PortalMid>
 
   <Layer>
     <Image>
       <Path>TileSheets/tilesheet1</Path>
     </Image>
     <Water>
-    <Path>TileSheets/water</Path>
-    <Effects>SpriteSheetEffect</Effects>
-    <SpriteSheetEffect>
-      <AmountOfFrames>
-        <X>2</X>
-        <Y>2</Y>
-      </AmountOfFrames>
-      <SwitchFrame>500</SwitchFrame>
-    </SpriteSheetEffect>
+      <Path>TileSheets/water</Path>
+      <Effects>SpriteSheetEffect</Effects>
+      <SpriteSheetEffect>
+        <AmountOfFrames>
+          <X>2</X>
+          <Y>2</Y>
+        </AmountOfFrames>
+        <SwitchFrame>500</SwitchFrame>
+      </SpriteSheetEffect>
     </Water>
-    <WaterTiles>[0:7]</WaterTiles>
+    <WaterTiles>[6:7]</WaterTiles>
     <TileMap>
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][2:2][2:2][2:2][x:x][x:x][x:x]</Row>
@@ -35,8 +43,8 @@
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][1:0][0:0][0:0][0:0][4:4][4:4][4:4]</Row>
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][2:2][2:2][2:2][2:2][0:0][0:0][0:0][0:2][x:x][x:x][x:x]</Row>
       <Row>[x:x][x:x][2:2][2:2][2:2][2:2][2:2][2:2][2:2][2:2][x:x][x:x][1:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][1:2][x:x][x:x][x:x]</Row>
-      <Row>[0:7][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][4:2][4:2][0:0][0:0][0:0][0:0][0:0][0:0][0:0][3:0][7:0][x:x][x:x][x:x][x:x]</Row>
-      <Row>[0:7][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][4:4][4:4][0:0][0:0][0:0][0:0][0:0][0:0][0:0][4:0][x:x][x:x][x:x][x:x][x:x]</Row>
+      <Row>[x:x][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][4:2][4:2][0:0][0:0][0:0][0:0][0:0][0:0][0:0][3:0][7:0][x:x][x:x][x:x][x:x]</Row>
+      <Row>[x:x][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][4:4][4:4][0:0][0:0][0:0][0:0][0:0][0:0][0:0][4:0][x:x][x:x][x:x][x:x][x:x]</Row>
       <Row>[x:x][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][3:0][x:x][x:x][0:0][0:0][0:0][0:0][0:0][0:0][0:0][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
       <Row>[x:x][0:0][0:0][0:0][0:0][3:0][7:0][7:0][7:0][4:0][x:x][x:x][0:2][0:2][0:2][0:2][0:2][0:2][0:2][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
       <Row>[x:x][5:0][0:0][0:0][0:0][4:0][x:x][x:x][x:x][x:x][x:x][x:x][1:2][1:2][1:2][1:2][1:2][1:2][1:2][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
@@ -46,9 +54,9 @@
       <Row>[x:x][x:x][0:0][0:0][4:0][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
       <Row>[x:x][5:1][0:0][0:0][2:0][4:1][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
       <Row>[x:x][1:1][0:0][0:0][0:0][2:4][2:1][2:1][4:1][x:x][5:1][2:1][2:1][4:1][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
-      <Row>[x:x][6:1][5:0][0:0][0:0][0:0][0:0][0:0][2:0][2:1][1:0][0:0][0:0][0:1][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
-      <Row>[x:x][x:x][6:0][0:2][0:0][0:0][0:0][0:0][0:0][4:2][0:0][0:0][0:0][0:1][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
-      <Row>[x:x][x:x][x:x][1:2][5:0][0:0][0:0][0:0][3:0][4:4][5:0][0:0][3:0][7:1][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
+      <Row>[x:x][6:1][5:0][0:0][0:0][0:0][0:0][0:0][2:0][2:1][1:0][0:0][0:0][6:7][6:7][6:7][6:7][6:7][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
+      <Row>[x:x][x:x][6:0][0:2][0:0][0:0][0:0][0:0][0:0][4:2][0:0][0:0][0:0][6:7][6:7][6:7][6:7][6:7][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
+      <Row>[x:x][x:x][x:x][1:2][5:0][0:0][0:0][0:0][3:0][4:4][5:0][0:0][3:0][6:7][6:7][6:7][6:7][6:7][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
       <Row>[x:x][x:x][x:x][x:x][6:0][0:0][0:0][3:0][4:0][x:x][6:0][7:0][4:0][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
       <Row>[x:x][x:x][x:x][x:x][6:1][0:2][0:2][4:0][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
       <Row>[x:x][x:x][x:x][x:x][x:x][1:2][1:2][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
@@ -62,7 +70,7 @@
       <Path>TileSheets/tilesheet1</Path>
     </Image>
     <OverlayTiles>[1:4][1:5][0:4][0:5][1:6]</OverlayTiles>
-    <PortalTiles>[7:7]</PortalTiles>
+    <PortalTiles>[7:7-City1]</PortalTiles>
     <TileMap>
     
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>

@@ -26,7 +26,6 @@ namespace YoutubeRPG
             {
                 for (int i = 0; i < menu.Items.Count; ++i)
                 {
-                    menu.Image.Update(gameTime);
                     menu.Items[i].Image.Update(gameTime);
                     float first = menu.Items[0].Image.Alpha;
                     float last = menu.Items[menu.Items.Count - 1].Image.Alpha;
@@ -35,7 +34,6 @@ namespace YoutubeRPG
                     else if (first == 1.0f && last == 1.0f)
                     {
                         isTransitioning = false;
-                        menu.Image.RestoreEffects();
                         foreach (MenuItem item in menu.Items)
                             item.Image.RestoreEffects();
                     }
@@ -62,8 +60,6 @@ namespace YoutubeRPG
             menu.OnMenuChanged += menu_OnMenuChange;
             menu.Transition(0.0f);
 
-            menu.Image.StoreEffects();
-            menu.Image.ActivateEffect("FadeEffect");
             foreach (MenuItem item in menu.Items)
             { //Image.StoreEffects is not working :(
                 item.Image.StoreEffects();
@@ -118,6 +114,27 @@ namespace YoutubeRPG
                     {
                         item.Image.StoreEffects();
                         item.Image.ActivateEffect("FadeEffect");
+                    }
+                }
+            }
+        }
+        public void MenuSelect_Test(eButtonState buttonState)
+        {
+            if (buttonState == eButtonState.DOWN && !isTransitioning)
+            {
+                if (menu.Items[menu.ItemNumber].LinkType == "Screen")
+                    ScreenManager.Instance.ChangeScreens(menu.Items[menu.ItemNumber].LinkID);
+                else
+                {
+                    isTransitioning = true;
+                    prevMenuID = currentMenuID;
+                    currentMenuID = menu.Items[menu.ItemNumber].LinkID;
+
+                    isTransitioning = true;
+                    if (isTransitioning)
+                    {
+                        menu.ID = currentMenuID;
+                        isTransitioning = false;
                     }
                 }
             }

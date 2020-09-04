@@ -15,7 +15,9 @@ namespace YoutubeRPG
         Player player;
         World world;
         Camera camera;
-        MenuManager menuManager;        
+        MenuManager menuManager;
+        Character mole;
+        Character mark; 
 
         Chemical chemical;
         //ChemicalManager chemicalManager;
@@ -46,13 +48,6 @@ namespace YoutubeRPG
             chemical = chemicalLoader.Load("Content/Load/Chemical/Alkane/Pentane.xml");
             chemical.LoadContent();
             chemical.Image.Position = player.Image.Position + new Vector2(128, 128);
-
-            /*
-            //TEST:chemicalManager
-            XmlManager<ChemicalManager> chemicalManagerLoader = new XmlManager<ChemicalManager>();
-            //if Party saves exist, load Save files here
-            chemicalManager = chemicalManagerLoader.Load("Content/Load/Gameplay/Party.xml");
-            chemicalManager.LoadContent(player.Image.Position);*/
         }
         public override void UnloadContent()
         {
@@ -61,7 +56,6 @@ namespace YoutubeRPG
             chemical.UnloadContent();
             world.UnloadContent();
             menuManager.UnloadContent();
-            //chemicalManager.UnloadContent();
         }
         public override void Update(GameTime gameTime)
         {
@@ -70,8 +64,8 @@ namespace YoutubeRPG
             player.Update(gameTime, world);
             chemical.Update(gameTime);
             world.Update(gameTime);
-            menuManager.Update(gameTime, ref player.ChemicalManager);
-            //chemicalManager.Update(gameTime, player);
+            menuManager.Update(gameTime);
+            //menuManager.Update(gameTime, ref player.ChemicalManager);
 
             camera.LockToSprite(world.CurrentMap.Layer[0], player.Image);
 
@@ -86,7 +80,6 @@ namespace YoutubeRPG
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, camera.Transformation);
             world.Draw(spriteBatch, "Underlay");
-            //chemicalManager.Draw(spriteBatch);
             player.Draw(spriteBatch);
             chemical.Draw(spriteBatch);
             world.Draw(spriteBatch, "Overlay");
@@ -102,7 +95,7 @@ namespace YoutubeRPG
             InputManager.AddKeyboardBinding(Keys.S, Toggle_Down);
             InputManager.AddKeyboardBinding(Keys.A, Toggle_Left);
             InputManager.AddKeyboardBinding(Keys.D, Toggle_Right);
-            InputManager.AddKeyboardBinding(Keys.Enter, menuManager.MenuSelect);
+            InputManager.AddKeyboardBinding(Keys.Enter, menuManager.MenuSelect_Test);
             InputManager.AddKeyboardBinding(Keys.J, menuManager.Activate);
             InputManager.AddKeyboardBinding(Keys.X, menuManager.PrevMenuSelect);
         }

@@ -243,6 +243,12 @@
 #begin Load/Gameplay/Map/Wild2.xml
 /copy:Load/Gameplay/Map/Wild2.xml
 
+#begin Load/Gameplay/Markovnikov.xml
+/copy:Load/Gameplay/Markovnikov.xml
+
+#begin Load/Gameplay/Mole.xml
+/copy:Load/Gameplay/Mole.xml
+
 #begin Load/Gameplay/Party.xml
 /copy:Load/Gameplay/Party.xml
 
