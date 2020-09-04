@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <World>
-  <MapSource>Content/Load/Gameplay/Map/Map1.xml</MapSource>
   <MapSource>Content/Load/Gameplay/Map/Wild1.xml</MapSource>
+  <MapSource>Content/Load/Gameplay/Map/Map1.xml</MapSource>
   <MapSource>Content/Load/Gameplay/Map/City1.xml</MapSource>
   <MapSource>Content/Load/Gameplay/Map/Wild2.xml</MapSource>
   <MapSource>Content/Load/Gameplay/Map/Room1.xml</MapSource>

@@ -75,7 +75,7 @@ namespace YoutubeRPG
                 else if (Vector2.Distance(player.Image.Position, chemicals[chemicalName[count]].Image.Position) > chemicals[chemicalName[count]].Dimensions.X * 3)
                     chemicals[chemicalName[count]].Image.Position = player.Image.Position;
 
-                chemicals[chemicalName[count]].Update(gameTime, player, chemical, count);
+                chemicals[chemicalName[count]].Update(gameTime, ref player, chemical, count);
             } 
         }
         public void Update(GameTime gameTime)

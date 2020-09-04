@@ -79,7 +79,7 @@ namespace YoutubeRPG
             Image.IsActive = true;
             Image.Update(gameTime);
         }
-        public void Update(GameTime gameTime, Player player, Chemical chemical, int count)
+        public void Update(GameTime gameTime, ref Player player, Chemical chemical, int count)
         {
             Vector2 v, p;
             if (count == 0)
@@ -101,16 +101,46 @@ namespace YoutubeRPG
             Velocity = Vector2.Zero;
             int padding = 5;
             float distance = Vector2.Distance(p, Image.Position);
-            if (distance > Dimensions.X)
+            if (distance > (Dimensions.X + Dimensions.Y) * 0.5f)
             {
+                float halfDimensionsX = Dimensions.X / 1.9f;
+                float halfDimensionsY = Dimensions.Y / 1.9f;
                 if (right && up)
-                    Velocity = new Vector2(1, -1);
+                {
+                    if ((p.X > Image.Position.X + halfDimensionsX) && (p.Y < Image.Position.Y - halfDimensionsY))
+                        Velocity = new Vector2(1, -1);
+                    else if (p.X < Image.Position.X + halfDimensionsX)
+                        Velocity = new Vector2(-1, -1);
+                    else if (p.X > Image.Position.Y - halfDimensionsY)
+                        Velocity = new Vector2(1, 1);
+                }
                 else if (right && down)
-                    Velocity = new Vector2(1, 1);
+                {
+                    if ((p.X > Image.Position.X + halfDimensionsX) && (p.Y > Image.Position.Y + halfDimensionsY))
+                        Velocity = new Vector2(1, 1);
+                    else if (p.X < Image.Position.X + halfDimensionsX)
+                        Velocity = new Vector2(-1, 1);
+                    else if (p.Y < Image.Position.Y + halfDimensionsY)
+                        Velocity = new Vector2(1, -1);
+                }
                 else if (left && down)
-                    Velocity = new Vector2(-1, 1);
+                {
+                    if ((p.X < Image.Position.X - halfDimensionsX) && (p.Y > Image.Position.Y + halfDimensionsY))
+                        Velocity = new Vector2(-1, 1);
+                    else if (p.X > Image.Position.X - halfDimensionsX)
+                        Velocity = new Vector2(1, 1);
+                    else if (p.Y < Image.Position.Y + halfDimensionsY)
+                        Velocity = new Vector2(-1, -1);
+                }
                 else if (left && up)
-                    Velocity = new Vector2(-1, -1);
+                {
+                    if ((p.X < Image.Position.X - halfDimensionsX) && (p.Y < Image.Position.Y - halfDimensionsY))
+                        Velocity = new Vector2(-1, -1);
+                    else if (p.X > Image.Position.X - halfDimensionsX)
+                        Velocity = new Vector2(1, -1);
+                    else if (p.Y > Image.Position.Y - halfDimensionsY)
+                        Velocity = new Vector2(-1, 1);
+                }
                 else if (right || left)
                 {
                     if (p.Y > (Image.Position.Y + padding))
@@ -145,11 +175,14 @@ namespace YoutubeRPG
             if (Velocity != Vector2.Zero)
             {
                 Velocity.Normalize();
-                Velocity *= (player.MoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
+                if (distance > (Dimensions.X + Dimensions.Y)*0.77f)
+                   Velocity *= (player.MoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds * 1.5f);
+                else
+                   Velocity *= (player.MoveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
                 Image.Position += Velocity;
-                if (Velocity.X < 0)
+                if (player.Velocity.X < 0)
                     Image.SpriteSheetEffect.CurrentFrame.Y = 0;
-                else if (Velocity.X > 0)
+                else if (player.Velocity.X > 0)
                     Image.SpriteSheetEffect.CurrentFrame.Y = 1;
             }
             Image.Update(gameTime);
