@@ -12,7 +12,7 @@ namespace YoutubeRPG
     public class MenuManager
     {
         Menu menu;
-        Menu clone;
+
 
         ChemicalManager chemicalManager;
         bool isTransitioning;
@@ -57,7 +57,7 @@ namespace YoutubeRPG
             menu.UnloadContent();
             menu = XmlMenuManager.Load(menu.ID);
             
-            if (menu.ID.Contains("Option"))
+            if (currentMenuID.Contains("Option"))
                 OptionInfoMenu();
 
             menu.LoadContent();
@@ -84,7 +84,6 @@ namespace YoutubeRPG
             menu.UnloadContent();
             if (chemicalManager != null)
                 chemicalManager.UnloadContent();
-            
         }
         public void Update(GameTime gameTime)
         {
