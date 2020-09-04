@@ -38,6 +38,8 @@
   </Item>
 
   <Item>
+    <LinkType>Menu</LinkType> 
+    <LinkID>Content/Load/Menu/OptionMenu_ItemTest.xml</LinkID>
     <Image>
       <Text>ITEM</Text>
       <FontName>Fonts/OCRA</FontName>  

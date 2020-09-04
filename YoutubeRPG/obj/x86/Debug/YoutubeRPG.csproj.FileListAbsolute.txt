@@ -110,3 +110,12 @@ C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x
 C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\TileSheets\water.xnb
 C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Load\Gameplay\Markovnikov.xml
 C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Load\Gameplay\Mole.xml
+C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Chemical\Image\Butane.xml
+C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Chemical\Image\Butane.xnb
+C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Chemical\Image\Ethane.xml
+C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Chemical\Image\Ethane.xnb
+C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Chemical\Image\Methane.xml
+C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Chemical\Image\Methane.xnb
+C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Load\Menu\OptionMenu_ItemTest.xml
+C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Chemical\Image\Water.xml
+C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Chemical\Image\Water.xnb

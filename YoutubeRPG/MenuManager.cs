@@ -124,6 +124,10 @@ namespace YoutubeRPG
             {
                 if (menu.Items[menu.ItemNumber].LinkType == "Screen")
                     ScreenManager.Instance.ChangeScreens(menu.Items[menu.ItemNumber].LinkID);
+                else if (menu.Items[menu.ItemNumber].LinkType == "None")
+                {
+                    //no action
+                }
                 else
                 {
                     isTransitioning = true;
@@ -145,9 +149,15 @@ namespace YoutubeRPG
             {
                 if (prevMenuID != String.Empty && prevMenuID != currentMenuID)
                 {
-                    isTransitioning = true;
+                    //isTransitioning = true;
                     currentMenuID = prevMenuID;
-                    menu.Transition(1.0f);
+                    menu.ID = currentMenuID;
+                    //menu.Transition(1.0f);
+                }
+                else
+                {
+                    menu.ID = "Content/Load/Menu/GameplayMenu.xml";
+                    menu.Active = true;
                 }
             }
         }
@@ -178,7 +188,10 @@ namespace YoutubeRPG
                 if (menu.Active)
                     menu.Active = false;
                 else
+                {
+                    menu.ID = "Content/Load/Menu/GameplayMenu.xml";
                     menu.Active = true; 
+                }
             }
         }
         public void OptionInfoMenu(ref ChemicalManager manager)

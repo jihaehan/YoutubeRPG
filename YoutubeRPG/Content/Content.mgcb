@@ -157,6 +157,66 @@
 /processorParam:TextureFormat=Color
 /build:Chemical/Alkane/Propane.png
 
+#begin Chemical/Image/Butane.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Image/Butane.png
+
+#begin Chemical/Image/Butane.xml
+/copy:Chemical/Image/Butane.xml
+
+#begin Chemical/Image/Ethane.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Image/Ethane.png
+
+#begin Chemical/Image/Ethane.xml
+/copy:Chemical/Image/Ethane.xml
+
+#begin Chemical/Image/Methane.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Image/Methane.png
+
+#begin Chemical/Image/Methane.xml
+/copy:Chemical/Image/Methane.xml
+
+#begin Chemical/Image/Water.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Image/Water.png
+
+#begin Chemical/Image/Water.xml
+/copy:Chemical/Image/Water.xml
+
 #begin ControlScreen/controlscreen.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -275,6 +335,9 @@
 
 #begin Load/Menu/OptionMenu.xml
 /copy:Load/Menu/OptionMenu.xml
+
+#begin Load/Menu/OptionMenu_ItemTest.xml
+/copy:Load/Menu/OptionMenu_ItemTest.xml
 
 #begin Load/Menu/TestMenu.xml
 /copy:Load/Menu/TestMenu.xml

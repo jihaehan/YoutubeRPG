@@ -18,4 +18,50 @@
       <Y>562.5</Y>
     </Position>
   </Image>
+
+  <Item>
+    <LinkType>Menu</LinkType> 
+    <LinkID>Content/Chemical/Image/Butane.xml</LinkID>
+    <Image>
+      <Text>BUTANE(l)</Text>
+      <FontName>Fonts/OCRAsmall</FontName>  
+      <TextColor>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+        <A>255</A>
+      </TextColor>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Menu</LinkType> 
+    <LinkID>Content/Chemical/Image/Methane.xml</LinkID>
+    <Image>
+      <Text>METHANE(g)</Text>
+      <FontName>Fonts/OCRAsmall</FontName>  
+      <TextColor>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+        <A>255</A>
+      </TextColor>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Menu</LinkType> 
+    <LinkID>Content/Chemical/Image/Ethane.xml</LinkID>
+    <Image>
+      <Text>ETHANE(g)</Text>
+      <FontName>Fonts/OCRAsmall</FontName>  
+      <TextColor>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+        <A>255</A>
+      </TextColor>
+    </Image>
+  </Item>
+
 </Menu>
