@@ -12,7 +12,7 @@ namespace YoutubeRPG
     public class MenuManager
     {
         Menu menu;
-
+        Menu clone; 
 
         ChemicalManager chemicalManager;
         bool isTransitioning;
@@ -66,10 +66,12 @@ namespace YoutubeRPG
 
             foreach (MenuItem item in menu.Items)
             {
-
                 item.Image.StoreEffects();
                 item.Image.ActivateEffect("FadeEffect");
             }
+
+            if (currentMenuID.Contains("GameplayMenu"))
+                menu.Active = true;
         }
         public void LoadContent(string menuPath)
         {
@@ -130,9 +132,7 @@ namespace YoutubeRPG
                 if (menu.Items[menu.ItemNumber].LinkType == "Screen")
                     ScreenManager.Instance.ChangeScreens(menu.Items[menu.ItemNumber].LinkID);
                 else if (menu.Items[menu.ItemNumber].LinkType == "None")
-                {
-                    //no action
-                }
+                {/*no action*/}
                 else
                 {
                     isTransitioning = true;
