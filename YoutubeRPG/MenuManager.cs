@@ -12,13 +12,13 @@ namespace YoutubeRPG
     public class MenuManager
     {
         Menu menu;
+        Menu clone;
+
         ChemicalManager chemicalManager;
         bool isTransitioning;
 
         string prevMenuID;
         string currentMenuID;
-
-        //later move into a Manager for MenuManagers
 
         void Transition(GameTime gameTime)
         {
@@ -30,7 +30,7 @@ namespace YoutubeRPG
                     float first = menu.Items[0].Image.Alpha;
                     float last = menu.Items[menu.Items.Count - 1].Image.Alpha;
                     if (first == 0.0f && last == 0.0f)
-                        menu.ID = currentMenuID; //menu.Items[menu.ItemNumber].LinkID;
+                        menu.ID = currentMenuID;
                     else if (first == 1.0f && last == 1.0f)
                     {
                         isTransitioning = false;
@@ -56,12 +56,17 @@ namespace YoutubeRPG
             XmlManager<Menu> XmlMenuManager = new XmlManager<Menu>();
             menu.UnloadContent();
             menu = XmlMenuManager.Load(menu.ID);
+            
+            if (menu.ID.Contains("Option"))
+                OptionInfoMenu();
+
             menu.LoadContent();
             menu.OnMenuChanged += menu_OnMenuChange;
             menu.Transition(0.0f);
 
             foreach (MenuItem item in menu.Items)
-            { //Image.StoreEffects is not working :(
+            {
+
                 item.Image.StoreEffects();
                 item.Image.ActivateEffect("FadeEffect");
             }
@@ -79,6 +84,7 @@ namespace YoutubeRPG
             menu.UnloadContent();
             if (chemicalManager != null)
                 chemicalManager.UnloadContent();
+            
         }
         public void Update(GameTime gameTime)
         {
@@ -194,15 +200,15 @@ namespace YoutubeRPG
                 }
             }
         }
-        public void OptionInfoMenu(ref ChemicalManager manager)
+        public void OptionInfoMenu()
         {
             menu.Items.Clear();
             foreach (string chemicalName in chemicalManager.chemicalName)
             {
                 MenuItem item = new MenuItem();
                 item.Image = new Image();
-                item.Image.Text = chemicalName;
-                string s = (chemicalManager.GetChemical(chemicalName).State).ToString();
+                item.Image.Text = chemicalName.ToUpper();
+                string s = (chemicalManager.GetChemical(chemicalName).State).ToString().ToLower();
                 item.Image.Text += "(" + s.Substring(0, 1) + ")";
                 item.Image.TextColor = Color.Black;
                 item.Image.FontName = "Fonts/OCRAsmall";

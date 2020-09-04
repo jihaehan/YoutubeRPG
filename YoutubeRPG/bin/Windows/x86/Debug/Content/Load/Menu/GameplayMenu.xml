@@ -23,7 +23,7 @@
   </Image>
 
   <Item>
-    <LinkType>Menu</LinkType> 
+    <LinkType>Info</LinkType> 
     <LinkID>Content/Load/Menu/OptionMenu.xml</LinkID>
     <Image>
       <Text>INFO</Text>

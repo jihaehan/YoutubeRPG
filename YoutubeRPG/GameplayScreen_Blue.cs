@@ -20,8 +20,7 @@ namespace YoutubeRPG
         Character mark; 
 
         Chemical chemical;
-        //ChemicalManager chemicalManager;
-
+        
         public override void LoadContent()
         {
             base.LoadContent();
@@ -35,10 +34,7 @@ namespace YoutubeRPG
 
             camera = new Camera();
             menuManager = new MenuManager();
-            //menuManager.LoadContent("Content/Load/Menu/OptionMenu.xml");
-            //menuManager.LoadContent("Content/Load/Menu/InfoMenu.xml");
             menuManager.LoadContent("Content/Load/Menu/GameplayMenu.xml");
-            //menuManager.LoadContent("Content/Load/Menu/TitleMenu.xml");
 
             player.Image.Position = world.CurrentMap.StartingPoint;
             InitializeBindings();
@@ -65,7 +61,7 @@ namespace YoutubeRPG
             chemical.Update(gameTime);
             world.Update(gameTime);
             menuManager.Update(gameTime);
-            //menuManager.Update(gameTime, ref player.ChemicalManager);
+            menuManager.Update(gameTime, ref player.ChemicalManager);
 
             camera.LockToSprite(world.CurrentMap.Layer[0], player.Image);
 
