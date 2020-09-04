@@ -12,7 +12,7 @@ namespace YoutubeRPG
     public class MenuManager
     {
         Menu menu;
-        Menu clone; 
+        List<Menu> clone; 
 
         ChemicalManager chemicalManager;
         bool isTransitioning;
@@ -43,6 +43,7 @@ namespace YoutubeRPG
         public MenuManager()
         {
             prevMenuID = currentMenuID = String.Empty;
+            clone = new List<Menu>();
             menu = new Menu();
             menu.OnMenuChanged += menu_OnMenuChange;    //OnMenuChanged = event;
                                                         //Adds the method, "menu_OnMenuChanged" into event OnMenuChanged
@@ -53,6 +54,11 @@ namespace YoutubeRPG
         }
         public void menu_OnMenuChange(object sender, EventArgs e)
         {
+            if (!currentMenuID.Contains("GameplayMenu") && currentMenuID != String.Empty)
+                clone.Add(menu);
+            else
+                clone.Clear();
+
             XmlManager<Menu> XmlMenuManager = new XmlManager<Menu>();
             menu.UnloadContent();
             menu = XmlMenuManager.Load(menu.ID);
@@ -86,6 +92,8 @@ namespace YoutubeRPG
             menu.UnloadContent();
             if (chemicalManager != null)
                 chemicalManager.UnloadContent();
+            foreach (Menu m in clone)
+                m.UnloadContent();    
         }
         public void Update(GameTime gameTime)
         {
@@ -102,7 +110,9 @@ namespace YoutubeRPG
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            menu.Draw(spriteBatch);
+            menu.Draw(spriteBatch);       
+            foreach (Menu m in clone)
+                m.Draw(spriteBatch);
         }
         public void MenuSelect(eButtonState buttonState)
         {
@@ -154,10 +164,8 @@ namespace YoutubeRPG
             {
                 if (prevMenuID != String.Empty && prevMenuID != currentMenuID)
                 {
-                    //isTransitioning = true;
                     currentMenuID = prevMenuID;
                     menu.ID = currentMenuID;
-                    //menu.Transition(1.0f);
                 }
                 else
                 {
