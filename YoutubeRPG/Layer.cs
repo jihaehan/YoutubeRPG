@@ -25,8 +25,10 @@ namespace YoutubeRPG
 
         [XmlElement("TileMap")]
         public TileMap Tile;
+
+        public Image Water;
         public Image Image;
-        public string OverlayTiles, PortalTiles;
+        public string OverlayTiles, PortalTiles, WaterTiles;
         public string SolidTiles, LeftEdge, RightEdge, TopEdge, LeftCorner, RightCorner, NWCorner, NECorner, SWCorner, SECorner, RightWall, LeftWall, TopWall, BottomWall, BottomDoor, SEWallCorner, SWWallCorner, NEWallCorner, NWWallCorner, LeftHalf, RightHalf; 
         
         List<Tile> underlayTiles;
@@ -39,6 +41,7 @@ namespace YoutubeRPG
         public Layer()
         {
             Image = new Image();
+            Water = new Image();
             underlayTiles = new List<Tile>();
             overlayTiles = new List<Tile>();
             portalTiles = new Dictionary<Vector2, string>();
@@ -46,12 +49,14 @@ namespace YoutubeRPG
             tilesCount = new List<TileCollision>();
             OverlayTiles = PortalTiles = String.Empty;
             
-            SolidTiles = LeftEdge = RightEdge = TopEdge = LeftCorner = RightCorner = NWCorner = NECorner = SWCorner = SECorner = RightWall = LeftWall = TopWall = BottomWall = BottomDoor = SEWallCorner = SWWallCorner = NEWallCorner = NWWallCorner = LeftHalf = RightHalf = String.Empty;
+            SolidTiles = LeftEdge = RightEdge = TopEdge = LeftCorner = RightCorner = NWCorner = NECorner = SWCorner = SECorner = RightWall = LeftWall = TopWall = BottomWall = BottomDoor = SEWallCorner = SWWallCorner = NEWallCorner = NWWallCorner = LeftHalf = RightHalf = WaterTiles = String.Empty;
         }
 
         public void LoadContent(Vector2 tileDimensions)
         {
             Image.LoadContent();
+            if (Water.Path != String.Empty)
+                Water.LoadContent();
             Vector2 position = -tileDimensions; //tileDimensions - new Vector2(128,128)
 
             foreach (string row in Tile.Row)
@@ -100,6 +105,11 @@ namespace YoutubeRPG
                                 tilesCount[tilesCount.Count() - 1] = TileCollision.RightHalf;
                             else if (LeftHalf.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
                                 tilesCount[tilesCount.Count() - 1] = TileCollision.LeftHalf;
+                            else if (WaterTiles.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
+                            {
+                                tilesCount[tilesCount.Count() - 1] = TileCollision.Water;
+                                Water.IsActive = true;
+                            }
                             else if (PortalTiles.Contains("[" + value1.ToString() + ":" + value2.ToString() + "-"))
                             {
                                 string[] p = PortalTiles.Split(']');
@@ -120,6 +130,7 @@ namespace YoutubeRPG
                                 (int)(value1 * tileDimensions.X), (int)(value2 * tileDimensions.Y),
                                 (int)tileDimensions.X, (int)tileDimensions.Y), tilesCount[tilesCount.Count() - 1]);
 
+
                             if (OverlayTiles.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
                                 overlayTiles.Add(tile);
                             else
@@ -134,6 +145,8 @@ namespace YoutubeRPG
         public void UnloadContent()
         {
             Image.UnloadContent();
+            if (Water.Path != String.Empty)
+                Water.UnloadContent();
         }
         public void Update(GameTime gameTime)
         {
@@ -142,6 +155,7 @@ namespace YoutubeRPG
             foreach (Tile tile in overlayTiles)
                 tile.Update(gameTime);
             Image.Update(gameTime);
+            Water.Update(gameTime);
         }
         public void Draw(SpriteBatch spriteBatch, string drawType)
         {
@@ -156,6 +170,11 @@ namespace YoutubeRPG
                 Image.Position = tile.Position;
                 Image.SourceRect = tile.SourceRect;
                 Image.Draw(spriteBatch);
+                if (tile.State == TileCollision.Water)
+                {
+                    Water.Position = tile.Position;
+                    Water.Draw(spriteBatch);
+                }
             }
         }
         public TileCollision GetTile(int x, int y)
