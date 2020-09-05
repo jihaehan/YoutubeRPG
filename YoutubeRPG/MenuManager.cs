@@ -19,6 +19,7 @@ namespace YoutubeRPG
 
         string prevMenuID;
         string currentMenuID;
+        int prevSelectedItem, gameplayMenuSelectedItem;
 
         void Transition(GameTime gameTime)
         {
@@ -42,6 +43,7 @@ namespace YoutubeRPG
         }
         public MenuManager()
         {
+            prevSelectedItem = gameplayMenuSelectedItem = 0;
             prevMenuID = currentMenuID = String.Empty;
             clone = new List<Menu>();
             menu = new Menu();
@@ -61,8 +63,8 @@ namespace YoutubeRPG
 
             XmlManager<Menu> XmlMenuManager = new XmlManager<Menu>();
             menu.UnloadContent();
-            menu = XmlMenuManager.Load(menu.ID); 
-            
+            menu = XmlMenuManager.Load(menu.ID);
+
             if (currentMenuID.Contains("OptionInfo"))
                 OptionInfoMenu();
 
@@ -77,7 +79,13 @@ namespace YoutubeRPG
             }
 
             if (currentMenuID.Contains("GameplayMenu"))
+            {
                 menu.Active = true;
+                menu.ItemNumber = gameplayMenuSelectedItem;
+                prevSelectedItem = 0;
+            }
+            else 
+                menu.ItemNumber = prevSelectedItem;
         }
         public void LoadContent(string menuPath)
         {
@@ -110,9 +118,9 @@ namespace YoutubeRPG
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            menu.Draw(spriteBatch);       
             foreach (Menu m in clone)
                 m.Draw(spriteBatch);
+            menu.Draw(spriteBatch);       
         }
         public void MenuSelect(eButtonState buttonState)
         {
@@ -125,7 +133,7 @@ namespace YoutubeRPG
                     isTransitioning = true;
                     prevMenuID = currentMenuID;
                     currentMenuID = menu.Items[menu.ItemNumber].LinkID;
-
+                    
                     menu.Transition(1.0f);
                     foreach (MenuItem item in menu.Items)
                     {
@@ -137,7 +145,7 @@ namespace YoutubeRPG
         }
         public void MenuSelect_Test(eButtonState buttonState)
         {
-            if (buttonState == eButtonState.DOWN && !isTransitioning)
+            if (buttonState == eButtonState.DOWN && !isTransitioning && IsActive)
             {
                 if (menu.Items[menu.ItemNumber].LinkType == "Screen")
                     ScreenManager.Instance.ChangeScreens(menu.Items[menu.ItemNumber].LinkID);
@@ -145,8 +153,11 @@ namespace YoutubeRPG
                 {/*no action*/}
                 else
                 {
+                    if (currentMenuID.Contains("Gameplay"))
+
                     isTransitioning = true;
                     prevMenuID = currentMenuID;
+                    prevSelectedItem = menu.ItemNumber;
                     currentMenuID = menu.Items[menu.ItemNumber].LinkID;
 
                     isTransitioning = true;
@@ -157,6 +168,11 @@ namespace YoutubeRPG
                     }
                 }
             }
+            else if (!IsActive)
+            {
+                Activate(buttonState);
+            }
+
         }
         public void PrevMenuSelect(eButtonState buttonState)
         {
@@ -164,18 +180,21 @@ namespace YoutubeRPG
             {
                 if (prevMenuID != String.Empty && prevMenuID != currentMenuID)
                 {
-                    currentMenuID = prevMenuID;
-                    menu.ID = currentMenuID;
                     if (clone.Count > 0)
                         clone.Remove(clone[clone.Count - 1]);
+                    currentMenuID = prevMenuID;
+                    menu.ID = currentMenuID;
+
                 }
-                else
+                else if (!prevMenuID.Contains("Gameplay"))
                 {
                     currentMenuID = prevMenuID = "Content/Load/Menu/GameplayMenu.xml";
                     menu.ID = currentMenuID;
                     menu.Active = true;
                     clone.Clear();
                 }
+                else if (IsActive)
+                    Activate(buttonState);
             }
         }
         public void SelectRight(eButtonState buttonState)
@@ -207,7 +226,8 @@ namespace YoutubeRPG
                 else
                 {
                     menu.ID = "Content/Load/Menu/GameplayMenu.xml";
-                    menu.Active = true; 
+                    menu.Active = true;
+                    prevSelectedItem = 0;
                 }
             }
         }
@@ -223,22 +243,16 @@ namespace YoutubeRPG
                 item.Image.Text += "(" + s.Substring(0, 1) + ")";
                 item.Image.TextColor = Color.Black;
                 item.Image.FontName = "Fonts/OCRAsmall";
-
-
+                item.LinkType = "Info";
+                if (!chemicalName.Contains("*"))
+                    item.LinkID = "Content/Chemical/Image/" + chemicalName + ".xml";
+                else
+                {
+                    string[] str = chemicalName.Split('*');
+                    item.LinkID = "Content/Chemical/Image" + str[0] + ".xml";
+                }
                 menu.Items.Add(item);
             }
-        }
-        public void InfoMenu()
-        {
-            menu.Items.Clear();
-            MenuItem item = new MenuItem();
-            item.Image = new Image();
-
-            //Description
-            item.Image.FontName = "Fonts/OCRA";
-            item.Image.TextColor = Color.Black;
-
-            //Chemical Image
         }
     }
 }
