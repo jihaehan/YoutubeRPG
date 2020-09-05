@@ -256,7 +256,14 @@ namespace YoutubeRPG
 
                 string h = (chemicalManager.GetChemical(chemicalName).CurrentHealth).ToString() + "/" + (chemicalManager.GetChemical(chemicalName).Health).ToString() ;
 
-                //float total = ScreenManager.Instance.Dimensions.X - item.Image.Font.MeasureString(h).X;
+                if (font != null)
+                {
+                    string space = " ";
+                    int spaceNum = (int)((ScreenManager.Instance.Dimensions.X - 730 - font.MeasureString(h).X - font.MeasureString(item.Image.Text).X)/font.MeasureString(space).X);
+                    for (int i = 0; i < spaceNum; i++)
+                        item.Image.Text += " ";
+                    item.Image.Text += h;
+                }
 
                 item.Image.TextColor = Color.Black;
                 item.Image.FontName = "Fonts/OCRAsmall";
