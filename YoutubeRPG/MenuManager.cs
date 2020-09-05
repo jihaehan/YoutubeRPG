@@ -61,9 +61,9 @@ namespace YoutubeRPG
 
             XmlManager<Menu> XmlMenuManager = new XmlManager<Menu>();
             menu.UnloadContent();
-            menu = XmlMenuManager.Load(menu.ID);
+            menu = XmlMenuManager.Load(menu.ID); 
             
-            if (currentMenuID.Contains("Option"))
+            if (currentMenuID.Contains("OptionInfo"))
                 OptionInfoMenu();
 
             menu.LoadContent();
@@ -166,11 +166,15 @@ namespace YoutubeRPG
                 {
                     currentMenuID = prevMenuID;
                     menu.ID = currentMenuID;
+                    if (clone.Count > 0)
+                        clone.Remove(clone[clone.Count - 1]);
                 }
                 else
                 {
-                    menu.ID = "Content/Load/Menu/GameplayMenu.xml";
+                    currentMenuID = prevMenuID = "Content/Load/Menu/GameplayMenu.xml";
+                    menu.ID = currentMenuID;
                     menu.Active = true;
+                    clone.Clear();
                 }
             }
         }
@@ -220,8 +224,21 @@ namespace YoutubeRPG
                 item.Image.TextColor = Color.Black;
                 item.Image.FontName = "Fonts/OCRAsmall";
 
+
                 menu.Items.Add(item);
             }
+        }
+        public void InfoMenu()
+        {
+            menu.Items.Clear();
+            MenuItem item = new MenuItem();
+            item.Image = new Image();
+
+            //Description
+            item.Image.FontName = "Fonts/OCRA";
+            item.Image.TextColor = Color.Black;
+
+            //Chemical Image
         }
     }
 }

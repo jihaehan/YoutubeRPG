@@ -333,6 +333,9 @@
 #begin Load/Menu/InfoMenu.xml
 /copy:Load/Menu/InfoMenu.xml
 
+#begin Load/Menu/OptionInfoMenu.xml
+/copy:Load/Menu/OptionInfoMenu.xml
+
 #begin Load/Menu/OptionMenu.xml
 /copy:Load/Menu/OptionMenu.xml
 

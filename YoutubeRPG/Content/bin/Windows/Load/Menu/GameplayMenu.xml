@@ -23,8 +23,8 @@
   </Image>
 
   <Item>
-    <LinkType>Menu</LinkType> 
-    <LinkID>Content/Load/Menu/OptionMenu.xml</LinkID>
+    <LinkType>Info</LinkType> 
+    <LinkID>Content/Load/Menu/OptionInfoMenu.xml</LinkID>
     <Image>
       <Text>INFO</Text>
       <FontName>Fonts/OCRA</FontName>  
@@ -38,9 +38,9 @@
   </Item>
 
   <Item>
+    <LinkType>Menu</LinkType> 
+    <LinkID>Content/Load/Menu/OptionMenu_ItemTest.xml</LinkID>
     <Image>
-      <LinkType>Menu</LinkType> 
-      <LinkID>Content/Load/Menu/OptionMenu_ItemTest.xml</LinkID>
       <Text>ITEM</Text>
       <FontName>Fonts/OCRA</FontName>  
       <TextColor>
