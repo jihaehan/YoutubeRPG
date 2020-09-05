@@ -38,6 +38,10 @@ namespace YoutubeRPG
         {
             get { return texture; }
         }
+        public SpriteFont Font
+        {
+            get { return font; }
+        }
 
         void SetEffect<T>(ref T effect)
         {
@@ -133,7 +137,6 @@ namespace YoutubeRPG
                 ScreenManager.Instance.SpriteBatch.Draw(Texture, Vector2.Zero, Color.White);
             ScreenManager.Instance.SpriteBatch.DrawString(font, Text, dimensions / 2 - font.MeasureString(Text) / 2, TextColor);
             ScreenManager.Instance.SpriteBatch.End();
-
             
             texture = renderTarget;
 

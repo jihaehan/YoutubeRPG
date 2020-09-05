@@ -21,6 +21,8 @@ namespace YoutubeRPG
         string currentMenuID;
         int prevSelectedItem, gameplayMenuSelectedItem;
 
+        SpriteFont font;
+
         void Transition(GameTime gameTime)
         {
             if (isTransitioning)
@@ -82,6 +84,7 @@ namespace YoutubeRPG
             {
                 menu.Active = true;
                 menu.ItemNumber = gameplayMenuSelectedItem;
+                font = menu.Image.Font;
                 //prevSelectedItem = 0;
             }
             else 
@@ -154,7 +157,8 @@ namespace YoutubeRPG
                 else
                 {
                     prevMenuID = currentMenuID;
-                    gameplayMenuSelectedItem = prevSelectedItem;
+                    if (prevMenuID.Contains("GameplayMenu"))
+                        gameplayMenuSelectedItem = menu.ItemNumber;
                     prevSelectedItem = menu.ItemNumber;
                     currentMenuID = menu.Items[menu.ItemNumber].LinkID;
 
@@ -198,12 +202,20 @@ namespace YoutubeRPG
         public void SelectRight(eButtonState buttonState)
         {
             if (/*menu.Axis == "X" && */buttonState == eButtonState.DOWN)
+            {
                 menu.ItemNumber++;
+                if (currentMenuID.Contains("GameplayMenu"))
+                    menu.ItemNumber++;
+            }
         }
         public void SelectLeft(eButtonState buttonState)
         {
             if (/*menu.Axis == "X" && */buttonState == eButtonState.DOWN)
+            {
                 menu.ItemNumber--;
+                if (currentMenuID.Contains("GameplayMenu"))
+                    menu.ItemNumber--;
+            }
         }
         public void SelectDown(eButtonState buttonState)
         {
@@ -241,6 +253,11 @@ namespace YoutubeRPG
                 item.Image.Text = chemicalName.ToUpper();
                 string s = (chemicalManager.GetChemical(chemicalName).State).ToString().ToLower();
                 item.Image.Text += "(" + s.Substring(0, 1) + ")";
+
+                string h = (chemicalManager.GetChemical(chemicalName).CurrentHealth).ToString() + "/" + (chemicalManager.GetChemical(chemicalName).Health).ToString() ;
+
+                //float total = ScreenManager.Instance.Dimensions.X - item.Image.Font.MeasureString(h).X;
+
                 item.Image.TextColor = Color.Black;
                 item.Image.FontName = "Fonts/OCRAsmall";
                 item.LinkType = "Info";

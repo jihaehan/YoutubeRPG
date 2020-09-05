@@ -31,6 +31,7 @@ namespace YoutubeRPG
         public Series Series;
         public Halogen Halogen;
 
+        public float CurrentHealth; //current health
         public float Health;        //sum of bond enthalpy
         public float Mass;          //atomic mass of 1 molecule
         public float Damage;        //determined by reaction
@@ -57,7 +58,7 @@ namespace YoutubeRPG
             State = State.Gas;
             Series = Series.Alkane;
             Halogen = Halogen.None;
-            Health = Mass = Damage = Defense = Dodge = Accuracy = 0;
+            Health = CurrentHealth = Mass = Damage = Defense = Dodge = Accuracy = 0;
             Solubility = false;
             Elements = new Dictionary<Element, int>();
             Products = new Dictionary<string, int>();
@@ -468,6 +469,7 @@ namespace YoutubeRPG
                     //Solubility???
                     break;
             }
+            CurrentHealth = Health;
         }
         public void Combustion() //choose what combustion
         {
