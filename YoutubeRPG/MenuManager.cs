@@ -82,7 +82,7 @@ namespace YoutubeRPG
             {
                 menu.Active = true;
                 menu.ItemNumber = gameplayMenuSelectedItem;
-                prevSelectedItem = 0;
+                //prevSelectedItem = 0;
             }
             else 
                 menu.ItemNumber = prevSelectedItem;
@@ -153,10 +153,8 @@ namespace YoutubeRPG
                 {/*no action*/}
                 else
                 {
-                    if (currentMenuID.Contains("Gameplay"))
-
-                    isTransitioning = true;
                     prevMenuID = currentMenuID;
+                    gameplayMenuSelectedItem = prevSelectedItem;
                     prevSelectedItem = menu.ItemNumber;
                     currentMenuID = menu.Items[menu.ItemNumber].LinkID;
 
@@ -225,7 +223,9 @@ namespace YoutubeRPG
                     menu.Active = false;
                 else
                 {
-                    menu.ID = "Content/Load/Menu/GameplayMenu.xml";
+                    currentMenuID = "Content/Load/Menu/GameplayMenu.xml";
+                    menu.ID = currentMenuID;
+                    
                     menu.Active = true;
                     prevSelectedItem = 0;
                 }
