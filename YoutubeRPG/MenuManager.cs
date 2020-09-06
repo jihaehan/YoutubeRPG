@@ -23,6 +23,7 @@ namespace YoutubeRPG
 
         SpriteFont font;
         Image page;
+        string pageText;
 
         void Transition(GameTime gameTime)
         {
@@ -48,6 +49,7 @@ namespace YoutubeRPG
         {
             prevSelectedItem = gameplayMenuSelectedItem = 0;
             prevMenuID = currentMenuID = String.Empty;
+            pageText = "1/3";
             page = new Image();
             clone = new List<Menu>();
             menu = new Menu();
@@ -70,7 +72,7 @@ namespace YoutubeRPG
             menu = XmlMenuManager.Load(menu.ID);
 
             if (currentMenuID.Contains("OptionInfo"))
-                OptionInfoMenu();
+                optionInfoMenu();
 
             menu.LoadContent();
             menu.OnMenuChanged += menu_OnMenuChange;
@@ -105,7 +107,8 @@ namespace YoutubeRPG
                 prevMenuID = currentMenuID = menuPath;
                 page.FontName = "Fonts/OCRAExt";
                 page.Path = "Misc/page";
-                page.Position = new Vector2(ScreenManager.Instance.Dimensions.X - 40, ScreenManager.Instance.Dimensions.Y - 20);
+                page.Position = new Vector2(ScreenManager.Instance.Dimensions.X - 47, ScreenManager.Instance.Dimensions.Y - 23);
+                //page.Text = "";
                 page.LoadContent();
             }
         }
@@ -138,6 +141,8 @@ namespace YoutubeRPG
             menu.Draw(spriteBatch);
             if (menu.Type.Contains("Info"))
                 page.Draw(spriteBatch);
+            if (page.IsVisible)
+                spriteBatch.DrawString(page.Font, pageText, page.Position + new Vector2(2,0), Color.White);
         }
         public void MenuSelect(eButtonState buttonState)
         {
@@ -262,7 +267,7 @@ namespace YoutubeRPG
                 }
             }
         }
-        public void OptionInfoMenu()
+        void optionInfoMenu()
         {
             menu.Items.Clear();
             foreach (string chemicalName in chemicalManager.chemicalName)
@@ -310,6 +315,7 @@ namespace YoutubeRPG
                 for (int k = invisible + 3; k < menu.Items.Count(); k++)
                     menu.Items[k].Image.IsVisible = false;
 
+                pageText = ((int)(menu.ItemNumber / 3 + 1)).ToString() + "/3";
             }
         }
     }
