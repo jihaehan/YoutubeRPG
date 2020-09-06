@@ -17,9 +17,9 @@ namespace YoutubeRPG
         public string Text, FontName, Path;
         public Vector2 Position, Scale;
         public Rectangle SourceRect;
-        public bool IsActive;
+        public bool IsActive, IsVisible;
         public Color TextColor;
-        public bool IsLeft, IsRight;
+        public bool IsCorner;
 
         Texture2D texture;
         Vector2 origin;
@@ -101,7 +101,8 @@ namespace YoutubeRPG
             SourceRect = Rectangle.Empty;
             effectList = new Dictionary<string, ImageEffect>();
             TextColor = Color.White;
-            IsLeft = IsRight = false;
+            IsCorner = false;
+            IsVisible = true;
         }
 
         public void LoadContent()
@@ -173,6 +174,7 @@ namespace YoutubeRPG
         {
             origin = new Vector2(SourceRect.Width / 2, SourceRect.Height / 2);
 
+            if (IsVisible)
             spriteBatch.Draw(
                 Texture, Position + origin, SourceRect, Color.White * Alpha,
                 0.0f, origin, Scale, SpriteEffects.None, 0.0f); 

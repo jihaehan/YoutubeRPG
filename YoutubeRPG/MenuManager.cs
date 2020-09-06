@@ -22,6 +22,7 @@ namespace YoutubeRPG
         int prevSelectedItem, gameplayMenuSelectedItem;
 
         SpriteFont font;
+        Image page;
 
         void Transition(GameTime gameTime)
         {
@@ -47,6 +48,7 @@ namespace YoutubeRPG
         {
             prevSelectedItem = gameplayMenuSelectedItem = 0;
             prevMenuID = currentMenuID = String.Empty;
+            page = new Image();
             clone = new List<Menu>();
             menu = new Menu();
             menu.OnMenuChanged += menu_OnMenuChange;    //OnMenuChanged = event;
@@ -87,7 +89,12 @@ namespace YoutubeRPG
                 font = menu.Image.Font;
                 //prevSelectedItem = 0;
             }
-            else 
+            else if (currentMenuID.Contains("OptionInfo"))
+            {
+                menu.ItemNumber = prevSelectedItem; 
+                optionInfoMenuPage();
+            }
+            else
                 menu.ItemNumber = prevSelectedItem;
         }
         public void LoadContent(string menuPath)
@@ -96,11 +103,16 @@ namespace YoutubeRPG
             {
                 menu.ID = menuPath;
                 prevMenuID = currentMenuID = menuPath;
+                page.FontName = "Fonts/OCRAExt";
+                page.Path = "Misc/page";
+                page.Position = new Vector2(ScreenManager.Instance.Dimensions.X - 40, ScreenManager.Instance.Dimensions.Y - 20);
+                page.LoadContent();
             }
         }
         public void UnloadContent()
         {
             menu.UnloadContent();
+            page.UnloadContent();
             if (chemicalManager != null)
                 chemicalManager.UnloadContent();
             foreach (Menu m in clone)
@@ -123,7 +135,9 @@ namespace YoutubeRPG
         {
             foreach (Menu m in clone)
                 m.Draw(spriteBatch);
-            menu.Draw(spriteBatch);       
+            menu.Draw(spriteBatch);
+            if (menu.Type.Contains("Info"))
+                page.Draw(spriteBatch);
         }
         public void MenuSelect(eButtonState buttonState)
         {
@@ -197,6 +211,7 @@ namespace YoutubeRPG
                 }
                 else if (IsActive)
                     Activate(buttonState);
+
             }
         }
         public void SelectRight(eButtonState buttonState)
@@ -221,11 +236,15 @@ namespace YoutubeRPG
         {
             if (/*menu.Axis == "Y" && */buttonState == eButtonState.DOWN)
                 menu.ItemNumber++;
+            else if (menu.Type == "OptionInfo")
+                optionInfoMenuPage();
         }
         public void SelectUp(eButtonState buttonState)
         {
             if (/*menu.Axis == "Y" && */buttonState == eButtonState.DOWN)
                 menu.ItemNumber--;
+            else if (menu.Type == "OptionInfo")
+                optionInfoMenuPage();
         }
         public void Activate(eButtonState buttonState)
         {
@@ -256,6 +275,7 @@ namespace YoutubeRPG
 
                 string h = (chemicalManager.GetChemical(chemicalName).CurrentHealth).ToString() + "/" + (chemicalManager.GetChemical(chemicalName).Health).ToString() ;
 
+
                 if (font != null)
                 {
                     string space = " ";
@@ -273,9 +293,23 @@ namespace YoutubeRPG
                 else
                 {
                     string[] str = chemicalName.Split('*');
-                    item.LinkID = "Content/Chemical/Image" + str[0] + ".xml";
+                    item.LinkID = "Content/Chemical/Image/" + str[0] + ".xml";
                 }
                 menu.Items.Add(item);
+            }
+        }
+        void optionInfoMenuPage()
+        {
+            if (!menu.Items[menu.ItemNumber].Image.IsVisible)
+            {
+                int invisible = menu.ItemNumber - menu.ItemNumber % 3;
+                for (int i = 0; (i < invisible) && (i < menu.Items.Count()); i++)
+                    menu.Items[i].Image.IsVisible = false;
+                for (int j = invisible; j < (invisible + 3) && j < (menu.Items.Count()); j++)
+                    menu.Items[j].Image.IsVisible = true;
+                for (int k = invisible + 3; k < menu.Items.Count(); k++)
+                    menu.Items[k].Image.IsVisible = false;
+
             }
         }
     }

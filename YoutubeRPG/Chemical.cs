@@ -106,6 +106,7 @@ namespace YoutubeRPG
             {
                 float halfDimensionsX = Dimensions.X / 1.9f;
                 float halfDimensionsY = Dimensions.Y / 1.9f;
+                halfDimensionsX = halfDimensionsY = (halfDimensionsX + halfDimensionsY) / 2f;
                 if (right && up)
                 {
                     if ((p.X > Image.Position.X + halfDimensionsX) && (p.Y < Image.Position.Y - halfDimensionsY))

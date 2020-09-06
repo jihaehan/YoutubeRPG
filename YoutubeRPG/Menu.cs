@@ -14,7 +14,7 @@ namespace YoutubeRPG
     {
         public event EventHandler OnMenuChanged; //type of delegate, which calls an 'event'
 
-        public string Axis, Effects;
+        public string Axis, Effects, Type;
         public Vector2 Alignment, Spacing, Grid;
         public Image Image;
         [XmlElement("Text")]
@@ -77,8 +77,11 @@ namespace YoutubeRPG
                 count = (int)Grid.Y;
             }
             else if (Axis == "Left")
+            {
                 dimensions = Vector2.Zero;
-            
+                count = 0;
+            }
+
             foreach (MenuItem item in Items)
             {
                 if (Axis == "X")
@@ -112,8 +115,16 @@ namespace YoutubeRPG
                 }
                 else if (Axis == "Left")
                 {
+                    count++;
+                    if (count > 3 && Type == "OptionInfo")
+                    {
+                        item.Image.IsVisible = false;
+                        if (count % 3 == 1)
+                            dimensions.Y = 0;
+                    }
                     item.Image.Position = new Vector2(0, dimensions.Y) + Alignment;
                     dimensions.Y += item.Image.SourceRect.Height + Spacing.Y;
+
                 }
             }
         }
@@ -123,6 +134,7 @@ namespace YoutubeRPG
             id = String.Empty;
             itemNumber = 0;
             Effects = String.Empty;
+            Type = String.Empty;
             Axis = "Y";
             Items = new List<MenuItem>();
             Alignment = Spacing = Vector2.Zero;

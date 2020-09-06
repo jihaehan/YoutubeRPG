@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Menu>
   <Axis>Left</Axis>
+  <Type>OptionInfo</Type>
   <Spacing>
     <X>0</X>
     <Y>10</Y>
@@ -15,6 +16,6 @@
       <X>696</X>
       <Y>562.5</Y>
     </Position>
+    <FontName>Fonts/OCRAExt</FontName>
   </Image>
-
 </Menu>
