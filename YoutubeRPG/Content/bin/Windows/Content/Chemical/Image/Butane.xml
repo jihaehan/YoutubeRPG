@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Menu>
-  <LinkType>None</LinkType> 
   <Type>Info</Type>
   <Image>
     <Path>Chemical/Image/Butane</Path>
@@ -9,4 +8,13 @@
       <Y>0</Y>
     </Position>
   </Image>
+
+  <Item>
+    <LinkType>Info</LinkType> 
+    <LinkID>Content/Load/Menu/InfoMenu.xml</LinkID>
+    <Image>
+      <Text>'</Text>
+      <FontName>Fonts/OCRA</FontName>  
+    </Image>
+  </Item>
 </Menu>

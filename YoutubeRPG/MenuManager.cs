@@ -19,11 +19,14 @@ namespace YoutubeRPG
 
         string prevMenuID;
         string currentMenuID;
+        string selectedItem;
         int prevSelectedItem, gameplayMenuSelectedItem;
+        List<Image> infoImage;
 
         SpriteFont font;
         Image page;
         string pageText;
+
 
         void Transition(GameTime gameTime)
         {
@@ -48,9 +51,10 @@ namespace YoutubeRPG
         public MenuManager()
         {
             prevSelectedItem = gameplayMenuSelectedItem = 0;
-            prevMenuID = currentMenuID = String.Empty;
+            prevMenuID = currentMenuID = selectedItem = String.Empty;
             pageText = "1/3";
             page = new Image();
+            infoImage = new List<Image>();
             clone = new List<Menu>();
             menu = new Menu();
             menu.OnMenuChanged += menu_OnMenuChange;    //OnMenuChanged = event;
@@ -62,16 +66,17 @@ namespace YoutubeRPG
         }
         public void menu_OnMenuChange(object sender, EventArgs e)
         {
-            if (!currentMenuID.Contains("GameplayMenu") && currentMenuID != String.Empty)
+            if (!currentMenuID.Contains("GameplayMenu") && currentMenuID != String.Empty) 
                 clone.Add(menu);
             else
                 clone.Clear();
 
             XmlManager<Menu> XmlMenuManager = new XmlManager<Menu>();
             menu.UnloadContent();
-            menu = XmlMenuManager.Load(menu.ID);
 
-            if (currentMenuID.Contains("OptionInfo"))
+            if (currentMenuID.Contains(".xml") || menu.ID.Contains(".xml"))
+                menu = XmlMenuManager.Load(menu.ID);
+            if (currentMenuID.Contains("OptionInfo"))  
                 optionInfoMenu();
 
             menu.LoadContent();
@@ -83,7 +88,12 @@ namespace YoutubeRPG
                 item.Image.StoreEffects();
                 item.Image.ActivateEffect("FadeEffect");
             }
-
+            if (!currentMenuID.Contains("Info"))
+            {
+                foreach (Image image in infoImage)
+                    image.UnloadContent();
+                infoImage.Clear();
+            }
             if (currentMenuID.Contains("GameplayMenu"))
             {
                 menu.Active = true;
@@ -91,10 +101,14 @@ namespace YoutubeRPG
                 font = menu.Image.Font;
                 //prevSelectedItem = 0;
             }
-            else if (currentMenuID.Contains("OptionInfo"))
+            else if (menu.Type == "OptionInfo")
             {
                 menu.ItemNumber = prevSelectedItem; 
                 optionInfoMenuPage();
+            }
+            else if (menu.Type == "ChemicalInfo")
+            {
+                chemicalInfoMenu();
             }
             else
                 menu.ItemNumber = prevSelectedItem;
@@ -108,7 +122,6 @@ namespace YoutubeRPG
                 page.FontName = "Fonts/OCRAExt";
                 page.Path = "Misc/page";
                 page.Position = new Vector2(ScreenManager.Instance.Dimensions.X - 47, ScreenManager.Instance.Dimensions.Y - 23);
-                //page.Text = "";
                 page.LoadContent();
             }
         }
@@ -119,7 +132,9 @@ namespace YoutubeRPG
             if (chemicalManager != null)
                 chemicalManager.UnloadContent();
             foreach (Menu m in clone)
-                m.UnloadContent();    
+                m.UnloadContent();
+            foreach (Image i in infoImage)
+                i.UnloadContent();
         }
         public void Update(GameTime gameTime)
         {
@@ -133,6 +148,8 @@ namespace YoutubeRPG
                menu.Update(gameTime);
             Transition(gameTime);
             chemicalManager = manager;
+            foreach (Image i in infoImage)
+                i.Update(gameTime);
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -143,89 +160,103 @@ namespace YoutubeRPG
                 page.Draw(spriteBatch);
             if (page.IsVisible)
                 spriteBatch.DrawString(page.Font, pageText, page.Position + new Vector2(2,0), Color.White);
+            foreach (Image i in infoImage)
+                i.Draw(spriteBatch);
         }
-        public void MenuSelect(eButtonState buttonState)
+        void chemicalInfoMenu()
         {
-            if (buttonState == eButtonState.DOWN && !isTransitioning)
+            foreach (Image image in infoImage)
+                image.UnloadContent();
+            infoImage.Clear();
+            Vector2 dimensions = new Vector2(menu.Image.Position.X + menu.Image.SourceRect.Width/2, 50);
+            Chemical chemical = chemicalManager.GetChemical(selectedItem);
+
+
+            //1: Chemical Name
+            Image i = new Image();
+            i.FontName = "Fonts/OCRAsmall";
+            i.Text = selectedItem.ToUpper();
+            i.TextColor = Color.Black;
+            i.Position = new Vector2(dimensions.X - font.MeasureString(i.Text).X/2f, dimensions.Y);
+            dimensions.Y += 10f;
+            infoImage.Add(i);
+
+            //2: Chemical Image
+            i = new Image();
+            i.Path = "Chemical/" + chemical.Series.ToString() + "/" + chemical.Name;
+            i.Effects = "SpriteSheetEffect";
+            i.SpriteSheetEffect = new SpriteSheetEffect();
+            i.SpriteSheetEffect.AmountOfFrames = new Vector2(2, 2);
+            i.SpriteSheetEffect.SwitchFrame = 500;
+            i.Position = new Vector2(dimensions.X - 64, dimensions.Y);
+            i.IsActive = true;
+            dimensions.Y += 128f;
+            infoImage.Add(i);
+            
+
+            chemical.UnloadContent();
+            foreach (Image image in infoImage)
+                image.LoadContent();
+        }
+        void propertyInfoMenu()
+        {
+
+        }
+        void optionInfoMenu()
+        {
+            menu.Items.Clear();
+            foreach (string chemicalName in chemicalManager.chemicalName)
             {
-                if (menu.Items[menu.ItemNumber].LinkType == "Screen")
-                    ScreenManager.Instance.ChangeScreens(menu.Items[menu.ItemNumber].LinkID);
+                MenuItem item = new MenuItem();
+                item.Image = new Image();
+                item.Image.Text = chemicalName.ToUpper();
+                string s = (chemicalManager.GetChemical(chemicalName).State).ToString().ToLower();
+                item.Image.Text += "(" + s.Substring(0, 1) + ")";
+
+                string h = (chemicalManager.GetChemical(chemicalName).CurrentHealth).ToString() + "/" + (chemicalManager.GetChemical(chemicalName).Health).ToString() ;
+
+
+                if (font != null)
+                {
+                    string space = " ";
+                    int spaceNum = (int)((ScreenManager.Instance.Dimensions.X - 730 - font.MeasureString(h).X - font.MeasureString(item.Image.Text).X)/font.MeasureString(space).X);
+                    for (int i = 0; i < spaceNum; i++)
+                        item.Image.Text += " ";
+                    item.Image.Text += h;
+                }
+
+                item.Image.TextColor = Color.Black;
+                item.Image.FontName = "Fonts/OCRAsmall";
+                item.LinkType = "Info";
+
+                /*
+                if (!chemicalName.Contains("*"))
+                    item.LinkID = "Content/Chemical/Image/" + chemicalName + ".xml";
                 else
                 {
-                    isTransitioning = true;
-                    prevMenuID = currentMenuID;
-                    currentMenuID = menu.Items[menu.ItemNumber].LinkID;
-                    
-                    menu.Transition(1.0f);
-                    foreach (MenuItem item in menu.Items)
-                    {
-                        item.Image.StoreEffects();
-                        item.Image.ActivateEffect("FadeEffect");
-                    }
-                }
+                    string[] str = chemicalName.Split('*');
+                    item.LinkID = "Content/Chemical/Image/" + str[0] + ".xml";
+                }*/
+
+                //TEST: chemicalInfoMenu
+                item.LinkID = "Content/Load/Menu/InfoMenu.xml";
+
+                menu.Items.Add(item);
             }
         }
-        public void MenuSelect_Test(eButtonState buttonState)
+        void optionInfoMenuPage()
         {
-            if (buttonState == eButtonState.DOWN && !isTransitioning && IsActive)
+            if (!menu.Items[menu.ItemNumber].Image.IsVisible)
             {
-                if (menu.Items[menu.ItemNumber].LinkType == "Screen")
-                    ScreenManager.Instance.ChangeScreens(menu.Items[menu.ItemNumber].LinkID);
-                else if (menu.Items[menu.ItemNumber].LinkType == "None")
-                {/*no action*/}
-                else
-                {
-                    prevMenuID = currentMenuID;
-                    if (prevMenuID.Contains("GameplayMenu"))
-                        gameplayMenuSelectedItem = menu.ItemNumber;
-                    prevSelectedItem = menu.ItemNumber;
-                    currentMenuID = menu.Items[menu.ItemNumber].LinkID;
+                int invisible = menu.ItemNumber - menu.ItemNumber % 3;
+                for (int i = 0; (i < invisible) && (i < menu.Items.Count()); i++)
+                    menu.Items[i].Image.IsVisible = false;
+                for (int j = invisible; j < (invisible + 3) && j < (menu.Items.Count()); j++)
+                    menu.Items[j].Image.IsVisible = true;
+                for (int k = invisible + 3; k < menu.Items.Count(); k++)
+                    menu.Items[k].Image.IsVisible = false;
 
-                    isTransitioning = true;
-                    if (isTransitioning)
-                    {
-                        menu.ID = currentMenuID;
-                        isTransitioning = false;
-                    }
-                }
-            }
-            else if (!IsActive)
-            {
-                Activate(buttonState);
-            }
-
-        }
-        public void PrevMenuSelect(eButtonState buttonState)
-        {
-            if (buttonState == eButtonState.DOWN && !isTransitioning)
-            {
-                if (prevMenuID != String.Empty && prevMenuID != currentMenuID)
-                {
-                    if (clone.Count > 0)
-                        clone.Remove(clone[clone.Count - 1]);
-                    currentMenuID = prevMenuID;
-                    menu.ID = currentMenuID;
-
-                }
-                else if (!prevMenuID.Contains("Gameplay"))
-                {
-                    currentMenuID = prevMenuID = "Content/Load/Menu/GameplayMenu.xml";
-                    menu.ID = currentMenuID;
-                    menu.Active = true;
-                    clone.Clear();
-                }
-                else if (IsActive)
-                    Activate(buttonState);
-
-            }
-        }
-        public void SelectRight(eButtonState buttonState)
-        {
-            if (/*menu.Axis == "X" && */buttonState == eButtonState.DOWN)
-            {
-                menu.ItemNumber++;
-                if (currentMenuID.Contains("GameplayMenu"))
-                    menu.ItemNumber++;
+                pageText = ((int)(menu.ItemNumber / 3 + 1)).ToString() + "/3";
             }
         }
         public void SelectLeft(eButtonState buttonState)
@@ -261,61 +292,104 @@ namespace YoutubeRPG
                 {
                     currentMenuID = "Content/Load/Menu/GameplayMenu.xml";
                     menu.ID = currentMenuID;
-                    
+
                     menu.Active = true;
                     prevSelectedItem = 0;
                 }
             }
         }
-        void optionInfoMenu()
+        public void MenuSelect_Test(eButtonState buttonState)
         {
-            menu.Items.Clear();
-            foreach (string chemicalName in chemicalManager.chemicalName)
+            if (buttonState == eButtonState.DOWN && !isTransitioning && IsActive)
             {
-                MenuItem item = new MenuItem();
-                item.Image = new Image();
-                item.Image.Text = chemicalName.ToUpper();
-                string s = (chemicalManager.GetChemical(chemicalName).State).ToString().ToLower();
-                item.Image.Text += "(" + s.Substring(0, 1) + ")";
-
-                string h = (chemicalManager.GetChemical(chemicalName).CurrentHealth).ToString() + "/" + (chemicalManager.GetChemical(chemicalName).Health).ToString() ;
-
-
-                if (font != null)
-                {
-                    string space = " ";
-                    int spaceNum = (int)((ScreenManager.Instance.Dimensions.X - 730 - font.MeasureString(h).X - font.MeasureString(item.Image.Text).X)/font.MeasureString(space).X);
-                    for (int i = 0; i < spaceNum; i++)
-                        item.Image.Text += " ";
-                    item.Image.Text += h;
-                }
-
-                item.Image.TextColor = Color.Black;
-                item.Image.FontName = "Fonts/OCRAsmall";
-                item.LinkType = "Info";
-                if (!chemicalName.Contains("*"))
-                    item.LinkID = "Content/Chemical/Image/" + chemicalName + ".xml";
+                if (menu.Items[menu.ItemNumber].LinkType == "Screen")
+                    ScreenManager.Instance.ChangeScreens(menu.Items[menu.ItemNumber].LinkID);
+                else if (menu.Items[menu.ItemNumber].LinkType == "None")
+                {/*no action*/}
                 else
                 {
-                    string[] str = chemicalName.Split('*');
-                    item.LinkID = "Content/Chemical/Image/" + str[0] + ".xml";
+                    prevMenuID = currentMenuID;
+                    if (prevMenuID.Contains("GameplayMenu"))
+                        gameplayMenuSelectedItem = menu.ItemNumber;
+                    prevSelectedItem = menu.ItemNumber;
+                    currentMenuID = menu.Items[menu.ItemNumber].LinkID;
+
+                    if (menu.Type.Contains("Option"))
+                    {
+                        string str = menu.Items[menu.ItemNumber].Image.Text;
+                        if (str != String.Empty)
+                        {
+                            str = str.Substring(0, str.IndexOf('(')).ToLower();
+                            selectedItem = str[0].ToString().ToUpper() + str.Substring(1);
+
+                        }
+                    }
+
+                    isTransitioning = true;
+                    if (isTransitioning)
+                    {
+                        menu.ID = currentMenuID;
+                        isTransitioning = false;
+                    }
                 }
-                menu.Items.Add(item);
+            }
+            else if (!IsActive)
+            {
+                Activate(buttonState);
             }
         }
-        void optionInfoMenuPage()
+        public void MenuSelect(eButtonState buttonState)
         {
-            if (!menu.Items[menu.ItemNumber].Image.IsVisible)
+            if (buttonState == eButtonState.DOWN && !isTransitioning)
             {
-                int invisible = menu.ItemNumber - menu.ItemNumber % 3;
-                for (int i = 0; (i < invisible) && (i < menu.Items.Count()); i++)
-                    menu.Items[i].Image.IsVisible = false;
-                for (int j = invisible; j < (invisible + 3) && j < (menu.Items.Count()); j++)
-                    menu.Items[j].Image.IsVisible = true;
-                for (int k = invisible + 3; k < menu.Items.Count(); k++)
-                    menu.Items[k].Image.IsVisible = false;
+                if (menu.Items[menu.ItemNumber].LinkType == "Screen")
+                    ScreenManager.Instance.ChangeScreens(menu.Items[menu.ItemNumber].LinkID);
+                else
+                {
+                    isTransitioning = true;
+                    prevMenuID = currentMenuID;
+                    currentMenuID = menu.Items[menu.ItemNumber].LinkID;
 
-                pageText = ((int)(menu.ItemNumber / 3 + 1)).ToString() + "/3";
+                    menu.Transition(1.0f);
+                    foreach (MenuItem item in menu.Items)
+                    {
+                        item.Image.StoreEffects();
+                        item.Image.ActivateEffect("FadeEffect");
+                    }
+                }
+            }
+        }
+        public void PrevMenuSelect(eButtonState buttonState)
+        {
+            if (buttonState == eButtonState.DOWN && !isTransitioning)
+            {
+                if (prevMenuID != String.Empty && prevMenuID != currentMenuID)
+                {
+                    if (clone.Count > 0)
+                        clone.Remove(clone[clone.Count - 1]);
+                    currentMenuID = prevMenuID;
+                    menu.ID = currentMenuID;
+
+                }
+                else if (!prevMenuID.Contains("Gameplay"))
+                {
+                    currentMenuID = prevMenuID = "Content/Load/Menu/GameplayMenu.xml";
+                    menu.ID = currentMenuID;
+                    menu.Active = true;
+                    clone.Clear();
+                }
+                else if (IsActive)
+                    Activate(buttonState);
+
+            }
+        }
+        public void SelectRight(eButtonState buttonState)
+        {
+            if (/*menu.Axis == "X" && */buttonState == eButtonState.DOWN)
+            {
+                menu.ItemNumber++;
+                if (currentMenuID.Contains("GameplayMenu"))
+                    menu.ItemNumber++;
             }
         }
     }

@@ -53,6 +53,7 @@ namespace YoutubeRPG
                 var obj = this;
                 (effect as ImageEffect).LoadContent(ref obj); 
             }
+            if (!effectList.ContainsKey(effect.GetType().ToString().Replace("YoutubeRPG.", "")))
             effectList.Add(effect.GetType().ToString().Replace("YoutubeRPG.", ""), (effect as ImageEffect));
         }
         public void ActivateEffect(string effect)

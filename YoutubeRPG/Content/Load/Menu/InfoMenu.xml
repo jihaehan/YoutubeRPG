@@ -1,25 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Menu>
-  <Active>false</Active>
-  <Axis>Y</Axis>
+  <Axis>Left</Axis>
+  <Type>ChemicalInfo</Type>
   <Spacing>
-    <X>30</X>
-    <Y>12</Y>
+    <X>0</X>
+    <Y>10</Y>
   </Spacing>
   <Alignment>
-    <X>-555</X>
-    <Y>327</Y>
+    <X>-5</X>
+    <Y>-5</Y>
   </Alignment> 
-  <Grid>
-    <X>2</X>
-    <Y>2</Y>
-  </Grid>
   <Image>
-    <Path>Misc/gameplay_menu</Path>
+    <Path>Misc/info_menu</Path>
     <Position>
-      <X>0</X>
-      <Y>562.5</Y>
+      <X>905</X>
+      <Y>0</Y>
     </Position>
+    <FontName>Fonts/OCRAExt</FontName>
   </Image>
-  
+
+  <Item>
+    <LinkType>Info</LinkType> 
+    <LinkID>Content/Load/Menu/InfoMenu.xml</LinkID>
+    <Image>
+      <Text>'</Text>
+      <FontName>Fonts/OCRAExt</FontName>  
+    </Image>
+  </Item>
 </Menu>
