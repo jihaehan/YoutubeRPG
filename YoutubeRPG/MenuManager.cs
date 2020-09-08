@@ -222,13 +222,20 @@ namespace YoutubeRPG
             i = new Image();
             i.FontName = "Fonts/OCRAExt";
             i.Text = "???";
-
-            if (!reactionHistory.Contains("Alkane"))
-                reactionHistory.Add("Alkane");
-
+            //TEST: Unlock breeding route
+            //if (!reactionHistory.Contains("Alkane")) reactionHistory.Add("Alkane");
             i.Text = reactionHistoryFormula(chemical);
             i.TextColor = Color.Black;
             i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f, dimensions.Y);
+            infoImage.Add(i);
+
+            //6: Page Number
+            i = new Image();
+            i.FontName = "Fonts/OCRAExt";
+            i.Text = "1/2";
+            i.Path = "Misc/page";
+            i.Position = new Vector2(ScreenManager.Instance.Dimensions.X - 47, menu.Image.SourceRect.Height - 23);
+            page.LoadContent();
             infoImage.Add(i);
 
             foreach (Image image in infoImage)
@@ -248,7 +255,28 @@ namespace YoutubeRPG
             i.Text = selectedItem.ToUpper();
             i.TextColor = Color.Black;
             i.Position = new Vector2(dimensions.X - font.MeasureString(i.Text).X / 2f, dimensions.Y);
-            dimensions.Y += 10f;
+            dimensions.Y += 50f;
+            infoImage.Add(i);
+
+            //2: Chemical Properties
+            i = new Image();
+            i.FontName = "Fonts/OCRAExt";
+            i.Text = "test: hohohoho";
+
+
+
+            i.TextColor = Color.Black;
+            i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f, dimensions.Y);
+            dimensions.Y += menu.Image.Font.MeasureString(i.Text).Y + 3;
+            infoImage.Add(i);
+
+            //6: Page Number
+            i = new Image();
+            i.FontName = "Fonts/OCRAExt";
+            i.Text = "2/2";
+            i.Path = "Misc/page";
+            i.Position = new Vector2(ScreenManager.Instance.Dimensions.X - 47, menu.Image.SourceRect.Height - 23);
+            page.LoadContent();
             infoImage.Add(i);
 
             foreach (Image image in infoImage)
