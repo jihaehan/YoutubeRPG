@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Chemical>
+  <Level>3</Level>
+  <Series>Halogenoalkane</Series>
+  <Halogen>Bromo</Halogen>
+    <Dimensions>
+    <X>90</X>
+    <Y>100</Y>
+  </Dimensions>
+  <Image>
+    <Path>Chemical/Halogenoalkane/Bromopropane</Path>
+    <Effects>SpriteSheetEffect</Effects>
+    <SpriteSheetEffect>
+      <AmountOfFrames>
+        <X>2</X>
+        <Y>2</Y>
+      </AmountOfFrames>
+      <SwitchFrame>500</SwitchFrame>
+    </SpriteSheetEffect>
+  </Image>
+</Chemical>

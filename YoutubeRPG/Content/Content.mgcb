@@ -61,6 +61,102 @@
 /processorParam:TextureFormat=Color
 /build:Characters/player.png
 
+#begin Chemical/Alcohol/Butanol.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alcohol/Butanol.png
+
+#begin Chemical/Alcohol/Butanol1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alcohol/Butanol1.png
+
+#begin Chemical/Alcohol/Ethanol.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alcohol/Ethanol.png
+
+#begin Chemical/Alcohol/Methanol.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alcohol/Methanol.png
+
+#begin Chemical/Alcohol/Pentanol.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alcohol/Pentanol.png
+
+#begin Chemical/Alcohol/Pentanol1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alcohol/Pentanol1.png
+
+#begin Chemical/Alcohol/Pentanol2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alcohol/Pentanol2.png
+
+#begin Chemical/Alcohol/Propanol.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alcohol/Propanol.png
+
 #begin Chemical/Alkane/Butane.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -168,6 +264,150 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Chemical/Alkane/Propane.png
+
+#begin Chemical/Alkene/Butene.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alkene/Butene.png
+
+#begin Chemical/Alkene/Butene1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alkene/Butene1.png
+
+#begin Chemical/Alkene/Butene2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alkene/Butene2.png
+
+#begin Chemical/Alkene/Ethene.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alkene/Ethene.png
+
+#begin Chemical/Alkene/Hexene.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alkene/Hexene.png
+
+#begin Chemical/Alkene/Hexene1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alkene/Hexene1.png
+
+#begin Chemical/Alkene/Hexene2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alkene/Hexene2.png
+
+#begin Chemical/Alkene/Hexene3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alkene/Hexene3.png
+
+#begin Chemical/Alkene/Pentene.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alkene/Pentene.png
+
+#begin Chemical/Alkene/Pentene1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alkene/Pentene1.png
+
+#begin Chemical/Alkene/Pentene2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alkene/Pentene2.png
+
+#begin Chemical/Alkene/Propene.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Alkene/Propene.png
 
 #begin Chemical/Diagram/Bromobutane.png
 /importer:TextureImporter
@@ -481,6 +721,102 @@
 /processorParam:TextureFormat=Color
 /build:Chemical/Diagram/Propene.png
 
+#begin Chemical/Halogenoalkane/Bromobutane.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Halogenoalkane/Bromobutane.png
+
+#begin Chemical/Halogenoalkane/Bromobutane1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Halogenoalkane/Bromobutane1.png
+
+#begin Chemical/Halogenoalkane/Bromoethane.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Halogenoalkane/Bromoethane.png
+
+#begin Chemical/Halogenoalkane/Bromomethane.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Halogenoalkane/Bromomethane.png
+
+#begin Chemical/Halogenoalkane/Bromopentane.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Halogenoalkane/Bromopentane.png
+
+#begin Chemical/Halogenoalkane/Bromopentane2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Halogenoalkane/Bromopentane2.png
+
+#begin Chemical/Halogenoalkane/Bromopentane3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Halogenoalkane/Bromopentane3.png
+
+#begin Chemical/Halogenoalkane/Bromopropane.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Halogenoalkane/Bromopropane.png
+
 #begin Chemical/Image/Butane.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -588,6 +924,21 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/OCRAsmall.spritefont
 
+#begin Load/Chemical/Alcohol/Butanol.xml
+/copy:Load/Chemical/Alcohol/Butanol.xml
+
+#begin Load/Chemical/Alcohol/Ethanol.xml
+/copy:Load/Chemical/Alcohol/Ethanol.xml
+
+#begin Load/Chemical/Alcohol/Methanol.xml
+/copy:Load/Chemical/Alcohol/Methanol.xml
+
+#begin Load/Chemical/Alcohol/Pentanol.xml
+/copy:Load/Chemical/Alcohol/Pentanol.xml
+
+#begin Load/Chemical/Alcohol/Propanol.xml
+/copy:Load/Chemical/Alcohol/Propanol.xml
+
 #begin Load/Chemical/Alkane/Butane.xml
 /copy:Load/Chemical/Alkane/Butane.xml
 
@@ -602,6 +953,36 @@
 
 #begin Load/Chemical/Alkane/Propane.xml
 /copy:Load/Chemical/Alkane/Propane.xml
+
+#begin Load/Chemical/Alkene/Butene.xml
+/copy:Load/Chemical/Alkene/Butene.xml
+
+#begin Load/Chemical/Alkene/Ethene.xml
+/copy:Load/Chemical/Alkene/Ethene.xml
+
+#begin Load/Chemical/Alkene/Hexene.xml
+/copy:Load/Chemical/Alkene/Hexene.xml
+
+#begin Load/Chemical/Alkene/Pentene.xml
+/copy:Load/Chemical/Alkene/Pentene.xml
+
+#begin Load/Chemical/Alkene/Propene.xml
+/copy:Load/Chemical/Alkene/Propene.xml
+
+#begin Load/Chemical/Halogenoalkane/Bromobutane.xml
+/copy:Load/Chemical/Halogenoalkane/Bromobutane.xml
+
+#begin Load/Chemical/Halogenoalkane/Bromoethane.xml
+/copy:Load/Chemical/Halogenoalkane/Bromoethane.xml
+
+#begin Load/Chemical/Halogenoalkane/Bromomethane.xml
+/copy:Load/Chemical/Halogenoalkane/Bromomethane.xml
+
+#begin Load/Chemical/Halogenoalkane/Bromopentane.xml
+/copy:Load/Chemical/Halogenoalkane/Bromopentane.xml
+
+#begin Load/Chemical/Halogenoalkane/Bromopropane.xml
+/copy:Load/Chemical/Halogenoalkane/Bromopropane.xml
 
 #begin Load/Gameplay/Map/City1.xml
 /copy:Load/Gameplay/Map/City1.xml
