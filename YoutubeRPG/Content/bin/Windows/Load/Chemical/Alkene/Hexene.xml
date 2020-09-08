@@ -3,8 +3,8 @@
   <Level>6</Level>
   <Series>Alkene</Series>
   <Dimensions>
-    <X>128</X>
-    <Y>128</Y>
+    <X>80</X>
+    <Y>80</Y>
   </Dimensions>
   <Image>
     <Path>Chemical/Alkene/Hexene</Path>

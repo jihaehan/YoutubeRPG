@@ -20,7 +20,7 @@
   </Image>
 
   <Item>
-    <LinkType>Info</LinkType> 
+    <LinkType>None</LinkType> 
     <LinkID>Content/Load/Menu/InfoMenu.xml</LinkID>
     <Image>
       <Text>'</Text>

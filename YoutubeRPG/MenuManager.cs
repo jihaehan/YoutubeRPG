@@ -163,9 +163,10 @@ namespace YoutubeRPG
                 m.Draw(spriteBatch);
             menu.Draw(spriteBatch);
             if (menu.Type.Contains("Info"))
+            {
                 page.Draw(spriteBatch);
-            if (page.IsVisible)
                 spriteBatch.DrawString(page.Font, pageText, page.Position + new Vector2(2,0), Color.White);
+            }
             foreach (Image i in infoImage)
                 i.Draw(spriteBatch);
         }
@@ -221,6 +222,10 @@ namespace YoutubeRPG
             i = new Image();
             i.FontName = "Fonts/OCRAExt";
             i.Text = "???";
+
+            if (!reactionHistory.Contains("Alkane"))
+                reactionHistory.Add("Alkane");
+
             i.Text = reactionHistoryFormula(chemical);
             i.TextColor = Color.Black;
             i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f, dimensions.Y);
@@ -344,7 +349,7 @@ namespace YoutubeRPG
                         string a = chemical.Name.Replace("ane", "ene").ToLower();
                         s = a + " + HBr + HEAT" + "\n\r" + "= " + chemical.Name.ToLower();
                     }
-                    // CAUTION: Halogenoalkane_Hydrohalogenation is missing
+                    // CAUTION: halogenoalkane_Hydrohalogenation is missing, but not a priority to sort out here
                     else
                     {
                         string element = chemical.GetElement(Element.C).ToString();
@@ -383,6 +388,19 @@ namespace YoutubeRPG
                 menu.ItemNumber--;
                 if (currentMenuID.Contains("GameplayMenu"))
                     menu.ItemNumber--;
+                else if (menu.Type == "ChemicalInfo")
+                    chemicalInfoMenu();
+            }
+        }
+        public void SelectRight(eButtonState buttonState)
+        {
+            if (/*menu.Axis == "X" && */buttonState == eButtonState.DOWN)
+            {
+                menu.ItemNumber++;
+                if (currentMenuID.Contains("GameplayMenu"))
+                    menu.ItemNumber++;
+                else if (menu.Type == "ChemicalInfo")
+                    propertyInfoMenu();
             }
         }
         public void SelectDown(eButtonState buttonState)
@@ -391,6 +409,8 @@ namespace YoutubeRPG
                 menu.ItemNumber++;
             else if (menu.Type == "OptionInfo")
                 optionInfoMenuPage();
+            else if (menu.Type == "ChemicalInfo")
+                propertyInfoMenu();
         }
         public void SelectUp(eButtonState buttonState)
         {
@@ -398,6 +418,8 @@ namespace YoutubeRPG
                 menu.ItemNumber--;
             else if (menu.Type == "OptionInfo")
                 optionInfoMenuPage();
+            else if (menu.Type == "ChemicalInfo")
+                chemicalInfoMenu();
         }
         public void Activate(eButtonState buttonState)
         {
@@ -500,15 +522,7 @@ namespace YoutubeRPG
 
             }
         }
-        public void SelectRight(eButtonState buttonState)
-        {
-            if (/*menu.Axis == "X" && */buttonState == eButtonState.DOWN)
-            {
-                menu.ItemNumber++;
-                if (currentMenuID.Contains("GameplayMenu"))
-                    menu.ItemNumber++;
-            }
-        }
+        
         #endregion
     }
 }
