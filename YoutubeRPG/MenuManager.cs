@@ -221,10 +221,6 @@ namespace YoutubeRPG
             i = new Image();
             i.FontName = "Fonts/OCRAExt";
             i.Text = "???";
-
-            if (!reactionHistory.Contains("Alkane"))
-                reactionHistory.Add("Alkane");
-
             i.Text = reactionHistoryFormula(chemical);
             i.TextColor = Color.Black;
             i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f, dimensions.Y);
@@ -298,6 +294,15 @@ namespace YoutubeRPG
                             s = chemical.Name.Replace("ane", "ene").ToLower() + " + H2Ni + HEAT" + "\n\r" + "= " + chemical.Name.ToLower();
                         }
                     }
+                    else
+                    {
+                        string element = chemical.GetElement(Element.C).ToString();
+                        if (element == "0" || element == "1")
+                            element = String.Empty;
+                        s += "??? + ??? = " + "C" + element;
+                        element = chemical.GetElement(Element.H).ToString();
+                        s += "H" + element;
+                    }
                     break;
                 case Series.Alkene:
                     int count = 0;
@@ -305,7 +310,11 @@ namespace YoutubeRPG
                     foreach (string reaction in str)
                     {
                         if (reactionHistory.Contains(reaction))
+                        {
                             s += reaction.Replace("Alkene_", "") + ", ";
+                            if (count == 2)
+                                s += "\n\r";
+                        }
                         else
                             s += "???, ";
                         if (count == 1)
@@ -318,27 +327,34 @@ namespace YoutubeRPG
                     {
                         s = chemical.Name.Replace("anol", "ene").ToLower() + " + NaOH + HEAT" + "\n\r" + "= " + chemical.Name.ToLower();
                     }
+                    else
+                    {
+                        string element = chemical.GetElement(Element.C).ToString();
+                        if (element == "0" || element == "1")
+                            element = String.Empty;
+                        s += "??? + ??? = " + "C" + element;
+                        element = (chemical.GetElement(Element.H)-1).ToString();
+                        s += "H" + element + "OH";
+                    }
                     break;
                 case Series.Halogenoalkane:
-                    s = "";
+                    s = String.Empty;
                     if (reactionHistory.Contains("Halogenoalkane_Halogenation"))
                     {
                         string a = chemical.Name.Replace("ane", "ene").ToLower();
                         s = a + " + HBr + HEAT" + "\n\r" + "= " + chemical.Name.ToLower();
                     }
+                    // CAUTION: Halogenoalkane_Hydrohalogenation is missing
+                    else
+                    {
+                        string element = chemical.GetElement(Element.C).ToString();
+                        if (element == "0" || element == "1")
+                            element = String.Empty;
+                        s += "??? + ??? = " + "C" + element;
+                        element = chemical.GetElement(Element.H).ToString();
+                        s += "H" + element + "Br";
+                    }
                     break;
-            }
-
-            if (s == String.Empty)
-            {
-                string element = String.Empty;
-                element = chemical.GetElement(Element.C).ToString();
-                if (element == "0" || element == "1")
-                    element = String.Empty;
-                s += " + ??? = " + "C" + element;
-                element = chemical.GetElement(Element.H).ToString();
-                s += "H" + element;
-
             }
             return s;
         }
