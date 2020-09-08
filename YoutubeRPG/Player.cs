@@ -23,6 +23,7 @@ namespace YoutubeRPG
         bool isPortal;
 
         public ChemicalManager ChemicalManager;
+        public List<string> ReactionHistory;
 
         public List<string> Keys
         {
@@ -32,6 +33,7 @@ namespace YoutubeRPG
 
         public Player()
         {
+            ReactionHistory = new List<string>();
             Velocity = Vector2.Zero;
             TileLength = 128;
             isPortal = false;

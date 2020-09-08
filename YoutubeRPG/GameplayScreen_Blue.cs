@@ -61,7 +61,7 @@ namespace YoutubeRPG
             chemical.Update(gameTime);
             world.Update(gameTime);
             menuManager.Update(gameTime);
-            menuManager.Update(gameTime, ref player.ChemicalManager);
+            menuManager.Update(gameTime, ref player);
 
             camera.LockToSprite(world.CurrentMap.Layer[0], player.Image);
 

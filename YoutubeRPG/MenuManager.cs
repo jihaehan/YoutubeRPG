@@ -15,6 +15,7 @@ namespace YoutubeRPG
         List<Menu> clone; 
 
         ChemicalManager chemicalManager;
+        List<string> reactionHistory;
         bool isTransitioning;
 
         string prevMenuID;
@@ -22,11 +23,10 @@ namespace YoutubeRPG
         string selectedItem;
         int prevSelectedItem, gameplayMenuSelectedItem;
         List<Image> infoImage;
-
+        StringBuilder sb;
         SpriteFont font;
         Image page;
         string pageText;
-
 
         void Transition(GameTime gameTime)
         {
@@ -54,7 +54,9 @@ namespace YoutubeRPG
             prevMenuID = currentMenuID = selectedItem = String.Empty;
             pageText = "1/3";
             page = new Image();
+            sb = new StringBuilder();
             infoImage = new List<Image>();
+            reactionHistory = new List<string>();
             clone = new List<Menu>();
             menu = new Menu();
             menu.OnMenuChanged += menu_OnMenuChange;    //OnMenuChanged = event;
@@ -110,6 +112,10 @@ namespace YoutubeRPG
             {
                 chemicalInfoMenu();
             }
+            else if (menu.Type == "PropertyInfo")
+            {
+                propertyInfoMenu();
+            }
             else
                 menu.ItemNumber = prevSelectedItem;
         }
@@ -142,12 +148,12 @@ namespace YoutubeRPG
                 menu.Update(gameTime);
             Transition(gameTime);
         }
-        public void Update(GameTime gameTime, ref ChemicalManager manager)
+        public void Update(GameTime gameTime, ref Player player)
         {
             if (!isTransitioning)
                menu.Update(gameTime);
             Transition(gameTime);
-            chemicalManager = manager;
+            chemicalManager = player.ChemicalManager;
             foreach (Image i in infoImage)
                 i.Update(gameTime);
         }
@@ -171,14 +177,13 @@ namespace YoutubeRPG
             Vector2 dimensions = new Vector2(menu.Image.Position.X + menu.Image.SourceRect.Width/2, 50);
             Chemical chemical = chemicalManager.GetChemical(selectedItem);
 
-
             //1: Chemical Name
             Image i = new Image();
             i.FontName = "Fonts/OCRAsmall";
             i.Text = selectedItem.ToUpper();
             i.TextColor = Color.Black;
             i.Position = new Vector2(dimensions.X - font.MeasureString(i.Text).X/2f, dimensions.Y);
-            dimensions.Y += 10f;
+            dimensions.Y += 50f;
             infoImage.Add(i);
 
             //2: Chemical Image
@@ -190,17 +195,63 @@ namespace YoutubeRPG
             i.SpriteSheetEffect.SwitchFrame = 500;
             i.Position = new Vector2(dimensions.X - 64, dimensions.Y);
             i.IsActive = true;
-            dimensions.Y += 128f;
+            dimensions.Y += 100f;
             infoImage.Add(i);
-            
 
-            chemical.UnloadContent();
+            //3: Chemical Formula
+            i = new Image();
+            i.Path = "Chemical/Diagram/" + chemical.Name;
+            i.Position = new Vector2(dimensions.X - 187.5f, dimensions.Y);
+            dimensions.Y = menu.Image.Position.Y + menu.Image.SourceRect.Height - 120f;
+            infoImage.Add(i);
+
+            //4: Reaction History Label
+            i = new Image();
+            i.FontName = "Fonts/OCRAExt";
+            if (chemical.Series == Series.Alkene)
+                i.Text = "Addition Reactions:";      
+            else 
+                i.Text = "Reaction History:";      
+            i.TextColor = Color.Black;
+            i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f, dimensions.Y);
+            dimensions.Y += menu.Image.Font.MeasureString(i.Text).Y + 3;
+            infoImage.Add(i);
+
+            //5: Reaction History/Potential Unlock
+            i = new Image();
+            i.FontName = "Fonts/OCRAExt";
+            i.Text = "???";
+
+            if (!reactionHistory.Contains("Alkane"))
+                reactionHistory.Add("Alkane");
+
+            i.Text = reactionHistoryFormula(chemical);
+            i.TextColor = Color.Black;
+            i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f, dimensions.Y);
+            infoImage.Add(i);
+
             foreach (Image image in infoImage)
                 image.LoadContent();
         }
         void propertyInfoMenu()
         {
+            foreach (Image image in infoImage)
+                image.UnloadContent();
+            infoImage.Clear();
+            Vector2 dimensions = new Vector2(menu.Image.Position.X + menu.Image.SourceRect.Width / 2, 50);
+            Chemical chemical = chemicalManager.GetChemical(selectedItem);
 
+            //1: Chemical Name
+            Image i = new Image();
+            i.FontName = "Fonts/OCRAsmall";
+            i.Text = selectedItem.ToUpper();
+            i.TextColor = Color.Black;
+            i.Position = new Vector2(dimensions.X - font.MeasureString(i.Text).X / 2f, dimensions.Y);
+            dimensions.Y += 10f;
+            infoImage.Add(i);
+
+            foreach (Image image in infoImage)
+                image.LoadContent();
         }
         void optionInfoMenu()
         {
@@ -215,7 +266,6 @@ namespace YoutubeRPG
 
                 string h = (chemicalManager.GetChemical(chemicalName).CurrentHealth).ToString() + "/" + (chemicalManager.GetChemical(chemicalName).Health).ToString() ;
 
-
                 if (font != null)
                 {
                     string space = " ";
@@ -224,25 +274,73 @@ namespace YoutubeRPG
                         item.Image.Text += " ";
                     item.Image.Text += h;
                 }
-
                 item.Image.TextColor = Color.Black;
                 item.Image.FontName = "Fonts/OCRAsmall";
                 item.LinkType = "Info";
-
-                /*
-                if (!chemicalName.Contains("*"))
-                    item.LinkID = "Content/Chemical/Image/" + chemicalName + ".xml";
-                else
-                {
-                    string[] str = chemicalName.Split('*');
-                    item.LinkID = "Content/Chemical/Image/" + str[0] + ".xml";
-                }*/
-
-                //TEST: chemicalInfoMenu
                 item.LinkID = "Content/Load/Menu/InfoMenu.xml";
-
                 menu.Items.Add(item);
             }
+        }
+
+        #region Misc Functions
+        string reactionHistoryFormula(Chemical chemical)
+        {
+            string s = String.Empty;
+            switch(chemical.Series)
+            {
+                case Series.Alkane:
+                    if (reactionHistory.Contains("Alkane"))
+                    {
+                        if (chemical.Name == "Methane")
+                            s = "CO2 + 4H2 = CH4";
+                        else
+                        {
+                            s = chemical.Name.Replace("ane", "ene").ToLower() + " + H2Ni + HEAT" + "\n\r" + "= " + chemical.Name.ToLower();
+                        }
+                    }
+                    break;
+                case Series.Alkene:
+                    int count = 0;
+                    string[] str = { "Alkene_Hydration", "Alkene_Halogenation", "Alkene_Hydrohalogenation", "Alkene_Hydrogenation" };
+                    foreach (string reaction in str)
+                    {
+                        if (reactionHistory.Contains(reaction))
+                            s += reaction.Replace("Alkene_", "") + ", ";
+                        else
+                            s += "???, ";
+                        if (count == 1)
+                            s += "\n\r";
+                        count++;
+                    }
+                    break;
+                case Series.Alcohol:
+                    if (reactionHistory.Contains("Alcohol"))
+                    {
+                        s = chemical.Name.Replace("anol", "ene").ToLower() + " + NaOH + HEAT" + "\n\r" + "= " + chemical.Name.ToLower();
+                    }
+                    break;
+                case Series.Halogenoalkane:
+                    s = "";
+                    if (reactionHistory.Contains("Halogenoalkane_Halogenation"))
+                    {
+                        string a = chemical.Name.Replace("ane", "ene").ToLower();
+                        s = a + " + HBr + HEAT" + "\n\r" + "= " + chemical.Name.ToLower();
+                    }
+                    break;
+            }
+
+            if (s == String.Empty)
+            {
+                string element = String.Empty;
+                element = chemical.GetElement(Element.C).ToString();
+                if (element == "0" || element == "1")
+                    element = String.Empty;
+                s += " + ??? = " + "C" + element;
+                element = chemical.GetElement(Element.H).ToString();
+                s += "H" + element;
+
+            }
+            return s;
         }
         void optionInfoMenuPage()
         {
@@ -259,6 +357,9 @@ namespace YoutubeRPG
                 pageText = ((int)(menu.ItemNumber / 3 + 1)).ToString() + "/3";
             }
         }
+        #endregion
+
+        #region User Input
         public void SelectLeft(eButtonState buttonState)
         {
             if (/*menu.Axis == "X" && */buttonState == eButtonState.DOWN)
@@ -392,5 +493,6 @@ namespace YoutubeRPG
                     menu.ItemNumber++;
             }
         }
+        #endregion
     }
 }

@@ -46,6 +46,27 @@ namespace YoutubeRPG
         Dictionary<string, int> Reactants;
         List<float> FormationEnthalpy;
 
+        #region Fields
+        public int GetElement(Element element)
+        {
+            if (Elements.ContainsKey(element))
+                return Elements[element];
+            else return 0;
+        }
+        public int GetProduct(string product)
+        {
+            if (Products.ContainsKey(product))
+                return Products[product];
+            else return 0;
+        }
+        public int GetReactant(string reactant)
+        {
+            if (Reactants.ContainsKey(reactant))
+                return Reactants[reactant];
+            else return 0;
+        }
+        #endregion
+
         public Chemical()
         {
             Dimensions = new Vector2(128, 128);

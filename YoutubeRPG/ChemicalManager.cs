@@ -76,7 +76,7 @@ namespace YoutubeRPG
                     chemicals[chemicalName[count]].Image.Position = player.Image.Position;
 
                 chemicals[chemicalName[count]].Update(gameTime, ref player, chemical, count);
-            } 
+            }
         }
         public void Update(GameTime gameTime)
         {
