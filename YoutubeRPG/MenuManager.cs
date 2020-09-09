@@ -199,7 +199,10 @@ namespace YoutubeRPG
             //1: Title, 'PLAN'
             Image i = new Image();
             i.FontName = "Fonts/OCRAsmall";
-            i.Text = "PLAN"; 
+            if (character.Name == String.Empty)
+                i.Text = character.QuestName;
+            else
+                i.Text = character.Name;
             i.TextColor = Color.Black;
             i.Position = new Vector2(dimensions.X - font.MeasureString(i.Text).X / 2f, dimensions.Y);
             dimensions.Y += 10f;

@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Character>
+  <Name>Bond Brothers</Name>
   <QuestName>Bond Brothers</QuestName>
   <Image>
       <Path>Characters/bondbros</Path>
