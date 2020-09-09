@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ItemManager>
   <ItemSource>Content/Load/Chemical/Item/Water.xml</ItemSource>
-  <ItemSource>Content/Load/Chemical/Item/Water.xml</ItemSource>
-  <ItemSource>Content/Load/Chemical/Item/Water.xml</ItemSource>
-  <ItemSource>Content/Load/Chemical/Item/Water.xml</ItemSource>
-  <ItemSource>Content/Load/Chemical/Item/Water.xml</ItemSource>
-  <ItemSource>Content/Load/Chemical/Item/Water.xml</ItemSource>
-  <ItemSource>Content/Load/Chemical/Item/Water.xml</ItemSource>
+  <ItemSource>Content/Load/Chemical/Item/Carbon.xml</ItemSource>
+  <ItemSource>Content/Load/Chemical/Item/Carbonmonoxide.xml</ItemSource>
+  <ItemSource>Content/Load/Chemical/Item/Carbondioxide.xml</ItemSource>
+  <ItemSource>Content/Load/Chemical/Item/Bromine.xml</ItemSource>
+  <ItemSource>Content/Load/Chemical/Item/Hydrogenbromide.xml</ItemSource>
+  <ItemSource>Content/Load/Chemical/Item/Sodiumhydroxide.xml</ItemSource>
+  <ItemSource>Content/Load/Chemical/Item/Nickeldihydride.xml</ItemSource>
 </ItemManager>

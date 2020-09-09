@@ -37,6 +37,14 @@
     <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Chemical/Alkene/Pentene1.png</File>
     <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Chemical/Alkene/Pentene2.png</File>
     <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Chemical/Alkene/Propene.png</File>
+    <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Chemical/Description/Bromine.png</File>
+    <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Chemical/Description/Carbon.png</File>
+    <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Chemical/Description/Carbondioxide.png</File>
+    <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Chemical/Description/Carbonmonoxide.png</File>
+    <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Chemical/Description/Enthalpyboost.png</File>
+    <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Chemical/Description/Hydrogenbromide.png</File>
+    <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Chemical/Description/Nickeldihydride.png</File>
+    <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Chemical/Description/Sodiumhydroxide.png</File>
     <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Chemical/Description/Water.png</File>
     <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Chemical/Diagram/Bromine.png</File>
     <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Chemical/Diagram/Bromobutane.png</File>
@@ -52,6 +60,7 @@
     <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Chemical/Diagram/Carbondioxide.png</File>
     <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Chemical/Diagram/Carbonmonoxide.png</File>
     <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Chemical/Diagram/ChemicalDiagram.png</File>
+    <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Chemical/Diagram/Enthalpyboost.png</File>
     <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Chemical/Diagram/Ethane.png</File>
     <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Chemical/Diagram/Ethanol.png</File>
     <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/Chemical/Diagram/Ethene.png</File>
@@ -114,6 +123,15 @@
     <File>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/TitleScreen/menuscreen.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
