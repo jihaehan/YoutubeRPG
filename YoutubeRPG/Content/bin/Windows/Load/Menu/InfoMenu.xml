@@ -20,8 +20,8 @@
   </Image>
 
   <Item>
-    <LinkType>Info</LinkType> 
-    <LinkID>Content/Load/Menu/PropertyMenu.xml</LinkID>
+    <LinkType>None</LinkType> 
+    <LinkID>Content/Load/Menu/InfoMenu.xml</LinkID>
     <Image>
       <Text>'</Text>
       <FontName>Fonts/OCRAExt</FontName>  

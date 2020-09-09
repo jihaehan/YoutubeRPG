@@ -23,6 +23,7 @@ namespace YoutubeRPG
         bool isPortal;
 
         public ChemicalManager ChemicalManager;
+        public ItemManager ItemManager;
         public List<string> ReactionHistory;
 
         public List<string> Keys
@@ -45,9 +46,12 @@ namespace YoutubeRPG
         {
             Image.LoadContent();
             XmlManager<ChemicalManager> chemicalManagerLoader = new XmlManager<ChemicalManager>();
-            //if Party saves exist, load Save files here
+            XmlManager<ItemManager> itemManagerLoader = new XmlManager<ItemManager>();
+            //if Party/Backpack saves exist, load Save files here
             ChemicalManager = chemicalManagerLoader.Load("Content/Load/Gameplay/Party.xml");
+            ItemManager = itemManagerLoader.Load("Content/Load/Gameplay/Backpack.xml");
             ChemicalManager.LoadContent();
+            ItemManager.LoadContent();
         }
         public void UnloadContent()
         {

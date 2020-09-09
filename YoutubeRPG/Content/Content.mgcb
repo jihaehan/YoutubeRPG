@@ -984,6 +984,12 @@
 #begin Load/Chemical/Halogenoalkane/Bromopropane.xml
 /copy:Load/Chemical/Halogenoalkane/Bromopropane.xml
 
+#begin Load/Chemical/Item/Water.xml
+/copy:Load/Chemical/Item/Water.xml
+
+#begin Load/Gameplay/Backpack.xml
+/copy:Load/Gameplay/Backpack.xml
+
 #begin Load/Gameplay/Map/City1.xml
 /copy:Load/Gameplay/Map/City1.xml
 
@@ -1040,6 +1046,9 @@
 
 #begin Load/Menu/OptionInfoMenu.xml
 /copy:Load/Menu/OptionInfoMenu.xml
+
+#begin Load/Menu/OptionItemMenu.xml
+/copy:Load/Menu/OptionItemMenu.xml
 
 #begin Load/Menu/OptionMenu.xml
 /copy:Load/Menu/OptionMenu.xml

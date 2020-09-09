@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Menu>
+  <Axis>Left</Axis>
+  <Type>OptionItem</Type>
+  <Spacing>
+    <X>0</X>
+    <Y>10</Y>
+  </Spacing>
+  <Alignment>
+    <X>730</X>
+    <Y>580.5</Y>
+  </Alignment> 
+  <Image>
+    <Path>Misc/option_menu</Path>
+    <Position>
+      <X>696</X>
+      <Y>562.5</Y>
+    </Position>
+    <FontName>Fonts/OCRAExt</FontName>
+  </Image>
+</Menu>

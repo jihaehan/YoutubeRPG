@@ -15,6 +15,7 @@ namespace YoutubeRPG
         List<Menu> clone; 
 
         ChemicalManager chemicalManager;
+        ItemManager itemManager;
         List<string> reactionHistory;
         bool isTransitioning;
 
@@ -103,10 +104,10 @@ namespace YoutubeRPG
                 font = menu.Image.Font;
                 //prevSelectedItem = 0;
             }
-            else if (menu.Type == "OptionInfo")
+            else if (menu.Type.Contains("Option"))
             {
                 menu.ItemNumber = prevSelectedItem; 
-                optionInfoMenuPage();
+                optionMenuPage();
             }
             else if (menu.Type == "ChemicalInfo")
             {
@@ -154,6 +155,7 @@ namespace YoutubeRPG
                menu.Update(gameTime);
             Transition(gameTime);
             chemicalManager = player.ChemicalManager;
+            itemManager = player.ItemManager;
             foreach (Image i in infoImage)
                 i.Update(gameTime);
         }
@@ -162,7 +164,7 @@ namespace YoutubeRPG
             foreach (Menu m in clone)
                 m.Draw(spriteBatch);
             menu.Draw(spriteBatch);
-            if (menu.Type.Contains("Info"))
+            if (menu.Type.Contains("Info") || currentMenuID.Contains("Option"))
             {
                 page.Draw(spriteBatch);
                 spriteBatch.DrawString(page.Font, pageText, page.Position + new Vector2(2,0), Color.White);
@@ -366,6 +368,35 @@ namespace YoutubeRPG
                 menu.Items.Add(item);
             }
         }
+        void optionItemMenu()
+        {
+            /*
+            menu.Items.Clear();
+            foreach (string chemicalName in chemicalManager.chemicalName)
+            {
+                MenuItem item = new MenuItem();
+                item.Image = new Image();
+                item.Image.Text = chemicalName.ToUpper();
+                string s = (chemicalManager.GetChemical(chemicalName).State).ToString().ToLower();
+                item.Image.Text += "(" + s.Substring(0, 1) + ")";
+
+                string h = (chemicalManager.GetChemical(chemicalName).CurrentHealth).ToString() + "/" + (chemicalManager.GetChemical(chemicalName).Health).ToString();
+
+                if (font != null)
+                {
+                    string space = " ";
+                    int spaceNum = (int)((ScreenManager.Instance.Dimensions.X - 730 - font.MeasureString(h).X - font.MeasureString(item.Image.Text).X) / font.MeasureString(space).X);
+                    for (int i = 0; i < spaceNum; i++)
+                        item.Image.Text += " ";
+                    item.Image.Text += h;
+                }
+                item.Image.TextColor = Color.Black;
+                item.Image.FontName = "Fonts/OCRAsmall";
+                item.LinkType = "Info";
+                item.LinkID = "Content/Load/Menu/InfoMenu.xml";
+                menu.Items.Add(item);
+            }*/
+        }
 
         #region Misc Functions
         string reactionHistoryFormula(Chemical chemical)
@@ -447,7 +478,7 @@ namespace YoutubeRPG
             }
             return s;
         }
-        void optionInfoMenuPage()
+        void optionMenuPage()
         {
             if (!menu.Items[menu.ItemNumber].Image.IsVisible)
             {
@@ -491,8 +522,8 @@ namespace YoutubeRPG
         {
             if (/*menu.Axis == "Y" && */buttonState == eButtonState.DOWN)
                 menu.ItemNumber++;
-            else if (menu.Type == "OptionInfo")
-                optionInfoMenuPage();
+            else if (menu.Type.Contains("Option"))
+                optionMenuPage();
             else if (menu.Type == "ChemicalInfo")
                 propertyInfoMenu();
         }
@@ -500,8 +531,8 @@ namespace YoutubeRPG
         {
             if (/*menu.Axis == "Y" && */buttonState == eButtonState.DOWN)
                 menu.ItemNumber--;
-            else if (menu.Type == "OptionInfo")
-                optionInfoMenuPage();
+            else if (menu.Type.Contains("Option"))
+                optionMenuPage();
             else if (menu.Type == "ChemicalInfo")
                 chemicalInfoMenu();
         }

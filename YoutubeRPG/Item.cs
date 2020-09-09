@@ -11,6 +11,7 @@ namespace YoutubeRPG
 {
     public enum ItemType
     {
+        None,
         Bromide,
         Chloride,
         Iodide,
@@ -26,10 +27,15 @@ namespace YoutubeRPG
     public class Item
     {
         public ItemType ItemType;
+        public string Name;
+        public float Amount;
         public Image Image;
 
         public void LoadContent()
         {
+            Name = String.Empty;
+            ItemType = ItemType.None;
+            Amount = 0;
             Image.LoadContent();
         }
         public void UnloadContent()

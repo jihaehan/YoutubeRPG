@@ -65,6 +65,7 @@
     <Compile Include="InputListener.cs" />
     <Compile Include="InputManager.cs" />
     <Compile Include="Item.cs" />
+    <Compile Include="ItemManager.cs" />
     <Compile Include="KeyboardEventArgs.cs" />
     <Compile Include="Layer.cs" />
     <Compile Include="Map.cs" />
