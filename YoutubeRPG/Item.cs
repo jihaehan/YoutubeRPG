@@ -30,14 +30,18 @@ namespace YoutubeRPG
         public string Name;
         public float Amount;
         public Image Image;
-        public State State;
+        public string State, Formula;
+        public string Description;
 
-        public void LoadContent()
+        public Item()
         {
-            Name = String.Empty;
-            State = State.Liquid;
+            Name = Description = Formula = String.Empty;
             ItemType = ItemType.None;
             Amount = 0;
+            State = "Liquid";
+        }
+        public void LoadContent()
+        {
             Image.LoadContent();
         }
         public void UnloadContent()

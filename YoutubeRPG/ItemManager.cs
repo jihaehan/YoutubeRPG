@@ -39,9 +39,10 @@ namespace YoutubeRPG
                 string[] split = itemSource.Split('/');
                 string s = (split[split.Length - 1]).Replace(".xml", String.Empty);
                 Item item = itemLoader.Load(itemSource);
+                Items.Add(item);
                 item.LoadContent();
                 item.Name = s;
-                Items.Add(item);
+                item.Description = "Chemical/Description/" + s;
             }
             if (itemName.Count() > 0)
                 CurrentItemNumber = 0;
@@ -71,9 +72,10 @@ namespace YoutubeRPG
             string[] split = itemSource.Split('/');
             string s = (split[split.Length - 1]).Replace(".xml", String.Empty);
             Item item = itemLoader.Load(itemSource);
+            Items.Add(item);
             item.LoadContent();
             item.Name = s;
-            Items.Add(item);
+            item.Description = "Chemical/Description/" + s;
         }
 
     }

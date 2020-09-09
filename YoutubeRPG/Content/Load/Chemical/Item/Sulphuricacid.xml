@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Item>
+  <Amount>1</Amount>
+  <State>Aqueous</State>
+  <Formula>H2SO4</Formula>
+  <Image>
+    <Path>Chemical/Diagram/Sulphuricacid</Path>
+  </Image>
+</Item>

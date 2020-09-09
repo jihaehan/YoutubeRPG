@@ -1,11 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Item>
   <Amount>1</Amount>
+  <State>Liquid</State>
+  <Formula>H2O</Formula>
   <Image>
-    <Path>Chemical/Image/Water</Path>
-    <Position>
-      <X>0</X>
-      <Y>0</Y>
-    </Position>
+    <Path>Chemical/Diagram/Water</Path>
   </Image>
 </Item>

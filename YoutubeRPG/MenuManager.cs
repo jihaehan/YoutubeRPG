@@ -93,7 +93,7 @@ namespace YoutubeRPG
                 item.Image.StoreEffects();
                 item.Image.ActivateEffect("FadeEffect");
             }
-            if (!currentMenuID.Contains("Info"))
+            if (!currentMenuID.Contains("Info") && !currentMenuID.Contains("Option"))
             {
                 foreach (Image image in infoImage)
                     image.UnloadContent();
@@ -114,10 +114,6 @@ namespace YoutubeRPG
             else if (menu.Type == "ChemicalInfo")
             {
                 chemicalInfoMenu();
-            }
-            else if (menu.Type == "PropertyInfo")
-            {
-                propertyInfoMenu();
             }
             else if (menu.Type == "ItemInfo")
             {
@@ -177,6 +173,41 @@ namespace YoutubeRPG
             }
             foreach (Image i in infoImage)
                 i.Draw(spriteBatch);
+        }
+        #region Description Menus
+        void itemInfoMenu()
+        {
+            foreach (Image image in infoImage)
+                image.UnloadContent();
+            infoImage.Clear();
+            Vector2 dimensions = new Vector2(menu.Image.Position.X + menu.Image.SourceRect.Width / 2, 50);
+            itemManager.CurrentItemNumber = prevSelectedItem;
+            Item item = itemManager.CurrentItem;
+
+            //1: Item Name
+            Image i = new Image();
+            i.FontName = "Fonts/OCRAsmall";
+            i.Text = selectedItem.ToUpper();
+            i.TextColor = Color.Black;
+            i.Position = new Vector2(dimensions.X - font.MeasureString(i.Text).X / 2f, dimensions.Y);
+            dimensions.Y += 10f;
+            infoImage.Add(i);
+
+            //2: Chemical Image
+            i = new Image();
+            i.Path = "Chemical/Diagram/" + item.Name;
+            i.Position = new Vector2(dimensions.X - 192.5f, dimensions.Y);
+            dimensions.Y += 200;
+            infoImage.Add(i);
+
+            //3: Text Description
+            i = new Image();
+            i.Path = item.Description;
+            i.Position = new Vector2(menu.Image.Position.X, dimensions.Y);
+            infoImage.Add(i);
+            
+            foreach (Image image in infoImage)
+                image.LoadContent();
         }
         void chemicalInfoMenu()
         {
@@ -346,6 +377,8 @@ namespace YoutubeRPG
             foreach (Image image in infoImage)
                 image.LoadContent();
         }
+        #endregion
+        #region Option Menus
         void optionInfoMenu()
         {
             menu.Items.Clear();
@@ -381,7 +414,11 @@ namespace YoutubeRPG
             {
                 MenuItem item = new MenuItem();
                 item.Image = new Image();
-                item.Image.Text = i.Name.ToUpper() + "(" + i.State.ToString().ToLower()[0] + ")";
+                string state = i.State.ToLower();
+                if (state[0] == 'A' || state[0] == 'a')
+                    state = "aq";
+                else state = state[0].ToString();
+                item.Image.Text = i.Name.ToUpper() + "(" + state + ")";
                 item.Image.TextColor = Color.Black;
                 item.Image.FontName = "Fonts/OCRAsmall";
                 item.LinkType = "Item";
@@ -389,11 +426,7 @@ namespace YoutubeRPG
                 menu.Items.Add(item);
             }
         }
-        void itemInfoMenu()
-        {
-
-        }
-
+        #endregion
         #region Misc Functions
         string reactionHistoryFormula(Chemical chemical)
         {

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Item>
+  <Amount>1</Amount>
+  <State>Solid</State>
+  <Formula>C</Formula>
+  <Image>
+    <Path>Chemical/Diagram/Carbon</Path>
+  </Image>
+</Item>

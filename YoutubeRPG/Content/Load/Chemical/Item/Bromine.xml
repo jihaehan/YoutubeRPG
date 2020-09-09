@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Item>
+  <Amount>1</Amount>
+  <State>Liquid</State>
+  <Formula>Br2</Formula>
+  <Image>
+    <Path>Chemical/Diagram/Bromine</Path>
+  </Image>
+</Item>

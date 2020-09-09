@@ -409,6 +409,30 @@
 /processorParam:TextureFormat=Color
 /build:Chemical/Alkene/Propene.png
 
+#begin Chemical/Description/Water.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Description/Water.png
+
+#begin Chemical/Diagram/Bromine.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Diagram/Bromine.png
+
 #begin Chemical/Diagram/Bromobutane.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -516,6 +540,54 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Chemical/Diagram/Butene.png
+
+#begin Chemical/Diagram/Carbon.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Diagram/Carbon.png
+
+#begin Chemical/Diagram/Carbondioxide.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Diagram/Carbondioxide.png
+
+#begin Chemical/Diagram/Carbonmonoxide.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Diagram/Carbonmonoxide.png
+
+#begin Chemical/Diagram/ChemicalDiagram.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Diagram/ChemicalDiagram.png
 
 #begin Chemical/Diagram/Ethane.png
 /importer:TextureImporter
@@ -625,6 +697,18 @@
 /processorParam:TextureFormat=Color
 /build:Chemical/Diagram/Hexene.png
 
+#begin Chemical/Diagram/Hydrogenbromide.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Diagram/Hydrogenbromide.png
+
 #begin Chemical/Diagram/Methane.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -648,6 +732,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Chemical/Diagram/Methanol.png
+
+#begin Chemical/Diagram/Nickeldihydride.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Diagram/Nickeldihydride.png
 
 #begin Chemical/Diagram/Pentane.png
 /importer:TextureImporter
@@ -720,6 +816,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Chemical/Diagram/Propene.png
+
+#begin Chemical/Diagram/Sodiumhydroxide.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Diagram/Sodiumhydroxide.png
+
+#begin Chemical/Diagram/Water.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Chemical/Diagram/Water.png
 
 #begin Chemical/Halogenoalkane/Bromobutane.png
 /importer:TextureImporter
@@ -984,6 +1104,30 @@
 #begin Load/Chemical/Halogenoalkane/Bromopropane.xml
 /copy:Load/Chemical/Halogenoalkane/Bromopropane.xml
 
+#begin Load/Chemical/Item/Bromine.xml
+/copy:Load/Chemical/Item/Bromine.xml
+
+#begin Load/Chemical/Item/Carbon.xml
+/copy:Load/Chemical/Item/Carbon.xml
+
+#begin Load/Chemical/Item/Carbondioxide.xml
+/copy:Load/Chemical/Item/Carbondioxide.xml
+
+#begin Load/Chemical/Item/Carbonmonoxide.xml
+/copy:Load/Chemical/Item/Carbonmonoxide.xml
+
+#begin Load/Chemical/Item/Hydrogenbromide.xml
+/copy:Load/Chemical/Item/Hydrogenbromide.xml
+
+#begin Load/Chemical/Item/Nickeldihydride.xml
+/copy:Load/Chemical/Item/Nickeldihydride.xml
+
+#begin Load/Chemical/Item/Sodiumhydroxide.xml
+/copy:Load/Chemical/Item/Sodiumhydroxide.xml
+
+#begin Load/Chemical/Item/Sulphuricacid.xml
+/copy:Load/Chemical/Item/Sulphuricacid.xml
+
 #begin Load/Chemical/Item/Water.xml
 /copy:Load/Chemical/Item/Water.xml
 
@@ -1043,6 +1187,9 @@
 
 #begin Load/Menu/InfoMenu.xml
 /copy:Load/Menu/InfoMenu.xml
+
+#begin Load/Menu/ItemMenu.xml
+/copy:Load/Menu/ItemMenu.xml
 
 #begin Load/Menu/OptionInfoMenu.xml
 /copy:Load/Menu/OptionInfoMenu.xml

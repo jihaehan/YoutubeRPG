@@ -39,8 +39,8 @@
   </Item>
 
   <Item>
-    <LinkType>Menu</LinkType> 
-    <LinkID>Content/Load/Menu/OptionMenu_ItemTest.xml</LinkID>
+    <LinkType>Item</LinkType> 
+    <LinkID>Content/Load/Menu/OptionItemMenu.xml</LinkID>
     <Image>
       <Text>ITEM</Text>
       <FontName>Fonts/OCRA</FontName>  
