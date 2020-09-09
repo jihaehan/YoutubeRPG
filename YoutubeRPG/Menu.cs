@@ -116,7 +116,7 @@ namespace YoutubeRPG
                 else if (Axis == "Left")
                 {
                     count++;
-                    if (count > 3 && Type == "OptionInfo")
+                    if (count > 3 && Type.Contains("Option"))
                     {
                         item.Image.IsVisible = false;
                         if (count % 3 == 1)

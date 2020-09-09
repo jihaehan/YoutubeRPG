@@ -16,19 +16,19 @@ namespace YoutubeRPG
         public List<string> ItemSource;
         public int CurrentItemNumber;
 
-        List<Item> items;
+        public List<Item> Items;
         public List<string> itemName;
 
         public ItemManager()
         {
             ItemSource = new List<string>();
             CurrentItemNumber = 0;
-            items = new List<Item>();
+            Items = new List<Item>();
             itemName = new List<string>();
         }
         public Item CurrentItem
         {
-            get { return items[CurrentItemNumber]; }
+            get { return Items[CurrentItemNumber]; }
         }
         public void LoadContent()
         {
@@ -39,31 +39,31 @@ namespace YoutubeRPG
                 string[] split = itemSource.Split('/');
                 string s = (split[split.Length - 1]).Replace(".xml", String.Empty);
                 Item item = itemLoader.Load(itemSource);
-                item.Name = s;
                 item.LoadContent();
-                items.Add(item);
+                item.Name = s;
+                Items.Add(item);
             }
             if (itemName.Count() > 0)
                 CurrentItemNumber = 0;
         }
         public void UnloadContent()
         {
-            foreach (Item i in items)
+            foreach (Item i in Items)
                 i.UnloadContent();
         }
         public void Update(GameTime gameTime)
         {
-            foreach (Item i in items)
+            foreach (Item i in Items)
                 i.Update(gameTime);
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            foreach (Item i in items)
+            foreach (Item i in Items)
                 i.Draw(spriteBatch);
         }
         public void AddItem(Item item)
         {
-            items.Add(item);
+            Items.Add(item);
         }
         public void AddItem(string itemSource)
         {
@@ -71,9 +71,9 @@ namespace YoutubeRPG
             string[] split = itemSource.Split('/');
             string s = (split[split.Length - 1]).Replace(".xml", String.Empty);
             Item item = itemLoader.Load(itemSource);
-            item.Name = s;
             item.LoadContent();
-            items.Add(item);
+            item.Name = s;
+            Items.Add(item);
         }
 
     }

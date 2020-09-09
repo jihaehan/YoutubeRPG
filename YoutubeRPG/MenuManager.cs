@@ -79,8 +79,10 @@ namespace YoutubeRPG
 
             if (currentMenuID.Contains(".xml") || menu.ID.Contains(".xml"))
                 menu = XmlMenuManager.Load(menu.ID);
-            if (currentMenuID.Contains("OptionInfo"))  
+            if (currentMenuID.Contains("OptionInfo"))
                 optionInfoMenu();
+            else if (currentMenuID.Contains("OptionItem"))
+                optionItemMenu();
 
             menu.LoadContent();
             menu.OnMenuChanged += menu_OnMenuChange;
@@ -116,6 +118,10 @@ namespace YoutubeRPG
             else if (menu.Type == "PropertyInfo")
             {
                 propertyInfoMenu();
+            }
+            else if (menu.Type == "ItemInfo")
+            {
+                itemInfoMenu();
             }
             else
                 menu.ItemNumber = prevSelectedItem;
@@ -370,32 +376,22 @@ namespace YoutubeRPG
         }
         void optionItemMenu()
         {
-            /*
             menu.Items.Clear();
-            foreach (string chemicalName in chemicalManager.chemicalName)
+            foreach (Item i in itemManager.Items)
             {
                 MenuItem item = new MenuItem();
                 item.Image = new Image();
-                item.Image.Text = chemicalName.ToUpper();
-                string s = (chemicalManager.GetChemical(chemicalName).State).ToString().ToLower();
-                item.Image.Text += "(" + s.Substring(0, 1) + ")";
-
-                string h = (chemicalManager.GetChemical(chemicalName).CurrentHealth).ToString() + "/" + (chemicalManager.GetChemical(chemicalName).Health).ToString();
-
-                if (font != null)
-                {
-                    string space = " ";
-                    int spaceNum = (int)((ScreenManager.Instance.Dimensions.X - 730 - font.MeasureString(h).X - font.MeasureString(item.Image.Text).X) / font.MeasureString(space).X);
-                    for (int i = 0; i < spaceNum; i++)
-                        item.Image.Text += " ";
-                    item.Image.Text += h;
-                }
+                item.Image.Text = i.Name.ToUpper() + "(" + i.State.ToString().ToLower()[0] + ")";
                 item.Image.TextColor = Color.Black;
                 item.Image.FontName = "Fonts/OCRAsmall";
-                item.LinkType = "Info";
-                item.LinkID = "Content/Load/Menu/InfoMenu.xml";
+                item.LinkType = "Item";
+                item.LinkID = "Content/Load/Menu/ItemMenu.xml";
                 menu.Items.Add(item);
-            }*/
+            }
+        }
+        void itemInfoMenu()
+        {
+
         }
 
         #region Misc Functions
