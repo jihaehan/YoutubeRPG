@@ -2,6 +2,7 @@
 <Item>
   <Amount>1</Amount>
   <State>Aqueous</State>
+  <Formula>NaOH</Formula>
   <Image>
     <Path>Chemical/Diagram/Sodiumhydroxide</Path>
   </Image>

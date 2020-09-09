@@ -2,6 +2,7 @@
 <Item>
   <Amount>1</Amount>
   <State>Solid</State>
+  <Formula>C</Formula>
   <Image>
     <Path>Chemical/Diagram/Carbon</Path>
   </Image>

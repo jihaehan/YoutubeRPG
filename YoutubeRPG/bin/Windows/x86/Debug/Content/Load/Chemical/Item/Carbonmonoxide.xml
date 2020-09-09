@@ -2,6 +2,7 @@
 <Item>
   <Amount>1</Amount>
   <State>Gas</State>
+  <Formula>CO</Formula>
   <Image>
     <Path>Chemical/Diagram/Carbonmonoxide</Path>
   </Image>
