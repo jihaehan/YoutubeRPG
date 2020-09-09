@@ -2,6 +2,7 @@
 <Chemical>
   <Level>1</Level>
   <Series>Halogenoalkane</Series>
+  <BoilingPoint>277</BoilingPoint>
   <Halogen>Bromo</Halogen>
     <Dimensions>
     <X>80</X>

@@ -2,6 +2,7 @@
 <Chemical>
   <Level>5</Level>
   <Series>Alcohol</Series>
+  <BoilingPoint>411.2</BoilingPoint>
   <Dimensions>
     <X>80</X>
     <Y>105</Y>

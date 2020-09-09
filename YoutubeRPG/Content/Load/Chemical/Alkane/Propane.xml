@@ -2,6 +2,7 @@
 <Chemical>
   <Level>3</Level>
   <Series>Alkane</Series>
+  <BoilingPoint>231</BoilingPoint>
   <Image>
     <Path>Chemical/Alkane/Propane</Path>
     <Effects>SpriteSheetEffect</Effects>

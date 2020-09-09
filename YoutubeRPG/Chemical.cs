@@ -32,9 +32,12 @@ namespace YoutubeRPG
         public Halogen Halogen;
 
         public float CurrentHealth; //current health
+        public float BoilingPoint;  //boiling point in K
         public float Health;        //sum of bond enthalpy
         public float Mass;          //atomic mass of 1 molecule
         public float Damage;        //determined by reaction
+        public float BaseDamage;    //determined by formation enthalpy
+        public float MaxDamage;     //determined by complete combustion
         public float Dodge;         //chance to dodge, determined by difference in mass
         public float Defense;       //attack mofidier
         public float Accuracy;      //chance to explode
@@ -79,7 +82,7 @@ namespace YoutubeRPG
             State = State.Gas;
             Series = Series.Alkane;
             Halogen = Halogen.None;
-            Health = CurrentHealth = Mass = Damage = Defense = Dodge = Accuracy = 0;
+            Health = CurrentHealth = Mass = Damage = BaseDamage = MaxDamage = Defense = Dodge = Accuracy = BoilingPoint = 0;
             Solubility = false;
             Elements = new Dictionary<Element, int>();
             Products = new Dictionary<string, int>();
@@ -231,6 +234,7 @@ namespace YoutubeRPG
                     FormationEnthalpy.Add(FormationEnthalpies.octane);
                     break;
                 case Series.Alkene:
+                    FormationEnthalpy.Add(0);
                     FormationEnthalpy.Add(FormationEnthalpies.ethene);
                     FormationEnthalpy.Add(FormationEnthalpies.propene);
                     FormationEnthalpy.Add(FormationEnthalpies.but_1_ene);
@@ -261,7 +265,7 @@ namespace YoutubeRPG
                     break;
             }
         }
-        private void CompleteCombustion()
+        public float CompleteCombustion()
         {
             switch (Series)
             {
@@ -379,6 +383,7 @@ namespace YoutubeRPG
                     }
                     break;
             }
+            return Damage;
         }
         public void NameChemical()
         {
@@ -447,8 +452,7 @@ namespace YoutubeRPG
                     Solubility = true;
                     break;
                 case Series.Halogenoalkane:
-                    Name.ToLower();
-                    Name = Halogen.ToString() + Name +  "ane";
+                    Name = Halogen.ToString() + Name.ToLower() +  "ane";
                     Elements.Add(Element.C, Level);
                     Elements.Add(Element.H, Level * 2 + 1);
                     if (Halogen == Halogen.Chloro)
@@ -492,7 +496,10 @@ namespace YoutubeRPG
                     break;
             }
             CurrentHealth = Health;
+            BaseDamage = FormationEnthalpy[Level];
+            MaxDamage = CompleteCombustion();
         }
+        
         public void Combustion() //choose what combustion
         {
             string o = "oxygen";
@@ -502,7 +509,7 @@ namespace YoutubeRPG
 
             if (Reactants[o] >= CO2)
             {
-                CompleteCombustion();
+                Damage = CompleteCombustion();
                 if (Products.ContainsKey("carbondioxide"))
                     Products["carbondioxide"] += Level;
                 else
@@ -531,6 +538,5 @@ namespace YoutubeRPG
                 Products["water"] += Level;
             else Products.Add("water", Level);
         }
-
     }
 }

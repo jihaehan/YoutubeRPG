@@ -255,22 +255,78 @@ namespace YoutubeRPG
             i.Text = selectedItem.ToUpper();
             i.TextColor = Color.Black;
             i.Position = new Vector2(dimensions.X - font.MeasureString(i.Text).X / 2f, dimensions.Y);
-            dimensions.Y += 50f;
+            dimensions.Y += 55f;
+            dimensions.X = menu.Image.Position.X + 38f;
             infoImage.Add(i);
 
-            //2: Chemical Properties
+            //2: Chemical Properties Labels
             i = new Image();
+            i.Text = "Series: " + chemical.Series.ToString();
+            i.Text += "\n\r\n\r";
+
+            i.Text += "Bond Enthalpy:\n\r\n\r";
+            i.Text += "Formation Enthalpy:\n\r\n\r";
+            i.Text += "Combustion Enthalpy:\n\r\n\r\n\r";
+            
+            i.Text += "Boiling Pt:\n\r";
+            i.Text += "Atomic Mass:\n\r";
+            i.Text += "Solubility:\n\r\n\r";
+            i.Text += "INFO: ";
+
+            switch(chemical.Series.ToString())
+            {
+                case "Alkane":
+                    i.Text += "used as fuels.\n\rrelatively unreactive.";
+                    break;
+                case "Alkene":
+                    i.Text += "double bonds.\n\rused in polymers.\n\rsmoky combustion.";
+                    break;
+                case "Alcohol":
+                    i.Text += "hydroxyl group.\n\r";
+                    if (chemical.Name == "Ethanol")
+                        i.Text += "used in drinks.";
+                    break;
+                case "Halogenoalkane":
+                    if (chemical.Name == "Bromomethane")
+                        i.Text += "not flammable.\n\r*fire extinguisher*";
+                    else
+                        i.Text += "flammable.\n\rfairly reactive.\n\r";
+                    break;
+            }
+
             i.FontName = "Fonts/OCRAExt";
-            i.Text = "test: hohohoho";
-
-
-
             i.TextColor = Color.Black;
-            i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f, dimensions.Y);
-            dimensions.Y += menu.Image.Font.MeasureString(i.Text).Y + 3;
+            i.Position = new Vector2(dimensions.X, dimensions.Y);
+            dimensions.Y += menu.Image.Font.MeasureString(" ").Y * 3;
             infoImage.Add(i);
 
-            //6: Page Number
+            //3: Chemical Thermodynamic Properties (orange)
+            i = new Image();
+            i.Text = "  " + chemical.CurrentHealth.ToString() + "/" + chemical.Health.ToString() + " kJ/mol" + "\n\r\n\r";
+            i.Text += "  " + chemical.BaseDamage.ToString() + " kJ/mol\n\r\n\r";
+            i.Text += "  " + chemical.MaxDamage.ToString() + " kJ/mol\n\r\n\r";
+            i.FontName = "Fonts/OCRAExt";
+            i.TextColor = Color.DarkOrange;
+            i.Position = new Vector2(dimensions.X, dimensions.Y);
+            dimensions.Y += menu.Image.Font.MeasureString(" ").Y * 6;
+            infoImage.Add(i);
+
+            //4: Chemical Brief Properties (blue)
+            i = new Image();
+            i.Text = "              " + chemical.BoilingPoint + " K\n\r";
+            i.Text += "              " + chemical.Mass + "\n\r";
+            i.Text += "              ";
+            if (chemical.Solubility)
+                i.Text += "polar";
+            else
+                i.Text += "nonpolar";
+            i.Text += "\n\r\n\r";
+            i.FontName = "Fonts/OCRAExt";
+            i.TextColor = Color.CornflowerBlue;
+            i.Position = new Vector2(dimensions.X, dimensions.Y);
+            infoImage.Add(i);
+
+            //5: Page Number
             i = new Image();
             i.FontName = "Fonts/OCRAExt";
             i.Text = "2/2";

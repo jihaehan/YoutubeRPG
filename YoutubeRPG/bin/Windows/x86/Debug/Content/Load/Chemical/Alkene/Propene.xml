@@ -2,6 +2,7 @@
 <Chemical>
   <Level>3</Level>
   <Series>Alkene</Series>
+  <BoilingPoint>225.4</BoilingPoint>
   <Dimensions>
     <X>60</X>
     <Y>60</Y>

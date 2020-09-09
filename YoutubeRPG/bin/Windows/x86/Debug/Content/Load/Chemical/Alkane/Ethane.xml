@@ -2,6 +2,7 @@
 <Chemical>
   <Level>2</Level>
   <Series>Alkane</Series>
+  <BoilingPoint>187.6</BoilingPoint>
   <Dimensions>
     <X>70</X>
     <Y>50</Y>
