@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Menu>
+  <Axis>Left</Axis>
+  <Type>PlanInfo</Type>
+  <Spacing>
+    <X>0</X>
+    <Y>10</Y>
+  </Spacing>
+  <Alignment>
+    <X>-5</X>
+    <Y>-5</Y>
+  </Alignment> 
+  <Image>
+    <Path>Misc/info_menu</Path>
+    <Position>
+      <X>905</X>
+      <Y>0</Y>
+    </Position>
+    <FontName>Fonts/OCRAExt</FontName>
+  </Image>
+
+  <Item>
+    <LinkType>None</LinkType> 
+    <LinkID>Content/Load/Menu/PlanMenu.xml</LinkID>
+    <Image>
+      <Text>'</Text>
+      <FontName>Fonts/OCRAExt</FontName>  
+    </Image>
+  </Item>
+</Menu>

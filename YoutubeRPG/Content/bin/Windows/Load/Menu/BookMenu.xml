@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Menu>
+  <Axis>Left</Axis>
+  <Type>Book</Type>
+  <Spacing>
+    <X>0</X>
+    <Y>10</Y>
+  </Spacing>
+  <Alignment>
+    <X>590</X>
+    <Y>45</Y>
+  </Alignment> 
+  <Image>
+    <Path>Misc/book_menu</Path>
+    <Position>
+      <X>530</X>
+      <Y>0</Y>
+    </Position>
+    <FontName>Fonts/OCRASmall</FontName>
+  </Image>
+</Menu>

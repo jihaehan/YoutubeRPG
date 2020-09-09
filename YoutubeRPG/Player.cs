@@ -24,6 +24,7 @@ namespace YoutubeRPG
 
         public ChemicalManager ChemicalManager;
         public ItemManager ItemManager;
+        public CharacterManager CharacterManager;
         public List<string> ReactionHistory;
 
         public List<string> Keys
@@ -47,16 +48,21 @@ namespace YoutubeRPG
             Image.LoadContent();
             XmlManager<ChemicalManager> chemicalManagerLoader = new XmlManager<ChemicalManager>();
             XmlManager<ItemManager> itemManagerLoader = new XmlManager<ItemManager>();
+            XmlManager<CharacterManager> characterManagerLoader = new XmlManager<CharacterManager>();
             //if Party/Backpack saves exist, load Save files here
             ChemicalManager = chemicalManagerLoader.Load("Content/Load/Gameplay/Party.xml");
             ItemManager = itemManagerLoader.Load("Content/Load/Gameplay/Backpack.xml");
+            CharacterManager = characterManagerLoader.Load("Content/Load/Gameplay/Character/IntroWorld.xml");
             ChemicalManager.LoadContent();
             ItemManager.LoadContent();
+            CharacterManager.LoadContent();
         }
         public void UnloadContent()
         {
             Image.UnloadContent();
             ChemicalManager.UnloadContent();
+            ItemManager.UnloadContent();
+            CharacterManager.UnloadContent();
         }
         public void Update(GameTime gameTime, World world)
         {

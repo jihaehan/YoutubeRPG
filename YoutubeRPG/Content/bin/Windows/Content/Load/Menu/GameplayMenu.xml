@@ -54,6 +54,8 @@
   </Item>
 
   <Item>
+    <LinkType>Plan</LinkType> 
+    <LinkID>Content/Load/Menu/OptionPlanMenu.xml</LinkID>
     <Image>
       <Text>PLAN</Text>
       <FontName>Fonts/OCRA</FontName>  
@@ -67,6 +69,8 @@
   </Item>
 
   <Item>
+    <LinkType>Book</LinkType> 
+    <LinkID>Content/Load/Menu/BookMenu.xml</LinkID>
     <Image>
       <Text>BOOK</Text>
       <FontName>Fonts/OCRA</FontName>  

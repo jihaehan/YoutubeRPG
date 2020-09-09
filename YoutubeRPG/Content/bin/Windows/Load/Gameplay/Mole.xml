@@ -1,5 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<XnaContent xmlns:ns="Microsoft.Xna.Framework">
-  <Asset Type="Object">
-  </Asset>
-</XnaContent>
+<Character>
+  <QuestName>Avogadro's Mole</QuestName>
+  <Image>
+      <Path>Characters/mole</Path>
+      <Effects>SpriteSheetEffect</Effects>
+      <SpriteSheetEffect>
+        <AmountOfFrames>
+          <X>2</X>
+          <Y>2</Y>
+        </AmountOfFrames>
+        <SwitchFrame>500</SwitchFrame>
+      </SpriteSheetEffect>
+    </Image>
+</Character>

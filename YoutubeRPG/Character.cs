@@ -13,12 +13,14 @@ namespace YoutubeRPG
         ChemicalManager ChemicalManager;
         public Image Image;
         public bool Battled;
+        public string QuestName, QuestDescription;
 
         public Character()
         {
             ChemicalManager = new ChemicalManager();
             Image = new Image();
-            Battled = false; 
+            Battled = false;
+            QuestName = String.Empty;
         }
         public void LoadContent(string path)
         {

@@ -16,6 +16,7 @@ namespace YoutubeRPG
 
         ChemicalManager chemicalManager;
         ItemManager itemManager;
+        CharacterManager characterManager;
         //World world;
         List<string> reactionHistory;
         bool isTransitioning;
@@ -84,6 +85,8 @@ namespace YoutubeRPG
                 optionInfoMenu();
             else if (currentMenuID.Contains("OptionItem"))
                 optionItemMenu();
+            else if (currentMenuID.Contains("OptionPlan"))
+                optionPlanMenu();
 
             menu.LoadContent();
             menu.OnMenuChanged += menu_OnMenuChange;
@@ -120,6 +123,10 @@ namespace YoutubeRPG
             {
                 itemInfoMenu();
             }
+            else if (menu.Type == "PlanInfo")
+            {
+                planInfoMenu();
+            }
             else
                 menu.ItemNumber = prevSelectedItem;
         }
@@ -141,6 +148,10 @@ namespace YoutubeRPG
             page.UnloadContent();
             if (chemicalManager != null)
                 chemicalManager.UnloadContent();
+            if (itemManager != null)
+                itemManager.UnloadContent();
+            if (characterManager != null)
+                characterManager.UnloadContent();
             foreach (Menu m in clone)
                 m.UnloadContent();
             foreach (Image i in infoImage)
@@ -159,6 +170,7 @@ namespace YoutubeRPG
             Transition(gameTime);
             chemicalManager = player.ChemicalManager;
             itemManager = player.ItemManager;
+            characterManager = player.CharacterManager;
             foreach (Image i in infoImage)
                 i.Update(gameTime);
         }
@@ -176,6 +188,40 @@ namespace YoutubeRPG
                 i.Draw(spriteBatch);
         }
         #region Description Menus
+        void planInfoMenu()
+        {
+            foreach (Image image in infoImage)
+                image.UnloadContent();
+            infoImage.Clear();
+            Vector2 dimensions = new Vector2(menu.Image.Position.X + menu.Image.SourceRect.Width / 2, 50);
+            Character character = characterManager.GetCharacter(characterManager.characterName[prevSelectedItem]);
+
+            //1: Title, 'PLAN'
+            Image i = new Image();
+            i.FontName = "Fonts/OCRAsmall";
+            i.Text = "PLAN"; 
+            i.TextColor = Color.Black;
+            i.Position = new Vector2(dimensions.X - font.MeasureString(i.Text).X / 2f, dimensions.Y);
+            dimensions.Y += 10f;
+            infoImage.Add(i);
+
+            //2: Map Outline
+            dimensions = new Vector2(menu.Image.Position.X + 63f, 100f);
+            i = new Image();
+            i.Path = "Misc/minimap_outline";
+            i.Position = dimensions;
+            infoImage.Add(i);
+
+            //3: Description
+            dimensions = new Vector2(menu.Image.Position.X, 373f);
+            i = new Image();
+            i.Path = character.QuestDescription;
+            i.Position = dimensions;
+            infoImage.Add(i);
+
+            foreach (Image image in infoImage)
+                image.LoadContent();
+        }
         void itemInfoMenu()
         {
             foreach (Image image in infoImage)
@@ -381,6 +427,23 @@ namespace YoutubeRPG
         #endregion
 
         #region Option Menus
+        void optionPlanMenu()
+        {
+            menu.Items.Clear();
+            foreach (string characterName in characterManager.characterName)
+            {
+                MenuItem item = new MenuItem();
+                Character character = characterManager.GetCharacter(characterName);
+
+                item.Image = new Image();
+                item.Image.Text = character.QuestName;
+                item.Image.TextColor = Color.Black;
+                item.Image.FontName = "Fonts/OCRAsmall";
+                item.LinkType = "Plan";
+                item.LinkID = "Content/Load/Menu/PlanMenu.xml";
+                menu.Items.Add(item);
+            }
+        }
         void optionInfoMenu()
         {
             menu.Items.Clear();
@@ -605,7 +668,9 @@ namespace YoutubeRPG
                         string str = menu.Items[menu.ItemNumber].Image.Text;
                         if (str != String.Empty)
                         {
-                            str = str.Substring(0, str.IndexOf('(')).ToLower();
+                            if (str.Contains("("))
+                                str = str.Substring(0, str.IndexOf('(')).ToLower();
+
                             selectedItem = str[0].ToString().ToUpper() + str.Substring(1);
 
                         }

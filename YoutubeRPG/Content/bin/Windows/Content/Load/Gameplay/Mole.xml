@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Character>
+  <QuestName>Avogadro's Mole</QuestName>
   <Image>
       <Path>Characters/mole</Path>
       <Effects>SpriteSheetEffect</Effects>

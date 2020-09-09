@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CharacterManager>
+  <CharacterSource>Content/Load/Gameplay/Mole.xml</CharacterSource>
+  <CharacterSource>Content/Load/Gameplay/Bondbrothers.xml</CharacterSource>
+  <CharacterSource>Content/Load/Gameplay/Markovnikov.xml</CharacterSource>
+  <CharacterSource>Content/Load/Gameplay/Methane.xml</CharacterSource>  
+</CharacterManager>

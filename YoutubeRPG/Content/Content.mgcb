@@ -25,6 +25,54 @@
 /processorParam:TextureFormat=Color
 /build:Characters/bondbros.png
 
+#begin Characters/Description/Bondbrothers.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Characters/Description/Bondbrothers.png
+
+#begin Characters/Description/Markovnikov.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Characters/Description/Markovnikov.png
+
+#begin Characters/Description/Methane.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Characters/Description/Methane.png
+
+#begin Characters/Description/Mole.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Characters/Description/Mole.png
+
 #begin Characters/mark.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1242,6 +1290,12 @@
 #begin Load/Gameplay/Backpack.xml
 /copy:Load/Gameplay/Backpack.xml
 
+#begin Load/Gameplay/Bondbrothers.xml
+/copy:Load/Gameplay/Bondbrothers.xml
+
+#begin Load/Gameplay/Character/IntroWorld.xml
+/copy:Load/Gameplay/Character/IntroWorld.xml
+
 #begin Load/Gameplay/Map/City1.xml
 /copy:Load/Gameplay/Map/City1.xml
 
@@ -1269,6 +1323,9 @@
 #begin Load/Gameplay/Markovnikov.xml
 /copy:Load/Gameplay/Markovnikov.xml
 
+#begin Load/Gameplay/Methane.xml
+/copy:Load/Gameplay/Methane.xml
+
 #begin Load/Gameplay/Mole.xml
 /copy:Load/Gameplay/Mole.xml
 
@@ -1289,6 +1346,9 @@
 
 #begin Load/GameplayScreen.xml
 /copy:Load/GameplayScreen.xml
+
+#begin Load/Menu/BookMenu.xml
+/copy:Load/Menu/BookMenu.xml
 
 #begin Load/Menu/GameplayMenu.xml
 /copy:Load/Menu/GameplayMenu.xml
@@ -1311,6 +1371,12 @@
 #begin Load/Menu/OptionMenu_ItemTest.xml
 /copy:Load/Menu/OptionMenu_ItemTest.xml
 
+#begin Load/Menu/OptionPlanMenu.xml
+/copy:Load/Menu/OptionPlanMenu.xml
+
+#begin Load/Menu/PlanMenu.xml
+/copy:Load/Menu/PlanMenu.xml
+
 #begin Load/Menu/TestMenu.xml
 /copy:Load/Menu/TestMenu.xml
 
@@ -1322,6 +1388,18 @@
 
 #begin Load/SplashScreen.xml
 /copy:Load/SplashScreen.xml
+
+#begin Misc/arrow_down.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Misc/arrow_down.png
 
 #begin Misc/book_menu.png
 /importer:TextureImporter
@@ -1371,6 +1449,18 @@
 /processorParam:TextureFormat=Color
 /build:Misc/info_menu.png
 
+#begin Misc/minimap_outline.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Misc/minimap_outline.png
+
 #begin Misc/option_menu.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1406,6 +1496,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Misc/testtube_button.png
+
+#begin Misc/yesno_menu.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Misc/yesno_menu.png
 
 #begin ScreenBackground/background.png
 /importer:TextureImporter
