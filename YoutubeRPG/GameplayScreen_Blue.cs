@@ -44,6 +44,12 @@ namespace YoutubeRPG
             chemical = chemicalLoader.Load("Content/Load/Chemical/Alkane/Pentane.xml");
             chemical.LoadContent();
             chemical.Image.Position = player.Image.Position + new Vector2(128, 128);
+
+            //TEST:character
+            XmlManager<Character> characterLoader = new XmlManager<Character>();
+            mole = characterLoader.Load("Content/Load/Gameplay/Mole.xml");
+            mole.LoadContent();
+            mole.Image.Position = player.Image.Position + new Vector2(128, -128);
         }
         public override void UnloadContent()
         {
@@ -52,6 +58,9 @@ namespace YoutubeRPG
             chemical.UnloadContent();
             world.UnloadContent();
             menuManager.UnloadContent();
+
+            //TEST:character
+            mole.UnloadContent();
         }
         public override void Update(GameTime gameTime)
         {
@@ -65,6 +74,8 @@ namespace YoutubeRPG
 
             camera.LockToSprite(world.CurrentMap.Layer[0], player.Image);
 
+            //TEST:character
+            mole.Update(gameTime);
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
@@ -78,6 +89,7 @@ namespace YoutubeRPG
             world.Draw(spriteBatch, "Underlay");
             player.Draw(spriteBatch);
             chemical.Draw(spriteBatch);
+            mole.Draw(spriteBatch);
             world.Draw(spriteBatch, "Overlay");
             spriteBatch.End();
 

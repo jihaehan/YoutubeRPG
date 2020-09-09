@@ -49,7 +49,6 @@ namespace YoutubeRPG
                     item.Image.FadeEffect.Increase = false;
             }
         }
-
         void AlignMenuItems()
         {
             Vector2 dimensions = Vector2.Zero;

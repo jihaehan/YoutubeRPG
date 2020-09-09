@@ -16,6 +16,7 @@ namespace YoutubeRPG
 
         ChemicalManager chemicalManager;
         ItemManager itemManager;
+        //World world;
         List<string> reactionHistory;
         bool isTransitioning;
 
@@ -196,7 +197,7 @@ namespace YoutubeRPG
             //2: Chemical Image
             i = new Image();
             i.Path = "Chemical/Diagram/" + item.Name;
-            i.Position = new Vector2(dimensions.X - 192.5f, dimensions.Y);
+            i.Position = new Vector2(dimensions.X - 188f, dimensions.Y);
             dimensions.Y += 200;
             infoImage.Add(i);
 
@@ -378,6 +379,7 @@ namespace YoutubeRPG
                 image.LoadContent();
         }
         #endregion
+
         #region Option Menus
         void optionInfoMenu()
         {
@@ -427,6 +429,7 @@ namespace YoutubeRPG
             }
         }
         #endregion
+
         #region Misc Functions
         string reactionHistoryFormula(Chemical chemical)
         {
