@@ -17,6 +17,7 @@ namespace YoutubeRPG
         CharacterManager characterManager;
         bool isTransitioning;
 
+        string ID;
         string prevMenuID;
         string currentMenuID;
         string currentMenuType;
@@ -27,7 +28,7 @@ namespace YoutubeRPG
 
         public ConversationManager()
         {
-            prevMenuID = currentMenuID = currentMenuType = currentDialogue = String.Empty;
+            prevMenuID = currentMenuID = currentMenuType = currentDialogue = ID = String.Empty;
             arrow = new Image();
             scrollingText = new List<Image>();
             dialogue = new Dictionary<string, MenuItem>();
@@ -49,36 +50,43 @@ namespace YoutubeRPG
                 clone.Clear();
 
             XmlManager<Menu> XmlMenuManager = new XmlManager<Menu>();
-            if (menu.ID.Contains(".xml") || menu.ID == String.Empty)
+            if (!currentMenuID.Contains(".xml"))
             {
                 menu.UnloadContent();
-                menu = XmlMenuManager.Load(menu.ID);
-            }
-
-            if (currentMenuID.Contains("Conversation"))
-            {
+                menu = XmlMenuManager.Load("Content/Load/Conversation/Intro.xml");
                 conversationMenu();
-                scrollingDialogue();
-            }
-
-            if (menu.ID.Contains(".xml") || menu.ID == String.Empty)
-            { 
+                //scrollingDialogue();
                 menu.LoadContent();
                 menu.OnMenuChanged += menu_OnMenuChange;
                 menu.Transition(0.0f);
+
             }
+            else if (menu.ID.Contains(".xml") || menu.ID == String.Empty)
+            {
+                menu.UnloadContent();
+                if (currentMenuID == String.Empty)
+                    menu = XmlMenuManager.Load(menu.ID);
+                else
+                    menu = XmlMenuManager.Load(currentMenuID);
+                menu.LoadContent();
+                menu.OnMenuChanged += menu_OnMenuChange;
+                menu.Transition(0.0f);
+                if (currentMenuID.Contains("Question"))
+                { 
+                    questionMenu();
+                    currentMenuID = "";
+                }
+            }
+            if (currentDialogue != String.Empty)// && !currentMenuID.Contains("Question"))
+                scrollingDialogue();
+
 
             foreach (MenuItem item in menu.Items)
             {
                 item.Image.StoreEffects();
                 item.Image.ActivateEffect("FadeEffect");
             }
-            if (currentMenuID.Contains("Conversation"))
-            {
-                scrollingDialogue();
-            }
-            else if (currentMenuID.Contains("Question"))
-                questionMenu();
+
         }
         #endregion
 
@@ -117,8 +125,6 @@ namespace YoutubeRPG
             characterManager = player.CharacterManager;
             foreach (Image i in scrollingText)
                 i.Update(gameTime);
-
-            string s = currentMenuID;
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -139,9 +145,13 @@ namespace YoutubeRPG
         void questionMenu()
         {
             //Yes:
-            menu.Items[0].LinkID = prevMenuID + "1";
+            string id = ID + "1";
+            menu.Items[0].LinkID = id;
+            //menu.Items[0].LinkType = dialogue[id].LinkType;
             //No:
-            menu.Items[1].LinkID = prevMenuID + "0";
+            id = ID + "0";
+            menu.Items[1].LinkID = id;
+            //menu.Items[1].LinkType = dialogue[id].LinkType;
 
         }
         void conversationMenu()
@@ -161,39 +171,46 @@ namespace YoutubeRPG
             else
             {
                 menu.Items.Clear();
-                menu.Items.Add(dialogue[currentMenuID]);
-                currentDialogue = dialogue[currentMenuID].Image.Text;
+                menu.Items.Add(dialogue[ID]);
+                currentDialogue = dialogue[ID].Image.Text;
                 menu.Items[0].Image.Text = " ";
                 menu.Items[0].Image.FontName = "Fonts/OCRA";
             }
             //unload menu here...
         }
+        /// <summary>
+        /// sets current dialogue based on 'ID'
+        /// </summary>
         void setDialogue()
         {
-            currentDialogue = dialogue[currentMenuID].Image.Text;
-            switch (dialogue[currentMenuID].LinkType)
+            if (ID != String.Empty)
             {
-                case "Question":
-                    currentMenuID = "Content/Load/Menu/QuestionMenu.xml";
-                    break;
-                case "End":
-                    currentDialogue = String.Empty;
-                    menu.Active = false;
-                    clone.Clear();
-                    break;
-                case "Battle":
-                    break;
-                case "Party":
-                    break;
+                currentDialogue = dialogue[ID].Image.Text;
+                switch (dialogue[ID].LinkType)
+                {
+                    case "Question":
+                        currentMenuID = "Content/Load/Menu/QuestionMenu.xml";
+                        break;
+                    case "End":
+                        menu.Active = false;
+                        clone.Clear();
+                        break;
+                    case "Battle":
+                        break;
+                    case "Party":
+                        break;
+                }
             }
+                
         }
+        ///Based on currentDialogue to generate scrollingText
         void scrollingDialogue()
         {
             //Unload images from previous scrolling Text
             foreach (Image image in scrollingText)
                 image.UnloadContent();
             scrollingText.Clear();
-            Vector2 dimensions = menu.Alignment;
+            Vector2 dimensions = new Vector2(570, 580);
             Image i = new Image();
 
             //Cut dialogue into individual bits
@@ -203,9 +220,9 @@ namespace YoutubeRPG
             int count = 0;
             foreach (string s in parts)
             {
-                if (rowLength + s.Length < 36)
+                if ((rowLength + s.Length) < 36)
                 {
-                    rowLength += s.Length;
+                    rowLength += s.Length + 1;
                     text += s + " "; 
                     if (s == parts[parts.Length - 1]) //if string is last word in dialogue
                     {
@@ -223,7 +240,7 @@ namespace YoutubeRPG
                     if (count < 3)
                     {
                         count++;
-                        text += "\n\r" + s;
+                        text += "\n\r" + s + " ";
                     }
                     else
                     {
@@ -236,7 +253,7 @@ namespace YoutubeRPG
                         scrollingText.Add(i);
                         text = s;
                     }
-                    rowLength = s.Length;
+                    rowLength = s.Length + 1;
                 }
             }
             foreach (Image image in scrollingText)
@@ -317,7 +334,11 @@ namespace YoutubeRPG
                     prevMenuID = currentMenuID;
                     currentMenuID = menu.Items[menu.ItemNumber].LinkID;
                     currentMenuType = menu.Items[menu.ItemNumber].LinkType;
-                    setDialogue(); //PROBLEM: questionMenu answers are not linking properly
+
+                    if (!ID.Contains(".xml") && currentMenuID!= String.Empty)
+                        ID = currentMenuID;
+                    setDialogue();
+
                     isTransitioning = true;
                     if (isTransitioning)
                     {

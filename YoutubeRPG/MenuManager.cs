@@ -25,7 +25,6 @@ namespace YoutubeRPG
         string selectedItem;
         int prevSelectedItem, gameplayMenuSelectedItem;
         List<Image> infoImage;
-        StringBuilder sb;
         SpriteFont font;
         Image page;
         string pageText;
@@ -36,7 +35,6 @@ namespace YoutubeRPG
             prevMenuID = currentMenuID = selectedItem = String.Empty;
             pageText = "1/3";
             page = new Image();
-            sb = new StringBuilder();
             infoImage = new List<Image>();
             reactionHistory = new List<string>();
             clone = new List<Menu>();
