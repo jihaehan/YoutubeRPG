@@ -15,7 +15,7 @@ namespace YoutubeRPG
         Player player;
         World world;
         Camera camera;
-        MenuManager menuManager;
+        //MenuManager menuManager;
         ConversationManager conversationManager;
         Character mole;
         Chemical chemical;
@@ -35,7 +35,7 @@ namespace YoutubeRPG
             //menuManager = new MenuManager();
             //menuManager.LoadContent("Content/Load/Menu/GameplayMenu.xml");
             conversationManager = new ConversationManager();
-            conversationManager.LoadContent("Content/Load/Menu/GameplayMenu.xml");
+            conversationManager.LoadContent("Content/Load/Conversation/Intro.xml");
 
             player.Image.Position = world.CurrentMap.StartingPoint;
             InitializeBindings();
@@ -124,36 +124,36 @@ namespace YoutubeRPG
 
         private void Toggle_Up(eButtonState buttonState)
         {
-            if (menuManager.IsActive)
+            /*if (menuManager.IsActive)
                 menuManager.SelectUp(buttonState);
-            else if (conversationManager.IsActive)
+            else*/ if (conversationManager.IsActive)
                 conversationManager.SelectUp(buttonState);
             else
                 player.MoveUp(buttonState);
         }
         private void Toggle_Down(eButtonState buttonState)
         {
-            if (menuManager.IsActive)
+            /*if (menuManager.IsActive)
                 menuManager.SelectDown(buttonState);
-            else if (conversationManager.IsActive)
+            else*/ if (conversationManager.IsActive)
                 conversationManager.SelectDown(buttonState);
             else
                 player.MoveDown(buttonState);
         }
         private void Toggle_Left(eButtonState buttonState)
         {
-            if (menuManager.IsActive)
+            /*if (menuManager.IsActive)
                 menuManager.SelectLeft(buttonState);
-            else if (conversationManager.IsActive)
+            else */if (conversationManager.IsActive)
                 conversationManager.SelectLeft(buttonState);
             else
                 player.MoveLeft(buttonState);
         }
         private void Toggle_Right(eButtonState buttonState)
         {
-            if (menuManager.IsActive)
+            /*if (menuManager.IsActive)
                 menuManager.SelectRight(buttonState);
-            else if (conversationManager.IsActive)
+            else*/ if (conversationManager.IsActive)
                 conversationManager.SelectRight(buttonState);
             else
                 player.MoveRight(buttonState);

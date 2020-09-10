@@ -1380,6 +1380,9 @@
 #begin Load/Menu/PlanMenu.xml
 /copy:Load/Menu/PlanMenu.xml
 
+#begin Load/Menu/QuestionMenu.xml
+/copy:Load/Menu/QuestionMenu.xml
+
 #begin Load/Menu/TestMenu.xml
 /copy:Load/Menu/TestMenu.xml
 

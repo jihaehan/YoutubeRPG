@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Menu>
+  <Axis>Left</Axis>
+  <Type>Conversation</Type>
+  <Spacing>
+    <X>0</X>
+    <Y>5</Y>
+  </Spacing>
+  <Alignment>
+    <X>440</X>
+    <Y>580</Y>
+  </Alignment> 
+  <Image>
+    <Path>Misc/yesno_menu</Path>
+    <Position>
+      <X>420</X>
+      <Y>565</Y>
+    </Position>
+    <FontName>Fonts/OCRAExt</FontName>
+  </Image>
+
+  <Item>
+    <LinkType>Yes</LinkType> 
+    <LinkID></LinkID>
+    <Image>
+      <Text>YES</Text>
+      <FontName>Fonts/OCRASmall</FontName>  
+      <TextColor>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+        <A>255</A>
+      </TextColor>
+    </Image>
+  </Item>
+  
+  <Item>
+    <LinkType>No</LinkType> 
+    <LinkID></LinkID>
+    <Image>
+      <Text>NO</Text>
+      <FontName>Fonts/OCRASmall</FontName>  
+      <TextColor>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+        <A>255</A>
+      </TextColor>
+    </Image>
+  </Item>
+
+</Menu>

@@ -1,5 +1,62 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<XnaContent xmlns:ns="Microsoft.Xna.Framework">
-  <Asset Type="Object">
-  </Asset>
-</XnaContent>
+<Menu>
+  <Axis>Left</Axis>
+  <Type>Conversation</Type>
+  <Spacing>
+    <X>0</X>
+    <Y>10</Y>
+  </Spacing>
+  <Alignment>
+    <X>570</X>
+    <Y>580</Y>
+  </Alignment> 
+  <Image>
+    <Path>Misc/conversation_menu</Path>
+    <Position>
+      <X>540</X>
+      <Y>562</Y>
+    </Position>
+    <FontName>Fonts/OCRAExt</FontName>
+  </Image>
+
+  <Item>
+    <LinkType>Question</LinkType> 
+    <LinkID>1</LinkID>
+    <Image>
+      <Text>Do you love chemistry?</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Question</LinkType> 
+    <LinkID>11</LinkID>
+    <Image>
+      <Text>A great anomaly will occur... what will you do next?</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>End</LinkType> 
+    <LinkID>110</LinkID>
+    <Image>
+      <Text>Guess it's safer to stay at home.</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Party</LinkType> 
+    <LinkID>111</LinkID>
+    <Image>
+      <Text>Methane:A Methane joins your party!</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>End</LinkType> 
+    <LinkID>10</LinkID>
+    <Image>
+      <Text>Oh, that's too bad...</Text>
+    </Image>
+  </Item>
+
+</Menu>
