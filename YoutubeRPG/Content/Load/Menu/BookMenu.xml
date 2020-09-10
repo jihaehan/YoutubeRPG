@@ -18,4 +18,140 @@
     </Position>
     <FontName>Fonts/OCRASmall</FontName>
   </Image>
+
+  <Item>
+    <LinkType>Book</LinkType> 
+    <LinkID>Series</LinkID>
+    <Image>
+      <Text>SERIES</Text>
+      <FontName>Fonts/OCRAsmall</FontName>  
+      <TextColor>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+        <A>255</A>
+      </TextColor>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Book</LinkType> 
+    <LinkID>Chemicals</LinkID>
+    <Image>
+      <Text>CHEMICALS</Text>
+      <FontName>Fonts/OCRAsmall</FontName>  
+      <TextColor>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+        <A>255</A>
+      </TextColor>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Book</LinkType> 
+    <LinkID>Redoxreaction</LinkID>
+    <Image>
+      <Text>REDOX REACT</Text>
+      <FontName>Fonts/OCRAsmall</FontName>  
+      <TextColor>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+        <A>255</A>
+      </TextColor>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Book</LinkType> 
+    <LinkID>Organicreaction</LinkID>
+    <Image>
+      <Text>ORGANIC REACT</Text>
+      <FontName>Fonts/OCRAsmall</FontName>  
+      <TextColor>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+        <A>255</A>
+      </TextColor>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Book</LinkType> 
+    <LinkID>Journal</LinkID>
+    <Image>
+      <Text>JOURNAL</Text>
+      <FontName>Fonts/OCRAsmall</FontName>  
+      <TextColor>
+        <R>67</R>
+        <G>179</G>
+        <B>255</B>
+        <A>255</A>
+      </TextColor>
+    </Image>
+  </Item>
+
+    <Item>
+    <LinkType>Book</LinkType> 
+    <LinkID>People</LinkID>
+    <Image>
+      <Text>PEOPLE</Text>
+      <FontName>Fonts/OCRAsmall</FontName>  
+      <TextColor>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+        <A>255</A>
+      </TextColor>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Book</LinkType> 
+    <LinkID>Controls</LinkID>
+    <Image>
+      <Text>CONTROLS</Text>
+      <FontName>Fonts/OCRAsmall</FontName>  
+      <TextColor>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+        <A>255</A>
+      </TextColor>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Book</LinkType> 
+    <LinkID>Settings</LinkID>
+    <Image>
+      <Text>SETTINGS</Text>
+      <FontName>Fonts/OCRAsmall</FontName>  
+      <TextColor>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+        <A>255</A>
+      </TextColor>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Book</LinkType> 
+    <LinkID>Credits</LinkID>
+    <Image>
+      <Text>CREDITS</Text>
+      <FontName>Fonts/OCRAsmall</FontName>  
+      <TextColor>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+        <A>255</A>
+      </TextColor>
+    </Image>
+  </Item>
+  
 </Menu>

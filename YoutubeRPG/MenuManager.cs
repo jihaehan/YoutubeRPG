@@ -17,7 +17,6 @@ namespace YoutubeRPG
         ChemicalManager chemicalManager;
         ItemManager itemManager;
         CharacterManager characterManager;
-        //World world;
         List<string> reactionHistory;
         bool isTransitioning;
 
@@ -77,10 +76,12 @@ namespace YoutubeRPG
                 clone.Clear();
 
             XmlManager<Menu> XmlMenuManager = new XmlManager<Menu>();
-            menu.UnloadContent();
 
-            if (currentMenuID.Contains(".xml") || menu.ID.Contains(".xml"))
+            if (currentMenuID.Contains(".xml") || currentMenuID == String.Empty)
+            {
+                menu.UnloadContent();
                 menu = XmlMenuManager.Load(menu.ID);
+            }
             if (currentMenuID.Contains("OptionInfo"))
                 optionInfoMenu();
             else if (currentMenuID.Contains("OptionItem"))
@@ -88,9 +89,12 @@ namespace YoutubeRPG
             else if (currentMenuID.Contains("OptionPlan"))
                 optionPlanMenu();
 
-            menu.LoadContent();
-            menu.OnMenuChanged += menu_OnMenuChange;
-            menu.Transition(0.0f);
+            if (currentMenuID.Contains(".xml") || currentMenuID == String.Empty)
+            {
+                menu.LoadContent();
+                menu.OnMenuChanged += menu_OnMenuChange;
+                menu.Transition(0.0f);
+            }
 
             foreach (MenuItem item in menu.Items)
             {
@@ -126,6 +130,11 @@ namespace YoutubeRPG
             else if (menu.Type == "PlanInfo")
             {
                 planInfoMenu();
+            }
+            else if (menu.Type == "Book")
+            {
+                menu.ItemNumber = prevSelectedItem;
+                bookMenu();
             }
             else
                 menu.ItemNumber = prevSelectedItem;
@@ -188,6 +197,29 @@ namespace YoutubeRPG
                 i.Draw(spriteBatch);
         }
         #region Description Menus
+        void bookMenu()
+        {
+            foreach (Image image in infoImage)
+                image.UnloadContent();
+            infoImage.Clear();
+            Vector2 dimensions = new Vector2(menu.Image.Position.X + menu.Image.SourceRect.Width *3/4, 45);
+            Image i = new Image();
+
+            switch (currentMenuID)
+            {
+                case "Credits":
+                    i = new Image();
+                    i.FontName = "Fonts/OCRAsmall";
+                    i.Text = "Demo Developed\n\rby Jihae Han";
+                    i.TextColor = Color.Black;
+                    i.Position = new Vector2(dimensions.X - font.MeasureString(i.Text).X / 2f, dimensions.Y);
+                    dimensions.Y += 10f;
+                    infoImage.Add(i);
+                    break;
+            }
+            foreach (Image image in infoImage)
+                image.LoadContent();
+        }
         void planInfoMenu()
         {
             foreach (Image image in infoImage)
@@ -215,7 +247,9 @@ namespace YoutubeRPG
             i.Position = dimensions;
             infoImage.Add(i);
 
-            //3: Description
+            //3: Minimap
+
+            //4: Description
             dimensions = new Vector2(menu.Image.Position.X, 373f);
             i = new Image();
             i.Path = character.QuestDescription;

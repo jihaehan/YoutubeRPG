@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Character>
+  <Name>The Methane</Name>
   <QuestName>The Methane</QuestName>
   <Image>
       <Path>Chemical/Alkane/Methane</Path>

@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Character>
+  <Name>Markovnikov</Name>
   <QuestName>Markovnikov</QuestName>
   <Image>
       <Path>Characters/mark</Path>
