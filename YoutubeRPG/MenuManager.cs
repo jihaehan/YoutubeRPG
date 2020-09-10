@@ -77,7 +77,7 @@ namespace YoutubeRPG
 
             XmlManager<Menu> XmlMenuManager = new XmlManager<Menu>();
 
-            if (currentMenuID.Contains(".xml") || currentMenuID == String.Empty)
+            if (menu.ID.Contains(".xml") || menu.ID == String.Empty)
             {
                 menu.UnloadContent();
                 menu = XmlMenuManager.Load(menu.ID);
@@ -89,7 +89,7 @@ namespace YoutubeRPG
             else if (currentMenuID.Contains("OptionPlan"))
                 optionPlanMenu();
 
-            if (currentMenuID.Contains(".xml") || currentMenuID == String.Empty)
+            if (menu.ID.Contains(".xml") || menu.ID == String.Empty)
             {
                 menu.LoadContent();
                 menu.OnMenuChanged += menu_OnMenuChange;
@@ -207,13 +207,41 @@ namespace YoutubeRPG
 
             switch (currentMenuID)
             {
+                case "Series":
+                    //menu.ID = "Menu/BookSeries.xml";
+                    break;
+                case "Chemicals":
+                    break;
+                case "Redoxreaction":
+                    break;
+                case "Organicreaction":
+                    break;
+                case "Journal":
+                    break;
+                case "People":
+                    break;
+                case "Controls":
+                    i = new Image();
+                    i.FontName = "Fonts/OCRAExt";
+                    i.Text = "WASD  = MOVE\n\r\n\rENTER = INTERACT\n\r        MENU\n\r\n\rX     = BACK";
+                    i.TextColor = Color.Black;
+                    i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f + 15f, 182);
+                    infoImage.Add(i);
+                    break;
+                case "Settings":
+                    i = new Image();
+                    i.FontName = "Fonts/OCRAExt";
+                    i.Text = "Coming Soon!";
+                    i.TextColor = Color.Black;
+                    i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f, 230);
+                    infoImage.Add(i);
+                    break;
                 case "Credits":
                     i = new Image();
-                    i.FontName = "Fonts/OCRAsmall";
+                    i.FontName = "Fonts/OCRAExt";
                     i.Text = "Demo Developed\n\rby Jihae Han";
                     i.TextColor = Color.Black;
-                    i.Position = new Vector2(dimensions.X - font.MeasureString(i.Text).X / 2f, dimensions.Y);
-                    dimensions.Y += 10f;
+                    i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f, 230);
                     infoImage.Add(i);
                     break;
             }

@@ -16,7 +16,7 @@
       <X>530</X>
       <Y>0</Y>
     </Position>
-    <FontName>Fonts/OCRASmall</FontName>
+    <FontName>Fonts/OCRAExt</FontName>
   </Image>
 
   <Item>
@@ -94,7 +94,7 @@
     </Image>
   </Item>
 
-    <Item>
+  <Item>
     <LinkType>Book</LinkType> 
     <LinkID>People</LinkID>
     <Image>
