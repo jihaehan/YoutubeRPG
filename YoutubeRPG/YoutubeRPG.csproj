@@ -50,10 +50,7 @@
     <Compile Include="CharacterManager.cs" />
     <Compile Include="Chemical.cs" />
     <Compile Include="ChemicalManager.cs" />
-    <Compile Include="Conversation.cs" />
-    <Compile Include="ConversationItem.cs" />
     <Compile Include="ConversationManager.cs" />
-    <Compile Include="ConversationScene.cs" />
     <Compile Include="DataSheet\DataSheet.cs" />
     <Compile Include="FadeEffect.cs" />
     <Compile Include="Game1.cs" />

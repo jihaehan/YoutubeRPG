@@ -124,7 +124,6 @@ namespace YoutubeRPG
                     }
                     item.Image.Position = new Vector2(0, dimensions.Y) + Alignment;
                     dimensions.Y += item.Image.SourceRect.Height + Spacing.Y;
-
                 }
             }
         }

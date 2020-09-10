@@ -1287,6 +1287,9 @@
 #begin Load/Chemical/Item/Water.xml
 /copy:Load/Chemical/Item/Water.xml
 
+#begin Load/Conversation/Intro.xml
+/copy:Load/Conversation/Intro.xml
+
 #begin Load/Gameplay/Backpack.xml
 /copy:Load/Gameplay/Backpack.xml
 

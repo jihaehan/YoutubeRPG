@@ -40,7 +40,7 @@ namespace YoutubeRPG
         #region Event
         public void menu_OnMenuChange(object sender, EventArgs e)
         {
-            if (!currentMenuID.Contains("GameplayMenu") && currentMenuID != String.Empty)
+            if (currentMenuID != String.Empty)
                 clone.Add(menu);
             else
                 clone.Clear();
@@ -80,6 +80,7 @@ namespace YoutubeRPG
                 arrow.Path = "Misc/arrow_down";
                 arrow.Position = new Vector2(ScreenManager.Instance.Dimensions.X -35, ScreenManager.Instance.Dimensions.Y - 25);
                 arrow.Effects = "FadeEffect";
+                arrow.IsActive = true;
                 arrow.LoadContent();
             }
         }
@@ -94,17 +95,12 @@ namespace YoutubeRPG
             foreach (Image i in scrollingText)
                 i.UnloadContent();
         }
-        public void Update(GameTime gameTime)
-        {
-            if (!isTransitioning)
-                menu.Update(gameTime);
-            Transition(gameTime);
-        }
         public void Update(GameTime gameTime, ref Player player)
         {
             if (!isTransitioning)
                 menu.Update(gameTime);
             Transition(gameTime);
+            arrow.Update(gameTime);
             characterManager = player.CharacterManager;
             foreach (Image i in scrollingText)
                 i.Update(gameTime);
@@ -114,13 +110,23 @@ namespace YoutubeRPG
             foreach (Menu m in clone)
                 m.Draw(spriteBatch);
             menu.Draw(spriteBatch);
-            if (menu.Type.Contains("Conversation"))
+            if (menu.Type.Contains("Conversation") && IsActive)
             {
                 arrow.Draw(spriteBatch);
             }
             foreach (Image i in scrollingText)
                 i.Draw(spriteBatch);
         }
+        #endregion
+        #region Option Menus
+        void scrollingTextConvert()
+        {
+            //Have some test dialogue
+        }
+        void yesnoMenu()
+        {
+
+        } 
         #endregion
         #region Misc Functions
         void Transition(GameTime gameTime)
@@ -177,7 +183,7 @@ namespace YoutubeRPG
                     menu.Active = false;
                 else
                 {
-                    currentMenuID = "Content/Load/Menu/GameplayMenu.xml";
+                    currentMenuID = "Content/Load/Conversation/Intro.xml";
                     menu.ID = currentMenuID;
                     menu.Active = true;
                 }

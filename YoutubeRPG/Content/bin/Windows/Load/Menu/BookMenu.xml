@@ -16,7 +16,7 @@
       <X>530</X>
       <Y>0</Y>
     </Position>
-    <FontName>Fonts/OCRASmall</FontName>
+    <FontName>Fonts/OCRAExt</FontName>
   </Image>
 
   <Item>
@@ -94,11 +94,26 @@
     </Image>
   </Item>
 
-    <Item>
+  <Item>
     <LinkType>Book</LinkType> 
     <LinkID>People</LinkID>
     <Image>
       <Text>PEOPLE</Text>
+      <FontName>Fonts/OCRAsmall</FontName>  
+      <TextColor>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+        <A>255</A>
+      </TextColor>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Book</LinkType> 
+    <LinkID>Saving</LinkID>
+    <Image>
+      <Text>SAVING</Text>
       <FontName>Fonts/OCRAsmall</FontName>  
       <TextColor>
         <R>0</R>
@@ -139,7 +154,7 @@
     </Image>
   </Item>
 
-    <Item>
+  <Item>
     <LinkType>Book</LinkType> 
     <LinkID>Credits</LinkID>
     <Image>
