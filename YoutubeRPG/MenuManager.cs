@@ -208,17 +208,51 @@ namespace YoutubeRPG
             switch (currentMenuID)
             {
                 case "Series":
-                    //menu.ID = "Menu/BookSeries.xml";
-                    break;
+                    i = new Image();
+                    i.FontName = "Fonts/OCRAExt";
+                    i.Text = "PLACEHOLDER";
+                    i.TextColor = Color.Black;
+                    i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f + 15f, 182);
+                    infoImage.Add(i); break;
                 case "Chemicals":
+                    i = new Image();
+                    i.FontName = "Fonts/OCRAExt";
+                    i.Text = "PLACEHOLDER";
+                    i.TextColor = Color.Black;
+                    i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f + 15f, 182);
+                    infoImage.Add(i);
                     break;
                 case "Redoxreaction":
+                    i = new Image();
+                    i.FontName = "Fonts/OCRAExt";
+                    i.Text = "PLACEHOLDER";
+                    i.TextColor = Color.Black;
+                    i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f + 15f, 182);
+                    infoImage.Add(i);
                     break;
                 case "Organicreaction":
+                    i = new Image();
+                    i.FontName = "Fonts/OCRAExt";
+                    i.Text = "PLACEHOLDER";
+                    i.TextColor = Color.Black;
+                    i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f + 15f, 182);
+                    infoImage.Add(i);
                     break;
                 case "Journal":
+                    i = new Image();
+                    i.FontName = "Fonts/OCRAExt";
+                    i.Text = "PLACEHOLDER";
+                    i.TextColor = Color.Black;
+                    i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f + 15f, 182);
+                    infoImage.Add(i);
                     break;
                 case "People":
+                    i = new Image();
+                    i.FontName = "Fonts/OCRAExt";
+                    i.Text = "PLACEHOLDER";
+                    i.TextColor = Color.Black;
+                    i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f + 15f, 182);
+                    infoImage.Add(i);
                     break;
                 case "Controls":
                     i = new Image();
