@@ -17,7 +17,6 @@ namespace YoutubeRPG
         Camera camera;
         MenuManager menuManager;
         Character mole;
-        Character mark; 
 
         Chemical chemical;
         

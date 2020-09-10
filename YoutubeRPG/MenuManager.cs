@@ -30,26 +30,6 @@ namespace YoutubeRPG
         Image page;
         string pageText;
 
-        void Transition(GameTime gameTime)
-        {
-            if (isTransitioning)
-            {
-                for (int i = 0; i < menu.Items.Count; ++i)
-                {
-                    menu.Items[i].Image.Update(gameTime);
-                    float first = menu.Items[0].Image.Alpha;
-                    float last = menu.Items[menu.Items.Count - 1].Image.Alpha;
-                    if (first == 0.0f && last == 0.0f)
-                        menu.ID = currentMenuID;
-                    else if (first == 1.0f && last == 1.0f)
-                    {
-                        isTransitioning = false;
-                        foreach (MenuItem item in menu.Items)
-                            item.Image.RestoreEffects();
-                    }
-                }
-            }
-        }
         public MenuManager()
         {
             prevSelectedItem = gameplayMenuSelectedItem = 0;
@@ -68,6 +48,7 @@ namespace YoutubeRPG
         {
             get { return menu.Active; }
         }
+        #region Event
         public void menu_OnMenuChange(object sender, EventArgs e)
         {
             if (!currentMenuID.Contains("GameplayMenu") && currentMenuID != String.Empty) 
@@ -139,6 +120,9 @@ namespace YoutubeRPG
             else
                 menu.ItemNumber = prevSelectedItem;
         }
+        #endregion
+
+        #region Main Methods
         public void LoadContent(string menuPath)
         {
             if (menuPath != String.Empty)
@@ -196,6 +180,8 @@ namespace YoutubeRPG
             foreach (Image i in infoImage)
                 i.Draw(spriteBatch);
         }
+        #endregion
+
         #region Description Menus
         void bookMenu()
         {
@@ -694,6 +680,26 @@ namespace YoutubeRPG
                     menu.Items[k].Image.IsVisible = false;
 
                 pageText = ((int)(menu.ItemNumber / 3 + 1)).ToString() + "/3";
+            }
+        }
+        void Transition(GameTime gameTime)
+        {
+            if (isTransitioning)
+            {
+                for (int i = 0; i < menu.Items.Count; ++i)
+                {
+                    menu.Items[i].Image.Update(gameTime);
+                    float first = menu.Items[0].Image.Alpha;
+                    float last = menu.Items[menu.Items.Count - 1].Image.Alpha;
+                    if (first == 0.0f && last == 0.0f)
+                        menu.ID = currentMenuID;
+                    else if (first == 1.0f && last == 1.0f)
+                    {
+                        isTransitioning = false;
+                        foreach (MenuItem item in menu.Items)
+                            item.Image.RestoreEffects();
+                    }
+                }
             }
         }
         #endregion
