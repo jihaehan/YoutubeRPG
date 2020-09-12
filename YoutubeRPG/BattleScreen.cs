@@ -54,6 +54,10 @@ namespace YoutubeRPG
             background.FontName = "Fonts/OCRAExt";
             background.LoadContent();
 
+            //Setup BattleManager
+            battleManager = new BattleManager();
+            battleManager.LoadContent("Content/Load/Menu/BattleMenu.xml");
+
         }
         public override void UnloadContent()
         {

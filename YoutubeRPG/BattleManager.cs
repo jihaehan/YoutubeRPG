@@ -39,6 +39,7 @@ namespace YoutubeRPG
             pageText = "1/3";
             page = new Image();
             card = new Image();
+            oxygen = new List<Image>();
             infoImage = new List<Image>();
             clone = new List<Menu>();
             menu = new Menu();
@@ -121,22 +122,23 @@ namespace YoutubeRPG
                 page.Position = new Vector2(307, ScreenManager.Instance.Dimensions.Y - 23);
                 page.LoadContent();
                 card.Path = "Misc/card";
+                card.FontName = "Fonts/OCRAsmall";
+                card.LoadContent();
                 card.Effects = "SpriteSheetEffect";
                 card.SpriteSheetEffect.AmountOfFrames.X = 1;
                 card.SpriteSheetEffect.AmountOfFrames.Y = 2;
                 card.SpriteSheetEffect.SwitchFrame = 50;
                 card.IsActive = false;
-                card.FontName = "Fonts/OCRAsmall";
-                card.LoadContent();
                 Image O2 = new Image();
+                O2.Path = "Misc/oxygen";
                 O2.Effects = "SpriteSheetEffect";
+                O2.FontName = "Fonts/OCRAsmall";
+                O2.LoadContent();
                 O2.SpriteSheetEffect.AmountOfFrames.X = 1;
                 O2.SpriteSheetEffect.AmountOfFrames.Y = 2;
                 O2.SpriteSheetEffect.SwitchFrame = 50;
                 O2.IsActive = false;
                 O2.Position = new Vector2(923, 522);
-                O2.Path = "Misc/oxygen";
-                O2.LoadContent();
                 oxygen.Add(O2);
                 for (int i = 0; i < 7; i++)
                 {
