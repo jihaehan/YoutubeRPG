@@ -32,7 +32,6 @@ namespace YoutubeRPG
         public override void LoadContent()
         {
             base.LoadContent();
-            InitializeBindings();
 
             XmlManager<Player> playerLoader = new XmlManager<Player>();
             player = playerLoader.Load("Content/Load/Gameplay/Player.xml");
@@ -59,6 +58,8 @@ namespace YoutubeRPG
             battleManager = new BattleManager();
             battleManager.LoadContent("Content/Load/Menu/BattleMenu.xml");
 
+            InitializeBindings();
+
         }
         public override void UnloadContent()
         {
@@ -73,7 +74,6 @@ namespace YoutubeRPG
             player.BattleUpdate(gameTime);
             enemy.BattleUpdate(gameTime);
             battleManager.Update(gameTime, ref player, ref enemy.ChemicalManager);
-
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
