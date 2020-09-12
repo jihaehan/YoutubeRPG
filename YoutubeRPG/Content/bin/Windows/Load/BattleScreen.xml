@@ -1,18 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BattleScreen>
-    <Image>
-      <Path>SplashScreen/Image</Path>
-      <IsActive>false</IsActive>
-      <Position>
-        <X>0</X>
-        <Y>0</Y>
-      </Position>
-      <Scale>
-        <X>1.0</X>
-        <Y>1.0</Y>
-      </Scale>
-      <FadeEffect>
-        <FadeSpeed>0.5</FadeSpeed>
-      </FadeEffect>
-   </Image>
+
 </BattleScreen>

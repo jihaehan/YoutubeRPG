@@ -26,7 +26,7 @@ namespace YoutubeRPG
         SpriteFont font;
         Image page;
         Image cardDown, cardUp;
-        Image O2Empty, O2Filled;
+        Image O2Empty, O2Filled, O2Label;
         float totalOxygen;
         float currentOxygen;
         string pageText;
@@ -41,6 +41,7 @@ namespace YoutubeRPG
             cardDown = cardUp = new Image();
             O2Empty = new Image();
             O2Filled = new Image();
+            O2Label = new Image();
             infoImage = new List<Image>();
             clone = new List<Menu>();
             menu = new Menu();
@@ -52,10 +53,13 @@ namespace YoutubeRPG
         }
         public void menu_OnMenuChange(object sender, EventArgs e)
         {
-            if (!currentMenuID.Contains("Battle") && currentMenuID != String.Empty)
-                clone.Add(menu);
-            else
-                clone.Clear();
+            if (!currentMenuID.Contains("/Flee"))
+            {
+                if (currentMenuID != String.Empty)
+                    clone.Add(menu);
+                else
+                    clone.Clear();
+            }
 
             XmlManager<Menu> XmlMenuManager = new XmlManager<Menu>();
 
@@ -120,7 +124,7 @@ namespace YoutubeRPG
                 prevMenuID = currentMenuID = menuPath;
                 page.FontName = "Fonts/OCRAExt";
                 page.Path = "Misc/page";
-                page.Position = new Vector2(307, ScreenManager.Instance.Dimensions.Y - 23);
+                page.Position = new Vector2(307, ScreenManager.Instance.Dimensions.Y - 21);
                 page.LoadContent();
                 cardDown.FontName = cardUp.FontName = "Fonts/OCRAsmall";
                 cardDown.Position = cardUp.Position = new Vector2(928.5f, 636f);
@@ -133,7 +137,11 @@ namespace YoutubeRPG
                 O2Empty.Path = "Misc/oxygen_empty";
                 O2Empty.LoadContent();   
                 O2Filled.Path = "Misc/oxygen_filled";
-                O2Filled.LoadContent();   
+                O2Filled.LoadContent();
+                O2Label.Path = "Misc/oxygen_label";
+                O2Label.FontName = "Fonts/OCRAsmall";
+                O2Label.Position = new Vector2(1151, 586);
+                O2Label.LoadContent();
             }
         }
         public void UnloadContent()
@@ -144,6 +152,7 @@ namespace YoutubeRPG
             cardUp.UnloadContent();
             O2Empty.UnloadContent();
             O2Filled.UnloadContent();
+            O2Label.UnloadContent();
             if (playerChemicals != null)
                 playerChemicals.UnloadContent();
             if (enemyChemicals != null)
@@ -172,6 +181,7 @@ namespace YoutubeRPG
             foreach (Image i in infoImage)
                 i.Update(gameTime);
         }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             foreach (Menu m in clone)
@@ -179,18 +189,8 @@ namespace YoutubeRPG
             menu.Draw(spriteBatch);
             cardDown.Draw(spriteBatch);
             cardUp.Draw(spriteBatch);
-            O2Empty.Position = O2Filled.Position = new Vector2(923, 522);
-            for (int i = 0; i < 8; i++)
-            {
-                O2Empty.Draw(spriteBatch);
-                O2Empty.Position.X += 44;
-            }
-            for (int i = 0; i < (int)totalOxygen/2; i++)
-            {
-                O2Filled.Draw(spriteBatch);
-                O2Filled.Position.X += 44;
-            }
-            if (currentMenuID.Contains("Option"))
+            drawOxygen(spriteBatch);
+            if (menu.Type.Contains("Option"))
             {
                 page.Draw(spriteBatch);
                 spriteBatch.DrawString(page.Font, pageText, page.Position + new Vector2(2, 0), Color.White);
@@ -203,6 +203,7 @@ namespace YoutubeRPG
         #region Option Menus
         void optionMoveMenu() //Currently alligned for CHEMICALS name
         {
+            menu.Alignment.X = 340;
             menu.Items.Clear();
             foreach (string chemicalName in playerChemicals.chemicalName)
             {
@@ -386,21 +387,6 @@ namespace YoutubeRPG
         #endregion
 
         #region Misc Functions
-        void optionMenuPage()
-        {
-            if (!menu.Items[menu.ItemNumber].Image.IsVisible)
-            {
-                int invisible = menu.ItemNumber - menu.ItemNumber % 3;
-                for (int i = 0; (i < invisible) && (i < menu.Items.Count()); i++)
-                    menu.Items[i].Image.IsVisible = false;
-                for (int j = invisible; j < (invisible + 3) && j < (menu.Items.Count()); j++)
-                    menu.Items[j].Image.IsVisible = true;
-                for (int k = invisible + 3; k < menu.Items.Count(); k++)
-                    menu.Items[k].Image.IsVisible = false;
-
-                pageText = ((int)(menu.ItemNumber / 3 + 1)).ToString() + "/3";
-            }
-        }
         void Transition(GameTime gameTime)
         {
             if (isTransitioning)
@@ -419,6 +405,41 @@ namespace YoutubeRPG
                             item.Image.RestoreEffects();
                     }
                 }
+            }
+        }
+        void optionMenuPage()
+        {
+            if (!menu.Items[menu.ItemNumber].Image.IsVisible)
+            {
+                int invisible = menu.ItemNumber - menu.ItemNumber % 3;
+                for (int i = 0; (i < invisible) && (i < menu.Items.Count()); i++)
+                    menu.Items[i].Image.IsVisible = false;
+                for (int j = invisible; j < (invisible + 3) && j < (menu.Items.Count()); j++)
+                    menu.Items[j].Image.IsVisible = true;
+                for (int k = invisible + 3; k < menu.Items.Count(); k++)
+                    menu.Items[k].Image.IsVisible = false;
+
+                pageText = ((int)(menu.ItemNumber / 3 + 1)).ToString() + "/3";
+            }
+        }
+        private void drawOxygen(SpriteBatch spriteBatch)
+        {
+            O2Label.Draw(spriteBatch);
+            string O2 = currentOxygen.ToString() + "/" + totalOxygen.ToString();
+            Vector2 position = O2Label.Position;
+            position.X -= O2Label.Font.MeasureString(O2 + " ").X;
+            spriteBatch.DrawString(O2Label.Font, O2, position, Color.SaddleBrown);
+
+            O2Empty.Position = O2Filled.Position = new Vector2(923, 522);
+            for (int i = 0; i < 8; i++)
+            {
+                O2Empty.Draw(spriteBatch);
+                O2Empty.Position.X += 44;
+            }
+            for (int i = 0; i < (int)totalOxygen / 2; i++)
+            {
+                O2Filled.Draw(spriteBatch);
+                O2Filled.Position.X += 44;
             }
         }
         #endregion

@@ -94,7 +94,6 @@ namespace YoutubeRPG
             InputManager.AddKeyboardBinding(Keys.A, battleManager.SelectLeft);
             InputManager.AddKeyboardBinding(Keys.D, battleManager.SelectRight);
             InputManager.AddKeyboardBinding(Keys.Enter, battleManager.MenuSelect_Test);
-            //InputManager.AddKeyboardBinding(Keys.J, battleManager.Activate);
             InputManager.AddKeyboardBinding(Keys.X, battleManager.PrevMenuSelect);
         }
         #region Helper Functions

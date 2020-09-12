@@ -1461,6 +1461,18 @@
 /processorParam:TextureFormat=Color
 /build:Misc/battle_menu.png
 
+#begin Misc/battle_menu_blank.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Misc/battle_menu_blank.png
+
 #begin Misc/book_menu.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1628,6 +1640,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Misc/oxygen_filled.png
+
+#begin Misc/oxygen_label.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Misc/oxygen_label.png
 
 #begin Misc/page.png
 /importer:TextureImporter

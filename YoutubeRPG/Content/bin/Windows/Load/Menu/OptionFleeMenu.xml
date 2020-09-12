@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Menu>
   <Axis>Left</Axis>
-  <Type>OptionFlee</Type>
+  <Type>Flee</Type>
   <Spacing>
     <X>0</X>
     <Y>10</Y>
@@ -12,18 +12,23 @@
   </Alignment> 
   <Image>
     <Position>
-      <X>730</X>
+      <X>340</X>
       <Y>580.5</Y>
     </Position>
     <FontName>Fonts/OCRAsmall</FontName>
     <Text>Leave Battle?</Text>
+    <TextColor>
+      <R>0</R>
+      <G>0</G>
+      <B>0</B>
+      <A>255</A>
+    </TextColor>
   </Image>
 
   <Item>
     <LinkType>Menu</LinkType> 
     <LinkID>Content/Load/Menu/FleeMenu.xml</LinkID>
     <Image>
-      <TextColor>
       <Path>Misc/yes_icon</Path>
     </Image>
   </Item>

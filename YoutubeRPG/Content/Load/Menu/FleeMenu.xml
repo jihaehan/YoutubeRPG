@@ -7,13 +7,19 @@
   </Alignment>
   <Image>
    <Position>
-      <X>730</X>
+      <X>340</X>
       <Y>580.5</Y>
     </Position>
-    <FontName>OCRAsmall</FontName>
+    <FontName>Fonts/OCRAsmall</FontName>
     <Text>Marie flees the battle</Text>
+      <TextColor>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+        <A>255</A>
+      </TextColor>
   </Image>
-  
+
   <Item>
     <LinkType>Screen</LinkType> 
     <LinkID>GameplayScreen_Blue</LinkID>
