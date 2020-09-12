@@ -22,6 +22,7 @@ namespace YoutubeRPG
         Dictionary<string, Chemical> battleChemicals;
         public List<string> battleChemicalName;
         Image tag;
+        Image shadow;
         int maxVisibleChemicals;
 
 
@@ -35,6 +36,7 @@ namespace YoutubeRPG
             battleChemicals = new Dictionary<string, Chemical>();
             battleChemicalName = new List<string>();
             tag = new Image();
+            shadow = new Image();
         }
 
         public Chemical CurrentChemical
@@ -63,14 +65,15 @@ namespace YoutubeRPG
             tag.FontName = "Fonts/OCRAExt";
             tag.Path = "Misc/off_white";
             tag.LoadContent();
+            shadow.Path = "Misc/shadow";
+            shadow.LoadContent();
         }
         public void UnloadContent()
         {
-            foreach (string name in chemicalName)
-            {
+            foreach (string name in chemicalName)           
                 chemicals[name].UnloadContent();
-            }
             tag.UnloadContent();
+            shadow.UnloadContent();
         }
 
         /// <summary>
@@ -111,19 +114,32 @@ namespace YoutubeRPG
         /// <summary>
         /// BattleScreen: update/draw all chemicals currently in battle
         /// </summary>
+        
+        public void BattleReady(string name)
+        {
+            chemicals[name].InBattle = true;
+        }
+        public void InitializeBattle(Vector2 startingPosition)
+        {
+            chemicals[chemicalName[0]].Image.Position = startingPosition;
+            for (int i = 1; i < chemicalName.Count; i++)
+                chemicals[chemicalName[i]].Image.Position = chemicals[chemicalName[i - 1]].Image.Position;            
+            for (int i = 0; i < Math.Min(3, chemicalName.Count); i++)
+                BattleReady(chemicalName[i]);
+        }
         public void BattleUpdate(GameTime gameTime, Vector2 position, bool isPlayer)
         {
             Vector2 targetPosition = position;
-            float increment = 0;
+            shadow.Position = targetPosition + new Vector2(-11, 100);
+            float increment = 95;
             if (isPlayer)
             {
-                targetPosition += new Vector2(155, 18);
-                increment = 90;
+                targetPosition += new Vector2(155, -18);
             }
             else
             {
-                targetPosition -= new Vector2(0, 137);
-                increment = -90;
+                targetPosition -= new Vector2(155, -9);
+                increment *= -1;
             }
             // add any chemicals tagged Inbattle to battle chemicals
             foreach (string name in chemicalName) 
@@ -137,7 +153,8 @@ namespace YoutubeRPG
                     //When adding new battle chemical, also create new battle tag
                     if (isPlayer) //if Player, add Horizontal Tag
                     {
-                        battleChemicals[name].BattleTag = name.Substring(0, (int)MathHelper.Max(name.Length - 1, 7)).ToUpper();
+                        int lastCharacter = MathHelper.Min(name.Length - 1, 7);
+                        battleChemicals[name].BattleTag = name.Substring(0, lastCharacter).ToUpper();
                     }
                     else //if Enemy, add Vertical Tag
                     {
@@ -160,21 +177,15 @@ namespace YoutubeRPG
                 //Update battle chemicals to targeted position
                 battleChemicals[name].Update(gameTime, targetPosition);
                 targetPosition.X += increment;
-
-                if (isPlayer) 
-                {
-
-                }
-                else
-                {
-
-                }
             }
         }
         public void BattleDraw(SpriteBatch spriteBatch)
         {
+            shadow.Draw(spriteBatch);
             for (int i = battleChemicalName.Count - 1; i >= 0; i-- )
             {
+                shadow.Position = battleChemicals[battleChemicalName[i]].Image.Position + new Vector2(-11, 100);
+                shadow.Draw(spriteBatch);
                 battleChemicals[battleChemicalName[i]].Draw(spriteBatch);
             }
         }
@@ -188,10 +199,13 @@ namespace YoutubeRPG
                     vHealth += currentHealth[0].ToString() + "\n\r";
                 vHealth += " k\n\rJ\n\r/\n\rm\n\ro\n\rl";
 
-                Vector2 tagPosition = new Vector2(battleChemicals[name].TagRectangle.X, battleChemicals[name].TagRectangle.X);
+                Vector2 tagPosition = new Vector2(battleChemicals[name].Image.Position.X, 0);
+                
                 spriteBatch.Draw(tag.Texture, battleChemicals[name].TagRectangle, Color.White);
-                spriteBatch.DrawString(tag.Font, vHealth, tagPosition, Color.LightGray);
+                
+                spriteBatch.DrawString(tag.Font, vHealth, tagPosition, Color.Black);
                 tagPosition.X -= 22;
+
                 if (battleChemicals[name].CurrentHealth/battleChemicals[name].Health < 0.3)
                     spriteBatch.DrawString(tag.Font, battleChemicals[name].BattleTag, tagPosition, Color.Orange);
                 else 
@@ -203,11 +217,12 @@ namespace YoutubeRPG
         {
             foreach (string name in battleChemicalName)
             {
+                float rowHeight = tag.Font.MeasureString(" ").Y;
                 Vector2 imgPos = battleChemicals[name].Image.Position;
-                Vector2 tagPosition = new Vector2(imgPos.X + 64 - tag.Font.MeasureString(battleChemicals[name].BattleTag).X / 2, imgPos.Y + 128);
-                spriteBatch.DrawString(tag.Font, battleChemicals[name].CurrentHealth.ToString(), tagPosition, Color.LightGray);
-                tagPosition.X -= 22;
+                Vector2 tagPosition = new Vector2(imgPos.X + 64 - tag.Font.MeasureString(battleChemicals[name].BattleTag).X / 2, imgPos.Y + 128 + rowHeight);
                 spriteBatch.DrawString(tag.Font, battleChemicals[name].BattleTag, tagPosition, Color.Black);
+                tagPosition.Y += rowHeight;
+                spriteBatch.DrawString(tag.Font, battleChemicals[name].CurrentHealth.ToString(), tagPosition, Color.LightGray);
             }
         }
         #endregion

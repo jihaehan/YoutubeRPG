@@ -40,6 +40,7 @@ namespace YoutubeRPG
             player.Image.SpriteSheetEffect.CurrentFrame.Y = 7;
             player.Image.SpriteSheetEffect.SwitchFrame = 500;
             player.Image.IsActive = true;
+            player.InitializeBattle();
 
             XmlManager<Character> characterLoader = new XmlManager<Character>();
             enemy = characterLoader.Load("Content/Load/Gameplay/Markovnikov.xml");
@@ -47,6 +48,7 @@ namespace YoutubeRPG
             enemy.Image.Position = new Vector2(1064, 175);
             enemy.Image.SpriteSheetEffect.CurrentFrame.Y = 1;
             enemy.Image.IsActive = true;
+            enemy.InitializeBattle();
 
             //Setup background, menu, etc.
             background.Path = "BattleBackground/Exterior";

@@ -99,6 +99,10 @@ namespace YoutubeRPG
         #endregion
 
         #region Battle Methods
+        public void InitializeBattle() //initialize first 3 chemicals as battle chemicals
+        {
+            ChemicalManager.InitializeBattle(Image.Position);
+        }
         public void BattleUpdate(GameTime gameTime)
         {
             ChemicalManager.BattleUpdate(gameTime, Image.Position, true);
