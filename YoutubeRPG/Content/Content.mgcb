@@ -1224,6 +1224,9 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/OCRAsmall.spritefont
 
+#begin Load/BattleScreen.xml
+/copy:Load/BattleScreen.xml
+
 #begin Load/Chemical/Alcohol/Butanol.xml
 /copy:Load/Chemical/Alcohol/Butanol.xml
 
@@ -1493,6 +1496,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Misc/card_down.png
+
+#begin Misc/card_up.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Misc/card_up.png
 
 #begin Misc/conversation_menu.png
 /importer:TextureImporter

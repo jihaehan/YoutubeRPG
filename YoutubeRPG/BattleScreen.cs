@@ -39,6 +39,7 @@ namespace YoutubeRPG
             player.LoadContent();
             player.Image.Position = new Vector2(128, 360);
             player.Image.SpriteSheetEffect.CurrentFrame.Y = 7;
+            player.Image.SpriteSheetEffect.SwitchFrame = 500;
             player.Image.IsActive = true;
 
             XmlManager<Character> characterLoader = new XmlManager<Character>();

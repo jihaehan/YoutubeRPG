@@ -25,8 +25,8 @@ namespace YoutubeRPG
         List<Image> infoImage;
         SpriteFont font;
         Image page;
-        Image card;
-        List<Image> oxygen;
+        Image cardDown, cardUp;
+        Image O2Empty, O2Filled;
         float totalOxygen;
         float currentOxygen;
         string pageText;
@@ -38,8 +38,9 @@ namespace YoutubeRPG
             prevMenuID = currentMenuID = selectedItem = String.Empty;
             pageText = "1/3";
             page = new Image();
-            card = new Image();
-            oxygen = new List<Image>();
+            cardDown = cardUp = new Image();
+            O2Empty = new Image();
+            O2Filled = new Image();
             infoImage = new List<Image>();
             clone = new List<Menu>();
             menu = new Menu();
@@ -121,40 +122,28 @@ namespace YoutubeRPG
                 page.Path = "Misc/page";
                 page.Position = new Vector2(307, ScreenManager.Instance.Dimensions.Y - 23);
                 page.LoadContent();
-                card.Path = "Misc/card";
-                card.FontName = "Fonts/OCRAsmall";
-                card.LoadContent();
-                card.Effects = "SpriteSheetEffect";
-                card.SpriteSheetEffect.AmountOfFrames.X = 1;
-                card.SpriteSheetEffect.AmountOfFrames.Y = 2;
-                card.SpriteSheetEffect.SwitchFrame = 50;
-                card.IsActive = false;
-                Image O2 = new Image();
-                O2.Path = "Misc/oxygen";
-                O2.Effects = "SpriteSheetEffect";
-                O2.FontName = "Fonts/OCRAsmall";
-                O2.LoadContent();
-                O2.SpriteSheetEffect.AmountOfFrames.X = 1;
-                O2.SpriteSheetEffect.AmountOfFrames.Y = 2;
-                O2.SpriteSheetEffect.SwitchFrame = 50;
-                O2.IsActive = false;
-                O2.Position = new Vector2(923, 522);
-                oxygen.Add(O2);
-                for (int i = 0; i < 7; i++)
-                {
-                    O2.Position.X += 44;
-                    oxygen.Add(O2);
-                }
-                
+                cardDown.FontName = cardUp.FontName = "Fonts/OCRAsmall";
+                cardDown.Position = cardUp.Position = new Vector2(928.5f, 636f);
+                cardUp.Path = "Misc/card_up";
+                cardUp.IsVisible = false;
+                cardUp.LoadContent();
+                cardDown.Path = "Misc/card_down";
+                cardDown.IsVisible = true;
+                cardDown.LoadContent();
+                O2Empty.Path = "Misc/oxygen_empty";
+                O2Empty.LoadContent();   
+                O2Filled.Path = "Misc/oxygen_filled";
+                O2Filled.LoadContent();   
             }
         }
         public void UnloadContent()
         {
             menu.UnloadContent();
             page.UnloadContent();
-            card.UnloadContent();
-            foreach (Image O2 in oxygen)
-                O2.UnloadContent();
+            cardDown.UnloadContent();
+            cardUp.UnloadContent();
+            O2Empty.UnloadContent();
+            O2Filled.UnloadContent();
             if (playerChemicals != null)
                 playerChemicals.UnloadContent();
             if (enemyChemicals != null)
@@ -188,9 +177,19 @@ namespace YoutubeRPG
             foreach (Menu m in clone)
                 m.Draw(spriteBatch);
             menu.Draw(spriteBatch);
-            card.Draw(spriteBatch);
-            foreach (Image O2 in oxygen)
-                O2.Draw(spriteBatch);
+            cardDown.Draw(spriteBatch);
+            cardUp.Draw(spriteBatch);
+            O2Empty.Position = O2Filled.Position = new Vector2(923, 522);
+            for (int i = 0; i < 8; i++)
+            {
+                O2Empty.Draw(spriteBatch);
+                O2Empty.Position.X += 44;
+            }
+            for (int i = 0; i < (int)totalOxygen/2; i++)
+            {
+                O2Filled.Draw(spriteBatch);
+                O2Filled.Position.X += 44;
+            }
             if (currentMenuID.Contains("Option"))
             {
                 page.Draw(spriteBatch);
