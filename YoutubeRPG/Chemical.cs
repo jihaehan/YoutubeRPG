@@ -23,6 +23,7 @@ namespace YoutubeRPG
         public Vector2 Velocity;
         public string Name;
         public string NickName;
+        public string BattleTag;
         public int Level;
         public int Experience;
         public int Reactivity;
@@ -42,7 +43,9 @@ namespace YoutubeRPG
         public float Defense;       //attack mofidier
         public float Accuracy;      //chance to explode
 
-        public bool Solubility;    //Environmental Factor
+        public bool Solubility;     //Environmental Factor
+        public bool InBattle;       //Determines whether on the battlegrounds
+        public Rectangle TagRectangle;
 
         Dictionary<Element, int> Elements;
         Dictionary<string, int> Products;   //products from a reaction
@@ -74,7 +77,8 @@ namespace YoutubeRPG
         {
             Dimensions = new Vector2(128, 128);
             Velocity = Vector2.Zero;
-            Name = NickName = String.Empty;
+            Name = NickName = BattleTag = String.Empty;
+            TagRectangle = new Rectangle();
             Level = 1;
             Experience = 0;
             Reactivity = 0;
@@ -84,6 +88,7 @@ namespace YoutubeRPG
             Halogen = Halogen.None;
             Health = CurrentHealth = Mass = Damage = BaseDamage = MaxDamage = Defense = Dodge = Accuracy = BoilingPoint = 0;
             Solubility = false;
+            InBattle = false;
             Elements = new Dictionary<Element, int>();
             Products = new Dictionary<string, int>();
             Reactants = new Dictionary<string, int>();
@@ -104,6 +109,25 @@ namespace YoutubeRPG
             Image.IsActive = true;
             Image.Update(gameTime);
         }
+        /// <summary>
+        /// chemical walks towards a certain point, BattleScreen
+        /// </summary>
+        public void Update(GameTime gameTime, Vector2 position)
+        {
+            float distance = Vector2.Distance(Image.Position, position);
+            
+            if (distance > 3)
+            {
+                Velocity = position - Image.Position;
+                Velocity.Normalize();
+                Velocity *= 200f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                Image.Position += Velocity;
+            }
+            Image.Update(gameTime);
+        }
+        /// <summary>
+        /// chemical follows player, GameplayScreen
+        /// </summary>
         public void Update(GameTime gameTime, ref Player player, Chemical chemical, int count)
         {
             Vector2 v, p;

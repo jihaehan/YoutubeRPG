@@ -13,6 +13,30 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin BattleBackground/Exterior.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:BattleBackground/Exterior.png
+
+#begin BattleBackground/Interior.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:BattleBackground/Interior.png
+
 #begin Characters/bondbros.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1350,8 +1374,14 @@
 #begin Load/GameplayScreen.xml
 /copy:Load/GameplayScreen.xml
 
+#begin Load/Menu/BattleMenu.xml
+/copy:Load/Menu/BattleMenu.xml
+
 #begin Load/Menu/BookMenu.xml
 /copy:Load/Menu/BookMenu.xml
+
+#begin Load/Menu/FleeMenu.xml
+/copy:Load/Menu/FleeMenu.xml
 
 #begin Load/Menu/GameplayMenu.xml
 /copy:Load/Menu/GameplayMenu.xml
@@ -1361,6 +1391,9 @@
 
 #begin Load/Menu/ItemMenu.xml
 /copy:Load/Menu/ItemMenu.xml
+
+#begin Load/Menu/OptionFleeMenu.xml
+/copy:Load/Menu/OptionFleeMenu.xml
 
 #begin Load/Menu/OptionInfoMenu.xml
 /copy:Load/Menu/OptionInfoMenu.xml
@@ -1373,6 +1406,9 @@
 
 #begin Load/Menu/OptionMenu_ItemTest.xml
 /copy:Load/Menu/OptionMenu_ItemTest.xml
+
+#begin Load/Menu/OptionMoveMenu.xml
+/copy:Load/Menu/OptionMoveMenu.xml
 
 #begin Load/Menu/OptionPlanMenu.xml
 /copy:Load/Menu/OptionPlanMenu.xml
@@ -1407,6 +1443,18 @@
 /processorParam:TextureFormat=Color
 /build:Misc/arrow_down.png
 
+#begin Misc/battle_menu.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Misc/battle_menu.png
+
 #begin Misc/book_menu.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1418,6 +1466,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Misc/book_menu.png
+
+#begin Misc/card.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Misc/card.png
+
+#begin Misc/card_down.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Misc/card_down.png
 
 #begin Misc/conversation_menu.png
 /importer:TextureImporter
@@ -1467,6 +1539,18 @@
 /processorParam:TextureFormat=Color
 /build:Misc/minimap_outline.png
 
+#begin Misc/no_icon.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Misc/no_icon.png
+
 #begin Misc/option_menu.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1478,6 +1562,42 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Misc/option_menu.png
+
+#begin Misc/oxygen.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Misc/oxygen.png
+
+#begin Misc/oxygen_empty.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Misc/oxygen_empty.png
+
+#begin Misc/oxygen_filled.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Misc/oxygen_filled.png
 
 #begin Misc/page.png
 /importer:TextureImporter
@@ -1491,6 +1611,18 @@
 /processorParam:TextureFormat=Color
 /build:Misc/page.png
 
+#begin Misc/shadow.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Misc/shadow.png
+
 #begin Misc/testtube_button.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1502,6 +1634,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Misc/testtube_button.png
+
+#begin Misc/yes_icon.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Misc/yes_icon.png
 
 #begin Misc/yesno_menu.png
 /importer:TextureImporter

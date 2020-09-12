@@ -17,18 +17,19 @@ namespace YoutubeRPG
         CharacterManager characterManager;
         bool isTransitioning;
 
+        int exit;
         string ID;
-        string prevMenuID;
         string currentMenuID;
-        string currentMenuType;
         List<Image> scrollingText;
         Dictionary<string, MenuItem> dialogue; //LinkID, Text
         string currentDialogue;
         Image arrow;
 
+
         public ConversationManager()
         {
-            prevMenuID = currentMenuID = currentMenuType = currentDialogue = ID = String.Empty;
+            exit = 1;
+            currentMenuID = currentDialogue = ID = String.Empty;
             arrow = new Image();
             scrollingText = new List<Image>();
             dialogue = new Dictionary<string, MenuItem>();
@@ -54,6 +55,7 @@ namespace YoutubeRPG
             {
                 menu.UnloadContent();
                 menu = XmlMenuManager.Load("Content/Load/Conversation/Intro.xml");
+                menu.Active = true;
                 conversationMenu();
                 //scrollingDialogue();
                 menu.LoadContent();
@@ -74,7 +76,6 @@ namespace YoutubeRPG
                 if (currentMenuID.Contains("Question"))
                 { 
                     questionMenu();
-                    currentMenuID = "";
                 }
             }
             if (currentDialogue != String.Empty)// && !currentMenuID.Contains("Question"))
@@ -96,7 +97,7 @@ namespace YoutubeRPG
             if (menuPath != String.Empty)
             {
                 menu.ID = menuPath;
-                prevMenuID = currentMenuID = menuPath;
+                currentMenuID = menuPath;
                 arrow.FontName = "Fonts/OCRAsmall";
                 arrow.Path = "Misc/arrow_down";
                 arrow.Position = new Vector2(ScreenManager.Instance.Dimensions.X -35, ScreenManager.Instance.Dimensions.Y - 19);
@@ -128,17 +129,18 @@ namespace YoutubeRPG
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            foreach (Menu m in clone)
-                m.Draw(spriteBatch);
-            menu.Draw(spriteBatch);
-            if (menu.Type.Contains("Conversation") && IsActive)
+            if (IsActive)
             {
-                arrow.Draw(spriteBatch);
-                if (scrollingText.Count > 0)
-                    scrollingText[0].Draw(spriteBatch);
+                foreach (Menu m in clone)
+                    m.Draw(spriteBatch);   
+                menu.Draw(spriteBatch);
+                if (menu.Type.Contains("Conversation"))
+                {
+                    arrow.Draw(spriteBatch);
+                }
+                foreach (Image i in scrollingText)
+                    i.Draw(spriteBatch);
             }
-            foreach (Image i in scrollingText)
-                i.Draw(spriteBatch);
         }
         #endregion
         #region Option Menus
@@ -161,12 +163,10 @@ namespace YoutubeRPG
                 foreach (MenuItem item in menu.Items)
                     dialogue.Add(item.LinkID, item);
                 currentDialogue = dialogue["0"].Image.Text;
-                currentMenuType = menu.Items[0].LinkType;
+                scrollingDialogue();
                 currentMenuID = menu.Items[0].LinkID;
                 menu.Items.Clear();
                 menu.Items.Add(dialogue["0"]);
-                menu.Items[0].Image.Text = " ";
-                menu.Items[0].Image.FontName = "Fonts/OCRA";
             }
             else
             {
@@ -176,11 +176,8 @@ namespace YoutubeRPG
                 menu.Items[0].Image.Text = " ";
                 menu.Items[0].Image.FontName = "Fonts/OCRA";
             }
-            //unload menu here...
         }
-        /// <summary>
-        /// sets current dialogue based on 'ID'
-        /// </summary>
+
         void setDialogue()
         {
             if (ID != String.Empty)
@@ -203,7 +200,6 @@ namespace YoutubeRPG
             }
                 
         }
-        ///Based on currentDialogue to generate scrollingText
         void scrollingDialogue()
         {
             //Unload images from previous scrolling Text
@@ -331,10 +327,7 @@ namespace YoutubeRPG
                 {/*no action*/}
                 else
                 {
-                    prevMenuID = currentMenuID;
                     currentMenuID = menu.Items[menu.ItemNumber].LinkID;
-                    currentMenuType = menu.Items[menu.ItemNumber].LinkType;
-
                     if (!ID.Contains(".xml") && currentMenuID!= String.Empty)
                         ID = currentMenuID;
                     setDialogue();

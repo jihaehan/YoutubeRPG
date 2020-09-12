@@ -10,7 +10,7 @@ namespace YoutubeRPG
 {
     public class Character
     {
-        ChemicalManager ChemicalManager;
+        public ChemicalManager ChemicalManager;
         public Image Image;
         public bool Battled;
         public string Name, QuestName, QuestDescription;
@@ -22,6 +22,7 @@ namespace YoutubeRPG
             Battled = false;
             Name = QuestName = String.Empty;
         }
+        #region Main Methods
         public void LoadContent(string path)
         {
             Image.LoadContent();
@@ -46,10 +47,27 @@ namespace YoutubeRPG
         public void Update(GameTime gameTime)
         {
             Image.Update(gameTime);
+            ChemicalManager.Update(gameTime);
         }
         public void Draw(SpriteBatch spriteBatch)
         {
             Image.Draw(spriteBatch);
+            ChemicalManager.Draw(spriteBatch);
         }
+        #endregion
+
+        #region Battle Methods
+        public void BattleUpdate(GameTime gameTime)
+        {
+            ChemicalManager.BattleUpdate(gameTime, Image.Position, false);
+            Image.Update(gameTime);
+        }
+        public void BattleDraw(SpriteBatch spriteBatch)
+        {
+            ChemicalManager.BattleDraw(spriteBatch);
+            ChemicalManager.DrawVerticalTag(spriteBatch);
+            Image.Draw(spriteBatch);
+        }
+        #endregion
     }
 }

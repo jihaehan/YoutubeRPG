@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Menu>
+  <Active>false</Active>
   <Axis>Left</Axis>
   <Type>Conversation</Type>
   <Spacing>
@@ -21,7 +22,7 @@
 
   <Item>
     <LinkType>Question</LinkType> 
-    <LinkID>1</LinkID>
+    <LinkID>0</LinkID>
     <Image>
       <Text>Do you love chemistry?</Text>
     </Image>
@@ -29,7 +30,7 @@
 
   <Item>
     <LinkType>Question</LinkType> 
-    <LinkID>11</LinkID>
+    <LinkID>01</LinkID>
     <Image>
       <Text>A great anomaly will occur... what will you do next?</Text>
     </Image>
@@ -37,15 +38,15 @@
 
   <Item>
     <LinkType>End</LinkType> 
-    <LinkID>110</LinkID>
+    <LinkID>010</LinkID>
     <Image>
       <Text>Guess it's safer to stay at home.</Text>
     </Image>
   </Item>
 
   <Item>
-    <LinkType>Party</LinkType> 
-    <LinkID>111</LinkID>
+    <LinkType>End</LinkType> 
+    <LinkID>011</LinkID>
     <Image>
       <Text>Methane:A Methane joins your party!</Text>
     </Image>
@@ -53,7 +54,7 @@
 
   <Item>
     <LinkType>End</LinkType> 
-    <LinkID>10</LinkID>
+    <LinkID>00</LinkID>
     <Image>
       <Text>Oh, that's too bad...</Text>
     </Image>

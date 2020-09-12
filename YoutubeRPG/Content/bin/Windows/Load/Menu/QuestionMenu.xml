@@ -4,17 +4,17 @@
   <Type>Conversation</Type>
   <Spacing>
     <X>0</X>
-    <Y>15</Y>
+    <Y>5</Y>
   </Spacing>
   <Alignment>
-    <X>570</X>
+    <X>440</X>
     <Y>580</Y>
   </Alignment> 
   <Image>
-    <Path>Misc/conversation_menu</Path>
+    <Path>Misc/yesno_menu</Path>
     <Position>
-      <X>540</X>
-      <Y>562</Y>
+      <X>420</X>
+      <Y>565</Y>
     </Position>
     <FontName>Fonts/OCRAExt</FontName>
   </Image>
@@ -24,7 +24,7 @@
     <LinkID></LinkID>
     <Image>
       <Text>YES</Text>
-      <FontName>Fonts/OCRA</FontName>  
+      <FontName>Fonts/OCRASmall</FontName>  
       <TextColor>
         <R>0</R>
         <G>0</G>
@@ -39,7 +39,7 @@
     <LinkID></LinkID>
     <Image>
       <Text>NO</Text>
-      <FontName>Fonts/OCRA</FontName>  
+      <FontName>Fonts/OCRASmall</FontName>  
       <TextColor>
         <R>0</R>
         <G>0</G>
@@ -48,5 +48,4 @@
       </TextColor>
     </Image>
   </Item>
-
 </Menu>

@@ -43,6 +43,7 @@ namespace YoutubeRPG
             portalArrival = Vector2.Zero;
             keys = new List<string>();
         }
+        #region Main Methods
         public void LoadContent()
         {
             Image.LoadContent();
@@ -63,6 +64,11 @@ namespace YoutubeRPG
             ChemicalManager.UnloadContent();
             ItemManager.UnloadContent();
             CharacterManager.UnloadContent();
+        }
+        public void Update(GameTime gameTime)
+        {
+            Image.Update(gameTime);
+            ChemicalManager.Update(gameTime);
         }
         public void Update(GameTime gameTime, World world)
         {
@@ -87,6 +93,21 @@ namespace YoutubeRPG
             ChemicalManager.Draw(spriteBatch);
             Image.Draw(spriteBatch);
         }
+        #endregion
+
+        #region Battle Methods
+        public void BattleUpdate(GameTime gameTime)
+        {
+            ChemicalManager.BattleUpdate(gameTime, Image.Position, true);
+            Image.Update(gameTime);
+        }
+        public void BattleDraw(SpriteBatch spriteBatch)
+        {
+            ChemicalManager.BattleDraw(spriteBatch);
+            ChemicalManager.DrawHorizontalTag(spriteBatch);
+            Image.Draw(spriteBatch);
+        }
+        #endregion
 
         public void MoveDown(eButtonState buttonState)
         {

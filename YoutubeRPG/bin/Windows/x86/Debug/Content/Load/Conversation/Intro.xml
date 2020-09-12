@@ -45,7 +45,7 @@
   </Item>
 
   <Item>
-    <LinkType>Party</LinkType> 
+    <LinkType>End</LinkType> 
     <LinkID>011</LinkID>
     <Image>
       <Text>Methane:A Methane joins your party!</Text>

@@ -15,6 +15,9 @@ namespace YoutubeRPG
     {
         [XmlElement("MapSource")]
         public List<string> MapSource;
+        //[XmlElement("BattleMapSource")]
+        //public List<string> BattleMapSource;
+
         public string CurrentMapName;
 
         Dictionary<string, Map> maps;
@@ -22,6 +25,7 @@ namespace YoutubeRPG
 
         public World()
         {
+            //BattleMapSource = new List<string>();
             MapSource = new List<string>();
             mapName = new List<string>();
             maps = new Dictionary<string, Map>();

@@ -1,0 +1,86 @@
+﻿<?xml version ="1.0" encoding="utf-8"?>
+<Menu>
+  <Active>true</Active>
+  <Axis>Y</Axis>
+  <Spacing>
+    <X>30</X>
+    <Y>12</Y>
+  </Spacing>
+  <Alignment>
+    <X>-555</X>
+    <Y>327</Y>
+  </Alignment> 
+  <Grid>
+    <X>2</X>
+    <Y>2</Y>
+  </Grid>
+  <Image>
+    <Path>Misc/battle_menu</Path>
+    <Position>
+      <X>0</X>
+      <Y>562.5</Y>
+    </Position>
+    <FontName>Fonts/OCRAsmall</FontName>
+  </Image>
+
+  <Item>
+    <LinkType>Move</LinkType> 
+    <LinkID>Content/Load/Menu/OptionMoveMenu.xml</LinkID>
+    <Image>
+      <Text>MOVE</Text>
+      <FontName>Fonts/OCRA</FontName>  
+      <TextColor>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+        <A>255</A>
+      </TextColor>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Item</LinkType> 
+    <LinkID>Content/Load/Menu/OptionItemMenu.xml</LinkID>
+    <Image>
+      <Text>ITEM</Text>
+      <FontName>Fonts/OCRA</FontName>  
+      <TextColor>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+        <A>255</A>
+      </TextColor>      
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Book</LinkType> 
+    <LinkID>Content/Load/Menu/BookMenu.xml</LinkID>
+    <Image>
+      <Text>BOOK</Text>
+      <FontName>Fonts/OCRA</FontName>  
+      <TextColor>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+        <A>255</A>
+      </TextColor>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Flee</LinkType> 
+    <LinkID>Content/Load/Menu/OptionFleeMenu.xml</LinkID>
+    <Image>
+      <Text>FLEE</Text>
+      <FontName>Fonts/OCRA</FontName>  
+      <TextColor>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+        <A>255</A>
+      </TextColor>
+    </Image>
+  </Item>
+
+</Menu>

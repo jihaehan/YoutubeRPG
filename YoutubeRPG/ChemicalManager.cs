@@ -19,7 +19,11 @@ namespace YoutubeRPG
         Dictionary<string, Chemical> chemicals;
         public List<string> chemicalName;
 
-        int maxVisibleChemicals; 
+        Dictionary<string, Chemical> battleChemicals;
+        public List<string> battleChemicalName;
+        Image tag;
+        int maxVisibleChemicals;
+
 
         public ChemicalManager()
         {
@@ -28,6 +32,9 @@ namespace YoutubeRPG
             chemicals = new Dictionary<string, Chemical>();
             chemicalName = new List<string>();
             maxVisibleChemicals = 3;
+            battleChemicals = new Dictionary<string, Chemical>();
+            battleChemicalName = new List<string>();
+            tag = new Image();
         }
 
         public Chemical CurrentChemical
@@ -53,6 +60,9 @@ namespace YoutubeRPG
             }
             if (chemicalName.Count() > 0)
                 CurrentChemicalName = chemicalName[0];
+            tag.FontName = "Fonts/OCRAExt";
+            tag.Path = "Misc/off_white";
+            tag.LoadContent();
         }
         public void UnloadContent()
         {
@@ -60,7 +70,12 @@ namespace YoutubeRPG
             {
                 chemicals[name].UnloadContent();
             }
+            tag.UnloadContent();
         }
+
+        /// <summary>
+        /// GameplayScreen: Update all chemicals in player party  
+        /// </summary>
         public void Update(GameTime gameTime, Player player)
         {
             Chemical chemical = new Chemical();
@@ -92,11 +107,125 @@ namespace YoutubeRPG
                 chemicals[chemicalName[count]].Draw(spriteBatch);
             }
         }
+        #region Battle Methods
+        /// <summary>
+        /// BattleScreen: update/draw all chemicals currently in battle
+        /// </summary>
+        public void BattleUpdate(GameTime gameTime, Vector2 position, bool isPlayer)
+        {
+            Vector2 targetPosition = position;
+            float increment = 0;
+            if (isPlayer)
+            {
+                targetPosition += new Vector2(155, 18);
+                increment = 90;
+            }
+            else
+            {
+                targetPosition -= new Vector2(0, 137);
+                increment = -90;
+            }
+            // add any chemicals tagged Inbattle to battle chemicals
+            foreach (string name in chemicalName) 
+            {
+                if (chemicals[name].InBattle && !battleChemicals.ContainsKey(name))
+                {
+                    battleChemicals.Add(name, chemicals[name]);
+                    battleChemicalName.Add(name);
+                    //add initial position before it walks to target position
+                    battleChemicals[name].Image.Position = targetPosition + new Vector2(increment * (battleChemicalName.Count - 2), 0); 
+                    //When adding new battle chemical, also create new battle tag
+                    if (isPlayer) //if Player, add Horizontal Tag
+                    {
+                        battleChemicals[name].BattleTag = name.Substring(0, (int)MathHelper.Max(name.Length - 1, 7)).ToUpper();
+                    }
+                    else //if Enemy, add Vertical Tag
+                    {
+                        string vName = String.Empty;
+                        for (int i = 0; i < name.Length - 1; i++)
+                            vName += name[i].ToString() + "\n\r";
+                        battleChemicals[name].BattleTag = vName.ToUpper();
+
+                        Rectangle r = tag.SourceRect;
+                        r.Width *= (int)tag.Font.MeasureString("T").X;
+                        r.Height *= (int)(tag.Font.MeasureString("T").Y * battleChemicals[name].CurrentHealth.ToString().Length + 4);
+                        r.X = (int)battleChemicals[name].Image.Position.X + 64;
+                        r.Y = 0;
+                        battleChemicals[name].TagRectangle = r;
+                    }
+                }
+            }
+            foreach (string name in battleChemicalName)
+            {
+                //Update battle chemicals to targeted position
+                battleChemicals[name].Update(gameTime, targetPosition);
+                targetPosition.X += increment;
+
+                if (isPlayer) 
+                {
+
+                }
+                else
+                {
+
+                }
+            }
+        }
+        public void BattleDraw(SpriteBatch spriteBatch)
+        {
+            for (int i = battleChemicalName.Count - 1; i >= 0; i-- )
+            {
+                battleChemicals[battleChemicalName[i]].Draw(spriteBatch);
+            }
+        }
+        public void DrawVerticalTag(SpriteBatch spriteBatch)
+        {
+            foreach (string name in battleChemicalName)
+            {
+                string currentHealth = battleChemicals[name].CurrentHealth.ToString();
+                string vHealth = String.Empty;
+                for (int i = 0; i < currentHealth.Length; i++)
+                    vHealth += currentHealth[0].ToString() + "\n\r";
+                vHealth += " k\n\rJ\n\r/\n\rm\n\ro\n\rl";
+
+                Vector2 tagPosition = new Vector2(battleChemicals[name].TagRectangle.X, battleChemicals[name].TagRectangle.X);
+                spriteBatch.Draw(tag.Texture, battleChemicals[name].TagRectangle, Color.White);
+                spriteBatch.DrawString(tag.Font, vHealth, tagPosition, Color.LightGray);
+                tagPosition.X -= 22;
+                if (battleChemicals[name].CurrentHealth/battleChemicals[name].Health < 0.3)
+                    spriteBatch.DrawString(tag.Font, battleChemicals[name].BattleTag, tagPosition, Color.Orange);
+                else 
+                    spriteBatch.DrawString(tag.Font, battleChemicals[name].BattleTag, tagPosition, Color.Black);
+                
+            }
+        }
+        public void DrawHorizontalTag(SpriteBatch spriteBatch)
+        {
+            foreach (string name in battleChemicalName)
+            {
+                Vector2 imgPos = battleChemicals[name].Image.Position;
+                Vector2 tagPosition = new Vector2(imgPos.X + 64 - tag.Font.MeasureString(battleChemicals[name].BattleTag).X / 2, imgPos.Y + 128);
+                spriteBatch.DrawString(tag.Font, battleChemicals[name].CurrentHealth.ToString(), tagPosition, Color.LightGray);
+                tagPosition.X -= 22;
+                spriteBatch.DrawString(tag.Font, battleChemicals[name].BattleTag, tagPosition, Color.Black);
+            }
+        }
+        #endregion
+
+        #region Getter/Setter Methods
         public Chemical GetChemical(string chemicalName)
         {
             if (chemicals.ContainsKey(chemicalName))
                 return chemicals[chemicalName];
-            return null;
+            else 
+                return null;
+        }
+        public Chemical GetBattleChemical(string chemicalName)
+        {
+            if (battleChemicals.ContainsKey(chemicalName))
+                return chemicals[chemicalName];
+            else 
+                return null;
         }
         public void ChangeChemical(string chemicalName)
         {
@@ -107,5 +236,6 @@ namespace YoutubeRPG
             }
             throw new Exception("Chemical not found.");
         }
+        #endregion
     }
 }
