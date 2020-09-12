@@ -14,13 +14,14 @@ namespace YoutubeRPG
         public Image Image;
         public bool Battled;
         public string Name, QuestName, QuestDescription;
-
+        bool hasParty;
         public Character()
         {
             ChemicalManager = new ChemicalManager();
             Image = new Image();
             Battled = false;
             Name = QuestName = String.Empty;
+            hasParty = false;
         }
         #region Main Methods
         public void LoadContent(string path)
@@ -33,6 +34,7 @@ namespace YoutubeRPG
                 ChemicalManager = chemicalManagerLoader.Load(path);
                 ChemicalManager.LoadContent();
             }
+            hasParty = true;
         }
         public void LoadContent()
         {
@@ -42,17 +44,18 @@ namespace YoutubeRPG
         public void UnloadContent()
         {
             Image.UnloadContent();
-            ChemicalManager.UnloadContent();
+            if (hasParty)
+                ChemicalManager.UnloadContent();
         }
         public void Update(GameTime gameTime)
         {
             Image.Update(gameTime);
-            ChemicalManager.Update(gameTime);
+            if (hasParty)
+                ChemicalManager.Update(gameTime);
         }
         public void Draw(SpriteBatch spriteBatch)
         {
             Image.Draw(spriteBatch);
-            ChemicalManager.Draw(spriteBatch);
         }
         #endregion
 

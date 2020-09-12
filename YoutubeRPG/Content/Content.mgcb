@@ -1317,6 +1317,9 @@
 #begin Load/Gameplay/Backpack.xml
 /copy:Load/Gameplay/Backpack.xml
 
+#begin Load/Gameplay/Battle/Markovnikov.xml
+/copy:Load/Gameplay/Battle/Markovnikov.xml
+
 #begin Load/Gameplay/Bondbrothers.xml
 /copy:Load/Gameplay/Bondbrothers.xml
 
@@ -1550,6 +1553,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Misc/no_icon.png
+
+#begin Misc/off_white.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Misc/off_white.png
 
 #begin Misc/option_menu.png
 /importer:TextureImporter

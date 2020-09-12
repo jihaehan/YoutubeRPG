@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Menu>
+  <Axis>Y</Axis>
+  <Alignment>
+    <X>-5</X>
+    <Y>-5</Y>
+  </Alignment>
+  <Image>
+   <Position>
+      <X>730</X>
+      <Y>580.5</Y>
+    </Position>
+    <FontName>OCRAsmall</FontName>
+    <Text>Marie flees the battle</Text>
+  </Image>
+  
+  <Item>
+    <LinkType>Screen</LinkType> 
+    <LinkID>GameplayScreen_Blue</LinkID>
+    <Image>
+      <Text>.</Text>
+    </Image>
+  </Item>
+</Menu>

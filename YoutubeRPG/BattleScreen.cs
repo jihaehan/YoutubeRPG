@@ -43,7 +43,7 @@ namespace YoutubeRPG
 
             XmlManager<Character> characterLoader = new XmlManager<Character>();
             enemy = characterLoader.Load("Content/Load/Gameplay/Markovnikov.xml");
-            enemy.LoadContent();
+            enemy.LoadContent("Content/Load/Gameplay/Battle/Markovnikov.xml");
             enemy.Image.Position = new Vector2(1064, 175);
             enemy.Image.SpriteSheetEffect.CurrentFrame.Y = 1;
             enemy.Image.IsActive = true;

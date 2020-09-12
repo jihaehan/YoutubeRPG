@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Menu>
+  <Axis>Left</Axis>
+  <Type>OptionFlee</Type>
+  <Spacing>
+    <X>0</X>
+    <Y>10</Y>
+  </Spacing>
+  <Alignment>
+    <X>342</X>
+    <Y>621</Y>
+  </Alignment> 
+  <Image>
+    <Position>
+      <X>730</X>
+      <Y>580.5</Y>
+    </Position>
+    <FontName>Fonts/OCRAsmall</FontName>
+    <Text>Leave Battle?</Text>
+  </Image>
+
+  <Item>
+    <LinkType>Menu</LinkType> 
+    <LinkID>Content/Load/Menu/FleeMenu.xml</LinkID>
+    <Image>
+      <TextColor>
+      <Path>Misc/yes_icon</Path>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Menu</LinkType> 
+    <LinkID>Content/Load/Menu/BattleMenu.xml</LinkID>
+    <Image>
+      <Path>Misc/no_icon</Path>
+    </Image>
+  </Item>
+</Menu>
