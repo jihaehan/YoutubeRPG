@@ -121,9 +121,14 @@ namespace YoutubeRPG
         }
         public void InitializeBattle(Vector2 startingPosition)
         {
-            chemicals[chemicalName[0]].Image.Position = startingPosition;
-            for (int i = 1; i < chemicalName.Count; i++)
-                chemicals[chemicalName[i]].Image.Position = chemicals[chemicalName[i - 1]].Image.Position;            
+            for (int i = 0; i < chemicalName.Count; i++)
+            { 
+                if (i == 0)
+                    chemicals[chemicalName[i]].Image.Position = startingPosition;
+                else 
+                    chemicals[chemicalName[i]].Image.Position = chemicals[chemicalName[i - 1]].Image.Position;
+                chemicals[chemicalName[i]].Image.IsActive = true;
+            }
             for (int i = 0; i < Math.Min(3, chemicalName.Count); i++)
                 BattleReady(chemicalName[i]);
         }
@@ -149,26 +154,19 @@ namespace YoutubeRPG
                     battleChemicals.Add(name, chemicals[name]);
                     battleChemicalName.Add(name);
                     //add initial position before it walks to target position
-                    battleChemicals[name].Image.Position = targetPosition + new Vector2(increment * (battleChemicalName.Count - 2), 0); 
+                    battleChemicals[name].Image.Position = targetPosition + new Vector2(increment * (battleChemicalName.Count - 2), 0);
                     //When adding new battle chemical, also create new battle tag
+                    int lastCharacter = MathHelper.Min(name.Length - 1, 7);
                     if (isPlayer) //if Player, add Horizontal Tag
                     {
-                        int lastCharacter = MathHelper.Min(name.Length - 1, 7);
                         battleChemicals[name].BattleTag = name.Substring(0, lastCharacter).ToUpper();
                     }
                     else //if Enemy, add Vertical Tag
                     {
                         string vName = String.Empty;
-                        for (int i = 0; i < name.Length - 1; i++)
+                        for (int i = 0; i < lastCharacter; i++)
                             vName += name[i].ToString() + "\n\r";
                         battleChemicals[name].BattleTag = vName.ToUpper();
-
-                        Rectangle r = tag.SourceRect;
-                        r.Width *= (int)tag.Font.MeasureString("T").X;
-                        r.Height *= (int)(tag.Font.MeasureString("T").Y * battleChemicals[name].CurrentHealth.ToString().Length + 4);
-                        r.X = (int)battleChemicals[name].Image.Position.X + 64;
-                        r.Y = 0;
-                        battleChemicals[name].TagRectangle = r;
                     }
                 }
             }
@@ -177,6 +175,13 @@ namespace YoutubeRPG
                 //Update battle chemicals to targeted position
                 battleChemicals[name].Update(gameTime, targetPosition);
                 targetPosition.X += increment;
+
+                Rectangle r = tag.SourceRect;
+                r.Width *= (int)tag.Font.MeasureString("T").X;
+                r.Height *= (int)(tag.Font.MeasureString("T").Y * battleChemicals[name].CurrentHealth.ToString().Length + 4);
+                r.X = (int)battleChemicals[name].Image.Position.X + 64;
+                r.Y = 0;
+                battleChemicals[name].TagRectangle = r;
             }
         }
         public void BattleDraw(SpriteBatch spriteBatch)
@@ -196,21 +201,16 @@ namespace YoutubeRPG
                 string currentHealth = battleChemicals[name].CurrentHealth.ToString();
                 string vHealth = String.Empty;
                 for (int i = 0; i < currentHealth.Length; i++)
-                    vHealth += currentHealth[0].ToString() + "\n\r";
-                vHealth += " k\n\rJ\n\r/\n\rm\n\ro\n\rl";
+                    vHealth += currentHealth[i].ToString() + "\n\r";
 
-                Vector2 tagPosition = new Vector2(battleChemicals[name].Image.Position.X, 0);
-                
+                Vector2 tagPosition = new Vector2(battleChemicals[name].TagRectangle.X, 0);
                 spriteBatch.Draw(tag.Texture, battleChemicals[name].TagRectangle, Color.White);
-                
-                spriteBatch.DrawString(tag.Font, vHealth, tagPosition, Color.Black);
-                tagPosition.X -= 22;
-
-                if (battleChemicals[name].CurrentHealth/battleChemicals[name].Health < 0.3)
-                    spriteBatch.DrawString(tag.Font, battleChemicals[name].BattleTag, tagPosition, Color.Orange);
+                if (battleChemicals[name].CurrentHealth / battleChemicals[name].Health > 0.3)
+                    spriteBatch.DrawString(tag.Font, vHealth, tagPosition, Color.Gray);
                 else 
-                    spriteBatch.DrawString(tag.Font, battleChemicals[name].BattleTag, tagPosition, Color.Black);
-                
+                    spriteBatch.DrawString(tag.Font, vHealth, tagPosition, Color.Orange);
+                tagPosition.X -= 22;
+                spriteBatch.DrawString(tag.Font, battleChemicals[name].BattleTag, tagPosition, Color.Black);
             }
         }
         public void DrawHorizontalTag(SpriteBatch spriteBatch)

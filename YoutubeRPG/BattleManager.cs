@@ -55,7 +55,7 @@ namespace YoutubeRPG
         {
             if (!currentMenuID.Contains("/Flee"))
             {
-                if (currentMenuID != String.Empty)
+                if (currentMenuID != String.Empty && !currentMenuID.Contains("Battle"))
                     clone.Add(menu);
                 else
                     clone.Clear();
@@ -232,7 +232,10 @@ namespace YoutubeRPG
         }
         void optionItemMenu()
         {
+            menu.Alignment.X = 340;
+            menu.Image.Position.Y = 720;
             menu.Items.Clear();
+          
             foreach (Item i in itemManager.Items)
             {
                 MenuItem item = new MenuItem();
