@@ -540,7 +540,7 @@ namespace YoutubeRPG
         }
         public void PrevMenuSelect(eButtonState buttonState)
         {
-            if (buttonState == eButtonState.DOWN && !isTransitioning)
+            if (buttonState == eButtonState.DOWN && !isTransitioning && !currentMenuID.Contains("BattleMenu"))
             {
                 if (prevMenuID != String.Empty && prevMenuID != currentMenuID)
                 {

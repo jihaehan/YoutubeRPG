@@ -6,6 +6,7 @@
     <SpriteSheetEffect>
       <SwitchFrame>200</SwitchFrame>
     </SpriteSheetEffect>
+    <FontName>Fonts/OCRAExt</FontName>
   </Image>
   <MoveSpeed>200</MoveSpeed>
 </Player>

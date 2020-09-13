@@ -17,7 +17,6 @@ namespace YoutubeRPG
         Player player;
         Character enemy;
         BattleManager battleManager;
-        SpriteFont tagFont;
 
         public BattleScreen()
         {
@@ -51,7 +50,7 @@ namespace YoutubeRPG
             enemy.InitializeBattle();
 
             //Setup background, menu, etc.
-            background.Path = "BattleBackground/Exterior";
+            background.Path = "BattleBackground/Interior";
             background.Position = Vector2.Zero;
             background.FontName = "Fonts/OCRAExt";
             background.LoadContent();
