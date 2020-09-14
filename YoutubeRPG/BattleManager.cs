@@ -70,9 +70,9 @@ namespace YoutubeRPG
                 menu.UnloadContent();
                 menu = XmlMenuManager.Load(menu.ID);
             }
-            /*if (currentMenuID.Contains("/Move"))
+            if (currentMenuID.Contains("/Move"))
                 MoveMenu();
-            else*/ if (currentMenuID.Contains("OptionMove"))
+            else if (currentMenuID.Contains("OptionMove"))
                 optionMoveMenu();
             else if (currentMenuID.Contains("OptionItem"))
                 optionItemMenu();
@@ -211,14 +211,16 @@ namespace YoutubeRPG
         {
             menu.Items.Clear();
             Chemical chemical = playerChemicals.GetBattleChemical(selectedItem);
+            generateMoveList(chemical);
 
             MenuItem item = new MenuItem();
             item.Image = new Image();
-            //item.Image.Text = 
+            item.Image.Text = selectedItem; //Test Text
             item.Image.TextColor = Color.Black;
             item.Image.FontName = "Fonts/OCRAsmall";
             item.LinkType = "Move";
             item.LinkID = "Content/Load/Menu/OptionMoveMenu.xml";
+
             menu.Items.Add(item);
         }
         void generateMoveList(Chemical chemical)
@@ -230,13 +232,68 @@ namespace YoutubeRPG
                 moveList.Add("Extinguisher");
             if (chemical.Isomers > 0)
                 moveList.Add("Branching");
-            if (chemical.Series == Series.Alkane)
-                moveList.Add("Free Radical Sub");
-            if (chemical.Series == Series.Alkene)
-                moveList.Add("Hydrogenation");
- 
+            switch (chemical.Series)
+            {
+                case Series.Alkane:
+                    moveList.Add("Free Radical Sub");
+                    break;
+                case Series.Alkene:
+                    moveList.Add("Addition Polymeriz");
+                    break;
+                case Series.Alcohol:
+                    moveList.Add("Oxidation");
+                    break;
+                case Series.Halogenoalkane:
+                    moveList.Add("SN2 Nucleophil Sub");
+                    break;
+            }
         }
+        public void SetChemicalMove(string name, string moveType)
+        {
+            playerChemicals.GetBattleChemical(name).BattleMove = moveType;
+        }
+        public void EndPlayerTurn()
+        {
+            foreach (string name in playerChemicals.battleChemicalName)
+            {
+                Chemical chemical = playerChemicals.GetBattleChemical(name);
+                switch (chemical.BattleMove)
+                {
+                    case "Combustion":
+                        //set different types of effects depending on 
+                        //Combustion
+                        //Incomplete Combustion
+                        //Apply AOE Damage
 
+                        break;
+                    case "Formation":
+                        //Enthalpy of formation. Basic attack.
+                        //Set only 1 target for damage
+                        break;
+                    case "Branching":
+                        //switch chemical spritesheet
+                        //Increase Defense rating for current chemicals
+                        break;
+                    case "Free Radical Sub":
+                        //Item - dependent reaction
+                        //For Alkanes to Halogenoalkanes
+                        break;
+                    case "Addition Polymeriz":
+                        //Item - dependent reaction for another chemical compound
+                        break;
+                    case "Oxidation":
+                        //Alcohols to Aldehydes
+                        //Oxygen dependent
+                        break;
+                    case "SN2 Nucleophil Sub":
+                        //Halogenoalkane to alcohols
+                        break;
+
+                }
+                //Clear BattleMove at the end of the turn
+                playerChemicals.GetBattleChemical(name).BattleMove = String.Empty;
+            }
+        }
         #endregion
 
         #region Option Menus
@@ -581,7 +638,7 @@ namespace YoutubeRPG
         }
         public void PrevMenuSelect(eButtonState buttonState)
         {
-            if (buttonState == eButtonState.DOWN && !isTransitioning && !currentMenuID.Contains("BattleMenu"))
+            if (buttonState == eButtonState.DOWN && !isTransitioning && !currentMenuID.Contains("BattleMenu") && menu.Type != "Flee")
             {
                 if (prevMenuID != String.Empty && prevMenuID != currentMenuID)
                 {

@@ -525,6 +525,8 @@ namespace YoutubeRPG
             CurrentHealth = Health;
             BaseDamage = FormationEnthalpy[Level];
             MaxDamage = CompleteCombustion();
+            if (Level > 3)
+                Isomers = Level - 1;
         }
         
         public void Combustion() //choose what combustion

@@ -89,45 +89,6 @@ namespace YoutubeRPG
             spriteBatch.End();
         }
 
-        #region Battle Methods
-        /// <summary>
-        /// Set chemical move at the MoveMenu screen for BattleManager
-        /// </summary>
-        public void SetChemicalMove(string name, string moveType)
-        {
-            player.ChemicalManager.GetBattleChemical(name).BattleMove = moveType;
-        }
-        /// <summary>
-        /// At the end of the player Turn
-        /// </summary>
-        /// 
-        public void EndPlayerTurn()
-        {
-            foreach (string name in player.ChemicalManager.battleChemicalName)
-            {
-                Chemical chemical = player.ChemicalManager.GetBattleChemical(name);
-                switch (chemical.BattleMove)
-                {
-                    case "Combustion":
-                        //set different types of effects depending on 
-                        //Combustion
-                        //Incomplete Combustion
-                        //Apply AOE Damage
-                        break;
-                    case "Formation":
-                        //Enthalpy of formation. Basic attack.
-                        //Set only 1 target for damage
-                        break;
-                    case "Branching":
-                        //switch chemical spritesheet
-                        //Increase Defense rating for current chemicals
-                        break;
-                }
-                //Clear BattleMove at the end of the turn
-                player.ChemicalManager.GetBattleChemical(name).BattleMove = String.Empty;
-            }
-        }
-        #endregion
         private void InitializeBindings()
         {
             InputManager.AddKeyboardBinding(Keys.W, battleManager.SelectUp);
