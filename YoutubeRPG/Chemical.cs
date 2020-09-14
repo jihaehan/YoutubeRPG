@@ -24,6 +24,7 @@ namespace YoutubeRPG
         public string Name;
         public string NickName;
         public string BattleTag;
+        public string BattleMove;   
         public int Level;
         public int Experience;
         public int Reactivity;
@@ -45,6 +46,7 @@ namespace YoutubeRPG
 
         public bool Solubility;     //Environmental Factor
         public bool InBattle;       //Determines whether on the battlegrounds
+        public bool TurnTaken;      //did the chemical take a turn?
         public Rectangle TagRectangle;
 
         Dictionary<Element, int> Elements;
@@ -77,7 +79,7 @@ namespace YoutubeRPG
         {
             Dimensions = new Vector2(128, 128);
             Velocity = Vector2.Zero;
-            Name = NickName = BattleTag = String.Empty;
+            Name = NickName = BattleTag = BattleMove = String.Empty;
             TagRectangle = new Rectangle();
             Level = 1;
             Experience = 0;
@@ -89,6 +91,7 @@ namespace YoutubeRPG
             Health = CurrentHealth = Mass = Damage = BaseDamage = MaxDamage = Defense = Dodge = Accuracy = BoilingPoint = 0;
             Solubility = false;
             InBattle = false;
+            TurnTaken = false;
             Elements = new Dictionary<Element, int>();
             Products = new Dictionary<string, int>();
             Reactants = new Dictionary<string, int>();

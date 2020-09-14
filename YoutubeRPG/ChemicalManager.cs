@@ -132,6 +132,24 @@ namespace YoutubeRPG
             for (int i = 0; i < Math.Min(3, chemicalName.Count); i++)
                 BattleReady(chemicalName[i]);
         }
+        public string DrawRandomCard()
+        {
+            //random card from chemicalsList (not battleready List)
+            if (chemicals.Count() != battleChemicals.Count())
+            {
+                Random rnd = new Random();
+                List<string> storedChemicals = new List<string>();
+                foreach (string name in chemicalName)
+                {
+                    if (!chemicals[name].InBattle)
+                        storedChemicals.Add(name);
+                }
+                int randIndex = rnd.Next(storedChemicals.Count());
+                return storedChemicals[randIndex];
+            }
+            else
+                return String.Empty;
+        }
         public void BattleUpdate(GameTime gameTime, Vector2 position, bool isPlayer)
         {
             Vector2 targetPosition = position;

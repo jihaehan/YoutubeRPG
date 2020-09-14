@@ -23,6 +23,7 @@ namespace YoutubeRPG
         string selectedItem;
         int prevSelectedItem, battleMenuSelectedItem;
         List<Image> infoImage;
+        List<string> moveList;
         SpriteFont font;
         Image page;
         Image cardDown, cardUp;
@@ -43,6 +44,7 @@ namespace YoutubeRPG
             O2Filled = new Image();
             O2Label = new Image();
             infoImage = new List<Image>();
+            moveList = new List<string>();
             clone = new List<Menu>();
             menu = new Menu();
             menu.OnMenuChanged += menu_OnMenuChange;
@@ -68,7 +70,9 @@ namespace YoutubeRPG
                 menu.UnloadContent();
                 menu = XmlMenuManager.Load(menu.ID);
             }
-            if (currentMenuID.Contains("OptionMove"))
+            /*if (currentMenuID.Contains("/Move"))
+                MoveMenu();
+            else*/ if (currentMenuID.Contains("OptionMove"))
                 optionMoveMenu();
             else if (currentMenuID.Contains("OptionItem"))
                 optionItemMenu();
@@ -181,7 +185,6 @@ namespace YoutubeRPG
             foreach (Image i in infoImage)
                 i.Update(gameTime);
         }
-
         public void Draw(SpriteBatch spriteBatch)
         {
             foreach (Menu m in clone)
@@ -200,34 +203,76 @@ namespace YoutubeRPG
         }
         #endregion
 
+        #region Battle Methods
+        void moveInfoMenu()
+        {
+        }
+        void MoveMenu()
+        {
+            menu.Items.Clear();
+            Chemical chemical = playerChemicals.GetBattleChemical(selectedItem);
+
+            MenuItem item = new MenuItem();
+            item.Image = new Image();
+            //item.Image.Text = 
+            item.Image.TextColor = Color.Black;
+            item.Image.FontName = "Fonts/OCRAsmall";
+            item.LinkType = "Move";
+            item.LinkID = "Content/Load/Menu/OptionMoveMenu.xml";
+            menu.Items.Add(item);
+        }
+        void generateMoveList(Chemical chemical)
+        {
+            moveList.Add("Formation");
+            if (!chemical.Name.Contains("Bromomethane"))
+                moveList.Add("Combustion");
+            else
+                moveList.Add("Extinguisher");
+            if (chemical.Isomers > 0)
+                moveList.Add("Branching");
+            if (chemical.Series == Series.Alkane)
+                moveList.Add("Free Radical Sub");
+            if (chemical.Series == Series.Alkene)
+                moveList.Add("Hydrogenation");
+ 
+        }
+
+        #endregion
+
         #region Option Menus
         void optionMoveMenu() //Currently alligned for CHEMICALS name
         {
             menu.Alignment.X = 340;
             menu.Items.Clear();
-            foreach (string chemicalName in playerChemicals.chemicalName)
+            foreach (string battleChemicalName in playerChemicals.battleChemicalName)
             {
-                MenuItem item = new MenuItem();
-                item.Image = new Image();
-                item.Image.Text = chemicalName.ToUpper();
-                string s = (playerChemicals.GetChemical(chemicalName).State).ToString().ToLower();
-                item.Image.Text += "(" + s.Substring(0, 1) + ")";
-
-                string h = (playerChemicals.GetChemical(chemicalName).CurrentHealth).ToString() + "/" + (playerChemicals.GetChemical(chemicalName).Health).ToString();
-
-                if (font != null)
+                Chemical chemical = playerChemicals.GetBattleChemical(battleChemicalName);
+                //if current move for battleChemical is not set...
+                if (chemical.BattleMove == String.Empty)
                 {
-                    string space = " ";
-                    int spaceNum = (int)((ScreenManager.Instance.Dimensions.X - 730 - font.MeasureString(h).X - font.MeasureString(item.Image.Text).X) / font.MeasureString(space).X);
-                    for (int i = 0; i < spaceNum; i++)
-                        item.Image.Text += " ";
-                    item.Image.Text += h;
+                    MenuItem item = new MenuItem();
+                    item.Image = new Image();
+                    item.Image.Text = battleChemicalName.ToUpper();
+                    string s = (playerChemicals.GetChemical(battleChemicalName).State).ToString().ToLower();
+                    item.Image.Text += "(" + s.Substring(0, 1) + ")";
+
+                    string h = (playerChemicals.GetChemical(battleChemicalName).CurrentHealth).ToString() + "/" + (playerChemicals.GetChemical(battleChemicalName).Health).ToString();
+
+                    if (font != null)
+                    {
+                        string space = " ";
+                        int spaceNum = (int)((ScreenManager.Instance.Dimensions.X - 730 - font.MeasureString(h).X - font.MeasureString(item.Image.Text).X) / font.MeasureString(space).X);
+                        for (int i = 0; i < spaceNum; i++)
+                            item.Image.Text += " ";
+                        item.Image.Text += h;
+                    }
+                    item.Image.TextColor = Color.Black;
+                    item.Image.FontName = "Fonts/OCRAsmall";
+                    item.LinkType = "Move";
+                    item.LinkID = "Content/Load/Menu/MoveMenu.xml";
+                    
+                    menu.Items.Add(item);
                 }
-                item.Image.TextColor = Color.Black;
-                item.Image.FontName = "Fonts/OCRAsmall";
-                item.LinkType = "Info";
-                item.LinkID = "Content/Load/Menu/InfoMenu.xml";
-                menu.Items.Add(item);
             }
         }
         void optionItemMenu()
@@ -382,10 +427,6 @@ namespace YoutubeRPG
 
             foreach (Image image in infoImage)
                 image.LoadContent();
-        }
-        void moveInfoMenu()
-        {
-            //fill in info image here...
         }
         #endregion
 
