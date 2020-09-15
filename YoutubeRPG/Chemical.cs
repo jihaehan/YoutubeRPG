@@ -25,6 +25,7 @@ namespace YoutubeRPG
         public string NickName;
         public string BattleTag;
         public string BattleMove;   
+        public string ChemicalFormula;
         public int Level;
         public int Experience;
         public int Reactivity;
@@ -51,7 +52,7 @@ namespace YoutubeRPG
 
         Dictionary<Element, int> Elements;
         Dictionary<string, int> Products;   //products from a reaction
-        Dictionary<string, int> Reactants;
+        Dictionary<string, float> Reactants;
         List<float> FormationEnthalpy;
 
         #region Fields
@@ -67,7 +68,21 @@ namespace YoutubeRPG
                 return Products[product];
             else return 0;
         }
-        public int GetReactant(string reactant)
+        public void AddReactant(string reactant, int num)
+        {
+            if (Reactants.ContainsKey(reactant))
+                Reactants[reactant] += num;
+            else
+                Reactants.Add(reactant, num);
+        }
+        public void SetOxygen(float num)
+        {
+            if (Reactants.ContainsKey("oxygen"))
+                Reactants["oxygen"] = num;
+            else
+                Reactants.Add("oxygen", num);
+        }
+        public float GetReactant(string reactant)
         {
             if (Reactants.ContainsKey(reactant))
                 return Reactants[reactant];
@@ -79,7 +94,7 @@ namespace YoutubeRPG
         {
             Dimensions = new Vector2(128, 128);
             Velocity = Vector2.Zero;
-            Name = NickName = BattleTag = BattleMove = String.Empty;
+            Name = NickName = BattleTag = BattleMove = ChemicalFormula = String.Empty;
             TagRectangle = new Rectangle();
             Level = 1;
             Experience = 0;
@@ -94,7 +109,7 @@ namespace YoutubeRPG
             TurnTaken = false;
             Elements = new Dictionary<Element, int>();
             Products = new Dictionary<string, int>();
-            Reactants = new Dictionary<string, int>();
+            Reactants = new Dictionary<string, float>();
             FormationEnthalpy = new List<float>();
         }
         public void LoadContent()
@@ -460,6 +475,10 @@ namespace YoutubeRPG
                     Health = (Elements[Element.C] - 1) * BondEnthalpies.C_C + Elements[Element.H] * BondEnthalpies.C_H;
                     Mass = Elements[Element.C] * AtomicMass.C + Elements[Element.H] * AtomicMass.H;
                     Solubility = false;
+                    if (Level == 1)
+                        ChemicalFormula = "CH4";
+                    else
+                        ChemicalFormula = "C" + Level.ToString() + "H" + Elements[Element.H].ToString();
                     break;
                 case Series.Alkene:
                     Name += "ene";
@@ -468,6 +487,7 @@ namespace YoutubeRPG
                     Health = (Elements[Element.C] - 2) * BondEnthalpies.C_C + BondEnthalpies.C__C + Elements[Element.H] * BondEnthalpies.C_H; 
                     Mass = Elements[Element.C] * AtomicMass.C + Elements[Element.H] * AtomicMass.H;
                     Solubility = false;
+                    ChemicalFormula = "C" + Level.ToString() + "H" + Elements[Element.H].ToString();
                     break;
                 case Series.Alcohol:
                     Name += "anol";
@@ -477,6 +497,10 @@ namespace YoutubeRPG
                     Health = (Elements[Element.C] - 1) * BondEnthalpies.C_C + BondEnthalpies.C_O + BondEnthalpies.O_H + (Elements[Element.H] - 1) * BondEnthalpies.C_H;
                     Mass = Elements[Element.C] * AtomicMass.C + Elements[Element.H] * AtomicMass.H + Elements[Element.O] * AtomicMass.O;
                     Solubility = true;
+                    if (Level == 1)
+                        ChemicalFormula = "CH3OH";
+                    else
+                        ChemicalFormula = "C" + Level.ToString() + "H" + (Elements[Element.H] - 1).ToString() + "OH";
                     break;
                 case Series.Halogenoalkane:
                     Name = Halogen.ToString() + Name.ToLower() +  "ane";
@@ -493,6 +517,10 @@ namespace YoutubeRPG
                         Elements.Add(Element.Br, 1);
                         Health = BondEnthalpies.C_Br;
                         Mass = Elements[Element.Br] * AtomicMass.Br;
+                        if (Level == 1)
+                            ChemicalFormula = "CH3Br";
+                        else
+                            ChemicalFormula = "C" + Level.ToString() + "H" + Elements[Element.H].ToString() + "Br";
                     }
                     Health += (Elements[Element.C] - 1) * BondEnthalpies.C_C + (Elements[Element.H] - 1) * BondEnthalpies.C_H;
                     Mass += Elements[Element.C] * AtomicMass.C + Elements[Element.H];
@@ -528,7 +556,23 @@ namespace YoutubeRPG
             if (Level > 3)
                 Isomers = Level - 1;
         }
-        
+        public float CalculateOxygen(string product)
+        {
+            float O2 = 0;
+            switch (product)
+            {
+                case "carbondioxide":
+                    O2 = (float)((Elements[Element.H] / 2 + Elements[Element.C] * 2) / 2);
+                    break;
+                case "carbonmonoxide":
+                    O2 = (float)((Elements[Element.H] / 2 + Elements[Element.C]) / 2);
+                    break;
+                case "carbon":
+                    O2 = (float)(Elements[Element.H] / 4);
+                    break;
+            }
+            return O2;
+        }
         public void Combustion() //choose what combustion
         {
             string o = "oxygen";
@@ -542,7 +586,7 @@ namespace YoutubeRPG
                 if (Products.ContainsKey("carbondioxide"))
                     Products["carbondioxide"] += Level;
                 else
-                    Products.Add("carbonmonoxide", Level);
+                    Products.Add("carbondioxide", Level);
             }
             else if (Reactants[o] >= CO)
             {
