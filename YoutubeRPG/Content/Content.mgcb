@@ -1386,6 +1386,9 @@
 #begin Load/Menu/BookMenu.xml
 /copy:Load/Menu/BookMenu.xml
 
+#begin Load/Menu/DescriptionMenu.xml
+/copy:Load/Menu/DescriptionMenu.xml
+
 #begin Load/Menu/FleeMenu.xml
 /copy:Load/Menu/FleeMenu.xml
 

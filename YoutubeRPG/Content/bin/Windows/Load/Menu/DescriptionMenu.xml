@@ -1,12 +1,13 @@
-﻿<Menu>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Menu>
   <Axis>Left</Axis>
-  <Type>Move</Type>
+  <Type>Description</Type>
   <Spacing>
     <X>0</X>
     <Y>10</Y>
   </Spacing>
   <Alignment>
-    <X>340</X>
+    <X>730</X>
     <Y>580.5</Y>
   </Alignment> 
   <Image>

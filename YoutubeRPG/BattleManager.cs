@@ -17,11 +17,14 @@ namespace YoutubeRPG
         ChemicalManager playerChemicals, enemyChemicals;
         ItemManager itemManager;
         bool isTransitioning;
+        bool isPlayerTurn;
+        bool isDescription;
 
         string prevMenuID;
         string currentMenuID;
-        string selectedItem;
+        string selectedItem, selectedChemical;
         int prevSelectedItem, battleMenuSelectedItem;
+        int turnCount;
         List<Image> infoImage;
         List<string> moveList;
         SpriteFont font;
@@ -31,13 +34,16 @@ namespace YoutubeRPG
         float totalOxygen;
         float currentOxygen;
         string pageText;
+        string description;
 
         public BattleManager()
         {
             totalOxygen = currentOxygen = 2;
             prevSelectedItem = battleMenuSelectedItem = 0;
-            prevMenuID = currentMenuID = selectedItem = String.Empty;
+            turnCount = 1; 
+            prevMenuID = currentMenuID = selectedItem = description = String.Empty;
             pageText = "1/3";
+            isPlayerTurn = isDescription = true;
             page = new Image();
             cardDown = cardUp = new Image();
             O2Empty = new Image();
@@ -55,7 +61,7 @@ namespace YoutubeRPG
         }
         public void menu_OnMenuChange(object sender, EventArgs e)
         {
-            if (!currentMenuID.Contains("/Flee"))
+            if (!currentMenuID.Contains("/Flee") && !menu.Type.Contains("Move"))
             {
                 if (currentMenuID != String.Empty && !currentMenuID.Contains("Battle"))
                     clone.Add(menu);
@@ -71,11 +77,13 @@ namespace YoutubeRPG
                 menu = XmlMenuManager.Load(menu.ID);
             }
             if (currentMenuID.Contains("/Move"))
-                MoveMenu();
+                moveMenu();
             else if (currentMenuID.Contains("OptionMove"))
                 optionMoveMenu();
             else if (currentMenuID.Contains("OptionItem"))
                 optionItemMenu();
+            else if (currentMenuID.Contains("Description"))
+                descriptionMenu();
             
             if (menu.ID.Contains(".xml") || menu.ID == String.Empty)
             {
@@ -89,7 +97,7 @@ namespace YoutubeRPG
                 item.Image.StoreEffects();
                 item.Image.ActivateEffect("FadeEffect");
             }
-            if (!currentMenuID.Contains("Move") && !currentMenuID.Contains("Option"))
+            if (!currentMenuID.Contains("Description"))
             {
                 foreach (Image image in infoImage)
                     image.UnloadContent();
@@ -110,10 +118,18 @@ namespace YoutubeRPG
             {
                 itemInfoMenu();
             }
+            else if (menu.Type == "Description")
+            {
+                moveInfoMenu();
+            }
             else if (menu.Type == "Book")
             {
                 menu.ItemNumber = prevSelectedItem;
                 bookMenu();
+            }
+            else if (menu.Type == "Move")
+            {
+                optionMenuPage();
             }
             else
                 menu.ItemNumber = prevSelectedItem;
@@ -193,7 +209,7 @@ namespace YoutubeRPG
             cardDown.Draw(spriteBatch);
             cardUp.Draw(spriteBatch);
             drawOxygen(spriteBatch);
-            if (menu.Type.Contains("Option"))
+            if (menu.Type.Contains("Option") || menu.Type == "Move")
             {
                 page.Draw(spriteBatch);
                 spriteBatch.DrawString(page.Font, pageText, page.Position + new Vector2(2, 0), Color.White);
@@ -206,25 +222,71 @@ namespace YoutubeRPG
         #region Battle Methods
         void moveInfoMenu()
         {
+
         }
-        void MoveMenu()
+        void descriptionMenu()
+        {
+            //Button that leads back to main menu
+            menu.Items.Clear();
+            MenuItem item = new MenuItem();
+            item.Image = new Image();
+            item.Image.Text = "."; 
+            item.LinkType = "Move";
+            item.LinkID = "Content/Load/Menu/OptionMoveMenu.xml";
+            menu.Items.Add(item);
+            //InfoImage
+            foreach (Image image in infoImage)
+                image.UnloadContent();
+            infoImage.Clear();
+            Chemical chemical = playerChemicals.GetBattleChemical(selectedChemical);    
+            
+            switch (selectedItem)
+            {
+                case "Formation":
+                    string s = selectedChemical + " forms from its elements at STP, releasing an Enthalpy of Formation of " + chemical.BaseDamage.ToString() + " kJ/mol";
+                    infoImage = scrollingDescription(s);
+                    break;
+                case "Combustion":
+                    break;
+                case "Branching":
+                    break;
+                case "Free Radical Sub":
+                    break;
+                case "Addition Polymeriz":
+                    break;
+                case "Oxidation":
+                    break;
+                case "SN2 Nucleophil Sub":
+                    break;
+                case "Extinguish Fire":
+                    break;
+            }
+
+            foreach (Image i in infoImage)
+                i.LoadContent();
+        }
+        
+        void moveMenu()
         {
             menu.Items.Clear();
             Chemical chemical = playerChemicals.GetBattleChemical(selectedItem);
             generateMoveList(chemical);
 
-            MenuItem item = new MenuItem();
-            item.Image = new Image();
-            item.Image.Text = selectedItem; //Test Text
-            item.Image.TextColor = Color.Black;
-            item.Image.FontName = "Fonts/OCRAsmall";
-            item.LinkType = "Move";
-            item.LinkID = "Content/Load/Menu/OptionMoveMenu.xml";
-
-            menu.Items.Add(item);
+            foreach (string move in moveList)
+            {
+                MenuItem item = new MenuItem();
+                item.Image = new Image();
+                item.Image.Text = move; //Test Text
+                item.Image.TextColor = Color.Black;
+                item.Image.FontName = "Fonts/OCRAsmall";
+                item.LinkType = "Move";
+                item.LinkID = "Content/Load/Menu/DescriptionMenu.xml";
+                menu.Items.Add(item);
+            }
         }
         void generateMoveList(Chemical chemical)
         {
+            moveList.Clear();
             moveList.Add("Formation");
             if (!chemical.Name.Contains("Bromomethane"))
                 moveList.Add("Combustion");
@@ -292,6 +354,8 @@ namespace YoutubeRPG
                 }
                 //Clear BattleMove at the end of the turn
                 playerChemicals.GetBattleChemical(name).BattleMove = String.Empty;
+                turnCount++;
+                totalOxygen = currentOxygen = turnCount * 2;
             }
         }
         #endregion
@@ -488,6 +552,7 @@ namespace YoutubeRPG
         #endregion
 
         #region Misc Functions
+
         void Transition(GameTime gameTime)
         {
             if (isTransitioning)
@@ -510,18 +575,22 @@ namespace YoutubeRPG
         }
         void optionMenuPage()
         {
-            if (!menu.Items[menu.ItemNumber].Image.IsVisible)
+            if (menu.Items.Count > 0)
             {
-                int invisible = menu.ItemNumber - menu.ItemNumber % 3;
-                for (int i = 0; (i < invisible) && (i < menu.Items.Count()); i++)
-                    menu.Items[i].Image.IsVisible = false;
-                for (int j = invisible; j < (invisible + 3) && j < (menu.Items.Count()); j++)
-                    menu.Items[j].Image.IsVisible = true;
-                for (int k = invisible + 3; k < menu.Items.Count(); k++)
-                    menu.Items[k].Image.IsVisible = false;
-
-                pageText = ((int)(menu.ItemNumber / 3 + 1)).ToString() + "/3";
+                pageText = ((int)(menu.ItemNumber / 3 + 1)).ToString() + "/" + ((int)((menu.Items.Count + 2) / 3)).ToString();
+                if (!menu.Items[menu.ItemNumber].Image.IsVisible)
+                {
+                    int invisible = menu.ItemNumber - menu.ItemNumber % 3;
+                    for (int i = 0; (i < invisible) && (i < menu.Items.Count()); i++)
+                        menu.Items[i].Image.IsVisible = false;
+                    for (int j = invisible; j < (invisible + 3) && j < (menu.Items.Count()); j++)
+                        menu.Items[j].Image.IsVisible = true;
+                    for (int k = invisible + 3; k < menu.Items.Count(); k++)
+                        menu.Items[k].Image.IsVisible = false;
+                    pageText = ((int)(menu.ItemNumber / 3 + 1)).ToString() + "/" + ((int)((menu.Items.Count + 2) / 3)).ToString();
+                }
             }
+
         }
         private void drawOxygen(SpriteBatch spriteBatch)
         {
@@ -542,6 +611,52 @@ namespace YoutubeRPG
                 O2Filled.Draw(spriteBatch);
                 O2Filled.Position.X += 44;
             }
+        }
+        List<Image> scrollingDescription(string description)
+        {
+            List<Image> imageList = new List<Image>();
+            Image i = new Image();
+            Vector2 dimensions = new Vector2(340f, 580.5f);
+            i.FontName = "Fonts/OCRAsmall";
+            i.TextColor = Color.Black;
+            i.Position = dimensions;
+            string[] parts = description.Split(' ');
+            string text = String.Empty;
+            int rowLength = 0;
+            int count = 0;
+            foreach (string s in parts)
+            {
+                if ((rowLength + s.Length) < 30)
+                {
+                    rowLength += s.Length + 1;
+                    text += s + " ";
+                    if (s == parts[parts.Length - 1]) //if string is last word in dialogue
+                    {
+                        i = new Image();
+                        i.Text = text;
+                        i.FontName = "Fonts/OCRAsmall";
+                        i.TextColor = Color.Black;
+                        i.Position = dimensions;
+                        imageList.Add(i);
+                        text = String.Empty;
+                    }
+                }
+                else
+                {
+                    count++;
+                    i.Text = text;
+                    imageList.Add(i);
+                    i = new Image();
+                    dimensions.Y += 42;
+                    i.Position = dimensions;
+                    i.TextColor = Color.Black;
+                    i.FontName = "Fonts/OCRAsmall";
+
+                    text = s + " ";
+                    rowLength = s.Length + 1;
+                }
+            }
+            return imageList;
         }
         #endregion
 
@@ -570,7 +685,10 @@ namespace YoutubeRPG
                 menu.ItemNumber++;
             else if (menu.Type.Contains("Option"))
                 optionMenuPage();
-
+            if (menu.Type == "Move")
+            {
+                optionMenuPage();
+            }
         }
         public void SelectUp(eButtonState buttonState)
         {
@@ -578,6 +696,10 @@ namespace YoutubeRPG
                 menu.ItemNumber--;
             else if (menu.Type.Contains("Option"))
                 optionMenuPage();
+            if (menu.Type == "Move")
+            {
+                optionMenuPage();
+            }
 
         }
         public void Activate(eButtonState buttonState)
@@ -599,7 +721,14 @@ namespace YoutubeRPG
         {
             if (buttonState == eButtonState.DOWN && !isTransitioning && IsActive)
             {
-                if (menu.Items[menu.ItemNumber].LinkType == "Screen")
+                if (menu.Items.Count < 1)
+                {
+                    if (isPlayerTurn)
+                        isPlayerTurn = false;
+                    else
+                        isPlayerTurn = true;
+                }
+                else if (menu.Items[menu.ItemNumber].LinkType == "Screen")
                     ScreenManager.Instance.ChangeScreens(menu.Items[menu.ItemNumber].LinkID);
                 else if (menu.Items[menu.ItemNumber].LinkType == "None")
                 {/*no action*/}
@@ -611,7 +740,7 @@ namespace YoutubeRPG
                     prevSelectedItem = menu.ItemNumber;
                     currentMenuID = menu.Items[menu.ItemNumber].LinkID;
 
-                    if (menu.Type.Contains("Option"))
+                    if (menu.Type.Contains("Option") || menu.Type == "Move")
                     {
                         string str = menu.Items[menu.ItemNumber].Image.Text;
                         if (str != String.Empty)
@@ -619,8 +748,12 @@ namespace YoutubeRPG
                             if (str.Contains("("))
                                 str = str.Substring(0, str.IndexOf('(')).ToLower();
 
+                            if (menu.Type == "Move")
+                            {
+                                playerChemicals.GetBattleChemical(selectedItem).BattleMove = str;
+                                selectedChemical = selectedItem;
+                            }
                             selectedItem = str[0].ToString().ToUpper() + str.Substring(1);
-
                         }
                     }
                     isTransitioning = true;
@@ -638,15 +771,14 @@ namespace YoutubeRPG
         }
         public void PrevMenuSelect(eButtonState buttonState)
         {
-            if (buttonState == eButtonState.DOWN && !isTransitioning && !currentMenuID.Contains("BattleMenu") && menu.Type != "Flee")
+            if (buttonState == eButtonState.DOWN && !isTransitioning && !currentMenuID.Contains("BattleMenu") && menu.Type != "Flee" && menu.Type != "Description")
             {
                 if (prevMenuID != String.Empty && prevMenuID != currentMenuID)
                 {
-                    if (clone.Count > 0)
+                    if (clone.Count > 0 && !currentMenuID.Contains("Move"))
                         clone.Remove(clone[clone.Count - 1]);
                     currentMenuID = prevMenuID;
                     menu.ID = currentMenuID;
-
                 }
                 else if (!prevMenuID.Contains("Battle"))
                 {
@@ -657,7 +789,6 @@ namespace YoutubeRPG
                 }
                 else if (IsActive)
                     Activate(buttonState);
-
             }
         }
         #endregion
