@@ -54,8 +54,17 @@ namespace YoutubeRPG
         Dictionary<string, int> Products;   //products from a reaction
         Dictionary<string, float> Reactants;
         List<float> FormationEnthalpy;
+        List<string> MoveHistory;
 
         #region Fields
+        public void RecordMove(string move)
+        {
+            MoveHistory.Add(move);
+        }
+        public List<string> GetMoveHistory()
+        {
+            return MoveHistory;
+        }
         public int GetElement(Element element)
         {
             if (Elements.ContainsKey(element))
@@ -111,6 +120,7 @@ namespace YoutubeRPG
             Products = new Dictionary<string, int>();
             Reactants = new Dictionary<string, float>();
             FormationEnthalpy = new List<float>();
+            MoveHistory = new List<string>();
         }
         public void LoadContent()
         {

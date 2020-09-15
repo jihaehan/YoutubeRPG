@@ -83,8 +83,6 @@ namespace YoutubeRPG
             background.Draw(spriteBatch);
             enemy.BattleDraw(spriteBatch);
             player.BattleDraw(spriteBatch);
-            //Draw special effects here
-            //PLACEHOLDER CODE
             battleManager.Draw(spriteBatch);
             spriteBatch.End();
         }

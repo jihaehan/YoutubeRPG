@@ -1383,6 +1383,9 @@
 #begin Load/Menu/BattleMenu.xml
 /copy:Load/Menu/BattleMenu.xml
 
+#begin Load/Menu/BattlingMenu.xml
+/copy:Load/Menu/BattlingMenu.xml
+
 #begin Load/Menu/BookMenu.xml
 /copy:Load/Menu/BookMenu.xml
 
@@ -1556,18 +1559,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Misc/book_menu.png
-
-#begin Misc/card.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Misc/card.png
 
 #begin Misc/card_down.png
 /importer:TextureImporter

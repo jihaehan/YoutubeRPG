@@ -11,10 +11,11 @@ namespace YoutubeRPG
 {
     public class SPX
     {
-        Image Image;
+        public Image Image;
         Vector2 targetPosition;
         float moveSpeed;
 
+        #region Main Methods
         public SPX(string xmlPath)
         {
             //Set MoveSpeed
@@ -28,6 +29,13 @@ namespace YoutubeRPG
                 Image.Position = new Vector2(1280 + Image.SourceRect.Width, targetPosition.Y);
             else if (Image.Path.Contains("player"))
                 Image.Position = new Vector2(-Image.SourceRect.Width, targetPosition.Y);
+        }
+        public SPX(string xmlPath, Vector2 position)
+        {
+            XmlManager<Image> xmlManager = new XmlManager<Image>();
+            Image = xmlManager.Load(xmlPath);
+            Image.Position = position;
+            LoadContent();
         }
         public void LoadContent()
         {
@@ -63,8 +71,8 @@ namespace YoutubeRPG
         {
             Image.Draw(spriteBatch);
         }
+        #endregion
     }
-
     public class SPXManager
     {
         public SPXManager()

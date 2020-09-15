@@ -50,7 +50,8 @@ namespace YoutubeRPG
             isPlayerTurn = true;
             isDescription = false;
             page = new Image();
-            cardDown = cardUp = new Image();
+            cardDown = new Image();
+            cardUp = new Image();
             O2Empty = new Image();
             O2Filled = new Image();
             O2Label = new Image();
@@ -91,6 +92,8 @@ namespace YoutubeRPG
                 optionItemMenu();
             else if (currentMenuID.Contains("Description"))
                 descriptionMenu();
+            else if (currentMenuID.Contains("Battling"))
+                battlingMenu();
             
             if (menu.ID.Contains(".xml") || menu.ID == String.Empty)
             {
@@ -122,22 +125,14 @@ namespace YoutubeRPG
                 optionMenuPage();
             }
             else if (menu.Type == "ItemInfo")
-            {
                 itemInfoMenu();
-            }
-            else if (menu.Type == "Description")
-            {
-                moveInfoMenu();
-            }
             else if (menu.Type == "Book")
             {
                 menu.ItemNumber = prevSelectedItem;
                 bookMenu();
             }
             else if (menu.Type == "Move")
-            {
                 optionMenuPage();
-            }
             else
                 menu.ItemNumber = prevSelectedItem;
         }
@@ -156,6 +151,7 @@ namespace YoutubeRPG
                 cardDown.FontName = cardUp.FontName = "Fonts/OCRAsmall";
                 cardDown.Position = cardUp.Position = new Vector2(928.5f, 636f);
                 cardUp.Path = "Misc/card_up";
+                cardUp.TextColor = Color.SaddleBrown;
                 cardUp.IsVisible = false;
                 cardUp.LoadContent();
                 cardDown.Path = "Misc/card_down";
@@ -214,8 +210,9 @@ namespace YoutubeRPG
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            foreach (SPX spx in spxImage)
-                spx.Draw(spriteBatch);
+            if (currentMenuID.Contains("Battling"))
+                foreach (SPX spx in spxImage)
+                    spx.Draw(spriteBatch);
             foreach (Menu m in clone)
                 m.Draw(spriteBatch);
             menu.Draw(spriteBatch);
@@ -233,9 +230,65 @@ namespace YoutubeRPG
         #endregion
 
         #region Battle Methods
-        void moveInfoMenu()
+        string battleCard()
         {
+            Random rnd = new Random();
+            List<string> notInParty = new List<string>();
+            
+            foreach (string chemicalName in playerChemicals.chemicalName)
+                if (!playerChemicals.GetChemical(chemicalName).InBattle)
+                    notInParty.Add(chemicalName);
 
+            if (notInParty.Count > 0)
+            {
+                int randomIndex = rnd.Next(notInParty.Count);
+                playerChemicals.GetChemical(notInParty[randomIndex]).InBattle = true;
+
+                cardUp.IsVisible = true;
+                cardUp.Position += Vector2.Zero;
+                cardUp.Text = notInParty[randomIndex] + "(" + playerChemicals.GetChemical(notInParty[randomIndex]).State.ToString().ToLower()[0] + ")";
+                cardUp.LoadContent();
+                return notInParty[randomIndex];
+            }
+            else
+            {
+                cardUp.IsVisible = false;
+                cardUp.Text = String.Empty;
+                cardUp.LoadContent();
+                return String.Empty;
+            }
+        }
+        void battlingMenu()
+        {
+            isDescription = true;
+
+            //infoImage
+            foreach (Image image in infoImage)
+                image.UnloadContent();
+            infoImage.Clear();
+            Image i = new Image();
+            i.FontName = "Fonts/OCRAsmall";
+            i.TextColor = Color.SaddleBrown;
+            Chemical chemical = playerChemicals.GetBattleChemical(selectedChemical);
+            string s = String.Empty;
+
+            //Manage enemyTurn
+            //enemyTurn();
+
+            //Manage playerTurn
+            foreach (string battleChemicalName in playerChemicals.battleChemicalName)
+                playerChemicals.GetBattleChemical(battleChemicalName).BattleMove = String.Empty;
+            //draw card and add new chemical to team
+            battleCard();
+        }
+        void enemyTurn() //NPC logic
+        {
+            foreach (string battleChemicalName in enemyChemicals.battleChemicalName)
+            {
+                Chemical chemical = enemyChemicals.GetBattleChemical(battleChemicalName);
+                generateMoveList(chemical);
+                //if (moveList.Contains())
+            }
         }
         void descriptionMenu()
         {
@@ -245,8 +298,18 @@ namespace YoutubeRPG
             item.Image = new Image();
             item.Image.Text = "."; 
             item.LinkType = "Move";
-            item.LinkID = "Content/Load/Menu/OptionMoveMenu.xml";
+
+            //if there are no chemicals left with moves
+            int playableChemicals = 0;
+            foreach (string battleChemicalName in playerChemicals.battleChemicalName)
+                if (playerChemicals.GetBattleChemical(battleChemicalName).BattleMove == String.Empty)
+                    playableChemicals++;
+            if (playableChemicals > 0)
+                item.LinkID = "Content/Load/Menu/OptionMoveMenu.xml";
+            else //switch to battling Menu
+                item.LinkID = "Content/Load/Menu/BattlingMenu.xml";
             menu.Items.Add(item);
+
             //InfoImage
             foreach (Image image in infoImage)
                 image.UnloadContent();
@@ -869,6 +932,7 @@ namespace YoutubeRPG
                             if (menu.Type == "Move")
                             {
                                 playerChemicals.GetBattleChemical(selectedItem).BattleMove = str;
+                                playerChemicals.GetBattleChemical(selectedItem).RecordMove(str);
                                 selectedChemical = selectedItem;
                             }
                             selectedItem = str[0].ToString().ToUpper() + str.Substring(1);
