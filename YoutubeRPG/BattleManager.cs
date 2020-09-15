@@ -16,6 +16,7 @@ namespace YoutubeRPG
 
         ChemicalManager playerChemicals, enemyChemicals;
         ItemManager itemManager;
+        SPXManager spxManager;
         bool isTransitioning;
         bool isPlayerTurn;
         bool isDescription;
@@ -26,6 +27,8 @@ namespace YoutubeRPG
         int prevSelectedItem, battleMenuSelectedItem;
         int turnCount;
         List<Image> infoImage; //for visual text distinct from menuButtons
+        List<SPX> spxImage;    //for special effects distinct from menuButtons
+
         List<string> moveList; //for individual chemicals
         List<string> environmentEffects; //for AOE effects for all chemicals
         SpriteFont font;
@@ -51,6 +54,8 @@ namespace YoutubeRPG
             O2Empty = new Image();
             O2Filled = new Image();
             O2Label = new Image();
+            spxManager = new SPXManager();
+            spxImage = new List<SPX>();
             infoImage = new List<Image>();
             moveList = environmentEffects = new List<string>();
             clone = new List<Menu>();
@@ -183,6 +188,8 @@ namespace YoutubeRPG
                 itemManager.UnloadContent();
             foreach (Menu m in clone)
                 m.UnloadContent();
+            foreach (SPX spx in spxImage)
+                spx.UnloadContent();
             foreach (Image i in infoImage)
                 i.UnloadContent();
         }
@@ -200,6 +207,8 @@ namespace YoutubeRPG
             playerChemicals = player.ChemicalManager;
             enemyChemicals = enemyChemicalManager;
             itemManager = player.ItemManager;
+            foreach (SPX spx in spxImage)
+                spx.Update(gameTime);
             foreach (Image i in infoImage)
                 i.Update(gameTime);
         }
@@ -216,6 +225,8 @@ namespace YoutubeRPG
                 page.Draw(spriteBatch);
                 spriteBatch.DrawString(page.Font, pageText, page.Position + new Vector2(2, 0), Color.White);
             }
+            foreach (SPX spx in spxImage)
+                spx.Draw(spriteBatch);
             foreach (Image i in infoImage)
                 i.Draw(spriteBatch);
         }

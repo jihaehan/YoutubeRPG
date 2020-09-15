@@ -83,6 +83,7 @@
     <Compile Include="Shapes\Triangle.cs" />
     <Compile Include="SplashScreen.cs" />
     <Compile Include="SpriteSheetEffect.cs" />
+    <Compile Include="SPX.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="TitleScreen.cs" />
     <Compile Include="World.cs" />
