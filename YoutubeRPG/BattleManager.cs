@@ -333,8 +333,35 @@ namespace YoutubeRPG
                 item.Image.FontName = "Fonts/OCRAsmall";
                 item.LinkType = "Move";
                 item.LinkID = "Content/Load/Menu/DescriptionMenu.xml";
+                string h = String.Empty;
+                h = moveReactants(move);
                 menu.Items.Add(item);
             }
+        }
+        string moveReactants(string move)
+        {
+            string req = String.Empty;
+            switch (move)
+            {
+                case "Free Radical Sub":     //alkane to halogenoalkane
+                    req = "Bromine";
+                    //requires +UV Light
+                    break;
+                case "Addition Polymeriz":
+                    req = "Nickeldihydride"; //alkene to alkane
+                    //requires +HEAT
+                    break;
+                case "Oxidation":
+                    req = "Chromate";        //alcohol to alkanal
+                    //requires +HEAT
+                    break;
+                case "SN2 Nucleophil Sub":   //halogenoalkane to alcohol
+                    req = "Sodiumhydroxide";
+                    //requires +HEAT
+                    break;
+            }
+            //check itemManager for items
+            return req;
         }
         void generateMoveList(Chemical chemical)
         {
@@ -853,7 +880,14 @@ namespace YoutubeRPG
         {
             if (buttonState == eButtonState.DOWN && !isTransitioning && !currentMenuID.Contains("BattleMenu") && menu.Type != "Flee" && menu.Type != "Description")
             {
-                if (prevMenuID != String.Empty && prevMenuID != currentMenuID)
+                if (currentMenuID.Contains("Move") && !prevMenuID.Contains("BattleMenu"))
+                {
+                    prevMenuID = "Content/Load/Menu/BattleMenu.xml";
+                    currentMenuID = "Content/Load/Menu/OptionMoveMenu.xml";
+                    menu.ID = currentMenuID;
+                    menu.Active = true;
+                }
+                else if (prevMenuID != String.Empty && prevMenuID != currentMenuID)
                 {
                     if (clone.Count > 0 && !currentMenuID.Contains("Move"))
                         clone.Remove(clone[clone.Count - 1]);
