@@ -312,9 +312,9 @@ namespace YoutubeRPG
                     infoImage = scrollingDescription(s);
                     environmentEffects.Add("Extinguisher");
                     isDescription = true;
+                    //add special effect
                     break;
             }
-
             foreach (Image img in infoImage)
                 img.LoadContent();
         }
@@ -324,7 +324,6 @@ namespace YoutubeRPG
             menu.Items.Clear();
             Chemical chemical = playerChemicals.GetBattleChemical(selectedItem);
             generateMoveList(chemical);
-
             foreach (string move in moveList)
             {
                 MenuItem item = new MenuItem();
@@ -628,6 +627,10 @@ namespace YoutubeRPG
         }
         void optionMenuPage()
         {
+            if (menu.ItemNumber < 0)
+                menu.ItemNumber = 0;
+            else if (menu.ItemNumber > menu.Items.Count - 1)
+                menu.ItemNumber = menu.Items.Count - 1;
             if (menu.Items.Count > 0)
             {
                 pageText = ((int)(menu.ItemNumber / 3 + 1)).ToString() + "/" + ((int)((menu.Items.Count + 2) / 3)).ToString();
