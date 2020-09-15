@@ -1,0 +1,8 @@
+﻿<Image>
+  <Path>SPX/enemy_CO2_mid</Path>
+  <Effects>FadeEffect</Effects>
+  <Position>
+      <X>480</X>
+      <Y>9</Y>
+  </Position>
+</Image>

@@ -1443,6 +1443,72 @@
 #begin Load/SplashScreen.xml
 /copy:Load/SplashScreen.xml
 
+#begin Load/SPX/black1.xml
+/copy:Load/SPX/black1.xml
+
+#begin Load/SPX/black2.xml
+/copy:Load/SPX/black2.xml
+
+#begin Load/SPX/enemy_C_big.xml
+/copy:Load/SPX/enemy_C_big.xml
+
+#begin Load/SPX/enemy_C_small.xml
+/copy:Load/SPX/enemy_C_small.xml
+
+#begin Load/SPX/enemy_CO_big.xml
+/copy:Load/SPX/enemy_CO_big.xml
+
+#begin Load/SPX/enemy_CO_small.xml
+/copy:Load/SPX/enemy_CO_small.xml
+
+#begin Load/SPX/enemy_CO2_big.xml
+/copy:Load/SPX/enemy_CO2_big.xml
+
+#begin Load/SPX/enemy_CO2_mid.xml
+/copy:Load/SPX/enemy_CO2_mid.xml
+
+#begin Load/SPX/enemy_CO2_small.xml
+/copy:Load/SPX/enemy_CO2_small.xml
+
+#begin Load/SPX/Extinguisher.xml
+/copy:Load/SPX/Extinguisher.xml
+
+#begin Load/SPX/player_C_big.xml
+/copy:Load/SPX/player_C_big.xml
+
+#begin Load/SPX/player_C_small.xml
+/copy:Load/SPX/player_C_small.xml
+
+#begin Load/SPX/player_CO_big.xml
+/copy:Load/SPX/player_CO_big.xml
+
+#begin Load/SPX/player_CO_small.xml
+/copy:Load/SPX/player_CO_small.xml
+
+#begin Load/SPX/player_CO2_big.xml
+/copy:Load/SPX/player_CO2_big.xml
+
+#begin Load/SPX/player_CO2_mid.xml
+/copy:Load/SPX/player_CO2_mid.xml
+
+#begin Load/SPX/player_CO2_small.xml
+/copy:Load/SPX/player_CO2_small.xml
+
+#begin Load/SPX/red1.xml
+/copy:Load/SPX/red1.xml
+
+#begin Load/SPX/red2.xml
+/copy:Load/SPX/red2.xml
+
+#begin Load/SPX/UV.xml
+/copy:Load/SPX/UV.xml
+
+#begin Load/SPX/white1.xml
+/copy:Load/SPX/white1.xml
+
+#begin Load/SPX/white2.xml
+/copy:Load/SPX/white2.xml
+
 #begin Misc/arrow_down.png
 /importer:TextureImporter
 /processor:TextureProcessor

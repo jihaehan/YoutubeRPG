@@ -1,0 +1,8 @@
+﻿<Image>
+  <Path>SPX/enemy_C_small</Path>
+  <Effects>FadeEffect</Effects>
+  <Position>
+      <X>955</X>
+      <Y>160</Y>
+  </Position>
+</Image>

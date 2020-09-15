@@ -1,0 +1,9 @@
+﻿<Image>
+  <Name>UV</Name>
+  <Path>SPX/UV</Path>
+  <Effects>FadeEffect</Effects>
+  <Position>
+      <X>0</X>
+      <Y>350</Y>
+  </Position>
+</Image>

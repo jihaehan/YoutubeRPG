@@ -1,0 +1,8 @@
+﻿<Image>
+  <Path>SPX/player_CO_big</Path>
+  <Effects>FadeEffect</Effects>
+  <Position>
+      <X>0</X>
+      <Y>215</Y>
+  </Position>
+</Image>

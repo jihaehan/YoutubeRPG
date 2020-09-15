@@ -1,0 +1,8 @@
+﻿<Image>
+  <Path>SPX/enemy_CO_big</Path>
+  <Effects>FadeEffect</Effects>
+  <Position>
+      <X>690</X>
+      <Y>60</Y>
+  </Position>
+</Image>

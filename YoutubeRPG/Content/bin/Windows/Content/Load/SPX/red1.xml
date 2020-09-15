@@ -1,0 +1,5 @@
+﻿<Image>
+  <Name>red1</Name>
+  <Effects>FadeEffect</Effects>
+  <Path>SPX/hit_red</Path>
+</Image>

@@ -214,6 +214,8 @@ namespace YoutubeRPG
         }
         public void Draw(SpriteBatch spriteBatch)
         {
+            foreach (SPX spx in spxImage)
+                spx.Draw(spriteBatch);
             foreach (Menu m in clone)
                 m.Draw(spriteBatch);
             menu.Draw(spriteBatch);
@@ -225,8 +227,6 @@ namespace YoutubeRPG
                 page.Draw(spriteBatch);
                 spriteBatch.DrawString(page.Font, pageText, page.Position + new Vector2(2, 0), Color.White);
             }
-            foreach (SPX spx in spxImage)
-                spx.Draw(spriteBatch);
             foreach (Image i in infoImage)
                 i.Draw(spriteBatch);
         }
