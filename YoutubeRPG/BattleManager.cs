@@ -25,8 +25,9 @@ namespace YoutubeRPG
         string selectedItem, selectedChemical;
         int prevSelectedItem, battleMenuSelectedItem;
         int turnCount;
-        List<Image> infoImage;
-        List<string> moveList;
+        List<Image> infoImage; //for visual text distinct from menuButtons
+        List<string> moveList; //for individual chemicals
+        List<string> environmentEffects; //for AOE effects for all chemicals
         SpriteFont font;
         Image page;
         Image cardDown, cardUp;
@@ -43,14 +44,15 @@ namespace YoutubeRPG
             turnCount = 1; 
             prevMenuID = currentMenuID = selectedItem = description = String.Empty;
             pageText = "1/3";
-            isPlayerTurn = isDescription = true;
+            isPlayerTurn = true;
+            isDescription = false;
             page = new Image();
             cardDown = cardUp = new Image();
             O2Empty = new Image();
             O2Filled = new Image();
             O2Label = new Image();
             infoImage = new List<Image>();
-            moveList = new List<string>();
+            moveList = environmentEffects = new List<string>();
             clone = new List<Menu>();
             menu = new Menu();
             menu.OnMenuChanged += menu_OnMenuChange;
@@ -290,17 +292,26 @@ namespace YoutubeRPG
                         infoImage = scrollingDescription("Insufficient O2 for Combustion.");
                     break;
                 case "Branching":
-
+                    //dependent on number of isomers, but need to count through turns
                     break;
                 case "Free Radical Sub":
+                    //need to refresh LinkID to current ID
                     break;
                 case "Addition Polymeriz":
+                    //randomize polymerization dependent on what items are available
                     break;
                 case "Oxidation":
+                    //dependent on number of oxygens available this round
                     break;
                 case "SN2 Nucleophil Sub":
+                    //dependent on the catalyst available
                     break;
-                case "Extinguish Fire":
+                case "Extinguisher":
+                    //dependent on bromomethane
+                    s = "Bromomethane interrupts chain reactions propogating combustion! All fires are extinguished.";
+                    infoImage = scrollingDescription(s);
+                    environmentEffects.Add("Extinguisher");
+                    isDescription = true;
                     break;
             }
 
@@ -665,7 +676,7 @@ namespace YoutubeRPG
             string[] parts = description.Split(' ');
             string text = String.Empty;
             int rowLength = 0;
-            int count = 0;
+            int count = 1;
             foreach (string s in parts)
             {
                 if ((rowLength + s.Length) < 30)
@@ -684,11 +695,16 @@ namespace YoutubeRPG
                 }
                 else
                 {
-                    count++;
                     i.Text = text;
                     imageList.Add(i);
                     i = new Image();
                     dimensions.Y += 42;
+                    if (count % 3 == 0)
+                    {
+                        count = 1;
+                        dimensions = new Vector2(340f, 580.5f);
+                    }
+                    count++;
                     i.Position = dimensions;
                     i.TextColor = Color.Black;
                     i.FontName = "Fonts/OCRAsmall";
@@ -706,6 +722,9 @@ namespace YoutubeRPG
                     }
                 }
             }
+            if (imageList.Count > 3)
+                for (int j = 3; j < imageList.Count; j++)
+                    imageList[j].IsVisible = false;
             return imageList;
         }
         #endregion
@@ -771,7 +790,15 @@ namespace YoutubeRPG
         {
             if (buttonState == eButtonState.DOWN && !isTransitioning && IsActive)
             {
-                if (menu.Items.Count < 1)
+                if (isDescription)
+                {
+                    infoImage.RemoveRange(0, Math.Min(3, infoImage.Count));
+                    for (int i = 0; i < Math.Min(infoImage.Count, 3); i++)
+                        infoImage[i].IsVisible = true;
+                    if (infoImage.Count < 3)
+                        isDescription = false;
+                }
+                else if (menu.Items.Count < 1)
                 {
                     if (isPlayerTurn)
                         isPlayerTurn = false;
