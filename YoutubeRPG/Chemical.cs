@@ -66,7 +66,7 @@ namespace YoutubeRPG
         {
             int count = 0;
             int iHistory = MoveHistory.Count - 1;
-            if (MoveHistory.Count > timeline)
+            if (MoveHistory.Count >= timeline)
                 for (int i = iHistory; i > iHistory - timeline; i--)
                 {
                     if (MoveHistory[i] == move)

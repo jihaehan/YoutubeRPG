@@ -108,11 +108,18 @@ namespace YoutubeRPG
     }
     public class SPXManager
     {
+        public Dictionary<string, bool> EnvironmentEffects;
         public SPXManager()
-        { }
+        {
+            EnvironmentEffects = new Dictionary<string, bool>();
+            EnvironmentEffects.Add("UV", false);
+            EnvironmentEffects.Add("Extinguisher", false);
+        }
 
         public string EnvironmentXml(string spxName)
         {   //draws out environment SPX: UV, Extinguisher
+            if (EnvironmentEffects.ContainsKey(spxName))
+                EnvironmentEffects[spxName] = true;
             return "Content/Load/SPX/" + spxName + ".xml";
         }
         public string AOEXml(string spxName, bool isPlayer)

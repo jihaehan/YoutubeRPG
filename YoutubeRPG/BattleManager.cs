@@ -108,7 +108,7 @@ namespace YoutubeRPG
                 item.Image.StoreEffects();
                 item.Image.ActivateEffect("FadeEffect");
             }
-            if (!currentMenuID.Contains("Description"))
+            if (!currentMenuID.Contains("Description") && !currentMenuID.Contains("/Move"))
             {
                 infoImageClear();
             }
@@ -225,6 +225,17 @@ namespace YoutubeRPG
         #endregion
 
         #region Battle Helper
+        string checkPlayableChemicals()
+        {
+            int playableChemicals = 0;
+            foreach (string battleChemicalName in player.ChemicalManager.battleChemicalName)
+                if (player.ChemicalManager.GetBattleChemical(battleChemicalName).BattleMove == String.Empty)
+                    playableChemicals++;
+            if (playableChemicals > 0)
+                return  "Content/Load/Menu/OptionMoveMenu.xml";
+            else //switch to battling Menu
+                return "Content/Load/Menu/BattlingMenu.xml";
+        }
         void searchBackpack(string infoText, string reactant)
         {
             bool found = false;
@@ -347,6 +358,7 @@ namespace YoutubeRPG
 
             EndPlayerTurn();
             //clear special effects
+            spxManager.EnvironmentEffects["Extinguisher"] = false;
             foreach (SPX spx in spxImage)
                 spx.FadeOut = true;
             //draw card and add new chemical to team
@@ -386,14 +398,7 @@ namespace YoutubeRPG
             item.LinkType = "Move";
 
             //if there are no chemicals left with moves
-            int playableChemicals = 0;
-            foreach (string battleChemicalName in player.ChemicalManager.battleChemicalName)
-                if (player.ChemicalManager.GetBattleChemical(battleChemicalName).BattleMove == String.Empty)
-                    playableChemicals++;
-            if (playableChemicals > 0)
-                item.LinkID = "Content/Load/Menu/OptionMoveMenu.xml";
-            else //switch to battling Menu
-                item.LinkID = "Content/Load/Menu/BattlingMenu.xml";
+            item.LinkID = checkPlayableChemicals();
             menu.Items.Add(item);
 
             //InfoImage
@@ -427,7 +432,6 @@ namespace YoutubeRPG
                         i.Text += chemical.Damage.ToString() + "kJ/mol";
                         i.Position = infoImage[infoImage.Count - 1].Position + new Vector2(0, 10f);
                         infoImage.Add(i);
-                        //add special effects
                         spxCombustion("CO2", chemical.Level);
                         //add damage
                     }
@@ -440,7 +444,6 @@ namespace YoutubeRPG
                         i.Text += chemical.Damage.ToString() + "kJ/mol";
                         i.Position = infoImage[infoImage.Count - 1].Position + new Vector2(0, 10f);
                         infoImage.Add(i);
-                        //add special effects
                         spxCombustion("CO", chemical.Level);
                         //add damage
                     }
@@ -453,7 +456,6 @@ namespace YoutubeRPG
                         i.Text += chemical.Damage.ToString() + "kJ/mol";
                         i.Position = infoImage[infoImage.Count - 1].Position + new Vector2(0, 10f);
                         infoImage.Add(i);
-                        //add special effects
                         spxCombustion("C", chemical.Level);
                         //add damage
                     }
@@ -474,7 +476,7 @@ namespace YoutubeRPG
                     //increase defense rating of chemical
                     break;
                 case "Free Radical Sub":
-                    searchBackpack("Initiation: [row] Br2 -> 2Cl*", reactant);
+                    searchBackpack("Initiation: [row] Br2 -> 2Cl*" , reactant);
                     break;
                 case "Addition Polymeriz":
                     //randomize polymerization dependent on what items are available
@@ -504,42 +506,43 @@ namespace YoutubeRPG
         }
         void moveMenu()
         {
-            //menu Items
+            #region setup
             menu.Items.Clear();
             Chemical chemical = player.ChemicalManager.GetBattleChemical(selectedItem);
             Chemical tempChemical = new Chemical();
             string tempChemicalName = String.Empty;
-            generateMoveList(chemical);
             bool isMultiStepMove = false;
             string[] multiStepMoves = { "Free Radical Sub", "Addition Polymeriz", "Oxidation", "SN2 Nucleophil Sub" };
+            #endregion
 
             foreach (string str in multiStepMoves)
+                //FIX: need to remove restriction after move is followed up
                 if (!isMultiStepMove && chemical.GetMoveHistory(1, str))
                 {
                     isMultiStepMove = true;
                     player.ChemicalManager.GetBattleChemical(selectedItem).BattleTag = str;
                     player.ChemicalManager.GetBattleChemical(selectedItem).RecordMove(str);
-                    //infoImage
                     infoImageClear();
-                    //depending on selected Item
                     switch (str)
                     {
                         case "Free Radical Sub":
-                            if (chemical.GetMoveHistory(3, str))
+                            if (chemical.CheckMoveCount(str) > 3)
+                                exitMultiStep(ref isMultiStepMove);
+                            else if (chemical.GetMoveHistory(3, str))
                             {
                                 string intermediate = chemical.ChemicalFormula.Substring(0, chemical.ChemicalFormula.Length - 1) + (chemical.GetElement(Element.H) - 1).ToString();
-                                infoImage = scrollingDescription("Termination: [row] Br* + Br* -> Br2 [row] Br* + *" +  intermediate + " -> " + intermediate + "Br");
+                                infoImage = scrollingDescription("Termination: [row] Br* + Br* -> Br2 [row] Br* + *" + intermediate + " -> " + intermediate + "Br");
                                 //add SPX and apply move effect here
                                 //Add TEMP chemical here`
                             }
-                            else 
+                            else
                             {
-                                infoImage = scrollingDescription("Propagation: [row] Br* " + chemical.ChemicalFormula + " -> HBr + *" + chemical.ChemicalFormula.Substring(0,chemical.ChemicalFormula.Length-1) + (chemical.GetElement(Element.H)-1).ToString());
+                                infoImage = scrollingDescription("Propagation: [row] Br* " + chemical.ChemicalFormula + " -> HBr + *" + chemical.ChemicalFormula.Substring(0, chemical.ChemicalFormula.Length - 1) + (chemical.GetElement(Element.H) - 1).ToString());
                             }
                             break;
                         case "Addition Polymeriz":
-                            if (chemical.CheckMoveCount(selectedItem) > 2)
-                                isMultiStepMove = false;
+                            if (chemical.CheckMoveCount(str) > 2)
+                                exitMultiStep(ref isMultiStepMove);
                             else
                             {
                                 tempChemicalName = chemical.Name.Replace("ene", "ane");
@@ -553,8 +556,8 @@ namespace YoutubeRPG
                             }
                             break;
                         case "Oxidation":
-                            if (chemical.CheckMoveCount(selectedItem) > 2)
-                                isMultiStepMove = false;
+                            if (chemical.CheckMoveCount(str) > 2)
+                                exitMultiStep(ref isMultiStepMove);
                             else
                             {
                                 tempChemicalName = chemical.Name.Replace("anol", "anal");
@@ -568,8 +571,8 @@ namespace YoutubeRPG
                             }
                             break;
                         case "SN2 Nucleophil Sub":
-                            if (chemical.CheckMoveCount(selectedItem) > 2)
-                                isMultiStepMove = false;
+                            if (chemical.CheckMoveCount(str) > 2)
+                                exitMultiStep(ref isMultiStepMove);
                             else
                             {
                                 tempChemicalName = chemical.Name.Replace("Bromo", String.Empty);
@@ -579,15 +582,27 @@ namespace YoutubeRPG
                                     string[] tempStr = tempChemicalName.Split('*');
                                     tempChemicalName = tempStr[0];
                                 }
-                                tempChemical = player.ChemicalManager.LoadTempChemical(tempChemicalName, "Alcohol");
+                                //tempChemical = player.ChemicalManager.LoadTempChemical(tempChemicalName, "Alcohol");
                                 infoImage = scrollingDescription(tempChemicalName + " joins the battle!");
                             }
                             break;
                     }
-                    foreach (Image img in infoImage)
-                        img.LoadContent();
+                    if (isMultiStepMove)
+                    {
+                        foreach (Image img in infoImage)
+                            img.LoadContent();
+                        MenuItem item = new MenuItem();
+                        item.Image = new Image();
+                        item.Image.Text = ".";
+                        item.LinkID = checkPlayableChemicals();
+                        menu.Items.Add(item);
+                    }
+                    else
+                        infoImageClear();
                 }
-            if (!isMultiStepMove)                
+            if (!isMultiStepMove)
+            {
+                generateMoveList(chemical);
                 foreach (string move in moveList)
                 {
                     MenuItem item = new MenuItem();
@@ -597,10 +612,9 @@ namespace YoutubeRPG
                     item.Image.FontName = "Fonts/OCRAsmall";
                     item.LinkType = "Move";
                     item.LinkID = "Content/Load/Menu/DescriptionMenu.xml";
-                    string h = String.Empty;
-                    h = moveReactants(move);
                     menu.Items.Add(item);
                 }
+            }
         }
         #endregion
 
@@ -1124,6 +1138,12 @@ namespace YoutubeRPG
         #endregion
 
         #region Shortcuts
+        void exitMultiStep(ref bool bMultiStep)
+        {
+            bMultiStep = false;
+            player.ChemicalManager.GetBattleChemical(selectedItem).BattleTag = String.Empty;
+            player.ChemicalManager.GetBattleChemical(selectedItem).RecordMove(String.Empty);
+        }
         void spxImageFade()
         {
             foreach (SPX spx in spxImage)
