@@ -56,7 +56,6 @@ namespace YoutubeRPG
         List<float> FormationEnthalpy;
         List<string> MoveHistory;
         string isomerPath;
-        bool isomerTransition;
 
         #region Fields
         public void RecordMove(string move)
@@ -137,7 +136,6 @@ namespace YoutubeRPG
             Reactivity = 0;
             Isomers = 0;
             isomerPath = String.Empty;
-            isomerTransition = false;
             State = State.Gas;
             Series = Series.Alkane;
             Halogen = Halogen.None;

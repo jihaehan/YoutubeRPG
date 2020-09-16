@@ -12,6 +12,7 @@ namespace YoutubeRPG
     public class SPX
     {
         public Image Image;
+        public bool FadeOut; 
         public int FadeCount;
         Vector2 targetPosition;
         float moveSpeed;
@@ -22,6 +23,7 @@ namespace YoutubeRPG
             //Set MoveSpeed
             moveSpeed = 300f;
             FadeCount = 0;
+            FadeOut = false;  
             //Load Image
             XmlManager<Image> xmlManager = new XmlManager<Image>();
             Image = xmlManager.Load(xmlPath);
@@ -53,29 +55,43 @@ namespace YoutubeRPG
         }
         public void Update(GameTime gameTime)
         {
-            Image.Update(gameTime);
-            if (Image.IsActive && Image.Path.Contains("white"))
+            if (FadeOut)
             {
-                if (Image.Alpha >= 1.0f)
-                    FadeCount++;
-                else if (FadeCount > 3 && Image.Alpha <= 0.0f)
-                {
-                    Image.IsActive = false;
-                    Image.IsVisible = false;
-                }
+                if (Image.Alpha > 0)
+                    Image.Alpha -= (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
+            else
+            {
+                Image.Update(gameTime);
 
-            if (Image.Path.Contains("UV") && Image.Position.Y < -Image.SourceRect.Height && !Image.IsActive)
-            {
-                Image.Position.Y -= moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-            else if (Image.Path.Contains("enemy") && Image.Position.X > targetPosition.X)
-            {
-                Image.Position.X -= moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-            else if (Image.Path.Contains("player") && Image.Position.X < targetPosition.X)
-            {
-                Image.Position.X += moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (Image.IsActive && Image.Path.Contains("white"))
+                {
+                    if (Image.Alpha >= 1.0f)
+                        FadeCount++;
+                    else if (FadeCount > 3 && Image.Alpha <= 0.0f)
+                    {
+                        Image.IsActive = false;
+                        Image.IsVisible = false;
+                    }
+                }
+
+                if (Image.Path.Contains("Extinguisher") && Image.IsActive)
+                {
+                    if (Image.Alpha >= 1.0f)
+                        Image.IsActive = false;
+                }
+                else if (Image.Path.Contains("UV") && Image.Position.Y < -Image.SourceRect.Height && !Image.IsActive)
+                {
+                    Image.Position.Y -= moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                else if (Image.Path.Contains("enemy") && Image.Position.X > targetPosition.X)
+                {
+                    Image.Position.X -= moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                else if (Image.Path.Contains("player") && Image.Position.X < targetPosition.X)
+                {
+                    Image.Position.X += moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
             }
         }
         public void Draw(SpriteBatch spriteBatch)
