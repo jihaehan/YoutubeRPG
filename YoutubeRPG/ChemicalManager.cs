@@ -76,18 +76,7 @@ namespace YoutubeRPG
         }
         public void LoadIsomer(string chemicalName, int branches)
         {
-            string path = battleChemicals[chemicalName].Image.Path;
-            if (branches > 1)
-                path = path.Replace((branches - 1).ToString(), branches.ToString());
-            Vector2 pos = battleChemicals[chemicalName].Image.Position;
-            battleChemicals[chemicalName].Image.UnloadContent();
-            battleChemicals[chemicalName].Image = new Image();
-            battleChemicals[chemicalName].Image.Path = path + branches.ToString();
-            battleChemicals[chemicalName].Image.Position = pos; 
-            battleChemicals[chemicalName].Image.Effects = "SpriteSheetEffect";
-            battleChemicals[chemicalName].Image.LoadContent();
-            battleChemicals[chemicalName].Image.SpriteSheetEffect.AmountOfFrames = new Vector2(2,2);
-            battleChemicals[chemicalName].Image.SpriteSheetEffect.SwitchFrame = 500;
+            battleChemicals[chemicalName].IsomerTransition(branches);
         }
         public Chemical LoadTempChemical(string chemicalName, string series)
         {

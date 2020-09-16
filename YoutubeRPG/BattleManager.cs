@@ -208,7 +208,7 @@ namespace YoutubeRPG
         {
             enemy.BattleDraw(spriteBatch);
             player.BattleDraw(spriteBatch);
-            if (currentMenuID.Contains("Battling"))
+            //if (currentMenuID.Contains("Battling"))
                 foreach (SPX spx in spxImage)
                     spx.Draw(spriteBatch);
             foreach (Menu m in clone)
@@ -391,7 +391,7 @@ namespace YoutubeRPG
                     int isomerState = Math.Min(chemical.Isomers, chemical.CheckMoveCount("Branching")+1);
                     if (chemical.CheckMoveCount("Branching") + 1> chemical.Isomers)
                     {
-                        infoImage = scrollingDescription(chemical.Name + " has no more structural isomers with further branching.");
+                        infoImage = scrollingDescription(chemical.Name + " has no structural isomers with further branching.");
                     }
                     else
                     {
@@ -413,7 +413,7 @@ namespace YoutubeRPG
                     break;
                 case "SN2 Nucleophil Sub":
                     //dependent on the catalyst available
-                    searchBackpack(chemical.ChemicalFormula + "(" + chemical.State.ToString().ToLower()[0] + ")" + " NaOH(aq) + HEAT -> " + chemical.ChemicalFormula.Substring(0, chemical.ChemicalFormula.Length-2) + "OH(l) + NaBr(aq)", reactant);
+                    searchBackpack(chemical.ChemicalFormula + "(" + chemical.State.ToString().ToLower()[0] + ")" + " NaOH(aq) + HEAT -> " + chemical.ChemicalFormula.Substring(0, chemical.ChemicalFormula.Length-2) + "OH(l) + NaBr(aq) [row] An Alcohol may join in the next turn!", reactant);
                     //Add another chemical at end of turn
                     break;
                 case "Extinguisher":
@@ -421,7 +421,6 @@ namespace YoutubeRPG
                     s = "Bromomethane interrupts chain reactions propogating combustion! All fires are extinguished.";
                     infoImage = scrollingDescription(s);
                     environmentEffects.Add("Extinguisher");
-                    isDescription = true;
                     //add special effect
                     break;
             }
@@ -504,7 +503,7 @@ namespace YoutubeRPG
                             else
                             {
                                 tempChemicalName = chemical.Name.Replace("Bromo", String.Empty);
-                                tempChemicalName = chemical.Name.Replace("ane", "anol");
+                                tempChemicalName = tempChemicalName.Replace("ane", "anol");
                                 if (tempChemicalName.Contains("*"))
                                 {
                                     string[] tempStr = tempChemicalName.Split('*');
@@ -904,7 +903,7 @@ namespace YoutubeRPG
             int count = 1;
             foreach (string s in parts)
             {
-                if(s == "[row]")
+                if (s == "[row]")
                 {
                     i.Text = text;
                     imageList.Add(i);
@@ -954,6 +953,7 @@ namespace YoutubeRPG
 
                     text = s + " ";
                     rowLength = s.Length + 1;
+                   
                     if (s == parts[parts.Length - 1]) //if string is last word in dialogue
                     {
                         i = new Image();
@@ -966,8 +966,11 @@ namespace YoutubeRPG
                 }
             }
             if (imageList.Count > 3)
+            {
                 for (int j = 3; j < imageList.Count; j++)
                     imageList[j].IsVisible = false;
+                isDescription = true;
+            }
             return imageList;
         }
         #endregion

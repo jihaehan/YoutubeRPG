@@ -12,6 +12,7 @@ namespace YoutubeRPG
     public class SPX
     {
         public Image Image;
+        public int FadeCount;
         Vector2 targetPosition;
         float moveSpeed;
 
@@ -20,6 +21,7 @@ namespace YoutubeRPG
         {
             //Set MoveSpeed
             moveSpeed = 300f;
+            FadeCount = 0;
             //Load Image
             XmlManager<Image> xmlManager = new XmlManager<Image>();
             Image = xmlManager.Load(xmlPath);
@@ -43,6 +45,7 @@ namespace YoutubeRPG
             Image.IsActive = true;
             Image.Effects = "FadeEffect";
             Image.LoadContent();
+            Image.FadeEffect.FadeSpeed += .02f;
         }
         public void UnloadContent()
         {
@@ -51,9 +54,17 @@ namespace YoutubeRPG
         public void Update(GameTime gameTime)
         {
             Image.Update(gameTime);
-            if (Image.Alpha >= 1.0f)
-                Image.IsActive = false;
-            
+            if (Image.IsActive && Image.Path.Contains("white"))
+            {
+                if (Image.Alpha >= 1.0f)
+                    FadeCount++;
+                else if (FadeCount > 3 && Image.Alpha <= 0.0f)
+                {
+                    Image.IsActive = false;
+                    Image.IsVisible = false;
+                }
+            }
+
             if (Image.Path.Contains("UV") && Image.Position.Y < -Image.SourceRect.Height && !Image.IsActive)
             {
                 Image.Position.Y -= moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -92,11 +103,19 @@ namespace YoutubeRPG
                 xmlPath = "Content/Load/SPX/enemy_";
             return xmlPath + spxName + ".xml";
         }
+        public string BranchingXml()
+        {
+            Random rnd = new Random();
+            string[] randomTarget = { "white1", "white2" }; //"black1", "black2", "white1", "white2",
+            int randomIndex = rnd.Next(randomTarget.Length);
+            string xmlPath = randomTarget[randomIndex];
+            return "Content/Load/SPX/" + xmlPath + ".xml";
+        }
         public string TargetXml()
         {
             //Randomizes SPX effect to load
             Random rnd = new Random();
-            string[] randomTarget = { "black1", "black2", "white1", "white2", "red1", "red2" };
+            string[] randomTarget = { "red1", "red2" }; //"black1", "black2", "white1", "white2",
             int randomIndex = rnd.Next(randomTarget.Length);
             string xmlPath = randomTarget[randomIndex];            
             return "Content/Load/SPX/" + xmlPath + ".xml";

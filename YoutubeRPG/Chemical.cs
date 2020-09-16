@@ -55,6 +55,8 @@ namespace YoutubeRPG
         Dictionary<string, float> Reactants;
         List<float> FormationEnthalpy;
         List<string> MoveHistory;
+        string isomerPath;
+        bool isomerTransition;
 
         #region Fields
         public void RecordMove(string move)
@@ -134,6 +136,8 @@ namespace YoutubeRPG
             Experience = 0;
             Reactivity = 0;
             Isomers = 0;
+            isomerPath = String.Empty;
+            isomerTransition = false;
             State = State.Gas;
             Series = Series.Alkane;
             Halogen = Halogen.None;
@@ -147,6 +151,7 @@ namespace YoutubeRPG
             FormationEnthalpy = new List<float>();
             MoveHistory = new List<string>();
         }
+        #region Main Methods
         public void LoadContent()
         {
             Image.LoadContent();
@@ -165,8 +170,13 @@ namespace YoutubeRPG
         /// <summary>
         /// chemical walks towards a certain point, BattleScreen
         /// </summary>
+
         public void Update(GameTime gameTime, Vector2 position)
         {
+            //For Branching Animation
+            isomerTransitionUpdate(gameTime, position);
+
+            //for moving to correct position
             float distance = Vector2.Distance(Image.Position, position);
             
             if (distance > 3)
@@ -178,6 +188,7 @@ namespace YoutubeRPG
             }
             Image.Update(gameTime);
             Image.IsActive = true;
+
         }
         /// <summary>
         /// chemical follows player, GameplayScreen
@@ -296,6 +307,39 @@ namespace YoutubeRPG
         {
             Image.Draw(spriteBatch);
         }
+        #endregion
+
+        #region Battle Methods
+        public void IsomerTransition(int branches)
+        {
+            isomerPath = Image.Path;
+            if (branches > 1)
+                isomerPath = isomerPath.Replace((branches - 1).ToString(), branches.ToString());
+            isomerPath += branches.ToString();
+            Image.ActivateEffect("FadeEffect");
+        }
+        void isomerTransitionUpdate(GameTime gameTime, Vector2 position)
+        {
+            if (Image.FadeEffect.IsActive && Image.Alpha <= 0.0f)
+            {
+                Image.UnloadContent();
+                Image = new Image();
+                Image.Path = isomerPath;
+                Image.Position = position;
+                Image.Effects = "SpriteSheetEffect";
+                Image.LoadContent();
+                Image.Alpha = 0.0f;
+                Image.SpriteSheetEffect.AmountOfFrames = new Vector2(2, 2);
+                Image.SpriteSheetEffect.SwitchFrame = 500;
+            }
+            if (!Image.FadeEffect.IsActive && Image.Alpha < 255f)
+            {
+                Image.Alpha += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+        }
+        #endregion
+
+        #region Misc Methods
         private void InitializeFormationEnthalpyList()
         {
             FormationEnthalpy.Clear();
@@ -647,5 +691,6 @@ namespace YoutubeRPG
                 Products["water"] += Level;
             else Products.Add("water", Level);
         }
+        #endregion
     }
 }
