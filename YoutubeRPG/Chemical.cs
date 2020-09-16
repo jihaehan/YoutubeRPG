@@ -61,9 +61,34 @@ namespace YoutubeRPG
         {
             MoveHistory.Add(move);
         }
-        public List<string> GetMoveHistory()
+        public bool GetMoveHistory(int timeline, string move)
         {
-            return MoveHistory;
+            int count = 0;
+            int iHistory = MoveHistory.Count - 1;
+            if (MoveHistory.Count > timeline)
+                for (int i = iHistory; i > iHistory - timeline; i--)
+                {
+                    if (MoveHistory[i] == move)
+                        count++;
+                }
+            if (count == timeline)
+                return true;
+            else 
+                return false;
+        }
+        public int CheckMoveCount(string move)
+        {
+            bool streak = true;
+            int count = 0;
+            if (MoveHistory.Count > 0)
+                for (int i = MoveHistory.Count - 1; i >= 0 && streak; i--)
+                {
+                    if (MoveHistory[i] == move)
+                        count++;
+                    else
+                        streak = false;
+                }
+            return count; 
         }
         public int GetElement(Element element)
         {

@@ -274,6 +274,7 @@ namespace YoutubeRPG
 
             //Manage enemyTurn
             //enemyTurn();
+            //display enemy actions in infoImage
 
             //Manage playerTurn
             foreach (string battleChemicalName in playerChemicals.battleChemicalName)
@@ -288,6 +289,24 @@ namespace YoutubeRPG
                 Chemical chemical = enemyChemicals.GetBattleChemical(battleChemicalName);
                 generateMoveList(chemical);
                 //if (moveList.Contains())
+            }
+        }
+        void searchBackpack(string infoText, string reactant)
+        {
+            bool found = false;
+            for (int j = 0; j < itemManager.Items.Count; j++)
+            {
+                if (itemManager.Items[j].Name == reactant && !found)
+                {
+                    infoImage = scrollingDescription(infoText);
+                    found = true;
+                    itemManager.Items.RemoveAt(j);
+                }
+            }
+            if (!found)
+            {
+                infoImage = scrollingDescription(selectedChemical + " does not have " + reactant);
+                playerChemicals.GetBattleChemical(selectedChemical).BattleMove = String.Empty;
             }
         }
         void descriptionMenu()
@@ -319,6 +338,11 @@ namespace YoutubeRPG
             i.TextColor = Color.SaddleBrown;
             Chemical chemical = playerChemicals.GetBattleChemical(selectedChemical);
             string s = String.Empty;
+
+            //If using items from backpack
+            string reactant = moveReactants(selectedItem);
+
+            //depending on which move has been selected
             switch (selectedItem)
             {
                 case "Formation":
@@ -367,18 +391,29 @@ namespace YoutubeRPG
                     break;
                 case "Branching":
                     //dependent on number of isomers, but need to count through turns
+                    int isomerState = Math.Min(chemical.Isomers, chemical.CheckMoveCount("Branching"));
+                    if (chemical.CheckMoveCount("Branching") > chemical.Isomers)
+                        infoImage = scrollingDescription(chemical.Name + " has no more structural isomers with further branching.");
+                    else
+                        infoImage = scrollingDescription(chemical.Name + " isomer: " + isomerState.ToString() + " branch. [row] Boiling pt decr as LDF decr.");
+                    //change spritesheet of chemical
+                    //increase defense rating of chemical
                     break;
                 case "Free Radical Sub":
-                    //need to refresh LinkID to current ID
+                    searchBackpack("Initiation: [row] Br2 -> 2Cl*", reactant);
                     break;
                 case "Addition Polymeriz":
                     //randomize polymerization dependent on what items are available
+                    searchBackpack(chemical.ChemicalFormula + "(" + chemical.State.ToString().ToLower()[0] + ") + NiH2(catalyst) + HEAT -> ", reactant);
                     break;
-                case "Oxidation":
-                    //dependent on number of oxygens available this round
+                case "Oxidation": //alcohol to alkanal
+                    //TO BE FIXED LATER
+                    searchBackpack(chemical.ChemicalFormula + "(l) + Chromate(catalyst) -> Alkanal + water", reactant);
                     break;
                 case "SN2 Nucleophil Sub":
                     //dependent on the catalyst available
+                    searchBackpack(chemical.ChemicalFormula + "(" + chemical.State.ToString().ToLower()[0] + ")" + " NaOH(aq) + HEAT -> " + chemical.ChemicalFormula.Substring(0, chemical.ChemicalFormula.Length-2) + "OH(l) + NaBr(aq)", reactant);
+                    //Add another chemical at end of turn
                     break;
                 case "Extinguisher":
                     //dependent on bromomethane
@@ -389,28 +424,113 @@ namespace YoutubeRPG
                     //add special effect
                     break;
             }
+            //Record Move
+            playerChemicals.GetBattleChemical(selectedChemical).RecordMove(playerChemicals.GetBattleChemical(selectedChemical).BattleMove);
             foreach (Image img in infoImage)
                 img.LoadContent();
         }
         
         void moveMenu()
         {
+            //menu Items
             menu.Items.Clear();
             Chemical chemical = playerChemicals.GetBattleChemical(selectedItem);
+            Chemical tempChemical = new Chemical();
+            string tempChemicalName = String.Empty;
             generateMoveList(chemical);
-            foreach (string move in moveList)
-            {
-                MenuItem item = new MenuItem();
-                item.Image = new Image();
-                item.Image.Text = move; //Test Text
-                item.Image.TextColor = Color.Black;
-                item.Image.FontName = "Fonts/OCRAsmall";
-                item.LinkType = "Move";
-                item.LinkID = "Content/Load/Menu/DescriptionMenu.xml";
-                string h = String.Empty;
-                h = moveReactants(move);
-                menu.Items.Add(item);
-            }
+            bool isMultiStepMove = false;
+            string[] multiStepMoves = { "Free Radical Sub", "Addition Polymeriz", "Oxidation", "SN2 Nucleophil Sub" };
+
+            foreach (string str in multiStepMoves)
+                if (!isMultiStepMove && chemical.GetMoveHistory(1, str))
+                {
+                    isMultiStepMove = true;
+                    playerChemicals.GetBattleChemical(selectedItem).BattleTag = str;
+                    playerChemicals.GetBattleChemical(selectedItem).RecordMove(str);
+                    //infoImage
+                    foreach (Image image in infoImage)
+                        image.UnloadContent();
+                    infoImage.Clear();
+                    //depending on selected Item
+                    switch (str)
+                    {
+                        case "Free Radical Sub":
+                            if (chemical.GetMoveHistory(3, str))
+                            {
+                                string intermediate = chemical.ChemicalFormula.Substring(0, chemical.ChemicalFormula.Length - 1) + (chemical.GetElement(Element.H) - 1).ToString();
+                                infoImage = scrollingDescription("Termination: [row] Br* + Br* -> Br2 [row] Br* + *" +  intermediate + " -> " + intermediate + "Br");
+                                //add SPX and apply move effect here
+                                //Add TEMP chemical here`
+                            }
+                            else 
+                            {
+                                infoImage = scrollingDescription("Propagation: [row] Br* " + chemical.ChemicalFormula + " -> HBr + *" + chemical.ChemicalFormula.Substring(0,chemical.ChemicalFormula.Length-1) + (chemical.GetElement(Element.H)-1).ToString());
+                            }
+                            break;
+                        case "Addition Polymeriz":
+                            if (chemical.CheckMoveCount(selectedItem) > 2)
+                                isMultiStepMove = false;
+                            else
+                            {
+                                tempChemicalName = chemical.Name.Replace("ene", "ane");
+                                if (tempChemicalName.Contains("*"))
+                                {
+                                    string[] tempStr = tempChemicalName.Split('*');
+                                    tempChemicalName = tempStr[0];
+                                }
+                                tempChemical = playerChemicals.LoadTempChemical(tempChemicalName, "Alkane");
+                                infoImage = scrollingDescription(tempChemicalName + " joins the battle!");
+                            }
+                            break;
+                        case "Oxidation":
+                            if (chemical.CheckMoveCount(selectedItem) > 2)
+                                isMultiStepMove = false;
+                            else
+                            {
+                                tempChemicalName = chemical.Name.Replace("anol", "anal");
+                                if (tempChemicalName.Contains("*"))
+                                {
+                                    string[] tempStr = tempChemicalName.Split('*');
+                                    tempChemicalName = tempStr[0];
+                                }
+                                tempChemical = playerChemicals.LoadTempChemical(tempChemicalName, "Aldehyde");
+                                infoImage = scrollingDescription(tempChemicalName + " joins the battle!");
+                            }
+                            break;
+                        case "SN2 Nucleophil Sub":
+                            if (chemical.CheckMoveCount(selectedItem) > 2)
+                                isMultiStepMove = false;
+                            else
+                            {
+                                tempChemicalName = chemical.Name.Replace("Bromo", String.Empty);
+                                tempChemicalName = chemical.Name.Replace("ane", "anol");
+                                if (tempChemicalName.Contains("*"))
+                                {
+                                    string[] tempStr = tempChemicalName.Split('*');
+                                    tempChemicalName = tempStr[0];
+                                }
+                                tempChemical = playerChemicals.LoadTempChemical(tempChemicalName, "Alcohol");
+                                infoImage = scrollingDescription(tempChemicalName + " joins the battle!");
+                            }
+                            break;
+                    }
+                    foreach (Image img in infoImage)
+                        img.LoadContent();
+                }
+            if (!isMultiStepMove)                
+                foreach (string move in moveList)
+                {
+                    MenuItem item = new MenuItem();
+                    item.Image = new Image();
+                    item.Image.Text = move; //Test Text
+                    item.Image.TextColor = Color.Black;
+                    item.Image.FontName = "Fonts/OCRAsmall";
+                    item.LinkType = "Move";
+                    item.LinkID = "Content/Load/Menu/DescriptionMenu.xml";
+                    string h = String.Empty;
+                    h = moveReactants(move);
+                    menu.Items.Add(item);
+                }
         }
         string moveReactants(string move)
         {
@@ -682,7 +802,7 @@ namespace YoutubeRPG
             i.FontName = "Fonts/OCRAsmall";
             i.Text = selectedItem.ToUpper();
             i.TextColor = Color.Black;
-            i.Position = new Vector2(dimensions.X - font.MeasureString(i.Text).X / 2f, dimensions.Y);
+            i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f, dimensions.Y);
             dimensions.Y += 10f;
             infoImage.Add(i);
 
@@ -783,7 +903,24 @@ namespace YoutubeRPG
             int count = 1;
             foreach (string s in parts)
             {
-                if ((rowLength + s.Length) < 30)
+                if(s == "[row]")
+                {
+                    i = new Image();
+                    rowLength = 0;
+                    if (count % 3 == 0)
+                    {
+                        count = 1;
+                        dimensions = new Vector2(340f, 580.5f);
+                    }
+                    count++;
+                    i.Text = text;
+                    i.FontName = "Fonts/OCRAsmall";
+                    i.TextColor = Color.Black;
+                    
+                    i.Position = dimensions;
+                    imageList.Add(i);
+                }
+                else if ((rowLength + s.Length) < 30)
                 {
                     rowLength += s.Length + 1;
                     text += s + " ";
@@ -932,7 +1069,7 @@ namespace YoutubeRPG
                             if (menu.Type == "Move")
                             {
                                 playerChemicals.GetBattleChemical(selectedItem).BattleMove = str;
-                                playerChemicals.GetBattleChemical(selectedItem).RecordMove(str);
+                                //playerChemicals.GetBattleChemical(selectedItem).RecordMove(str);
                                 selectedChemical = selectedItem;
                             }
                             selectedItem = str[0].ToString().ToUpper() + str.Substring(1);

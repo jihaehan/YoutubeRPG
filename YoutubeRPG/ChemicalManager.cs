@@ -43,6 +43,51 @@ namespace YoutubeRPG
         {
             get { return chemicals[CurrentChemicalName]; }
         }
+        public string RemoveRandomTempChemical()
+        {
+            string tempChemicalName = String.Empty;
+            List<string> tempChemicalList = new List<string>();
+            foreach (string name in battleChemicalName)
+            {
+                if (name.Contains("TEMP"))
+                    tempChemicalList.Add(name);
+            }
+            Random rnd = new Random();
+            int randomIndex = rnd.Next(0, tempChemicalList.Count);
+            battleChemicals[tempChemicalList[randomIndex]].UnloadContent();
+            battleChemicals.Remove(tempChemicalList[randomIndex]);
+            battleChemicalName.Remove(tempChemicalList[randomIndex]);
+            return tempChemicalName;
+        }
+        public void UnloadTempChemicals()
+        {
+            List<string> tempChemicalList = new List<string>();
+            foreach (string name in battleChemicalName)
+            {
+                if (name.Contains("TEMP"))
+                    tempChemicalList.Add(name);
+            }
+            foreach (string name in tempChemicalList)
+            {
+                battleChemicals[name].UnloadContent();
+                battleChemicalName.Remove(name);
+                battleChemicals.Remove(name);
+            }
+        }
+        public Chemical LoadTempChemical(string chemicalName, string series)
+        {
+            string xmlPath = "Content/Load/Chemical/" + series + "/" + chemicalName + ".xml";
+            XmlManager<Chemical> chemicalLoader = new XmlManager<Chemical>();
+            Chemical chemical = chemicalLoader.Load(xmlPath);
+            string s = chemicalName + "TEMP";
+            chemical.NickName = "TEMP";
+            while (battleChemicals.ContainsKey(s))
+                s += "*";
+            battleChemicalName.Add(s);
+            chemical.LoadContent();
+            battleChemicals.Add(s, chemical);
+            return battleChemicals[s];
+        }
         public void LoadContent()
         {
             XmlManager<Chemical> chemicalLoader = new XmlManager<Chemical>();
@@ -74,6 +119,7 @@ namespace YoutubeRPG
                 chemicals[name].UnloadContent();
             tag.UnloadContent();
             shadow.UnloadContent();
+            UnloadTempChemicals();
         }
 
         /// <summary>
