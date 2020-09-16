@@ -21,7 +21,7 @@ namespace YoutubeRPG
         public SPX(string xmlPath)
         {
             //Set MoveSpeed
-            moveSpeed = 300f;
+            moveSpeed = 150f;
             FadeCount = 0;
             FadeOut = false;  
             //Load Image
@@ -47,7 +47,7 @@ namespace YoutubeRPG
             Image.IsActive = true;
             Image.Effects = "FadeEffect";
             Image.LoadContent();
-            Image.FadeEffect.FadeSpeed += .02f;
+            Image.FadeEffect.FadeSpeed = 0.5f;
         }
         public void UnloadContent()
         {
@@ -58,7 +58,7 @@ namespace YoutubeRPG
             if (FadeOut)
             {
                 if (Image.Alpha > 0)
-                    Image.Alpha -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    Image.Alpha -= (float)gameTime.ElapsedGameTime.TotalSeconds * 0.5f;
             }
             else
             {
@@ -84,13 +84,19 @@ namespace YoutubeRPG
                 {
                     Image.Position.Y -= moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
-                else if (Image.Path.Contains("enemy") && Image.Position.X > targetPosition.X)
+                else if (Image.Path.Contains("enemy"))
                 {
-                    Image.Position.X -= moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    if (Image.Position.X > targetPosition.X)
+                        Image.Position.X -= moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds; 
+                    else
+                        FadeOut = true;
                 }
-                else if (Image.Path.Contains("player") && Image.Position.X < targetPosition.X)
+                else if (Image.Path.Contains("player"))
                 {
-                    Image.Position.X += moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    if (Image.Position.X < targetPosition.X)
+                        Image.Position.X += moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    else
+                        FadeOut = true;
                 }
             }
         }

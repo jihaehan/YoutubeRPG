@@ -206,9 +206,8 @@ namespace YoutubeRPG
         {
             enemy.BattleDraw(spriteBatch);
             player.BattleDraw(spriteBatch);
-            //if (currentMenuID.Contains("Battling"))
-                foreach (SPX spx in spxImage)
-                    spx.Draw(spriteBatch);
+            foreach (SPX spx in spxImage)
+                spx.Draw(spriteBatch);
             foreach (Menu m in clone)
                 m.Draw(spriteBatch);
             menu.Draw(spriteBatch);
@@ -417,7 +416,7 @@ namespace YoutubeRPG
                     //Add special effects here!
                     break;
                 case "Combustion":
-                    chemical.SetOxygen(0);
+                    chemical.SetOxygen(currentOxygen);
                     chemical.Combustion();
                     if (chemical.GetProduct("carbondioxide") > 0)
                     {
@@ -429,6 +428,8 @@ namespace YoutubeRPG
                         i.Position = infoImage[infoImage.Count - 1].Position + new Vector2(0, 10f);
                         infoImage.Add(i);
                         //add special effects
+                        spxCombustion("CO2", chemical.Level);
+                        //add damage
                     }
                     else if (chemical.GetProduct("carbonmonoxide") > 0)
                     {
@@ -440,6 +441,8 @@ namespace YoutubeRPG
                         i.Position = infoImage[infoImage.Count - 1].Position + new Vector2(0, 10f);
                         infoImage.Add(i);
                         //add special effects
+                        spxCombustion("CO", chemical.Level);
+                        //add damage
                     }
                     else if (chemical.GetProduct("carbon") > 0)
                     {
@@ -451,6 +454,8 @@ namespace YoutubeRPG
                         i.Position = infoImage[infoImage.Count - 1].Position + new Vector2(0, 10f);
                         infoImage.Add(i);
                         //add special effects
+                        spxCombustion("C", chemical.Level);
+                        //add damage
                     }
                     else
                         infoImage = scrollingDescription("Insufficient O2 for Combustion.");
@@ -787,7 +792,17 @@ namespace YoutubeRPG
         #endregion
 
         #region Misc Functions
-
+        void spxCombustion(string combustionType, int level)
+        {
+            if (level > 5 && combustionType == "CO2")
+                spxImage.Add(new SPX(spxManager.AOEXml(combustionType + "_big", true)));
+            else if (level > 3 && combustionType != "CO2")
+                spxImage.Add(new SPX(spxManager.AOEXml(combustionType + "_big", true)));
+            else if (level > 3 && combustionType == "CO2")
+                spxImage.Add(new SPX(spxManager.AOEXml(combustionType + "_mid", true)));
+            else
+                spxImage.Add(new SPX(spxManager.AOEXml(combustionType + "_small", true)));
+        }
         void Transition(GameTime gameTime)
         {
             if (isTransitioning)
@@ -831,7 +846,7 @@ namespace YoutubeRPG
             }
 
         }
-        private void drawOxygen(SpriteBatch spriteBatch)
+        void drawOxygen(SpriteBatch spriteBatch)
         {
             O2Label.Draw(spriteBatch);
             string O2 = currentOxygen.ToString() + "/" + totalOxygen.ToString();
