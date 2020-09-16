@@ -905,20 +905,21 @@ namespace YoutubeRPG
             {
                 if(s == "[row]")
                 {
+                    i.Text = text;
+                    imageList.Add(i);
                     i = new Image();
                     rowLength = 0;
+                    dimensions.Y += 42f;
                     if (count % 3 == 0)
                     {
                         count = 1;
                         dimensions = new Vector2(340f, 580.5f);
                     }
                     count++;
-                    i.Text = text;
                     i.FontName = "Fonts/OCRAsmall";
                     i.TextColor = Color.Black;
-                    
                     i.Position = dimensions;
-                    imageList.Add(i);
+                    text = String.Empty;
                 }
                 else if ((rowLength + s.Length) < 30)
                 {
