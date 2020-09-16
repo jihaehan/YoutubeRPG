@@ -177,6 +177,7 @@ namespace YoutubeRPG
                 Image.Position += Velocity;
             }
             Image.Update(gameTime);
+            Image.IsActive = true;
         }
         /// <summary>
         /// chemical follows player, GameplayScreen
@@ -589,7 +590,7 @@ namespace YoutubeRPG
             BaseDamage = FormationEnthalpy[Level];
             MaxDamage = CompleteCombustion();
             if (Level > 3)
-                Isomers = Level - 1;
+                Isomers = Level - 3;
         }
         public float CalculateOxygen(string product)
         {

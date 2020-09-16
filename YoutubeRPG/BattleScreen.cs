@@ -14,8 +14,6 @@ namespace YoutubeRPG
     {
         List<Image> specialEffects;
         Image background;
-        Player player;
-        Character enemy;
         BattleManager battleManager;
 
         public BattleScreen()
@@ -24,30 +22,10 @@ namespace YoutubeRPG
             specialEffects = new List<Image>();
             background = new Image();
 
-            //Battle Components
-            player = new Player();
-            enemy = new Character();
         }
         public override void LoadContent()
         {
             base.LoadContent();
-
-            XmlManager<Player> playerLoader = new XmlManager<Player>();
-            player = playerLoader.Load("Content/Load/Gameplay/Player.xml");
-            player.LoadContent();
-            player.Image.Position = new Vector2(128, 360);
-            player.Image.SpriteSheetEffect.CurrentFrame.Y = 7;
-            player.Image.SpriteSheetEffect.SwitchFrame = 500;
-            player.Image.IsActive = true;
-            player.InitializeBattle();
-
-            XmlManager<Character> characterLoader = new XmlManager<Character>();
-            enemy = characterLoader.Load("Content/Load/Gameplay/Markovnikov.xml");
-            enemy.LoadContent("Content/Load/Gameplay/Battle/Markovnikov.xml");
-            enemy.Image.Position = new Vector2(1064, 175);
-            enemy.Image.SpriteSheetEffect.CurrentFrame.Y = 1;
-            enemy.Image.IsActive = true;
-            enemy.InitializeBattle();
 
             //Setup background, menu, etc.
             background.Path = "BattleBackground/Interior";
@@ -72,17 +50,13 @@ namespace YoutubeRPG
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            player.BattleUpdate(gameTime);
-            enemy.BattleUpdate(gameTime);
-            battleManager.Update(gameTime, ref player, ref enemy.ChemicalManager);
+            battleManager.Update(gameTime);
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
             spriteBatch.Begin();
             background.Draw(spriteBatch);
-            enemy.BattleDraw(spriteBatch);
-            player.BattleDraw(spriteBatch);
             battleManager.Draw(spriteBatch);
             spriteBatch.End();
         }

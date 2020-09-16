@@ -13,8 +13,8 @@ namespace YoutubeRPG
     {
         Menu menu;
         List<Menu> clone;
-
-        ChemicalManager playerChemicals, enemyChemicals;
+        Player player;
+        Character enemy;
         ItemManager itemManager;
         SPXManager spxManager;
         bool isTransitioning;
@@ -38,14 +38,15 @@ namespace YoutubeRPG
         float totalOxygen;
         float currentOxygen;
         string pageText;
-        string description;
 
         public BattleManager()
         {
+            player = new Player();
+            enemy = new Character();
             totalOxygen = currentOxygen = 2;
             prevSelectedItem = battleMenuSelectedItem = 0;
             turnCount = 1; 
-            prevMenuID = currentMenuID = selectedItem = description = String.Empty;
+            prevMenuID = currentMenuID = selectedItem = String.Empty;
             pageText = "1/3";
             isPlayerTurn = true;
             isDescription = false;
@@ -140,8 +141,9 @@ namespace YoutubeRPG
         #region Main Methods
         public void LoadContent(string menuPath)
         {
+            initializeParties();
             if (menuPath != String.Empty)
-            {
+            {    
                 menu.ID = menuPath;
                 prevMenuID = currentMenuID = menuPath;
                 page.FontName = "Fonts/OCRAExt";
@@ -169,6 +171,10 @@ namespace YoutubeRPG
         }
         public void UnloadContent()
         {
+            //First save player content into another file before unloading...
+            //and then redirect screen to level up screen depending on EXP gains
+            player.UnloadContent();
+            enemy.UnloadContent();
             menu.UnloadContent();
             page.UnloadContent();
             cardDown.UnloadContent();
@@ -176,10 +182,6 @@ namespace YoutubeRPG
             O2Empty.UnloadContent();
             O2Filled.UnloadContent();
             O2Label.UnloadContent();
-            if (playerChemicals != null)
-                playerChemicals.UnloadContent();
-            if (enemyChemicals != null)
-                enemyChemicals.UnloadContent();
             if (itemManager != null)
                 itemManager.UnloadContent();
             foreach (Menu m in clone)
@@ -191,17 +193,11 @@ namespace YoutubeRPG
         }
         public void Update(GameTime gameTime)
         {
-            if (!isTransitioning)
-                menu.Update(gameTime);
-            Transition(gameTime);
-        }
-        public void Update(GameTime gameTime, ref Player player, ref ChemicalManager enemyChemicalManager)
-        {
+            player.BattleUpdate(gameTime);
+            enemy.BattleUpdate(gameTime);
             if (!isTransitioning)
                menu.Update(gameTime);
             Transition(gameTime);
-            playerChemicals = player.ChemicalManager;
-            enemyChemicals = enemyChemicalManager;
             itemManager = player.ItemManager;
             foreach (SPX spx in spxImage)
                 spx.Update(gameTime);
@@ -210,6 +206,8 @@ namespace YoutubeRPG
         }
         public void Draw(SpriteBatch spriteBatch)
         {
+            enemy.BattleDraw(spriteBatch);
+            player.BattleDraw(spriteBatch);
             if (currentMenuID.Contains("Battling"))
                 foreach (SPX spx in spxImage)
                     spx.Draw(spriteBatch);
@@ -235,18 +233,18 @@ namespace YoutubeRPG
             Random rnd = new Random();
             List<string> notInParty = new List<string>();
             
-            foreach (string chemicalName in playerChemicals.chemicalName)
-                if (!playerChemicals.GetChemical(chemicalName).InBattle)
+            foreach (string chemicalName in player.ChemicalManager.chemicalName)
+                if (!player.ChemicalManager.GetChemical(chemicalName).InBattle)
                     notInParty.Add(chemicalName);
 
             if (notInParty.Count > 0)
             {
                 int randomIndex = rnd.Next(notInParty.Count);
-                playerChemicals.GetChemical(notInParty[randomIndex]).InBattle = true;
+                player.ChemicalManager.GetChemical(notInParty[randomIndex]).InBattle = true;
 
                 cardUp.IsVisible = true;
                 cardUp.Position += Vector2.Zero;
-                cardUp.Text = notInParty[randomIndex] + "(" + playerChemicals.GetChemical(notInParty[randomIndex]).State.ToString().ToLower()[0] + ")";
+                cardUp.Text = notInParty[randomIndex] + "(" + player.ChemicalManager.GetChemical(notInParty[randomIndex]).State.ToString().ToLower()[0] + ")";
                 cardUp.LoadContent();
                 return notInParty[randomIndex];
             }
@@ -269,7 +267,7 @@ namespace YoutubeRPG
             Image i = new Image();
             i.FontName = "Fonts/OCRAsmall";
             i.TextColor = Color.SaddleBrown;
-            Chemical chemical = playerChemicals.GetBattleChemical(selectedChemical);
+            Chemical chemical = player.ChemicalManager.GetBattleChemical(selectedChemical);
             string s = String.Empty;
 
             //Manage enemyTurn
@@ -277,16 +275,16 @@ namespace YoutubeRPG
             //display enemy actions in infoImage
 
             //Manage playerTurn
-            foreach (string battleChemicalName in playerChemicals.battleChemicalName)
-                playerChemicals.GetBattleChemical(battleChemicalName).BattleMove = String.Empty;
+            foreach (string battleChemicalName in player.ChemicalManager.battleChemicalName)
+                player.ChemicalManager.GetBattleChemical(battleChemicalName).BattleMove = String.Empty;
             //draw card and add new chemical to team
             battleCard();
         }
         void enemyTurn() //NPC logic
         {
-            foreach (string battleChemicalName in enemyChemicals.battleChemicalName)
+            foreach (string battleChemicalName in enemy.ChemicalManager.battleChemicalName)
             {
-                Chemical chemical = enemyChemicals.GetBattleChemical(battleChemicalName);
+                Chemical chemical = enemy.ChemicalManager.GetBattleChemical(battleChemicalName);
                 generateMoveList(chemical);
                 //if (moveList.Contains())
             }
@@ -306,7 +304,7 @@ namespace YoutubeRPG
             if (!found)
             {
                 infoImage = scrollingDescription(selectedChemical + " does not have " + reactant);
-                playerChemicals.GetBattleChemical(selectedChemical).BattleMove = String.Empty;
+                player.ChemicalManager.GetBattleChemical(selectedChemical).BattleMove = String.Empty;
             }
         }
         void descriptionMenu()
@@ -320,8 +318,8 @@ namespace YoutubeRPG
 
             //if there are no chemicals left with moves
             int playableChemicals = 0;
-            foreach (string battleChemicalName in playerChemicals.battleChemicalName)
-                if (playerChemicals.GetBattleChemical(battleChemicalName).BattleMove == String.Empty)
+            foreach (string battleChemicalName in player.ChemicalManager.battleChemicalName)
+                if (player.ChemicalManager.GetBattleChemical(battleChemicalName).BattleMove == String.Empty)
                     playableChemicals++;
             if (playableChemicals > 0)
                 item.LinkID = "Content/Load/Menu/OptionMoveMenu.xml";
@@ -336,7 +334,7 @@ namespace YoutubeRPG
             Image i = new Image();
             i.FontName = "Fonts/OCRAsmall";
             i.TextColor = Color.SaddleBrown;
-            Chemical chemical = playerChemicals.GetBattleChemical(selectedChemical);
+            Chemical chemical = player.ChemicalManager.GetBattleChemical(selectedChemical);
             string s = String.Empty;
 
             //If using items from backpack
@@ -390,13 +388,16 @@ namespace YoutubeRPG
                         infoImage = scrollingDescription("Insufficient O2 for Combustion.");
                     break;
                 case "Branching":
-                    //dependent on number of isomers, but need to count through turns
-                    int isomerState = Math.Min(chemical.Isomers, chemical.CheckMoveCount("Branching"));
-                    if (chemical.CheckMoveCount("Branching") > chemical.Isomers)
+                    int isomerState = Math.Min(chemical.Isomers, chemical.CheckMoveCount("Branching")+1);
+                    if (chemical.CheckMoveCount("Branching") + 1> chemical.Isomers)
+                    {
                         infoImage = scrollingDescription(chemical.Name + " has no more structural isomers with further branching.");
+                    }
                     else
-                        infoImage = scrollingDescription(chemical.Name + " isomer: " + isomerState.ToString() + " branch. [row] Boiling pt decr as LDF decr.");
-                    //change spritesheet of chemical
+                    {
+                        infoImage = scrollingDescription(chemical.Name + " isomer: " + isomerState.ToString() + " branch. [row] Boiling pt decr as London Dispersion Forces decr.");
+                        player.ChemicalManager.LoadIsomer(chemical.Name, isomerState);
+                    }
                     //increase defense rating of chemical
                     break;
                 case "Free Radical Sub":
@@ -425,7 +426,7 @@ namespace YoutubeRPG
                     break;
             }
             //Record Move
-            playerChemicals.GetBattleChemical(selectedChemical).RecordMove(playerChemicals.GetBattleChemical(selectedChemical).BattleMove);
+            player.ChemicalManager.GetBattleChemical(selectedChemical).RecordMove(player.ChemicalManager.GetBattleChemical(selectedChemical).BattleMove);
             foreach (Image img in infoImage)
                 img.LoadContent();
         }
@@ -434,7 +435,7 @@ namespace YoutubeRPG
         {
             //menu Items
             menu.Items.Clear();
-            Chemical chemical = playerChemicals.GetBattleChemical(selectedItem);
+            Chemical chemical = player.ChemicalManager.GetBattleChemical(selectedItem);
             Chemical tempChemical = new Chemical();
             string tempChemicalName = String.Empty;
             generateMoveList(chemical);
@@ -445,8 +446,8 @@ namespace YoutubeRPG
                 if (!isMultiStepMove && chemical.GetMoveHistory(1, str))
                 {
                     isMultiStepMove = true;
-                    playerChemicals.GetBattleChemical(selectedItem).BattleTag = str;
-                    playerChemicals.GetBattleChemical(selectedItem).RecordMove(str);
+                    player.ChemicalManager.GetBattleChemical(selectedItem).BattleTag = str;
+                    player.ChemicalManager.GetBattleChemical(selectedItem).RecordMove(str);
                     //infoImage
                     foreach (Image image in infoImage)
                         image.UnloadContent();
@@ -478,7 +479,7 @@ namespace YoutubeRPG
                                     string[] tempStr = tempChemicalName.Split('*');
                                     tempChemicalName = tempStr[0];
                                 }
-                                tempChemical = playerChemicals.LoadTempChemical(tempChemicalName, "Alkane");
+                                tempChemical = player.ChemicalManager.LoadTempChemical(tempChemicalName, "Alkane");
                                 infoImage = scrollingDescription(tempChemicalName + " joins the battle!");
                             }
                             break;
@@ -493,7 +494,7 @@ namespace YoutubeRPG
                                     string[] tempStr = tempChemicalName.Split('*');
                                     tempChemicalName = tempStr[0];
                                 }
-                                tempChemical = playerChemicals.LoadTempChemical(tempChemicalName, "Aldehyde");
+                                tempChemical = player.ChemicalManager.LoadTempChemical(tempChemicalName, "Aldehyde");
                                 infoImage = scrollingDescription(tempChemicalName + " joins the battle!");
                             }
                             break;
@@ -509,7 +510,7 @@ namespace YoutubeRPG
                                     string[] tempStr = tempChemicalName.Split('*');
                                     tempChemicalName = tempStr[0];
                                 }
-                                tempChemical = playerChemicals.LoadTempChemical(tempChemicalName, "Alcohol");
+                                tempChemical = player.ChemicalManager.LoadTempChemical(tempChemicalName, "Alcohol");
                                 infoImage = scrollingDescription(tempChemicalName + " joins the battle!");
                             }
                             break;
@@ -585,13 +586,13 @@ namespace YoutubeRPG
         }
         public void SetChemicalMove(string name, string moveType)
         {
-            playerChemicals.GetBattleChemical(name).BattleMove = moveType;
+            player.ChemicalManager.GetBattleChemical(name).BattleMove = moveType;
         }
         public void EndPlayerTurn()
         {
-            foreach (string name in playerChemicals.battleChemicalName)
+            foreach (string name in player.ChemicalManager.battleChemicalName)
             {
-                Chemical chemical = playerChemicals.GetBattleChemical(name);
+                Chemical chemical = player.ChemicalManager.GetBattleChemical(name);
                 switch (chemical.BattleMove)
                 {
                     case "Combustion":
@@ -626,7 +627,7 @@ namespace YoutubeRPG
 
                 }
                 //Clear BattleMove at the end of the turn
-                playerChemicals.GetBattleChemical(name).BattleMove = String.Empty;
+                player.ChemicalManager.GetBattleChemical(name).BattleMove = String.Empty;
                 turnCount++;
                 totalOxygen = currentOxygen = turnCount * 2;
             }
@@ -638,19 +639,19 @@ namespace YoutubeRPG
         {
             menu.Alignment.X = 340;
             menu.Items.Clear();
-            foreach (string battleChemicalName in playerChemicals.battleChemicalName)
+            foreach (string battleChemicalName in player.ChemicalManager.battleChemicalName)
             {
-                Chemical chemical = playerChemicals.GetBattleChemical(battleChemicalName);
+                Chemical chemical = player.ChemicalManager.GetBattleChemical(battleChemicalName);
                 //if current move for battleChemical is not set...
                 if (chemical.BattleMove == String.Empty)
                 {
                     MenuItem item = new MenuItem();
                     item.Image = new Image();
                     item.Image.Text = battleChemicalName.ToUpper();
-                    string s = (playerChemicals.GetChemical(battleChemicalName).State).ToString().ToLower();
+                    string s = (player.ChemicalManager.GetChemical(battleChemicalName).State).ToString().ToLower();
                     item.Image.Text += "(" + s.Substring(0, 1) + ")";
 
-                    string h = (playerChemicals.GetChemical(battleChemicalName).CurrentHealth).ToString() + "/" + (playerChemicals.GetChemical(battleChemicalName).Health).ToString();
+                    string h = (player.ChemicalManager.GetChemical(battleChemicalName).CurrentHealth).ToString() + "/" + (player.ChemicalManager.GetChemical(battleChemicalName).Health).ToString();
 
                     if (font != null)
                     {
@@ -971,6 +972,27 @@ namespace YoutubeRPG
         }
         #endregion
 
+        #region Initializations
+        void initializeParties()
+        {
+            XmlManager<Player> playerLoader = new XmlManager<Player>();
+            player = playerLoader.Load("Content/Load/Gameplay/Player.xml");
+            player.LoadContent();
+            player.Image.Position = new Vector2(128, 360);
+            player.Image.SpriteSheetEffect.CurrentFrame.Y = 7;
+            player.Image.SpriteSheetEffect.SwitchFrame = 500;
+            player.Image.IsActive = true;
+            player.InitializeBattle();
+
+            XmlManager<Character> characterLoader = new XmlManager<Character>();
+            enemy = characterLoader.Load("Content/Load/Gameplay/Markovnikov.xml");
+            enemy.LoadContent("Content/Load/Gameplay/Battle/Markovnikov.xml");
+            enemy.Image.Position = new Vector2(1064, 175);
+            enemy.Image.SpriteSheetEffect.CurrentFrame.Y = 1;
+            enemy.Image.IsActive = true;
+            enemy.InitializeBattle();
+        }
+        #endregion
         #region Input Methods
         public void SelectLeft(eButtonState buttonState)
         {
@@ -1069,8 +1091,8 @@ namespace YoutubeRPG
 
                             if (menu.Type == "Move")
                             {
-                                playerChemicals.GetBattleChemical(selectedItem).BattleMove = str;
-                                //playerChemicals.GetBattleChemical(selectedItem).RecordMove(str);
+                                player.ChemicalManager.GetBattleChemical(selectedItem).BattleMove = str;
+                                //player.ChemicalManager.GetBattleChemical(selectedItem).RecordMove(str);
                                 selectedChemical = selectedItem;
                             }
                             selectedItem = str[0].ToString().ToUpper() + str.Substring(1);
