@@ -22,6 +22,7 @@ namespace YoutubeRPG
         Dictionary<string, Chemical> battleChemicals;
         public List<string> battleChemicalName;
         public List<string> tempChemicalName;
+        List<Chemical> clone;
         Image tag;
         Image shadow;
         int maxVisibleChemicals;
@@ -39,6 +40,7 @@ namespace YoutubeRPG
             tempChemicalName = new List<string>();
             tag = new Image();
             shadow = new Image();
+            clone = new List<Chemical>();
         }
         #region Temp Chemical Methods
         public void RemoveRandomTempChemical()
@@ -218,6 +220,7 @@ namespace YoutubeRPG
                         dead = name;
                 if (dead != String.Empty)
                 {
+                    clone.Add(battleChemicals[dead]);
                     battleChemicals.Remove(dead);
                     battleChemicalName.Remove(dead);
                     chemicalName.Remove(dead);
@@ -228,6 +231,19 @@ namespace YoutubeRPG
             for (int i = 0; i < deadTemp.Count; i++)
                 tempChemicalName.Remove(deadTemp[i]);
             deadTemp.Clear();
+            // manage chemical clones
+            int deadIndex = -1;
+            for (int i = 0; i < clone.Count;i++)
+            {
+                clone[i].LeaveBattleScreen(gameTime, isPlayer);
+                if (clone[i].Image.Position.X > 1280 || clone[i].Image.Position.X < -128)
+                    deadIndex = i;
+            }
+            if (deadIndex > -1)
+            {
+                clone[deadIndex].UnloadContent();
+                clone.RemoveAt(deadIndex);
+            }
             // add any chemicals tagged Inbattle to battle chemicals
             foreach (string name in chemicalName) 
             {
@@ -287,6 +303,8 @@ namespace YoutubeRPG
                 shadow.Draw(spriteBatch);
                 battleChemicals[battleChemicalName[i]].Draw(spriteBatch);
             }
+            foreach (Chemical c in clone)
+                c.Draw(spriteBatch);
         }
         public void DrawVerticalTag(SpriteBatch spriteBatch)
         {
