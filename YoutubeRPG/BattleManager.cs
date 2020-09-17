@@ -347,10 +347,14 @@ namespace YoutubeRPG
             //infoImage
             infoImageClear();
             Image i = new Image();
+            //i.Text = player.ChemicalManager.RemoveRandomTempChemical() + " leaves the battle!";
             i.FontName = "Fonts/OCRAsmall";
             i.TextColor = Color.SaddleBrown;
             Chemical chemical = player.ChemicalManager.GetBattleChemical(selectedChemical);
             string s = String.Empty;
+
+            //trigger chemical leaves battle
+            player.ChemicalManager.RemoveRandomTempChemical();
 
             //Manage enemyTurn
             //enemyTurn();
@@ -381,8 +385,11 @@ namespace YoutubeRPG
                 player.ChemicalManager.GetBattleChemical(name).BattleMove = String.Empty;
             }
             turnCount++;
-            totalOxygen = turnCount * 2;
-            currentOxygen = turnCount * 2;
+            if (totalOxygen < 18)
+            {
+                totalOxygen = turnCount * 2;
+                currentOxygen = turnCount * 2;
+            }
         }
         #endregion
 
@@ -545,13 +552,8 @@ namespace YoutubeRPG
                                 exitMultiStep(ref isMultiStepMove);
                             else
                             {
-                                tempChemicalName = chemical.Name.Replace("ene", "ane");
-                                if (tempChemicalName.Contains("*"))
-                                {
-                                    string[] tempStr = tempChemicalName.Split('*');
-                                    tempChemicalName = tempStr[0];
-                                }
-                                tempChemical = player.ChemicalManager.LoadTempChemical(tempChemicalName, "Alkane");
+                                tempChemicalName = getTempName(chemical.Name, "ene", "ane");
+                                //player.ChemicalManager.LoadTempChemical(tempChemicalName, "Alkane");
                                 infoImage = scrollingDescription(tempChemicalName + " joins the battle!");
                             }
                             break;
@@ -560,13 +562,8 @@ namespace YoutubeRPG
                                 exitMultiStep(ref isMultiStepMove);
                             else
                             {
-                                tempChemicalName = chemical.Name.Replace("anol", "anal");
-                                if (tempChemicalName.Contains("*"))
-                                {
-                                    string[] tempStr = tempChemicalName.Split('*');
-                                    tempChemicalName = tempStr[0];
-                                }
-                                tempChemical = player.ChemicalManager.LoadTempChemical(tempChemicalName, "Aldehyde");
+                                tempChemicalName = getTempName(chemical.Name, "anol", "anal");
+                                //player.ChemicalManager.LoadTempChemical(tempChemicalName, "Aldehyde");
                                 infoImage = scrollingDescription(tempChemicalName + " joins the battle!");
                             }
                             break;
@@ -577,7 +574,8 @@ namespace YoutubeRPG
                             {
                                 tempChemicalName = chemical.Name.Replace("Bromo", String.Empty);
                                 tempChemicalName = getTempName(tempChemicalName, "ane", "anol");
-                                //tempChemical = player.ChemicalManager.LoadTempChemical(tempChemicalName, "Alcohol");
+                                tempChemicalName = tempChemicalName[0].ToString().ToUpper() + tempChemicalName.Substring(1);
+                                player.ChemicalManager.LoadTempChemical(tempChemicalName, "Alcohol");
                                 infoImage = scrollingDescription(tempChemicalName + " joins the battle!");
                             }
                             break;
@@ -618,6 +616,7 @@ namespace YoutubeRPG
         {
             menu.Alignment.X = 340;
             menu.Items.Clear();
+            List<string> graveyard = new List<string>();
             foreach (string battleChemicalName in player.ChemicalManager.battleChemicalName)
             {
                 Chemical chemical = player.ChemicalManager.GetBattleChemical(battleChemicalName);
@@ -1146,7 +1145,7 @@ namespace YoutubeRPG
         void exitMultiStep(ref bool bMultiStep)
         {
             bMultiStep = false;
-            player.ChemicalManager.GetBattleChemical(selectedItem).BattleTag = String.Empty;
+            player.ChemicalManager.GetBattleChemical(selectedItem).BattleMove = String.Empty;
             player.ChemicalManager.GetBattleChemical(selectedItem).RecordMove(String.Empty);
         }
         void spxImageFade()

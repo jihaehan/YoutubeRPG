@@ -21,6 +21,7 @@ namespace YoutubeRPG
 
         Dictionary<string, Chemical> battleChemicals;
         public List<string> battleChemicalName;
+        public List<string> tempChemicalName;
         Image tag;
         Image shadow;
         int maxVisibleChemicals;
@@ -35,63 +36,56 @@ namespace YoutubeRPG
             maxVisibleChemicals = 3;
             battleChemicals = new Dictionary<string, Chemical>();
             battleChemicalName = new List<string>();
+            tempChemicalName = new List<string>();
             tag = new Image();
             shadow = new Image();
         }
-
-        public Chemical CurrentChemical
+        #region Temp Chemical Methods
+        public void RemoveRandomTempChemical()
         {
-            get { return chemicals[CurrentChemicalName]; }
-        }
-        public string RemoveRandomTempChemical()
-        {
-            string tempChemicalName = String.Empty;
-            List<string> tempChemicalList = new List<string>();
-            foreach (string name in battleChemicalName)
+            if (tempChemicalName.Count > 0)
             {
-                if (name.Contains("TEMP"))
-                    tempChemicalList.Add(name);
+                Random rnd = new Random();
+                int randomIndex = rnd.Next(0, tempChemicalName.Count);
+                string removeTemp = tempChemicalName[randomIndex];
+                battleChemicals[removeTemp].IsDead = true;
+                battleChemicals[removeTemp].IsTempLeave = true;
             }
-            Random rnd = new Random();
-            int randomIndex = rnd.Next(0, tempChemicalList.Count);
-            battleChemicals[tempChemicalList[randomIndex]].UnloadContent();
-            battleChemicals.Remove(tempChemicalList[randomIndex]);
-            battleChemicalName.Remove(tempChemicalList[randomIndex]);
-            return tempChemicalName;
         }
         public void UnloadTempChemicals()
         {
-            List<string> tempChemicalList = new List<string>();
-            foreach (string name in battleChemicalName)
+            foreach (string name in tempChemicalName)
             {
-                if (name.Contains("TEMP"))
-                    tempChemicalList.Add(name);
+                chemicals[name].UnloadContent();
+                chemicalName.Remove(name);
+                chemicals.Remove(name);
             }
-            foreach (string name in tempChemicalList)
-            {
-                battleChemicals[name].UnloadContent();
-                battleChemicalName.Remove(name);
-                battleChemicals.Remove(name);
-            }
+            tempChemicalName.Clear();
         }
+        public void LoadTempChemical(string name, string series)
+        {
+            string xmlPath = "Content/Load/Chemical/" + series + "/" + name + ".xml";
+            XmlManager<Chemical> chemicalLoader = new XmlManager<Chemical>();
+            Chemical chemical = chemicalLoader.Load(xmlPath);
+            chemical.IsTemp = true;
+            chemical.InBattle = true;
+            while (chemicals.ContainsKey(name))
+                name += "*";
+            chemical.LoadContent();
+            chemicalName.Add(name);
+            chemicals.Add(name, chemical);
+            tempChemicalName.Add(name);
+        }
+        #endregion
         public void LoadIsomer(string chemicalName, int branches)
         {
             battleChemicals[chemicalName].IsomerTransition(branches);
         }
-        public Chemical LoadTempChemical(string chemicalName, string series)
+        public Chemical CurrentChemical
         {
-            string xmlPath = "Content/Load/Chemical/" + series + "/" + chemicalName + ".xml";
-            XmlManager<Chemical> chemicalLoader = new XmlManager<Chemical>();
-            Chemical chemical = chemicalLoader.Load(xmlPath);
-            string s = chemicalName + "TEMP";
-            chemical.NickName = "TEMP";
-            while (battleChemicals.ContainsKey(s))
-                s += "*";
-            battleChemicalName.Add(s);
-            chemical.LoadContent();
-            battleChemicals.Add(s, chemical);
-            return battleChemicals[s];
+            get { return chemicals[CurrentChemicalName]; }
         }
+
         public void LoadContent()
         {
             XmlManager<Chemical> chemicalLoader = new XmlManager<Chemical>();
@@ -214,6 +208,26 @@ namespace YoutubeRPG
                 targetPosition -= new Vector2(155, -9);
                 increment *= -1;
             }
+            // Remove Temporary Chemicals
+            List<string> deadTemp = new List<string>();
+            foreach (string name in tempChemicalName)
+            {
+                string dead = String.Empty;
+                if (battleChemicalName.Contains(name))
+                    if (battleChemicals[name].IsDead)
+                        dead = name;
+                if (dead != String.Empty)
+                {
+                    battleChemicals.Remove(dead);
+                    battleChemicalName.Remove(dead);
+                    chemicalName.Remove(dead);
+                    chemicals.Remove(dead);
+                    deadTemp.Add(dead);
+                }
+            }
+            for (int i = 0; i < deadTemp.Count; i++)
+                tempChemicalName.Remove(deadTemp[i]);
+            deadTemp.Clear();
             // add any chemicals tagged Inbattle to battle chemicals
             foreach (string name in chemicalName) 
             {
@@ -250,7 +264,19 @@ namespace YoutubeRPG
                 r.X = (int)battleChemicals[name].Image.Position.X + 64;
                 r.Y = 0;
                 battleChemicals[name].TagRectangle = r;
+
+                if (battleChemicals[name].Health <= 0 || battleChemicals[name].IsDead)
+                    deadTemp.Add(name);
             }
+            //remove dead battle Chemicals
+            for (int i = 0; i < deadTemp.Count; i++)
+            {
+                battleChemicals[deadTemp[i]].UnloadContent();
+                battleChemicals.Remove(deadTemp[i]);
+                battleChemicalName.Remove(deadTemp[i]);
+            }
+            deadTemp.Clear();
+
         }
         public void BattleDraw(SpriteBatch spriteBatch)
         {

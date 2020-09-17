@@ -47,7 +47,10 @@ namespace YoutubeRPG
 
         public bool Solubility;     //Environmental Factor
         public bool InBattle;       //Determines whether on the battlegrounds
+        public bool IsTemp;         //Is this a temporary chemical?
+        public bool IsTempLeave;    //animation for leaving temporary chemical
         public bool TurnTaken;      //did the chemical take a turn?
+        public bool IsDead;         //is the player chemical dead?
         public Rectangle TagRectangle;
 
         Dictionary<Element, int> Elements;
@@ -143,6 +146,9 @@ namespace YoutubeRPG
             Solubility = false;
             InBattle = false;
             TurnTaken = false;
+            IsTemp = false;
+            IsTempLeave = false;
+            IsDead = false;
             Elements = new Dictionary<Element, int>();
             Products = new Dictionary<string, int>();
             Reactants = new Dictionary<string, float>();
@@ -688,6 +694,13 @@ namespace YoutubeRPG
             if (Products.ContainsKey("water"))
                 Products["water"] += Level;
             else Products.Add("water", Level);
+        }
+        public void LeaveBattleScreen(GameTime gameTime, bool isPlayer)
+        {
+            if (isPlayer && Image.Position.X < 1280)
+                Image.Position.X += 300 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            else if (!isPlayer && Image.Position.X > Image.SourceRect.Width)
+                Image.Position.X -= 300 * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
         #endregion
     }
