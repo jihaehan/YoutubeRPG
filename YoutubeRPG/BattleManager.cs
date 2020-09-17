@@ -108,7 +108,7 @@ namespace YoutubeRPG
                 item.Image.StoreEffects();
                 item.Image.ActivateEffect("FadeEffect");
             }
-            if (!currentMenuID.Contains("Description") && !currentMenuID.Contains("/Move"))
+            if (menu.Type != "Description" && !currentMenuID.Contains("/Move"))
             {
                 infoImageClear();
             }
@@ -342,20 +342,22 @@ namespace YoutubeRPG
         }
         void battlingMenu()
         {
-            isDescription = true;
-
             //infoImage
             infoImageClear();
             Image i = new Image();
             //i.Text = player.ChemicalManager.RemoveRandomTempChemical() + " leaves the battle!";
             i.FontName = "Fonts/OCRAsmall";
             i.TextColor = Color.SaddleBrown;
+            i.Position = new Vector2(340f, 580.5f);
             Chemical chemical = player.ChemicalManager.GetBattleChemical(selectedChemical);
             string s = String.Empty;
 
-            //trigger chemical leaves battle
-            player.ChemicalManager.RemoveRandomTempChemical();
-
+            //trigger Temporary Chemical to leave battle
+            s = player.ChemicalManager.RemoveRandomTempChemical();
+            if (s != String.Empty)
+                infoImage = scrollingDescription(s + " leaves the battle! [row] Thanks for the help!");
+            foreach (Image image in infoImage)
+                image.LoadContent();
             //Manage enemyTurn
             //enemyTurn();
             //display enemy actions in infoImage
@@ -401,6 +403,7 @@ namespace YoutubeRPG
             menu.Items.Clear();
             MenuItem item = new MenuItem();
             item.Image = new Image();
+            item.Image.Position = new Vector2(-5, -5);
             item.Image.Text = "."; 
             item.LinkType = "Move";
 
@@ -616,7 +619,6 @@ namespace YoutubeRPG
         {
             menu.Alignment.X = 340;
             menu.Items.Clear();
-            List<string> graveyard = new List<string>();
             foreach (string battleChemicalName in player.ChemicalManager.battleChemicalName)
             {
                 Chemical chemical = player.ChemicalManager.GetBattleChemical(battleChemicalName);

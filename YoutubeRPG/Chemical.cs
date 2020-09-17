@@ -48,12 +48,12 @@ namespace YoutubeRPG
         public bool Solubility;     //Environmental Factor
         public bool InBattle;       //Determines whether on the battlegrounds
         public bool IsTemp;         //Is this a temporary chemical?
-        public bool IsTempLeave;    //animation for leaving temporary chemical
+        public int TempCount;       //Chance that temporary chemical will leave
         public bool TurnTaken;      //did the chemical take a turn?
         public bool IsDead;         //is the player chemical dead?
-        public Rectangle TagRectangle;
+        public Rectangle TagRectangle; 
 
-        Dictionary<Element, int> Elements;
+        Dictionary<Element, int> Elements;  
         Dictionary<string, int> Products;   //products from a reaction
         Dictionary<string, float> Reactants;
         List<float> FormationEnthalpy;
@@ -138,6 +138,7 @@ namespace YoutubeRPG
             Experience = 0;
             Reactivity = 0;
             Isomers = 0;
+            TempCount = 0;
             isomerPath = String.Empty;
             State = State.Gas;
             Series = Series.Alkane;
@@ -147,7 +148,6 @@ namespace YoutubeRPG
             InBattle = false;
             TurnTaken = false;
             IsTemp = false;
-            IsTempLeave = false;
             IsDead = false;
             Elements = new Dictionary<Element, int>();
             Products = new Dictionary<string, int>();

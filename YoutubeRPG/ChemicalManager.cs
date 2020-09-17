@@ -26,6 +26,7 @@ namespace YoutubeRPG
         Image tag;
         Image shadow;
         int maxVisibleChemicals;
+        int[] percentage = { 3, 10 }; //percentage chance for Temporary Chemical to stay
 
 
         public ChemicalManager()
@@ -41,18 +42,22 @@ namespace YoutubeRPG
             tag = new Image();
             shadow = new Image();
             clone = new List<Chemical>();
+             
         }
         #region Temp Chemical Methods
-        public void RemoveRandomTempChemical()
+        public string RemoveRandomTempChemical()
         {
-            if (tempChemicalName.Count > 0)
+            Random rnd = new Random();
+            int r = rnd.Next(0, percentage[1]);
+            if (tempChemicalName.Count > 0 && r > percentage[0]) //30% chance of staying
             {
-                Random rnd = new Random();
                 int randomIndex = rnd.Next(0, tempChemicalName.Count);
                 string removeTemp = tempChemicalName[randomIndex];
                 battleChemicals[removeTemp].IsDead = true;
-                battleChemicals[removeTemp].IsTempLeave = true;
+                return removeTemp;
             }
+            else
+                return String.Empty;
         }
         public void UnloadTempChemicals()
         {
@@ -128,7 +133,7 @@ namespace YoutubeRPG
         public void Update(GameTime gameTime, Player player)
         {
             Chemical chemical = new Chemical();
-            for (int count = 0; count < maxVisibleChemicals/*chemicalName.Count*/; count++)
+            for (int count = 0; count < Math.Min(maxVisibleChemicals, chemicals.Count); count++)
             {
                 if (count > 0)
                 {
@@ -151,7 +156,7 @@ namespace YoutubeRPG
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            for (int count = 0; count < maxVisibleChemicals; count++)
+            for (int count = 0; count < Math.Min(maxVisibleChemicals, chemicals.Count); count++)
             {
                 chemicals[chemicalName[count]].Draw(spriteBatch);
             }
