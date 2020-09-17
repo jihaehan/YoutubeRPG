@@ -520,7 +520,7 @@ namespace YoutubeRPG
                 if (!isMultiStepMove && chemical.GetMoveHistory(1, str))
                 {
                     isMultiStepMove = true;
-                    player.ChemicalManager.GetBattleChemical(selectedItem).BattleTag = str;
+                    player.ChemicalManager.GetBattleChemical(selectedItem).BattleMove = str;
                     player.ChemicalManager.GetBattleChemical(selectedItem).RecordMove(str);
                     infoImageClear();
                     switch (str)
@@ -576,12 +576,7 @@ namespace YoutubeRPG
                             else
                             {
                                 tempChemicalName = chemical.Name.Replace("Bromo", String.Empty);
-                                tempChemicalName = tempChemicalName.Replace("ane", "anol");
-                                if (tempChemicalName.Contains("*"))
-                                {
-                                    string[] tempStr = tempChemicalName.Split('*');
-                                    tempChemicalName = tempStr[0];
-                                }
+                                tempChemicalName = getTempName(tempChemicalName, "ane", "anol");
                                 //tempChemical = player.ChemicalManager.LoadTempChemical(tempChemicalName, "Alcohol");
                                 infoImage = scrollingDescription(tempChemicalName + " joins the battle!");
                             }
@@ -1138,6 +1133,16 @@ namespace YoutubeRPG
         #endregion
 
         #region Shortcuts
+        string getTempName(string tempName, string delete, string replace)
+        {
+            tempName = tempName.Replace(delete, replace);
+            if (tempName.Contains("*"))
+            {
+                string[] tempStr = tempName.Split('*');
+                tempName = tempStr[0];
+            }
+            return tempName;
+        }
         void exitMultiStep(ref bool bMultiStep)
         {
             bMultiStep = false;
