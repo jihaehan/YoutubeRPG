@@ -246,14 +246,14 @@ namespace YoutubeRPG
             {
                 if (itemManager.Items[j].Name == reactant && !found)
                 {
-                    infoImage = scrollingDescription(infoText);
+                    infoImage = scrollingDescription(infoText, Color.Black);
                     found = true;
                     itemManager.Items.RemoveAt(j);
                 }
             }
             if (!found)
             {
-                infoImage = scrollingDescription(selectedChemical + " does not have " + reactant);
+                infoImage = scrollingDescription(selectedChemical + " does not have " + reactant, Color.Black);
                 player.ChemicalManager.GetBattleChemical(selectedChemical).BattleMove = String.Empty;
             }
         }
@@ -371,7 +371,7 @@ namespace YoutubeRPG
             //trigger Temporary Chemical to leave battle
             s = player.ChemicalManager.RemoveRandomTempChemical();
             if (s != String.Empty)
-                infoImage = scrollingDescription(s + " leaves the battle! [row] Thanks for the help!");
+                infoImage = scrollingDescription(s + " leaves the battle! [row] Thanks for the help!", Color.Black);
             foreach (Image image in infoImage)
                 image.LoadContent();
 
@@ -407,8 +407,6 @@ namespace YoutubeRPG
             Chemical chemical = enemy.ChemicalManager.GetBattleChemical(name);
             generateMoveList(chemical);
             enemy.ChemicalManager.GetBattleChemical(name).BattleMove = pickMove(chemical);
-            //enemy.ChemicalManager.GetBattleChemical(name).TurnTaken = true;
-
             return enemy.ChemicalManager.GetBattleChemical(name).BattleMove;
         }
         public void EndTurn()
@@ -435,8 +433,10 @@ namespace YoutubeRPG
             i.FontName = "Fonts/OCRAsmall";
             i.TextColor = Color.SaddleBrown;
             i.Position = new Vector2(340f, 580.5f);
-            i.Text = selectedEnemy;
-            infoImage.Add(i);
+            string s = selectedEnemy + " triggers " + enemyMoveName(selectedEnemy);
+            //i.Text = scrollingDescription(s);
+            //infoImage.Add(i);
+            infoImage = scrollingDescription(s, Color.SaddleBrown);
             foreach (Image image in infoImage)
                 image.LoadContent();
 
@@ -535,7 +535,7 @@ namespace YoutubeRPG
             {
                 case "Formation":
                     s = selectedChemical + " releases an Enthalpy of Formation of " + chemical.BaseDamage.ToString() + " kJ/mol";
-                    infoImage = scrollingDescription(s);
+                    infoImage = scrollingDescription(s, Color.Black);
                     //Add special effects here!
                     break;
                 case "Combustion":
@@ -545,7 +545,7 @@ namespace YoutubeRPG
                     {
                         string CO2 = "carbondioxide";
                         s = chemical.ChemicalFormula + "(" + chemical.State.ToString().ToLower()[0] + ")" + " + " + chemical.CalculateOxygen(CO2) + "O2(g) = " + chemical.GetProduct(CO2).ToString() + "CO2(g) + " + chemical.GetProduct("water").ToString() + "H2O(l)";
-                        infoImage = scrollingDescription(s);
+                        infoImage = scrollingDescription(s, Color.Black);
                         i.Text = "\n\rCOMP COMBUST: ";
                         i.Text += chemical.Damage.ToString() + "kJ/mol";
                         i.Position = infoImage[infoImage.Count - 1].Position + new Vector2(0, 10f);
@@ -557,7 +557,7 @@ namespace YoutubeRPG
                     {
                         string CO = "carbonmonoxide";
                         s = chemical.ChemicalFormula + "(" + chemical.State.ToString().ToLower()[0] + ")" + " + " + chemical.CalculateOxygen(CO) + "O2(g) = " + chemical.GetProduct(CO).ToString() + "CO(g) + " + chemical.GetProduct("water").ToString() + "H2O(l)";
-                        infoImage = scrollingDescription(s);
+                        infoImage = scrollingDescription(s, Color.Black);
                         i.Text = "\n\rINCOMP COMB: ";
                         i.Text += chemical.Damage.ToString() + "kJ/mol";
                         i.Position = infoImage[infoImage.Count - 1].Position + new Vector2(0, 10f);
@@ -569,7 +569,7 @@ namespace YoutubeRPG
                     {
                         string C = "carbon";
                         s = chemical.ChemicalFormula + "(" + chemical.State.ToString().ToLower()[0] + ")" + " + " + chemical.CalculateOxygen(C) + "O2(g) = " + chemical.GetProduct(C).ToString() + "C(s) + " + chemical.GetProduct("water").ToString() + "H2O(l)";
-                        infoImage = scrollingDescription(s);
+                        infoImage = scrollingDescription(s, Color.Black);
                         i.Text = "\n\rINCOMP COMB: ";
                         i.Text += chemical.Damage.ToString() + "kJ/mol";
                         i.Position = infoImage[infoImage.Count - 1].Position + new Vector2(0, 10f);
@@ -578,17 +578,17 @@ namespace YoutubeRPG
                         //add damage
                     }
                     else
-                        infoImage = scrollingDescription("Insufficient O2 for Combustion.");
+                        infoImage = scrollingDescription("Insufficient O2 for Combustion.", Color.Black);
                     break;
                 case "Branching":
                     int isomerState = Math.Min(chemical.Isomers, chemical.CheckMoveCount("Branching")+1);
                     if (chemical.CheckMoveCount("Branching") + 1> chemical.Isomers)
                     {
-                        infoImage = scrollingDescription(chemical.Name + " has no structural isomers with further branching.");
+                        infoImage = scrollingDescription(chemical.Name + " has no structural isomers with further branching.", Color.Black);
                     }
                     else
                     {
-                        infoImage = scrollingDescription(chemical.Name + " isomer: " + isomerState.ToString() + " branch. [row] Boiling pt decr as London Dispersion Forces decr.");
+                        infoImage = scrollingDescription(chemical.Name + " isomer: " + isomerState.ToString() + " branch. [row] Boiling pt decr as London Dispersion Forces decr.", Color.Black);
                         player.ChemicalManager.LoadIsomer(chemical.Name, isomerState);
                     }
                     //increase defense rating of chemical
@@ -611,7 +611,7 @@ namespace YoutubeRPG
                     break;
                 case "Extinguisher":
                     s = "Bromomethane interrupts chain reactions propogating combustion! All fires are extinguished.";
-                    infoImage = scrollingDescription(s);
+                    infoImage = scrollingDescription(s, Color.Black);
                     environmentEffects.Add("Extinguisher");
                     spxClear();
                     spxImage.Add(new SPX(spxManager.EnvironmentXml("Extinguisher")));
@@ -649,13 +649,13 @@ namespace YoutubeRPG
                             else if (chemical.GetMoveHistory(3, str))
                             {
                                 string intermediate = chemical.ChemicalFormula.Substring(0, chemical.ChemicalFormula.Length - 1) + (chemical.GetElement(Element.H) - 1).ToString();
-                                infoImage = scrollingDescription("Termination: [row] Br* + Br* -> Br2 [row] Br* + *" + intermediate + " -> " + intermediate + "Br");
+                                infoImage = scrollingDescription("Termination: [row] Br* + Br* -> Br2 [row] Br* + *" + intermediate + " -> " + intermediate + "Br", Color.Black);
                                 //add SPX and apply move effect here
                                 //Add TEMP chemical here`
                             }
                             else
                             {
-                                infoImage = scrollingDescription("Propagation: [row] Br* " + chemical.ChemicalFormula + " -> HBr + *" + chemical.ChemicalFormula.Substring(0, chemical.ChemicalFormula.Length - 1) + (chemical.GetElement(Element.H) - 1).ToString());
+                                infoImage = scrollingDescription("Propagation: [row] Br* " + chemical.ChemicalFormula + " -> HBr + *" + chemical.ChemicalFormula.Substring(0, chemical.ChemicalFormula.Length - 1) + (chemical.GetElement(Element.H) - 1).ToString(), Color.Black);
                             }
                             break;
                         case "Addition Polymeriz":
@@ -665,7 +665,7 @@ namespace YoutubeRPG
                             {
                                 tempChemicalName = getTempName(chemical.Name, "ene", "ane");
                                 //player.ChemicalManager.LoadTempChemical(tempChemicalName, "Alkane");
-                                infoImage = scrollingDescription(tempChemicalName + " joins the battle!");
+                                infoImage = scrollingDescription(tempChemicalName + " joins the battle!", Color.Black);
                             }
                             break;
                         case "Oxidation":
@@ -675,7 +675,7 @@ namespace YoutubeRPG
                             {
                                 tempChemicalName = getTempName(chemical.Name, "anol", "anal");
                                 //player.ChemicalManager.LoadTempChemical(tempChemicalName, "Aldehyde");
-                                infoImage = scrollingDescription(tempChemicalName + " joins the battle!");
+                                infoImage = scrollingDescription(tempChemicalName + " joins the battle!", Color.Black);
                             }
                             break;
                         case "SN2 Nucleophil Sub":
@@ -687,7 +687,7 @@ namespace YoutubeRPG
                                 tempChemicalName = getTempName(tempChemicalName, "ane", "anol");
                                 tempChemicalName = tempChemicalName[0].ToString().ToUpper() + tempChemicalName.Substring(1);
                                 player.ChemicalManager.LoadTempChemical(tempChemicalName, "Alcohol");
-                                infoImage = scrollingDescription(tempChemicalName + " joins the battle!");
+                                infoImage = scrollingDescription(tempChemicalName + " joins the battle!", Color.Black);
                             }
                             break;
                     }
@@ -984,13 +984,13 @@ namespace YoutubeRPG
                 O2Filled.Position.X += 44;
             }
         }
-        List<Image> scrollingDescription(string description)
+        List<Image> scrollingDescription(string description, Color textColor)
         {
             List<Image> imageList = new List<Image>();
             Image i = new Image();
             Vector2 dimensions = new Vector2(340f, 580.5f);
             i.FontName = "Fonts/OCRAsmall";
-            i.TextColor = Color.Black;
+            i.TextColor = textColor;
             i.Position = dimensions;
             string[] parts = description.Split(' ');
             string text = String.Empty;
@@ -1012,7 +1012,7 @@ namespace YoutubeRPG
                     }
                     count++;
                     i.FontName = "Fonts/OCRAsmall";
-                    i.TextColor = Color.Black;
+                    i.TextColor = textColor;
                     i.Position = dimensions;
                     text = String.Empty;
                 }
@@ -1025,7 +1025,7 @@ namespace YoutubeRPG
                         i = new Image();
                         i.Text = text;
                         i.FontName = "Fonts/OCRAsmall";
-                        i.TextColor = Color.Black;
+                        i.TextColor = textColor;
                         i.Position = dimensions;
                         imageList.Add(i);
                     }
@@ -1043,7 +1043,7 @@ namespace YoutubeRPG
                     }
                     count++;
                     i.Position = dimensions;
-                    i.TextColor = Color.Black;
+                    i.TextColor = textColor;
                     i.FontName = "Fonts/OCRAsmall";
 
                     text = s + " ";
@@ -1054,7 +1054,7 @@ namespace YoutubeRPG
                         i = new Image();
                         i.Text = text;
                         i.FontName = "Fonts/OCRAsmall";
-                        i.TextColor = Color.Black;
+                        i.TextColor = textColor;
                         i.Position = dimensions;
                         imageList.Add(i);
                     }
