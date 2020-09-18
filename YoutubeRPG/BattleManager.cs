@@ -429,22 +429,88 @@ namespace YoutubeRPG
         void enemyMenu()
         {
             infoImageClear();
-            Image i = new Image();
-            i.FontName = "Fonts/OCRAsmall";
-            i.TextColor = Color.SaddleBrown;
-            i.Position = new Vector2(340f, 580.5f);
+            Chemical chemical = enemy.ChemicalManager.GetBattleChemical(selectedEnemy);
             string s = selectedEnemy + " triggers " + enemyMoveName(selectedEnemy);
-            //i.Text = scrollingDescription(s);
-            //infoImage.Add(i);
-            infoImage = scrollingDescription(s, Color.SaddleBrown);
-            foreach (Image image in infoImage)
-                image.LoadContent();
-
             //use selectedEnemy here for chemicalName
             //use enemy Turn here to decide what move is triggered
             //trigger special effects accordingly
             //trigger status effects accordingly
-            //end turn
+            string move = enemyMoveName(selectedEnemy);
+            switch (move)
+            {
+                case "Formation":
+                    s = selectedEnemy + " releases an Enthalpy of Formation of " + chemical.BaseDamage.ToString() + " kJ/mol";
+                    infoImage = scrollingDescription(s, Color.SaddleBrown);
+                    break;
+                //Add special effects here!
+                case "Combustion":
+                    chemical.SetOxygen(totalOxygen);
+                    chemical.Combustion();
+                    if (chemical.GetProduct("carbondioxide") > 0)
+                    {
+                        s = selectedEnemy + " reacts with Oxygen to produce Carbondioxide and Water! [row] Releases Enthalpy of Combustion of " + chemical.Damage.ToString() + "kJ/mol";
+                        infoImage = scrollingDescription(s, Color.SaddleBrown);
+                        spxCombustion("CO2", chemical.Level);
+                        //add damage
+                    }
+                    else if (chemical.GetProduct("carbonmonoxide") > 0)
+                    {
+                        s = selectedEnemy + " reacts with Oxygen to produce Carbonmonoxide and Water! [row] Incomplete Combustion releases " + chemical.Damage.ToString() + "kJ/mol";
+                        infoImage = scrollingDescription(s, Color.SaddleBrown);
+                        spxCombustion("CO", chemical.Level);
+                        //add damage
+                    }
+                    else if (chemical.GetProduct("carbon") > 0)
+                    {
+                        s = selectedEnemy + " reacts with Oxygen to produce Soot and Water! [row] Incomplete Combustion releases " + chemical.Damage.ToString() + "kJ/mol";
+                        infoImage = scrollingDescription(s, Color.SaddleBrown);
+                        spxCombustion("C", chemical.Level);
+                        //add damage
+                    }
+                    else
+                        infoImage = scrollingDescription(selectedEnemy + " tries to combust! But insufficient Oxygen.", Color.SaddleBrown);
+                    break;
+                case "Branching":
+                    int isomerState = Math.Min(chemical.Isomers, chemical.CheckMoveCount("Branching") + 1);
+                    if (chemical.CheckMoveCount("Branching") + 1 > chemical.Isomers)
+                        infoImage = scrollingDescription(selectedEnemy + " attempts to branch but fails!", Color.SaddleBrown);
+                    else
+                    {
+                        infoImage = scrollingDescription(selectedEnemy + " conforms into a branched isomer: " + isomerState.ToString() + " branch.", Color.SaddleBrown);
+                        enemy.ChemicalManager.LoadIsomer(chemical.Name, isomerState);
+                    }
+                    //increase defense rating of chemical
+                    break;
+                case "Free Radical Sub":
+                    s = selectedEnemy + " begins Free Radical Substitution. [row] Initiation: [row] Br2-> 2Cl * ";
+                    infoImage = scrollingDescription(s, Color.SaddleBrown);
+                    break;
+                case "Addition Polymeriz":
+                    s = selectedEnemy + " begins Addition Polymerisation. [row] Reacts with Nickel Catalyst and HEAT!";
+                    infoImage = scrollingDescription(s, Color.SaddleBrown);
+                    break;
+                case "Oxidation": //alcohol to alkanal
+                    //FIX later on...
+                    s = selectedEnemy + " begins Oxidation. [row]";
+                    infoImage = scrollingDescription(s, Color.SaddleBrown);
+                    break;
+                case "SN2 Nucleophil Sub":
+                    s = selectedEnemy + " begins SN2 Nucleophilic Substitution. [row] Reacts with Sodium Hydroxide and HEAT!";
+                    infoImage = scrollingDescription(s, Color.SaddleBrown);
+                    break;
+                case "Extinguisher":
+                    s = "Bromomethane interrupts chain reactions propogating combustion! All fires are extinguished.";
+                    infoImage = scrollingDescription(s, Color.SaddleBrown);
+                    if (!environmentEffects.Contains(move))
+                        environmentEffects.Add("Extinguisher");
+                    //spxClear();
+                    spxImage.Add(new SPX(spxManager.EnvironmentXml("Extinguisher")));
+                    break;
+            }
+
+            infoImage = scrollingDescription(s, Color.SaddleBrown);
+            foreach (Image image in infoImage)
+                image.LoadContent();
         }
 
         string pickMove(Chemical chemical)
@@ -473,7 +539,7 @@ namespace YoutubeRPG
             }
             if (moveList.Contains("Extinguisher") && selected == String.Empty)
             {
-                if (rnd.Next(100) < 17)      //17% chance of trigger
+                if (rnd.Next(100) < 8)      //17% chance of trigger
                     selected = "Extinguisher";
             }
             else if (moveList.Contains("Branching") && selected == String.Empty)
@@ -493,7 +559,7 @@ namespace YoutubeRPG
             }
             else if (moveList.Contains("Combustion") && selected == String.Empty)
             {
-                if (chemical.CalculateOxygen("carbon") <= totalOxygen && rnd.Next(100) < 70)
+                if (chemical.CalculateOxygen("carbon") <= totalOxygen && rnd.Next(100) < 90)
                     selected = "Combustion";
             }
             if (selected != String.Empty && moveList.Contains(selected))
