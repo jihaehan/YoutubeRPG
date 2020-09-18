@@ -92,7 +92,7 @@ namespace YoutubeRPG
         {
             get { return chemicals[CurrentChemicalName]; }
         }
-
+        
         public void LoadContent()
         {
             XmlManager<Chemical> chemicalLoader = new XmlManager<Chemical>();
@@ -165,7 +165,44 @@ namespace YoutubeRPG
         /// <summary>
         /// BattleScreen: update/draw all chemicals currently in battle
         /// </summary>
-        
+        public int GetTurnCount()
+        {
+            int count = 0;
+            foreach (string name in battleChemicalName)
+            {
+                if (battleChemicals[name].TurnTaken)
+                    count++;
+            }
+            return count;
+        }
+        public string EnemyInstance()
+        {
+            string enemyButton = String.Empty;
+            int count = 0;
+            for (int i = 0; i < battleChemicalName.Count; i++)
+            {
+                string name = battleChemicalName[i];
+                if (battleChemicals[name].TurnTaken)
+                    count++;
+                else if (enemyButton == String.Empty && !battleChemicals[name].TurnTaken)
+                    enemyButton = name;
+            }
+            if (enemyButton != String.Empty)
+            {
+                battleChemicals[enemyButton].TurnTaken = true;  
+                if (enemyButton.Contains("*"))
+                {
+                    string[] str = enemyButton.Split('*');
+                    enemyButton = str[0];
+                }
+            }
+            
+            return enemyButton;
+        }
+        public int BattlePartySize()
+        {
+            return battleChemicals.Count;
+        }
         public void BattleReady(string name)
         {
             chemicals[name].InBattle = true;

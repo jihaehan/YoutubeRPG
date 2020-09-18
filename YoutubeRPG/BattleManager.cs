@@ -24,6 +24,7 @@ namespace YoutubeRPG
         string prevMenuID;
         string currentMenuID;
         string selectedItem, selectedChemical;
+        string selectedEnemy;
         int prevSelectedItem, battleMenuSelectedItem;
         int turnCount;
         List<Image> infoImage; //for visual text distinct from menuButtons
@@ -45,8 +46,8 @@ namespace YoutubeRPG
             enemy = new Character();
             totalOxygen = currentOxygen = 2;
             prevSelectedItem = battleMenuSelectedItem = 0;
-            turnCount = 1; 
-            prevMenuID = currentMenuID = selectedItem = String.Empty;
+            turnCount = 1;
+            prevMenuID = currentMenuID = selectedItem = selectedEnemy =  String.Empty;
             pageText = "1/3";
             isPlayerTurn = true;
             isDescription = false;
@@ -95,6 +96,8 @@ namespace YoutubeRPG
                 descriptionMenu();
             else if (currentMenuID.Contains("Battling"))
                 battlingMenu();
+            else if (currentMenuID.Contains("Enemy"))
+                enemyMenu();
             
             if (menu.ID.Contains(".xml") || menu.ID == String.Empty)
             {
@@ -349,8 +352,8 @@ namespace YoutubeRPG
             i.FontName = "Fonts/OCRAsmall";
             i.TextColor = Color.SaddleBrown;
             i.Position = new Vector2(340f, 580.5f);
-            Chemical chemical = player.ChemicalManager.GetBattleChemical(selectedChemical);
             string s = String.Empty;
+            //Chemical chemical = player.ChemicalManager.GetBattleChemical(selectedChemical);
 
             //trigger Temporary Chemical to leave battle
             s = player.ChemicalManager.RemoveRandomTempChemical();
@@ -360,33 +363,47 @@ namespace YoutubeRPG
                 image.LoadContent();
 
             //Manage enemyTurn
-            isDescription = true;
-            enemyTurn();
-            //display enemy actions in infoImage
-            EndPlayerTurn();
-            //clear special effects
-            spxManager.EnvironmentEffects["Extinguisher"] = false;
-            foreach (SPX spx in spxImage)
-                spx.FadeOut = true;
-            //draw card and add new chemical to team
-            battleCard();
-        }
-        void enemyTurn() //NPC logic
-        {
-            foreach (string battleChemicalName in enemy.ChemicalManager.battleChemicalName)
+            string e = enemy.ChemicalManager.EnemyInstance();
+            if (e != String.Empty)
             {
-                Chemical chemical = enemy.ChemicalManager.GetBattleChemical(battleChemicalName);
-                generateMoveList(chemical);
-                //if (moveList.Contains())
+                selectedEnemy = e;
+                menu.Items.Clear();
+                MenuItem item = new MenuItem();
+                item.Image = new Image();
+                item.Image.Position = new Vector2(-5, -5);
+                item.Image.Text = ".";
+                item.LinkID = "Content/Load/Menu/EnemyMenu.xml";
+                menu.Items.Add(item);
             }
+            else //manage end of turn
+            {
+                //Refresh values for player and enemy turn
+                EndTurn();
+                //clear special effects
+                spxManager.EnvironmentEffects["Extinguisher"] = false;
+                foreach (SPX spx in spxImage)
+                    spx.FadeOut = true;
+                //draw card and add new chemical to team
+                battleCard();
+            }
+           
         }
-        public void EndPlayerTurn()
+        string enemyMoveName(string name) //NPC logic
+        {
+            Chemical chemical = enemy.ChemicalManager.GetBattleChemical(name);
+            generateMoveList(chemical);
+            enemy.ChemicalManager.GetBattleChemical(name).BattleMove = pickMove(chemical);
+            //enemy.ChemicalManager.GetBattleChemical(name).TurnTaken = true;
+
+            return enemy.ChemicalManager.GetBattleChemical(name).BattleMove;
+        }
+        public void EndTurn()
         {
             //refresh moves for party members
             foreach (string name in player.ChemicalManager.battleChemicalName)
-            {
                 player.ChemicalManager.GetBattleChemical(name).BattleMove = String.Empty;
-            }
+            foreach (string name in enemy.ChemicalManager.battleChemicalName)
+                enemy.ChemicalManager.GetBattleChemical(name).TurnTaken = false;
             turnCount++;
             if (totalOxygen < 18)
             {
@@ -397,6 +414,25 @@ namespace YoutubeRPG
         #endregion
 
         #region Enemy Logic
+        void enemyMenu()
+        {
+            infoImageClear();
+            Image i = new Image();
+            i.FontName = "Fonts/OCRAsmall";
+            i.TextColor = Color.SaddleBrown;
+            i.Position = new Vector2(340f, 580.5f);
+            i.Text = selectedEnemy;
+            infoImage.Add(i);
+            foreach (Image image in infoImage)
+                image.LoadContent();
+
+            //use selectedEnemy here for chemicalName
+            //use enemy Turn here to decide what move is triggered
+            //trigger special effects accordingly
+            //trigger status effects accordingly
+            //end turn
+        }
+
         string pickMove(Chemical chemical)
         {
             string selected = String.Empty;
@@ -440,6 +476,11 @@ namespace YoutubeRPG
                     if (chemical.Isomers > 0 && !isomerState.Contains("1") && selected == String.Empty)
                         selected = "Branching";
                 }
+            }
+            else if (moveList.Contains("Combustion") && selected == String.Empty)
+            {
+                if (chemical.CalculateOxygen("carbon") <= totalOxygen && rnd.Next(100) < 70)
+                    selected = "Combustion";
             }
             if (selected != String.Empty && moveList.Contains(selected))
                 return selected;

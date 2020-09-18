@@ -317,3 +317,4 @@ C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\obj\x86\Debug
 C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\obj\x86\Debug\YoutubeRPG.csproj.CopyComplete
 C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\obj\x86\Debug\YoutubeRPG.exe
 C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\obj\x86\Debug\YoutubeRPG.pdb
+C:\Users\jihae\Desktop\MSc_Games\Dissertation\Tutorials\YoutubeRPG\bin\Windows\x86\Debug\Content\Load\Menu\EnemyMenu.xml
