@@ -315,6 +315,19 @@ namespace YoutubeRPG
         #endregion
 
         #region Battle Methods
+        void enemyCard()
+        {
+            Random rnd = new Random();
+            List<string> notInParty = new List<string>();
+            foreach (string chemicalName in enemy.ChemicalManager.chemicalName)
+                if (!enemy.ChemicalManager.GetChemical(chemicalName).InBattle)
+                    notInParty.Add(chemicalName);
+            if (notInParty.Count > 0)
+            {
+                int randomIndex = rnd.Next(notInParty.Count);
+                enemy.ChemicalManager.GetChemical(notInParty[randomIndex]).InBattle = true;
+            }
+        }
         string battleCard()
         {
             Random rnd = new Random();
@@ -385,6 +398,7 @@ namespace YoutubeRPG
                     spx.FadeOut = true;
                 //draw card and add new chemical to team
                 battleCard();
+                enemyCard();
             }
            
         }
