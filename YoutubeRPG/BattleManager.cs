@@ -358,10 +358,11 @@ namespace YoutubeRPG
                 infoImage = scrollingDescription(s + " leaves the battle! [row] Thanks for the help!");
             foreach (Image image in infoImage)
                 image.LoadContent();
-            //Manage enemyTurn
-            //enemyTurn();
-            //display enemy actions in infoImage
 
+            //Manage enemyTurn
+            isDescription = true;
+            enemyTurn();
+            //display enemy actions in infoImage
             EndPlayerTurn();
             //clear special effects
             spxManager.EnvironmentEffects["Extinguisher"] = false;
@@ -392,6 +393,58 @@ namespace YoutubeRPG
                 totalOxygen = turnCount * 2;
                 currentOxygen = turnCount * 2;
             }
+        }
+        #endregion
+
+        #region Enemy Logic
+        string pickMove(Chemical chemical)
+        {
+            string selected = String.Empty;
+            Random rnd = new Random();
+
+            switch (chemical.Series)
+            {
+                case Series.Alkane:
+                    if (rnd.Next(100) < 20) //20% chance of triggrer
+                        selected = "Free Radical Sub";
+                    break;
+                case Series.Alkene:
+                    if (rnd.Next(100) < 15) //15% chance of trigger
+                        selected = "Addition Polymeriz";
+                    break;
+                //case Series.Alcohol:
+                //if (rnd.Next(100) < 5)
+                //return "Oxidation";
+                //break;
+                case Series.Halogenoalkane:
+                    if (rnd.Next(100) < 10)  //10% chance of trigger
+                        selected = "SN2 Nucleophil Sub";
+                    break;
+            }
+            if (moveList.Contains("Extinguisher") && selected == String.Empty)
+            {
+                if (rnd.Next(100) < 17)      //17% chance of trigger
+                    selected = "Extinguisher";
+            }
+            else if (moveList.Contains("Branching") && selected == String.Empty)
+            {
+                if (rnd.Next(100) < 30 && chemical.CurrentHealth < chemical.Health / 2)
+                {
+                    string isomerState = chemical.Image.Path;
+                    for (int i = 3; i > 0; i--)
+                    {
+                        if (rnd.Next(100) < 50 && selected == String.Empty)
+                            if (isomerState.Contains(i.ToString()) && chemical.Isomers > i)
+                                selected = "Branching";
+                    }
+                    if (chemical.Isomers > 0 && !isomerState.Contains("1") && selected == String.Empty)
+                        selected = "Branching";
+                }
+            }
+            if (selected != String.Empty && moveList.Contains(selected))
+                return selected;
+            else
+                return "Formation";
         }
         #endregion
 
