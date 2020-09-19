@@ -94,6 +94,17 @@ namespace YoutubeRPG
                 }
             return count; 
         }
+        public int CheckBranching()
+        {
+            int count = 0;
+            if (MoveHistory.Count > 0)
+                for (int i = MoveHistory.Count - 1; i >= 0; i--)
+                {
+                    if (MoveHistory[i] == "Branching")
+                        count++;
+                }
+            return count;
+        }
         public int GetElement(Element element)
         {
             if (Elements.ContainsKey(element))
@@ -319,7 +330,8 @@ namespace YoutubeRPG
             isomerPath = Image.Path;
             if (branches > 1)
                 isomerPath = isomerPath.Replace((branches - 1).ToString(), branches.ToString());
-            isomerPath += branches.ToString();
+            else
+                isomerPath += branches.ToString();
             Image.ActivateEffect("FadeEffect");
         }
         void isomerTransitionUpdate(GameTime gameTime, Vector2 position)

@@ -647,7 +647,7 @@ namespace YoutubeRPG
                         infoImage = scrollingDescription("Insufficient O2 for Combustion.", Color.Black);
                     break;
                 case "Branching":
-                    int isomerState = Math.Min(chemical.Isomers, chemical.CheckMoveCount("Branching")+1);
+                    int isomerState = Math.Min(chemical.Isomers, chemical.CheckBranching()+1);
                     if (chemical.CheckMoveCount("Branching") + 1> chemical.Isomers)
                     {
                         infoImage = scrollingDescription(chemical.Name + " has no structural isomers with further branching.", Color.Black);
