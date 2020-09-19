@@ -1,11 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ChemicalManager>
   <ChemicalSource>Content/Load/Chemical/Alcohol/Butanol.xml</ChemicalSource>
-  <ChemicalSource>Content/Load/Chemical/Halogenoalkane/Bromomethane.xml</ChemicalSource>
-  <ChemicalSource>Content/Load/Chemical/Alkane/Propane.xml</ChemicalSource>
-  <ChemicalSource>Content/Load/Chemical/Alcohol/Methanol.xml</ChemicalSource>
-  <ChemicalSource>Content/Load/Chemical/Alkene/Hexene.xml</ChemicalSource>
-  <ChemicalSource>Content/Load/Chemical/Alkene/Butene.xml</ChemicalSource>
-  <ChemicalSource>Content/Load/Chemical/Alkane/Ethane.xml</ChemicalSource>
 </ChemicalManager>
 

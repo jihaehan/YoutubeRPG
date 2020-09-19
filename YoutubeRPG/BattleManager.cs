@@ -659,11 +659,10 @@ namespace YoutubeRPG
                     }
                     //increase defense rating of chemical
                     break;
-                case "Free Radical Sub":
+                case "Free Radical Sub": //alkane to halogenoalkane
                     searchBackpack("Initiation: [row] Br2 -> 2Cl*" , reactant);
                     break;
-                case "Addition Polymeriz":
-                    //randomize polymerization dependent on what items are available
+                case "Addition Polymeriz": //alkene to alkane
                     searchBackpack(chemical.ChemicalFormula + "(" + chemical.State.ToString().ToLower()[0] + ") + NiH2(catalyst) + HEAT -> ", reactant);
                     break;
                 case "Oxidation": //alcohol to alkanal
@@ -709,32 +708,33 @@ namespace YoutubeRPG
                     infoImageClear();
                     switch (str)
                     {
-                        case "Free Radical Sub":
+                        case "Free Radical Sub": //alkane to halogenoalkane
                             if (chemical.CheckMoveCount(str) > 3)
                                 exitMultiStep(ref isMultiStepMove);
                             else if (chemical.GetMoveHistory(3, str))
                             {
+                                tempChemicalName = getTempName("Bromo" + chemical.Name.ToLower(), String.Empty, String.Empty);
                                 string intermediate = chemical.ChemicalFormula.Substring(0, chemical.ChemicalFormula.Length - 1) + (chemical.GetElement(Element.H) - 1).ToString();
-                                infoImage = scrollingDescription("Termination: [row] Br* + Br* -> Br2 [row] Br* + *" + intermediate + " -> " + intermediate + "Br", Color.Black);
-                                //add SPX and apply move effect here
+                                infoImage = scrollingDescription("Last step of Free Radical Substitution. [row] Termination: [row] Br* + Br* -> Br2 [row] Br* + *" + intermediate + " -> " + intermediate + "Br [row] " + tempChemicalName + " joins the battle!", Color.Black);  
+                                player.ChemicalManager.LoadTempChemical(tempChemicalName, "Halogenoalkane");
                                 //Add TEMP chemical here`
                             }
                             else
                             {
-                                infoImage = scrollingDescription("Propagation: [row] Br* " + chemical.ChemicalFormula + " -> HBr + *" + chemical.ChemicalFormula.Substring(0, chemical.ChemicalFormula.Length - 1) + (chemical.GetElement(Element.H) - 1).ToString(), Color.Black);
+                                infoImage = scrollingDescription(chemical.Name + " enters second step of Free Radical Substitution. [row] Propagation: [row] Br* " + chemical.ChemicalFormula + " -> HBr + *" + chemical.ChemicalFormula.Substring(0, chemical.ChemicalFormula.Length - 1) + (chemical.GetElement(Element.H) - 1).ToString(), Color.Black);
                             }
                             break;
-                        case "Addition Polymeriz":
+                        case "Addition Polymeriz": //alkene to alkane
                             if (chemical.CheckMoveCount(str) > 2)
                                 exitMultiStep(ref isMultiStepMove);
                             else
                             {
                                 tempChemicalName = getTempName(chemical.Name, "ene", "ane");
-                                //player.ChemicalManager.LoadTempChemical(tempChemicalName, "Alkane");
+                                player.ChemicalManager.LoadTempChemical(tempChemicalName, "Alkane");
                                 infoImage = scrollingDescription(tempChemicalName + " joins the battle!", Color.Black);
                             }
                             break;
-                        case "Oxidation":
+                        case "Oxidation": //alcohol to alkanal
                             if (chemical.CheckMoveCount(str) > 2)
                                 exitMultiStep(ref isMultiStepMove);
                             else
@@ -1073,7 +1073,7 @@ namespace YoutubeRPG
                     dimensions.Y += 42f;
                     if (count % 3 == 0)
                     {
-                        count = 1;
+                        count = 0;
                         dimensions = new Vector2(340f, 580.5f);
                     }
                     count++;
@@ -1104,7 +1104,7 @@ namespace YoutubeRPG
                     dimensions.Y += 42;
                     if (count % 3 == 0)
                     {
-                        count = 1;
+                        count = 0;
                         dimensions = new Vector2(340f, 580.5f);
                     }
                     count++;
@@ -1310,7 +1310,8 @@ namespace YoutubeRPG
         #region Shortcuts
         string getTempName(string tempName, string delete, string replace)
         {
-            tempName = tempName.Replace(delete, replace);
+            if (delete != String.Empty)
+                tempName = tempName.Replace(delete, replace);
             if (tempName.Contains("*"))
             {
                 string[] tempStr = tempName.Split('*');
