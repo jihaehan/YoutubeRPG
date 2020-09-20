@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ChemicalManager>
-  <ChemicalSource>Content/Load/Chemical/Alcohol/Butanol.xml</ChemicalSource>
+  <ChemicalSource>Content/Load/Chemical/Alkene/Butene.xml</ChemicalSource>
+    <ChemicalSource>Content/Load/Chemical/Alkene/Butene.xml</ChemicalSource>
 </ChemicalManager>
 

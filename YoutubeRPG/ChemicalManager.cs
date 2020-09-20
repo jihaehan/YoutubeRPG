@@ -48,8 +48,8 @@ namespace YoutubeRPG
         public string RemoveRandomTempChemical()
         {
             Random rnd = new Random();
-            int r = rnd.Next(0, percentage[1]);
-            if (tempChemicalName.Count > 0 && r > percentage[0]) //30% chance of staying
+            int r = rnd.Next(0, 100);
+            if (tempChemicalName.Count > 0 && r > 70) //30% chance of staying
             {
                 int randomIndex = rnd.Next(0, tempChemicalName.Count);
                 string removeTemp = tempChemicalName[randomIndex];
@@ -84,6 +84,7 @@ namespace YoutubeRPG
             tempChemicalName.Add(name);
         }
         #endregion
+
         public void LoadIsomer(string chemicalName, int branches)
         {
             battleChemicals[chemicalName].IsomerTransition(branches);
@@ -323,7 +324,7 @@ namespace YoutubeRPG
                 r.Y = 0;
                 battleChemicals[name].TagRectangle = r;
 
-                if (battleChemicals[name].Health <= 0 || battleChemicals[name].IsDead)
+                if (battleChemicals[name].CurrentHealth <= 0 || battleChemicals[name].IsDead)
                     deadTemp.Add(name);
             }
             //remove dead battle Chemicals

@@ -643,7 +643,7 @@ namespace YoutubeRPG
                         Mass = Elements[Element.Br] * AtomicMass.Br;
                     }
                     Health += (Elements[Element.C] - 1) * BondEnthalpies.C_C + (Elements[Element.H] - 2) * BondEnthalpies.C_H;
-                    //Solubility???
+                    //Solubility
                     break;
             }
             CurrentHealth = Health;

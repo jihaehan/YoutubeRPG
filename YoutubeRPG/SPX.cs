@@ -43,11 +43,16 @@ namespace YoutubeRPG
         }
         public void LoadContent()
         {
-            Image.Alpha = 0.0f;
-            Image.IsActive = true;
-            Image.Effects = "FadeEffect";
+            if (!Image.Path.Contains("player") &&  !Image.Path.Contains("enemy"))
+            {
+                Image.Alpha = 0.0f;
+                Image.IsActive = true;
+                Image.Effects = "FadeEffect";
+            }
+            else
+                Image.IsActive = false;
             Image.LoadContent();
-            Image.FadeEffect.FadeSpeed = 0.5f;
+            //Image.FadeEffect.FadeSpeed = 0.5f;
         }
         public void UnloadContent()
         {
@@ -68,7 +73,17 @@ namespace YoutubeRPG
                 {
                     if (Image.Alpha >= 1.0f)
                         FadeCount++;
-                    else if (FadeCount > 3 && Image.Alpha <= 0.0f)
+                    else if (FadeCount > 2 && Image.Alpha <= 0.0f)
+                    {
+                        Image.IsActive = false;
+                        Image.IsVisible = false;
+                    }
+                }
+                else if (Image.IsActive && Image.Path.Contains("red"))
+                {
+                    if (Image.Alpha >= 1.0f)
+                        FadeCount++;
+                    else if (FadeCount > 2 && Image.Alpha <= 0.0f)
                     {
                         Image.IsActive = false;
                         Image.IsVisible = false;
@@ -144,10 +159,11 @@ namespace YoutubeRPG
         {
             //Randomizes SPX effect to load
             Random rnd = new Random();
-            string[] randomTarget = { "red1", "red2" }; //"black1", "black2", "white1", "white2",
+            string[] randomTarget = { "red1", "red2", "white1", "white2" }; //"black1", "black2", "white1", "white2",
             int randomIndex = rnd.Next(randomTarget.Length);
             string xmlPath = randomTarget[randomIndex];            
             return "Content/Load/SPX/" + xmlPath + ".xml";
         }
+        
     }
 }

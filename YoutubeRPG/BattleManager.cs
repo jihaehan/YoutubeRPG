@@ -44,7 +44,7 @@ namespace YoutubeRPG
         {
             player = new Player();
             enemy = new Character();
-            totalOxygen = currentOxygen = 2;
+            totalOxygen = currentOxygen = 3;
             prevSelectedItem = battleMenuSelectedItem = 0;
             turnCount = 1;
             prevMenuID = currentMenuID = selectedItem = selectedEnemy =  String.Empty;
@@ -417,10 +417,10 @@ namespace YoutubeRPG
             foreach (string name in enemy.ChemicalManager.battleChemicalName)
                 enemy.ChemicalManager.GetBattleChemical(name).TurnTaken = false;
             turnCount++;
-            if (totalOxygen < 18)
+            if (totalOxygen < 27)
             {
-                totalOxygen = turnCount * 2;
-                currentOxygen = turnCount * 2;
+                totalOxygen = turnCount * 3;
+                currentOxygen = turnCount * 3;
             }
         }
         #endregion
@@ -444,13 +444,14 @@ namespace YoutubeRPG
                     break;
                 //Add special effects here!
                 case "Combustion":
-                    chemical.SetOxygen(totalOxygen);
+                    chemical.SetOxygen(currentOxygen);
                     chemical.Combustion();
                     if (chemical.GetProduct("carbondioxide") > 0)
                     {
                         s = selectedEnemy + " reacts with Oxygen to produce Carbondioxide and Water! [row] Releases Enthalpy of Combustion of " + chemical.Damage.ToString() + "kJ/mol";
                         infoImage = scrollingDescription(s, Color.SaddleBrown);
                         spxCombustion("CO2", chemical.Level);
+                       
                         //add damage
                     }
                     else if (chemical.GetProduct("carbonmonoxide") > 0)
@@ -469,6 +470,7 @@ namespace YoutubeRPG
                     }
                     else
                         infoImage = scrollingDescription(selectedEnemy + " tries to combust! But insufficient Oxygen.", Color.SaddleBrown);
+
                     break;
                 case "Branching":
                     int isomerState = Math.Min(chemical.Isomers, chemical.CheckMoveCount("Branching") + 1);
@@ -559,7 +561,7 @@ namespace YoutubeRPG
             }
             else if (moveList.Contains("Combustion") && selected == String.Empty)
             {
-                if (chemical.CalculateOxygen("carbon") <= totalOxygen && rnd.Next(100) < 90)
+                if (chemical.CalculateOxygen("carbon") <= currentOxygen && rnd.Next(100) < 90)
                     selected = "Combustion";
             }
             if (selected != String.Empty && moveList.Contains(selected))
@@ -591,6 +593,8 @@ namespace YoutubeRPG
             i.FontName = "Fonts/OCRAsmall";
             i.TextColor = Color.SaddleBrown;
             Chemical chemical = player.ChemicalManager.GetBattleChemical(selectedChemical);
+            string enemyChemical = String.Empty;
+            List<string> enemyChemicals = new List<string>();
             string s = String.Empty;
 
             //If using items from backpack
@@ -600,9 +604,13 @@ namespace YoutubeRPG
             switch (selectedItem)
             {
                 case "Formation":
-                    s = selectedChemical + " releases an Enthalpy of Formation of " + chemical.BaseDamage.ToString() + " kJ/mol";
+                    s = selectedChemical + " releases an Enthalpy of Formation of " + chemical.BaseDamage.ToString() + " kJ/mol [row]";
+                    enemyChemical = getRandomChemical(true);
                     infoImage = scrollingDescription(s, Color.Black);
-                    //Add special effects here!
+                    s = enemyChemical + " takes " + calculateDamage(selectedChemical, enemyChemical, chemical.BaseDamage, 1, true).ToString() +" kJ/mol of damage!";
+                    continueDescription(s, Color.DarkSlateGray);
+                    SPX target = new SPX(spxManager.TargetXml(), enemy.ChemicalManager.GetBattleChemical(enemyChemical).Image.Position);
+                    spxImage.Add(target);                    
                     break;
                 case "Combustion":
                     chemical.SetOxygen(currentOxygen);
@@ -616,8 +624,9 @@ namespace YoutubeRPG
                         i.Text += chemical.Damage.ToString() + "kJ/mol";
                         i.Position = infoImage[infoImage.Count - 1].Position + new Vector2(0, 10f);
                         infoImage.Add(i);
+                        currentOxygen -= chemical.CalculateOxygen(CO2);
                         spxCombustion("CO2", chemical.Level);
-                        //add damage
+                        
                     }
                     else if (chemical.GetProduct("carbonmonoxide") > 0)
                     {
@@ -629,7 +638,7 @@ namespace YoutubeRPG
                         i.Position = infoImage[infoImage.Count - 1].Position + new Vector2(0, 10f);
                         infoImage.Add(i);
                         spxCombustion("CO", chemical.Level);
-                        //add damage
+                        currentOxygen -= chemical.CalculateOxygen(CO);
                     }
                     else if (chemical.GetProduct("carbon") > 0)
                     {
@@ -641,6 +650,7 @@ namespace YoutubeRPG
                         i.Position = infoImage[infoImage.Count - 1].Position + new Vector2(0, 10f);
                         infoImage.Add(i);
                         spxCombustion("C", chemical.Level);
+                        currentOxygen -= chemical.CalculateOxygen(C);
                         //add damage
                     }
                     else
@@ -678,7 +688,7 @@ namespace YoutubeRPG
                     s = "Bromomethane interrupts chain reactions propogating combustion! All fires are extinguished.";
                     infoImage = scrollingDescription(s, Color.Black);
                     environmentEffects.Add("Extinguisher");
-                    spxClear();
+                    //spxImageClear();
                     spxImage.Add(new SPX(spxManager.EnvironmentXml("Extinguisher")));
                     break;
             }
@@ -717,7 +727,6 @@ namespace YoutubeRPG
                                 string intermediate = chemical.ChemicalFormula.Substring(0, chemical.ChemicalFormula.Length - 1) + (chemical.GetElement(Element.H) - 1).ToString();
                                 infoImage = scrollingDescription("Last step of Free Radical Substitution. [row] Termination: [row] Br* + Br* -> Br2 [row] Br* + *" + intermediate + " -> " + intermediate + "Br [row] " + tempChemicalName + " joins the battle!", Color.Black);  
                                 player.ChemicalManager.LoadTempChemical(tempChemicalName, "Halogenoalkane");
-                                //Add TEMP chemical here`
                             }
                             else
                             {
@@ -1044,7 +1053,7 @@ namespace YoutubeRPG
                 O2Empty.Draw(spriteBatch);
                 O2Empty.Position.X += 44;
             }
-            for (int i = 0; i < (int)totalOxygen / 2; i++)
+            for (int i = 0; i < (int)totalOxygen / 3; i++)
             {
                 O2Filled.Draw(spriteBatch);
                 O2Filled.Position.X += 44;
@@ -1134,6 +1143,88 @@ namespace YoutubeRPG
             }
             return imageList;
         }
+        List<Image> scrollingDescriptionContinued(string description, Color textColor)
+        {
+            List<Image> imageList = new List<Image>();
+            Image i = new Image();
+            Vector2 dimensions = new Vector2(340f, 580.5f);
+            i.FontName = "Fonts/OCRAsmall";
+            i.TextColor = textColor;
+            i.Position = dimensions;
+            string[] parts = description.Split(' ');
+            string text = String.Empty;
+            int rowLength = 0;
+            int count = 1;
+            foreach (string s in parts)
+            {
+                if (s == "[row]")
+                {
+                    i.Text = text;
+                    imageList.Add(i);
+                    i = new Image();
+                    rowLength = 0;
+                    dimensions.Y += 42f;
+                    if (count % 3 == 0)
+                    {
+                        count = 0;
+                        dimensions = new Vector2(340f, 580.5f);
+                    }
+                    count++;
+                    i.FontName = "Fonts/OCRAsmall";
+                    i.TextColor = textColor;
+                    i.Position = dimensions;
+                    text = String.Empty;
+                }
+                else if ((rowLength + s.Length) < 30)
+                {
+                    rowLength += s.Length + 1;
+                    text += s + " ";
+                    if (s == parts[parts.Length - 1]) //if string is last word in dialogue
+                    {
+                        i = new Image();
+                        i.Text = text;
+                        i.FontName = "Fonts/OCRAsmall";
+                        i.TextColor = textColor;
+                        i.Position = dimensions;
+                        imageList.Add(i);
+                    }
+                }
+                else
+                {
+                    i.Text = text;
+                    imageList.Add(i);
+                    i = new Image();
+                    dimensions.Y += 42;
+                    if (count % 3 == 0)
+                    {
+                        count = 0;
+                        dimensions = new Vector2(340f, 580.5f);
+                    }
+                    count++;
+                    i.Position = dimensions;
+                    i.TextColor = textColor;
+                    i.FontName = "Fonts/OCRAsmall";
+
+                    text = s + " ";
+                    rowLength = s.Length + 1;
+
+                    if (s == parts[parts.Length - 1]) //if string is last word in dialogue
+                    {
+                        i = new Image();
+                        i.Text = text;
+                        i.FontName = "Fonts/OCRAsmall";
+                        i.TextColor = textColor;
+                        i.Position = dimensions;
+                        imageList.Add(i);
+                    }
+                }
+            }
+            for (int j = 0; j < imageList.Count; j++)
+                imageList[j].IsVisible = false;
+            isDescription = true;
+            return imageList;
+        }
+
         #endregion
 
         #region Initializations
@@ -1308,6 +1399,94 @@ namespace YoutubeRPG
         #endregion
 
         #region Shortcuts
+        int calculateDamage(string playerName, string enemyName, float damage, float defenseModifier, bool isPlayer)
+        {
+            float damageTaken = 0;
+            // Formula: 2 * BoilingPoint / EnemyBaseDamage * modifier
+            if (isPlayer)
+            {
+                float damageReduction = 2 * enemy.ChemicalManager.GetBattleChemical(enemyName).BaseDamage / player.ChemicalManager.GetBattleChemical(playerName).BoilingPoint * defenseModifier;
+                damageTaken = (int)((1 - damageReduction) * damage);
+                if (damageTaken < 0)
+                    damageTaken *= -1;
+                player.ChemicalManager.GetBattleChemical(playerName).Defense = (int)(1 - damageReduction);
+                enemy.ChemicalManager.GetBattleChemical(enemyName).CurrentHealth -= (int)damageTaken;
+                if (enemy.ChemicalManager.GetBattleChemical(enemyName).CurrentHealth < 0)
+                    enemy.ChemicalManager.GetBattleChemical(enemyName).CurrentHealth = 0;
+                return (int)damageTaken;
+            }
+            else
+            {
+                float damageReduction = 2 * player.ChemicalManager.GetBattleChemical(playerName).BaseDamage / enemy.ChemicalManager.GetBattleChemical(enemyName).BoilingPoint * defenseModifier;
+                damageTaken = (int)((1 - damageReduction) * damage);
+                if (damageTaken < 0)
+                    damageTaken *= -1;
+                enemy.ChemicalManager.GetBattleChemical(enemyName).Defense = (int)(1 - damageReduction);
+                player.ChemicalManager.GetBattleChemical(playerName).CurrentHealth -= (int)damageTaken;
+                if (player.ChemicalManager.GetBattleChemical(playerName).CurrentHealth < 0)
+                    player.ChemicalManager.GetBattleChemical(playerName).CurrentHealth = 0;
+                return (int)damageTaken;
+            }
+        }
+        List<string> getRandomChemicals(bool isPlayer, int num)
+        {
+            List<string> aliveChemicals = new List<string>();
+            List<string> names = new List<string>();
+            Random rnd = new Random();
+            if (isPlayer)
+            {
+                foreach (string n in enemy.ChemicalManager.battleChemicalName)
+                    if (!enemy.ChemicalManager.GetBattleChemical(n).IsDead)
+                        aliveChemicals.Add(n);
+                for (int i = 0; i < Math.Min(num, aliveChemicals.Count); i++)
+                {
+                    int randomIndex = rnd.Next(0, aliveChemicals.Count - 1);
+                    names.Add(enemy.ChemicalManager.battleChemicalName[randomIndex]);
+                }
+            }
+            else
+            {
+                foreach (string n in player.ChemicalManager.battleChemicalName)
+                    if (!player.ChemicalManager.GetBattleChemical(n).IsDead)
+                        aliveChemicals.Add(n);
+                int randomIndex = rnd.Next(0, aliveChemicals.Count - 1);
+                names.Add(player.ChemicalManager.battleChemicalName[randomIndex]);
+            }
+            return names;
+        }
+        string getRandomChemical(bool isPlayer)
+        {
+            string name = String.Empty;
+            Random rnd = new Random();
+            List<string> aliveChemicals = new List<string>();
+            if (isPlayer)
+            {
+                foreach (string n in enemy.ChemicalManager.battleChemicalName)
+                    if (!enemy.ChemicalManager.GetBattleChemical(n).IsDead)
+                        aliveChemicals.Add(n);
+                int randomIndex = rnd.Next(0, aliveChemicals.Count);
+                name = enemy.ChemicalManager.battleChemicalName[randomIndex];
+            }
+            else
+            {
+                foreach (string n in player.ChemicalManager.battleChemicalName)
+                    if (!player.ChemicalManager.GetBattleChemical(n).IsDead)
+                        aliveChemicals.Add(n);
+                int randomIndex = rnd.Next(0, aliveChemicals.Count);
+                name = player.ChemicalManager.battleChemicalName[randomIndex];
+            }
+            return name;
+        }
+        void continueDescription(string description, Color color)
+        {
+            Image i = new Image();
+            i.Text = " ";
+            while (infoImage.Count % 3 != 0)
+                infoImage.Add(i);
+            if (infoImage.Count % 3 == 0)
+                foreach (Image img in scrollingDescriptionContinued(description, color))
+                    infoImage.Add(img);
+        }
         string getTempName(string tempName, string delete, string replace)
         {
             if (delete != String.Empty)
@@ -1341,12 +1520,6 @@ namespace YoutubeRPG
             foreach (Image image in infoImage)
                 image.UnloadContent();
             infoImage.Clear();
-        }
-        void spxClear()
-        {
-            foreach (SPX spx in spxImage)
-                spx.UnloadContent();
-            spxImage.Clear();
         }
         #endregion
     }
