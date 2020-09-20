@@ -22,6 +22,7 @@ namespace YoutubeRPG
         Dictionary<string, Chemical> battleChemicals;
         public List<string> battleChemicalName;
         public List<string> tempChemicalName;
+        public List<string> deadChemicalName;
         List<Chemical> clone;
         Image tag;
         Image shadow;
@@ -39,6 +40,7 @@ namespace YoutubeRPG
             battleChemicals = new Dictionary<string, Chemical>();
             battleChemicalName = new List<string>();
             tempChemicalName = new List<string>();
+            deadChemicalName = new List<string>();
             tag = new Image();
             shadow = new Image();
             clone = new List<Chemical>();
@@ -333,6 +335,8 @@ namespace YoutubeRPG
                 battleChemicals[deadTemp[i]].UnloadContent();
                 battleChemicals.Remove(deadTemp[i]);
                 battleChemicalName.Remove(deadTemp[i]);
+                if (!deadChemicalName.Contains(deadTemp[i]))
+                    deadChemicalName.Add(deadTemp[i]);
             }
             deadTemp.Clear();
 

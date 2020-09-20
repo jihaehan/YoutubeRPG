@@ -28,7 +28,7 @@ namespace YoutubeRPG
         string selectedEnemy;
         int prevSelectedItem, battleMenuSelectedItem;
         int turnCount;
-        int EXP;
+        float EXP;
         List<Image> infoImage; //for visual text distinct from menuButtons
         List<SPX> spxImage;    //for special effects distinct from menuButtons
 
@@ -474,7 +474,32 @@ namespace YoutubeRPG
         }
         void endBattleMenu()
         {
+            infoImageClear();
+            foreach (string n in enemy.ChemicalManager.deadChemicalName)
+            {
+                Chemical c = enemy.ChemicalManager.GetChemical(n);
+                if (c.InBattle)
+                    EXP += c.Mass;
+            }
+            EXP = EXP / player.ChemicalManager.BattlePartySize();
+            if (isWin)
+                infoImage = scrollingDescription("Marie has won the battle! [row] Each Party member gains " + EXP.ToString() + " of Atomic Mass!", Color.Black);
+            else
+                infoImage = scrollingDescription(enemy.Name + " has won the battle! [row] Each Party gains " + (EXP/3).ToString() + " of Atomic Mass!", Color.SaddleBrown);
 
+            foreach (string n in player.ChemicalManager.battleChemicalName)
+            {
+                //player gains this much exp... then levels up....
+            }
+
+            foreach (Image i in infoImage)
+                i.LoadContent();
+        }
+        void levellingMenu()
+        {
+            //change image/background???
+            //infoImage = chemical + " levels up to a " + evolvedChemical;
+            //evolution animation = true!
         }
         string enemyMoveName(string name) //NPC logic
         {
