@@ -650,6 +650,8 @@ namespace YoutubeRPG
             CurrentHealth = Health;
             BaseDamage = FormationEnthalpy[Level];
             MaxDamage = CompleteCombustion();
+            if (Name.Contains("Bromomethane"))
+                MaxDamage = -606;
             if (Level > 3)
                 Isomers = Level - 3;
         }

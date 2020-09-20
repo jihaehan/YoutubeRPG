@@ -1392,6 +1392,9 @@
 #begin Load/Menu/DescriptionMenu.xml
 /copy:Load/Menu/DescriptionMenu.xml
 
+#begin Load/Menu/EndBattleMenu.xml
+/copy:Load/Menu/EndBattleMenu.xml
+
 #begin Load/Menu/EnemyMenu.xml
 /copy:Load/Menu/EnemyMenu.xml
 
@@ -1406,6 +1409,9 @@
 
 #begin Load/Menu/ItemMenu.xml
 /copy:Load/Menu/ItemMenu.xml
+
+#begin Load/Menu/LevellingMenu.xml
+/copy:Load/Menu/LevellingMenu.xml
 
 #begin Load/Menu/MoveMenu.xml
 /copy:Load/Menu/MoveMenu.xml

@@ -1,0 +1,19 @@
+﻿<?xml version ="1.0" encoding="utf-8"?>
+<Menu>
+  <Active>true</Active>
+  <Type>Description</Type>
+  <Axis>Y</Axis>
+  <Alignment>
+    <X>-5</X>
+    <Y>-5</Y>
+  </Alignment> 
+
+  <Item>
+    <LinkType>Screen</LinkType> 
+    <LinkID>GameplayScreen_Blue</LinkID>
+    <Image>
+      <Text>.</Text>
+    </Image>
+  </Item>
+
+</Menu>

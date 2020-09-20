@@ -20,6 +20,7 @@ namespace YoutubeRPG
         bool isTransitioning;
         bool isPlayerTurn;
         bool isDescription;
+        bool isWin;
 
         string prevMenuID;
         string currentMenuID;
@@ -54,6 +55,7 @@ namespace YoutubeRPG
             pageText = "1/3";
             isPlayerTurn = true;
             isDescription = false;
+            isWin = false;
             page = new Image();
             cardDown = new Image();
             cardUp = new Image();
@@ -102,6 +104,8 @@ namespace YoutubeRPG
                 battlingMenu();
             else if (currentMenuID.Contains("Enemy"))
                 enemyMenu();
+            else if (currentMenuID.Contains("EndBattle"))
+                endBattleMenu();
             
             if (menu.ID.Contains(".xml") || menu.ID == String.Empty)
             {
@@ -119,7 +123,7 @@ namespace YoutubeRPG
             {
                 infoImageClear();
             }
-            if (currentMenuID.Contains("BattleMenu"))
+            if (currentMenuID.Contains("/BattleMenu"))
             {
                 menu.Active = true;
                 menu.ItemNumber = battleMenuSelectedItem;
@@ -232,6 +236,45 @@ namespace YoutubeRPG
         #endregion
 
         #region Battle Helper
+        bool checkWinCondition(bool isPlayer)
+        {
+            bool win = false;
+            int deadCount = 0;
+            int battleCount = 0;
+            {
+                foreach (string n in enemy.ChemicalManager.battleChemicalName)
+                {
+                    if (enemy.ChemicalManager.GetBattleChemical(n).InBattle)
+                    {
+                        if (enemy.ChemicalManager.GetBattleChemical(n).IsDead)
+                            deadCount++;
+                        battleCount++;
+                    }
+                }
+                if (deadCount == battleCount) 
+                {
+                    win = true;
+                    isWin = true;
+                }
+            }
+            if (!win)
+            {
+                foreach (string n in player.ChemicalManager.battleChemicalName)
+                {
+                    if (player.ChemicalManager.GetBattleChemical(n).InBattle)
+                    {
+                        if (player.ChemicalManager.GetBattleChemical(n).IsDead)
+                            deadCount++;
+                        battleCount++;
+                    }
+                }
+                if (deadCount == battleCount)
+                {
+                    win = true;
+                }
+            }
+            return win;
+        }
         string checkPlayableChemicals()
         {
             int playableChemicals = 0;
@@ -376,6 +419,7 @@ namespace YoutubeRPG
         }
         void battlingMenu()
         {
+
             //infoImage
             infoImageClear();
             string s = String.Empty;
@@ -390,13 +434,20 @@ namespace YoutubeRPG
             string e = enemy.ChemicalManager.EnemyInstance();
             if (e != String.Empty)
             {
-                selectedEnemy = e;
                 menu.Items.Clear();
                 MenuItem item = new MenuItem();
                 item.Image = new Image();
                 item.Image.Position = new Vector2(-5, -5);
                 item.Image.Text = ".";
-                item.LinkID = "Content/Load/Menu/EnemyMenu.xml";
+                if (checkWinCondition(false))
+                {   //if EnemyWins
+                    item.LinkID = "Content/Load/Menu/EndBattleMenu.xml";
+                }
+                else
+                {
+                    selectedEnemy = e;
+                    item.LinkID = "Content/Load/Menu/EnemyMenu.xml";
+                }
                 menu.Items.Add(item);
             }
             else //manage end of turn
@@ -420,6 +471,10 @@ namespace YoutubeRPG
                 enemyCard();
             }
            
+        }
+        void endBattleMenu()
+        {
+
         }
         string enemyMoveName(string name) //NPC logic
         {
@@ -449,19 +504,20 @@ namespace YoutubeRPG
         {
             infoImageClear();
             Chemical chemical = enemy.ChemicalManager.GetBattleChemical(selectedEnemy);
-            string s = selectedEnemy + " triggers " + enemyMoveName(selectedEnemy);
-            //use selectedEnemy here for chemicalName
-            //use enemy Turn here to decide what move is triggered
-            //trigger special effects accordingly
-            //trigger status effects accordingly
+            string s = String.Empty;
+            string randomChemical = String.Empty;
+            List<string> randomChemicals = new List<string>();
             string move = enemyMoveName(selectedEnemy);
             switch (move)
             {
                 case "Formation":
+                    randomChemical = getRandomChemical(false);
                     s = selectedEnemy + " releases an Enthalpy of Formation of " + chemical.BaseDamage.ToString() + " kJ/mol";
                     infoImage = scrollingDescription(s, Color.SaddleBrown);
+                    s = randomChemical + " takes " + calculateDamage(randomChemical, selectedEnemy, chemical.BaseDamage, false).ToString() + " kJ/mol of damage!";
+                    continueDescription(s, Color.Black);
+                    spxImage.Add(new SPX(spxManager.TargetXml(), player.ChemicalManager.GetBattleChemical(randomChemical).Image.Position));
                     break;
-                //Add special effects here!
                 case "Combustion":
                     chemical.SetOxygen(currentOxygen);
                     chemical.Combustion();
@@ -469,22 +525,22 @@ namespace YoutubeRPG
                     {
                         s = selectedEnemy + " reacts with Oxygen to produce Carbondioxide and Water! [row] Releases Enthalpy of Combustion of " + chemical.Damage.ToString() + "kJ/mol";
                         infoImage = scrollingDescription(s, Color.SaddleBrown);
-                        spxCombustion("CO2", chemical.Level);
-                       
+                        spxCombustion("CO2", chemical.Level, false);
+                        
                         //add damage
                     }
                     else if (chemical.GetProduct("carbonmonoxide") > 0)
                     {
                         s = selectedEnemy + " reacts with Oxygen to produce Carbonmonoxide and Water! [row] Incomplete Combustion releases " + chemical.Damage.ToString() + "kJ/mol";
                         infoImage = scrollingDescription(s, Color.SaddleBrown);
-                        spxCombustion("CO", chemical.Level);
+                        spxCombustion("CO", chemical.Level, false);
                         //add damage
                     }
                     else if (chemical.GetProduct("carbon") > 0)
                     {
                         s = selectedEnemy + " reacts with Oxygen to produce Soot and Water! [row] Incomplete Combustion releases " + chemical.Damage.ToString() + "kJ/mol";
                         infoImage = scrollingDescription(s, Color.SaddleBrown);
-                        spxCombustion("C", chemical.Level);
+                        spxCombustion("C", chemical.Level, false);
                         //add damage
                     }
                     else
@@ -601,8 +657,11 @@ namespace YoutubeRPG
             item.Image.Text = "."; 
             item.LinkType = "Move";
 
-            //if there are no chemicals left with moves
-            item.LinkID = checkPlayableChemicals();
+            //if there are no chemicals left with moves, or check win condition
+            if (checkWinCondition(true))
+                item.LinkID = "Content/Load/Menu/EndBattleMenu.xml";
+            else
+                item.LinkID = checkPlayableChemicals();
             menu.Items.Add(item);
 
             //InfoImage
@@ -627,8 +686,7 @@ namespace YoutubeRPG
                     infoImage = scrollingDescription(s, Color.Black);
                     s = enemyChemical + " takes " + calculateDamage(selectedChemical, enemyChemical, chemical.BaseDamage, true).ToString() +" kJ/mol of damage!";
                     continueDescription(s, Color.SaddleBrown);
-                    SPX target = new SPX(spxManager.TargetXml(), enemy.ChemicalManager.GetBattleChemical(enemyChemical).Image.Position);
-                    spxImage.Add(target);                    
+                    spxImage.Add(new SPX(spxManager.TargetXml(), enemy.ChemicalManager.GetBattleChemical(enemyChemical).Image.Position));
                     break;
                 case "Combustion":
                     chemical.SetOxygen(currentOxygen);
@@ -643,7 +701,7 @@ namespace YoutubeRPG
                         i.Position = infoImage[infoImage.Count - 1].Position + new Vector2(0, 10f);
                         infoImage.Add(i);
                         currentOxygen -= chemical.CalculateOxygen(CO2);
-                        spxCombustion("CO2", chemical.Level);
+                        spxCombustion("CO2", chemical.Level, true);
                         damagedCombustion(chemical, "red", true); //add damage from combustion
                     }
                     else if (chemical.GetProduct("carbonmonoxide") > 0)
@@ -655,7 +713,7 @@ namespace YoutubeRPG
                         i.Text += chemical.Damage.ToString() + "kJ/mol";
                         i.Position = infoImage[infoImage.Count - 1].Position + new Vector2(0, 10f);
                         infoImage.Add(i);
-                        spxCombustion("CO", chemical.Level);
+                        spxCombustion("CO", chemical.Level, true);
                         currentOxygen -= chemical.CalculateOxygen(CO);
                         damagedCombustion(chemical, "white", true); //add damage from combustion
                     }
@@ -668,7 +726,7 @@ namespace YoutubeRPG
                         i.Text += chemical.Damage.ToString() + "kJ/mol";
                         i.Position = infoImage[infoImage.Count - 1].Position + new Vector2(0, 10f);
                         infoImage.Add(i);
-                        spxCombustion("C", chemical.Level);
+                        spxCombustion("C", chemical.Level, true);
                         currentOxygen -= chemical.CalculateOxygen(C);
                         damagedCombustion(chemical, "black", true); //add damage from combustion
                     }
@@ -695,14 +753,12 @@ namespace YoutubeRPG
                 case "Addition Polymeriz": //alkene to alkane
                     searchBackpack(selectedChemical + "begins Addition Polymerization. [row] " + chemical.ChemicalFormula + "(" + chemical.State.ToString().ToLower()[0] + ") + NiH2(catalyst) + HEAT -> ", reactant);
                     break;
-                case "Oxidation": //alcohol to alkanal
-                    //TO BE FIXED LATER
+                case "Oxidation": //alcohol to alkanal, TO BE FIXED LATER
                     searchBackpack(selectedChemical + "begins Oxidation. [row] " + chemical.ChemicalFormula + "(l) + Chromate(catalyst) -> Alkanal + water", reactant);
                     break;
-                case "SN2 Nucleophil Sub":
+                case "SN2 Nucleophil Sub": 
                     //dependent on the catalyst available
-                    searchBackpack(selectedChemical + "begins SN2 Nucleophilic Substitution. [row] " + chemical.ChemicalFormula + "(" + chemical.State.ToString().ToLower()[0] + ")" + " NaOH(aq) + HEAT -> " + chemical.ChemicalFormula.Substring(0, chemical.ChemicalFormula.Length-2) + "OH(l) + NaBr(aq) [row] An Alcohol may join in the next turn!", reactant);
-                    //Add another chemical at end of turn
+                    searchBackpack(selectedChemical + "begins SN2 Nucleophilic Substitution. [row] " + chemical.ChemicalFormula + "(" + chemical.State.ToString().ToLower()[0] + ")" + " + NaOH(aq) + HEAT -> " + chemical.ChemicalFormula.Substring(0, chemical.ChemicalFormula.Length-2) + "OH(l) + NaBr(aq) [row] An Alcohol may join in the next turn!", reactant);
                     break;
                 case "Extinguisher":
                     s = "Bromomethane interrupts chain reactions propogating combustion! Defense of all party members increase dramatically.";
@@ -715,6 +771,8 @@ namespace YoutubeRPG
             player.ChemicalManager.GetBattleChemical(selectedChemical).RecordMove(player.ChemicalManager.GetBattleChemical(selectedChemical).BattleMove);
             foreach (Image img in infoImage)
                 img.LoadContent();
+
+            
         }
         void moveMenu()
         {
@@ -1004,16 +1062,16 @@ namespace YoutubeRPG
         #endregion
 
         #region Misc Functions
-        void spxCombustion(string combustionType, int level)
+        void spxCombustion(string combustionType, int level, bool isPlayer)
         {
             if (level > 5 && combustionType == "CO2")
-                spxImage.Add(new SPX(spxManager.AOEXml(combustionType + "_big", true)));
+                spxImage.Add(new SPX(spxManager.AOEXml(combustionType + "_big", isPlayer)));
             else if (level > 3 && combustionType != "CO2")
-                spxImage.Add(new SPX(spxManager.AOEXml(combustionType + "_big", true)));
+                spxImage.Add(new SPX(spxManager.AOEXml(combustionType + "_big", isPlayer)));
             else if (level > 3 && combustionType == "CO2")
-                spxImage.Add(new SPX(spxManager.AOEXml(combustionType + "_mid", true)));
+                spxImage.Add(new SPX(spxManager.AOEXml(combustionType + "_mid", isPlayer)));
             else
-                spxImage.Add(new SPX(spxManager.AOEXml(combustionType + "_small", true)));
+                spxImage.Add(new SPX(spxManager.AOEXml(combustionType + "_small", isPlayer)));
         }
         void Transition(GameTime gameTime)
         {
