@@ -608,7 +608,7 @@ namespace YoutubeRPG
                     enemyChemical = getRandomChemical(true);
                     infoImage = scrollingDescription(s, Color.Black);
                     s = enemyChemical + " takes " + calculateDamage(selectedChemical, enemyChemical, chemical.BaseDamage, 1, true).ToString() +" kJ/mol of damage!";
-                    continueDescription(s, Color.DarkSlateGray);
+                    continueDescription(s, Color.SaddleBrown);
                     SPX target = new SPX(spxManager.TargetXml(), enemy.ChemicalManager.GetBattleChemical(enemyChemical).Image.Position);
                     spxImage.Add(target);                    
                     break;
@@ -626,6 +626,7 @@ namespace YoutubeRPG
                         infoImage.Add(i);
                         currentOxygen -= chemical.CalculateOxygen(CO2);
                         spxCombustion("CO2", chemical.Level);
+
                         
                     }
                     else if (chemical.GetProduct("carbonmonoxide") > 0)
@@ -652,6 +653,13 @@ namespace YoutubeRPG
                         spxCombustion("C", chemical.Level);
                         currentOxygen -= chemical.CalculateOxygen(C);
                         //add damage
+                        s = String.Empty;
+                        foreach (string damaged in getRandomChemicals(true, Math.Min(chemical.Level, enemy.ChemicalManager.BattlePartySize())))
+                        {
+                            s += damaged + " takes " + calculateDamage(selectedChemical, damaged, chemical.BaseDamage, 1, true).ToString() + " kJ/mol of damage! [row] ";
+                            spxImage.Add(new SPX("Content/Load/SPX/black1.xml", enemy.ChemicalManager.GetBattleChemical(damaged).Image.Position));
+                        }
+                        continueDescription(s, Color.SaddleBrown);
                     }
                     else
                         infoImage = scrollingDescription("Insufficient O2 for Combustion.", Color.Black);
@@ -1434,13 +1442,19 @@ namespace YoutubeRPG
             List<string> names = new List<string>();
             Random rnd = new Random();
             if (isPlayer)
-            {
+            { //problem here... chemicals sometime selected twice...
                 foreach (string n in enemy.ChemicalManager.battleChemicalName)
                     if (!enemy.ChemicalManager.GetBattleChemical(n).IsDead)
                         aliveChemicals.Add(n);
                 for (int i = 0; i < Math.Min(num, aliveChemicals.Count); i++)
                 {
-                    int randomIndex = rnd.Next(0, aliveChemicals.Count - 1);
+                    int randomIndex = rnd.Next(0, aliveChemicals.Count);
+                    string n = enemy.ChemicalManager.battleChemicalName[randomIndex];
+                    while (names.Contains(n))
+                    {
+                        randomIndex = rnd.Next(0, aliveChemicals.Count);
+                        n = enemy.ChemicalManager.battleChemicalName[randomIndex];
+                    }
                     names.Add(enemy.ChemicalManager.battleChemicalName[randomIndex]);
                 }
             }
@@ -1449,7 +1463,7 @@ namespace YoutubeRPG
                 foreach (string n in player.ChemicalManager.battleChemicalName)
                     if (!player.ChemicalManager.GetBattleChemical(n).IsDead)
                         aliveChemicals.Add(n);
-                int randomIndex = rnd.Next(0, aliveChemicals.Count - 1);
+                int randomIndex = rnd.Next(0, aliveChemicals.Count);
                 names.Add(player.ChemicalManager.battleChemicalName[randomIndex]);
             }
             return names;

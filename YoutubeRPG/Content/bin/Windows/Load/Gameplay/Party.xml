@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ChemicalManager>
   <ChemicalSource>Content/Load/Chemical/Halogenoalkane/Bromomethane.xml</ChemicalSource>
-
+  <ChemicalSource>Content/Load/Chemical/Alkane/Methane.xml</ChemicalSource>
+    <ChemicalSource>Content/Load/Chemical/Alkane/Pentane.xml</ChemicalSource>
 </ChemicalManager>
 

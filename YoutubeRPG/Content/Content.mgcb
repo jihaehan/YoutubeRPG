@@ -1506,6 +1506,15 @@
 #begin Load/SPX/red2.xml
 /copy:Load/SPX/red2.xml
 
+#begin Load/SPX/target1.xml
+/copy:Load/SPX/target1.xml
+
+#begin Load/SPX/target2.xml
+/copy:Load/SPX/target2.xml
+
+#begin Load/SPX/target3.xml
+/copy:Load/SPX/target3.xml
+
 #begin Load/SPX/UV.xml
 /copy:Load/SPX/UV.xml
 
@@ -2162,6 +2171,42 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:SPX/player_CO2_small.png
+
+#begin SPX/target1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:SPX/target1.png
+
+#begin SPX/target2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:SPX/target2.png
+
+#begin SPX/target3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:SPX/target3.png
 
 #begin SPX/UV.png
 /importer:TextureImporter
