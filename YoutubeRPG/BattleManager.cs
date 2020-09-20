@@ -27,11 +27,13 @@ namespace YoutubeRPG
         string selectedEnemy;
         int prevSelectedItem, battleMenuSelectedItem;
         int turnCount;
+        int EXP;
         List<Image> infoImage; //for visual text distinct from menuButtons
         List<SPX> spxImage;    //for special effects distinct from menuButtons
 
         List<string> moveList; //for individual chemicals
         List<string> environmentEffects; //for AOE effects for all chemicals
+        Dictionary<string, float> originalDefense; //originalDefense for extinguisher effect
         SpriteFont font;
         Image page;
         Image cardDown, cardUp;
@@ -47,6 +49,7 @@ namespace YoutubeRPG
             totalOxygen = currentOxygen = 3;
             prevSelectedItem = battleMenuSelectedItem = 0;
             turnCount = 1;
+            EXP = 0;
             prevMenuID = currentMenuID = selectedItem = selectedEnemy =  String.Empty;
             pageText = "1/3";
             isPlayerTurn = true;
@@ -60,6 +63,7 @@ namespace YoutubeRPG
             spxManager = new SPXManager();
             spxImage = new List<SPX>();
             infoImage = new List<Image>();
+            originalDefense = new Dictionary<string, float>();
             moveList = environmentEffects = new List<string>();
             clone = new List<Menu>();
             menu = new Menu();
@@ -237,7 +241,21 @@ namespace YoutubeRPG
             if (playableChemicals > 0)
                 return  "Content/Load/Menu/OptionMoveMenu.xml";
             else //switch to battling Menu
+            {
+                //Manage Extinguisher effect
+                originalDefense.Clear();
+                if (spxManager.EnvironmentEffects["Extinguisher"])
+                {
+                    foreach (string n in player.ChemicalManager.battleChemicalName)
+                    {
+                        originalDefense.Add(n, player.ChemicalManager.GetBattleChemical(n).Defense);
+                        player.ChemicalManager.GetBattleChemical(n).Defense -= .2f;
+                        if (player.ChemicalManager.GetBattleChemical(n).Defense < .3f)
+                            player.ChemicalManager.GetBattleChemical(n).Defense = .3f;
+                    }
+                }
                 return "Content/Load/Menu/BattlingMenu.xml";
+            }
         }
         void searchBackpack(string infoText, string reactant)
         {
@@ -360,14 +378,7 @@ namespace YoutubeRPG
         {
             //infoImage
             infoImageClear();
-            Image i = new Image();
-            //i.Text = player.ChemicalManager.RemoveRandomTempChemical() + " leaves the battle!";
-            i.FontName = "Fonts/OCRAsmall";
-            i.TextColor = Color.SaddleBrown;
-            i.Position = new Vector2(340f, 580.5f);
             string s = String.Empty;
-            //Chemical chemical = player.ChemicalManager.GetBattleChemical(selectedChemical);
-
             //trigger Temporary Chemical to leave battle
             s = player.ChemicalManager.RemoveRandomTempChemical();
             if (s != String.Empty)
@@ -392,7 +403,15 @@ namespace YoutubeRPG
             {
                 //Refresh values for player and enemy turn
                 EndTurn();
-                //clear special effects
+                //clear special effects and manage Extinguisher effect
+                if (spxManager.EnvironmentEffects["Extinguisher"])
+                {
+                    foreach (string n in player.ChemicalManager.battleChemicalName)
+                    {
+                        if (originalDefense.ContainsKey(n))
+                            player.ChemicalManager.GetBattleChemical(n).Defense = originalDefense[n];
+                    }
+                }
                 spxManager.EnvironmentEffects["Extinguisher"] = false;
                 foreach (SPX spx in spxImage)
                     spx.FadeOut = true;
@@ -501,11 +520,10 @@ namespace YoutubeRPG
                     infoImage = scrollingDescription(s, Color.SaddleBrown);
                     break;
                 case "Extinguisher":
-                    s = "Bromomethane interrupts chain reactions propogating combustion! All fires are extinguished.";
+                    s = "Bromomethane interrupts chain reactions propogating combustion! Defense of all party members increases dramatically.";
                     infoImage = scrollingDescription(s, Color.SaddleBrown);
                     if (!environmentEffects.Contains(move))
                         environmentEffects.Add("Extinguisher");
-                    //spxClear();
                     spxImage.Add(new SPX(spxManager.EnvironmentXml("Extinguisher")));
                     break;
             }
@@ -607,7 +625,7 @@ namespace YoutubeRPG
                     s = selectedChemical + " releases an Enthalpy of Formation of " + chemical.BaseDamage.ToString() + " kJ/mol [row]";
                     enemyChemical = getRandomChemical(true);
                     infoImage = scrollingDescription(s, Color.Black);
-                    s = enemyChemical + " takes " + calculateDamage(selectedChemical, enemyChemical, chemical.BaseDamage, 1, true).ToString() +" kJ/mol of damage!";
+                    s = enemyChemical + " takes " + calculateDamage(selectedChemical, enemyChemical, chemical.BaseDamage, true).ToString() +" kJ/mol of damage!";
                     continueDescription(s, Color.SaddleBrown);
                     SPX target = new SPX(spxManager.TargetXml(), enemy.ChemicalManager.GetBattleChemical(enemyChemical).Image.Position);
                     spxImage.Add(target);                    
@@ -626,8 +644,7 @@ namespace YoutubeRPG
                         infoImage.Add(i);
                         currentOxygen -= chemical.CalculateOxygen(CO2);
                         spxCombustion("CO2", chemical.Level);
-                        //add damage from Combustion
-                        damagedCombustion(chemical, "red", true);
+                        damagedCombustion(chemical, "red", true); //add damage from combustion
                     }
                     else if (chemical.GetProduct("carbonmonoxide") > 0)
                     {
@@ -640,8 +657,7 @@ namespace YoutubeRPG
                         infoImage.Add(i);
                         spxCombustion("CO", chemical.Level);
                         currentOxygen -= chemical.CalculateOxygen(CO);
-                        //add damage from Combustion
-                        damagedCombustion(chemical, "white", true);
+                        damagedCombustion(chemical, "white", true); //add damage from combustion
                     }
                     else if (chemical.GetProduct("carbon") > 0)
                     {
@@ -654,8 +670,7 @@ namespace YoutubeRPG
                         infoImage.Add(i);
                         spxCombustion("C", chemical.Level);
                         currentOxygen -= chemical.CalculateOxygen(C);
-                        //add damage from Combustion
-                        damagedCombustion(chemical, "black", true);
+                        damagedCombustion(chemical, "black", true); //add damage from combustion
                     }
                     else
                         infoImage = scrollingDescription("Insufficient O2 for Combustion.", Color.Black);
@@ -670,29 +685,29 @@ namespace YoutubeRPG
                     {
                         infoImage = scrollingDescription(chemical.Name + " isomer: " + isomerState.ToString() + " branch. [row] Boiling pt decr as London Dispersion Forces decr.", Color.Black);
                         player.ChemicalManager.LoadIsomer(chemical.Name, isomerState);
+                        //increase defense rating of chemical
+                        player.ChemicalManager.GetBattleChemical(selectedChemical).Defense -= .10f;
                     }
-                    //increase defense rating of chemical
                     break;
                 case "Free Radical Sub": //alkane to halogenoalkane
-                    searchBackpack("Initiation: [row] Br2 -> 2Cl*" , reactant);
+                    searchBackpack(selectedChemical + " begins Free Radical Substitution: Initiation. [row] Br2 -> 2Cl*" , reactant);
                     break;
                 case "Addition Polymeriz": //alkene to alkane
-                    searchBackpack(chemical.ChemicalFormula + "(" + chemical.State.ToString().ToLower()[0] + ") + NiH2(catalyst) + HEAT -> ", reactant);
+                    searchBackpack(selectedChemical + "begins Addition Polymerization. [row] " + chemical.ChemicalFormula + "(" + chemical.State.ToString().ToLower()[0] + ") + NiH2(catalyst) + HEAT -> ", reactant);
                     break;
                 case "Oxidation": //alcohol to alkanal
                     //TO BE FIXED LATER
-                    searchBackpack(chemical.ChemicalFormula + "(l) + Chromate(catalyst) -> Alkanal + water", reactant);
+                    searchBackpack(selectedChemical + "begins Oxidation. [row] " + chemical.ChemicalFormula + "(l) + Chromate(catalyst) -> Alkanal + water", reactant);
                     break;
                 case "SN2 Nucleophil Sub":
                     //dependent on the catalyst available
-                    searchBackpack(chemical.ChemicalFormula + "(" + chemical.State.ToString().ToLower()[0] + ")" + " NaOH(aq) + HEAT -> " + chemical.ChemicalFormula.Substring(0, chemical.ChemicalFormula.Length-2) + "OH(l) + NaBr(aq) [row] An Alcohol may join in the next turn!", reactant);
+                    searchBackpack(selectedChemical + "begins SN2 Nucleophilic Substitution. [row] " + chemical.ChemicalFormula + "(" + chemical.State.ToString().ToLower()[0] + ")" + " NaOH(aq) + HEAT -> " + chemical.ChemicalFormula.Substring(0, chemical.ChemicalFormula.Length-2) + "OH(l) + NaBr(aq) [row] An Alcohol may join in the next turn!", reactant);
                     //Add another chemical at end of turn
                     break;
                 case "Extinguisher":
-                    s = "Bromomethane interrupts chain reactions propogating combustion! All fires are extinguished.";
+                    s = "Bromomethane interrupts chain reactions propogating combustion! Defense of all party members increase dramatically.";
                     infoImage = scrollingDescription(s, Color.Black);
                     environmentEffects.Add("Extinguisher");
-                    //spxImageClear();
                     spxImage.Add(new SPX(spxManager.EnvironmentXml("Extinguisher")));
                     break;
             }
@@ -1410,7 +1425,7 @@ namespace YoutubeRPG
             {
                 foreach (string damaged in getRandomChemicals(isPlayer, Math.Min(chemical.Level, enemy.ChemicalManager.BattlePartySize())))
                 {
-                    s += damaged + " takes " + calculateDamage(selectedChemical, damaged, chemical.Damage, 1, true).ToString() + " kJ/mol of damage! [row] ";
+                    s += damaged + " takes " + calculateDamage(selectedChemical, damaged, chemical.Damage, true).ToString() + " kJ/mol of damage! [row] ";
                     spxImage.Add(new SPX("Content/Load/SPX/" + color + "1.xml", enemy.ChemicalManager.GetBattleChemical(damaged).Image.Position));
                 }
                 continueDescription(s, Color.SaddleBrown);
@@ -1419,20 +1434,20 @@ namespace YoutubeRPG
             {
                 foreach (string damaged in getRandomChemicals(isPlayer, Math.Min(chemical.Level, player.ChemicalManager.BattlePartySize())))
                 {
-                    s += damaged + " takes " + calculateDamage(selectedEnemy, damaged, chemical.Damage, 1, true).ToString() + " kJ/mol of damage! [row] ";
+                    s += damaged + " takes " + calculateDamage(selectedEnemy, damaged, chemical.Damage, true).ToString() + " kJ/mol of damage! [row] ";
                     spxImage.Add(new SPX("Content/Load/SPX/" + color + "2.xml", player.ChemicalManager.GetBattleChemical(damaged).Image.Position));
                 }
                 continueDescription(s, Color.Black);
             }
         }
-        int calculateDamage(string playerName, string enemyName, float damage, float defenseModifier, bool isPlayer)
+        int calculateDamage(string playerName, string enemyName, float damage, bool isPlayer)
         {
             float damageTaken = 0;
             // Formula: 2 * BoilingPoint / EnemyBaseDamage * modifier
             if (isPlayer)
             {
                 float damageReduction = 1 + (1 / (player.ChemicalManager.GetBattleChemical(playerName).MaxDamage / enemy.ChemicalManager.GetBattleChemical(enemyName).BoilingPoint));
-                damageReduction *= defenseModifier;
+                damageReduction *= enemy.ChemicalManager.GetBattleChemical(enemyName).Defense;
                 damageTaken = (int)(damageReduction * damage);
                 enemy.ChemicalManager.GetBattleChemical(enemyName).CurrentHealth += (int)damageTaken;
                 if (enemy.ChemicalManager.GetBattleChemical(enemyName).CurrentHealth < 0)
@@ -1442,7 +1457,7 @@ namespace YoutubeRPG
             else
             {
                 float damageReduction = 1 + (1 / (enemy.ChemicalManager.GetBattleChemical(enemyName).MaxDamage / player.ChemicalManager.GetBattleChemical(playerName).BoilingPoint));
-                damageReduction *= defenseModifier;
+                damageReduction *= player.ChemicalManager.GetBattleChemical(playerName).Defense;
                 damageTaken = (int)(damageReduction * damage);
                 player.ChemicalManager.GetBattleChemical(playerName).CurrentHealth += (int)damageTaken;
                 if (player.ChemicalManager.GetBattleChemical(playerName).CurrentHealth < 0)

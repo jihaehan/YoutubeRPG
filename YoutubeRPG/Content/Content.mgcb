@@ -1443,6 +1443,9 @@
 #begin Load/Menu/TitleMenu.xml
 /copy:Load/Menu/TitleMenu.xml
 
+#begin Load/Saves/Save1.xml
+/copy:Load/Saves/Save1.xml
+
 #begin Load/ScreenManager.xml
 /copy:Load/ScreenManager.xml
 

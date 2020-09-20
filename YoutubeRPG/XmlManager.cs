@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using System.Xml.Serialization;
+using System.Xml;
 using System.IO;
 
 namespace YoutubeRPG
@@ -32,7 +33,7 @@ namespace YoutubeRPG
             {
                 XmlSerializer xml = new XmlSerializer(Type);
                 xml.Serialize(writer, obj);
-                }
+            }
         }
 
     }

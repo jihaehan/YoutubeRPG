@@ -8,11 +8,18 @@ namespace YoutubeRPG
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        //TO BE FIXED LATER
+        public int Experience;
+        public ChemicalManager Party;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            //TO BE FIXED LATER
+            Experience = 0;
+            Party = new ChemicalManager();
         }
 
         protected override void Initialize()

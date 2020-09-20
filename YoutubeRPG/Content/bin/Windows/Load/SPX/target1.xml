@@ -1,5 +1,5 @@
 ﻿<Image>
   <Name>target1</Name>
   <Effects>FadeEffect</Effects>
-  <Path>SPX/hit_outline</Path>
+  <Path>SPX/target1</Path>
 </Image>

@@ -154,7 +154,8 @@ namespace YoutubeRPG
             State = State.Gas;
             Series = Series.Alkane;
             Halogen = Halogen.None;
-            Health = CurrentHealth = Mass = Damage = BaseDamage = MaxDamage = Defense = Dodge = Accuracy = BoilingPoint = 0;
+            Health = CurrentHealth = Mass = Damage = BaseDamage = MaxDamage = Dodge = Accuracy = BoilingPoint = 0;
+            Defense = 1;
             Solubility = false;
             InBattle = false;
             TurnTaken = false;

@@ -33,6 +33,11 @@ namespace YoutubeRPG
         [XmlIgnore]
         public bool IsFadeEffect { get; set; }
 
+        [XmlIgnore]
+        public Dictionary<string, Chemical> Party;
+        [XmlIgnore]
+        public int Experience;
+
         public static ScreenManager Instance
         {
             get
@@ -56,6 +61,9 @@ namespace YoutubeRPG
             xmlGameScreenManager.Type = currentScreen.Type;
             //currentScreen = xmlGameScreenManager.Load("Content/Load/SplashScreen.xml");
 
+            /*TEMP SOLUTION*/
+            Party = new Dictionary<string, Chemical>();
+            Experience = 0;
         }
         public void ChangeScreens(string screenName)
         {
@@ -104,6 +112,7 @@ namespace YoutubeRPG
         {
             currentScreen.UnloadContent();
             Image.UnloadContent();
+            
         }
         public void Update(GameTime gameTime)
         {
