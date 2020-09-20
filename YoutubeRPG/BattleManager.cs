@@ -626,8 +626,8 @@ namespace YoutubeRPG
                         infoImage.Add(i);
                         currentOxygen -= chemical.CalculateOxygen(CO2);
                         spxCombustion("CO2", chemical.Level);
-
-                        
+                        //add damage from Combustion
+                        damagedCombustion(chemical, "red", true);
                     }
                     else if (chemical.GetProduct("carbonmonoxide") > 0)
                     {
@@ -640,6 +640,8 @@ namespace YoutubeRPG
                         infoImage.Add(i);
                         spxCombustion("CO", chemical.Level);
                         currentOxygen -= chemical.CalculateOxygen(CO);
+                        //add damage from Combustion
+                        damagedCombustion(chemical, "white", true);
                     }
                     else if (chemical.GetProduct("carbon") > 0)
                     {
@@ -652,14 +654,8 @@ namespace YoutubeRPG
                         infoImage.Add(i);
                         spxCombustion("C", chemical.Level);
                         currentOxygen -= chemical.CalculateOxygen(C);
-                        //add damage
-                        s = String.Empty;
-                        foreach (string damaged in getRandomChemicals(true, Math.Min(chemical.Level, enemy.ChemicalManager.BattlePartySize())))
-                        {
-                            s += damaged + " takes " + calculateDamage(selectedChemical, damaged, chemical.BaseDamage, 1, true).ToString() + " kJ/mol of damage! [row] ";
-                            spxImage.Add(new SPX("Content/Load/SPX/black1.xml", enemy.ChemicalManager.GetBattleChemical(damaged).Image.Position));
-                        }
-                        continueDescription(s, Color.SaddleBrown);
+                        //add damage from Combustion
+                        damagedCombustion(chemical, "black", true);
                     }
                     else
                         infoImage = scrollingDescription("Insufficient O2 for Combustion.", Color.Black);
@@ -1407,30 +1403,48 @@ namespace YoutubeRPG
         #endregion
 
         #region Shortcuts
+        void damagedCombustion(Chemical chemical, string color, bool isPlayer)
+        {
+            string s = String.Empty;
+            if (isPlayer)
+            {
+                foreach (string damaged in getRandomChemicals(isPlayer, Math.Min(chemical.Level, enemy.ChemicalManager.BattlePartySize())))
+                {
+                    s += damaged + " takes " + calculateDamage(selectedChemical, damaged, chemical.Damage, 1, true).ToString() + " kJ/mol of damage! [row] ";
+                    spxImage.Add(new SPX("Content/Load/SPX/" + color + "1.xml", enemy.ChemicalManager.GetBattleChemical(damaged).Image.Position));
+                }
+                continueDescription(s, Color.SaddleBrown);
+            }
+            else
+            {
+                foreach (string damaged in getRandomChemicals(isPlayer, Math.Min(chemical.Level, player.ChemicalManager.BattlePartySize())))
+                {
+                    s += damaged + " takes " + calculateDamage(selectedEnemy, damaged, chemical.Damage, 1, true).ToString() + " kJ/mol of damage! [row] ";
+                    spxImage.Add(new SPX("Content/Load/SPX/" + color + "2.xml", player.ChemicalManager.GetBattleChemical(damaged).Image.Position));
+                }
+                continueDescription(s, Color.Black);
+            }
+        }
         int calculateDamage(string playerName, string enemyName, float damage, float defenseModifier, bool isPlayer)
         {
             float damageTaken = 0;
             // Formula: 2 * BoilingPoint / EnemyBaseDamage * modifier
             if (isPlayer)
             {
-                float damageReduction = 2 * enemy.ChemicalManager.GetBattleChemical(enemyName).BaseDamage / player.ChemicalManager.GetBattleChemical(playerName).BoilingPoint * defenseModifier;
-                damageTaken = (int)((1 - damageReduction) * damage);
-                if (damageTaken < 0)
-                    damageTaken *= -1;
-                player.ChemicalManager.GetBattleChemical(playerName).Defense = (int)(1 - damageReduction);
-                enemy.ChemicalManager.GetBattleChemical(enemyName).CurrentHealth -= (int)damageTaken;
+                float damageReduction = 1 + (1 / (player.ChemicalManager.GetBattleChemical(playerName).MaxDamage / enemy.ChemicalManager.GetBattleChemical(enemyName).BoilingPoint));
+                damageReduction *= defenseModifier;
+                damageTaken = (int)(damageReduction * damage);
+                enemy.ChemicalManager.GetBattleChemical(enemyName).CurrentHealth += (int)damageTaken;
                 if (enemy.ChemicalManager.GetBattleChemical(enemyName).CurrentHealth < 0)
                     enemy.ChemicalManager.GetBattleChemical(enemyName).CurrentHealth = 0;
                 return (int)damageTaken;
             }
             else
             {
-                float damageReduction = 2 * player.ChemicalManager.GetBattleChemical(playerName).BaseDamage / enemy.ChemicalManager.GetBattleChemical(enemyName).BoilingPoint * defenseModifier;
-                damageTaken = (int)((1 - damageReduction) * damage);
-                if (damageTaken < 0)
-                    damageTaken *= -1;
-                enemy.ChemicalManager.GetBattleChemical(enemyName).Defense = (int)(1 - damageReduction);
-                player.ChemicalManager.GetBattleChemical(playerName).CurrentHealth -= (int)damageTaken;
+                float damageReduction = 1 + (1 / (enemy.ChemicalManager.GetBattleChemical(enemyName).MaxDamage / player.ChemicalManager.GetBattleChemical(playerName).BoilingPoint));
+                damageReduction *= defenseModifier;
+                damageTaken = (int)(damageReduction * damage);
+                player.ChemicalManager.GetBattleChemical(playerName).CurrentHealth += (int)damageTaken;
                 if (player.ChemicalManager.GetBattleChemical(playerName).CurrentHealth < 0)
                     player.ChemicalManager.GetBattleChemical(playerName).CurrentHealth = 0;
                 return (int)damageTaken;
@@ -1442,7 +1456,7 @@ namespace YoutubeRPG
             List<string> names = new List<string>();
             Random rnd = new Random();
             if (isPlayer)
-            { //problem here... chemicals sometime selected twice...
+            {
                 foreach (string n in enemy.ChemicalManager.battleChemicalName)
                     if (!enemy.ChemicalManager.GetBattleChemical(n).IsDead)
                         aliveChemicals.Add(n);
@@ -1463,8 +1477,17 @@ namespace YoutubeRPG
                 foreach (string n in player.ChemicalManager.battleChemicalName)
                     if (!player.ChemicalManager.GetBattleChemical(n).IsDead)
                         aliveChemicals.Add(n);
-                int randomIndex = rnd.Next(0, aliveChemicals.Count);
-                names.Add(player.ChemicalManager.battleChemicalName[randomIndex]);
+                for (int i = 0; i < Math.Min(num, aliveChemicals.Count); i++)
+                {
+                    int randomIndex = rnd.Next(0, aliveChemicals.Count);
+                    string n = player.ChemicalManager.battleChemicalName[randomIndex];
+                    while (names.Contains(n))
+                    {
+                        randomIndex = rnd.Next(0, aliveChemicals.Count);
+                        n = player.ChemicalManager.battleChemicalName[randomIndex];
+                    }
+                    names.Add(enemy.ChemicalManager.battleChemicalName[randomIndex]);
+                }
             }
             return names;
         }
