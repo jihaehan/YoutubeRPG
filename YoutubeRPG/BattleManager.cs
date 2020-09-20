@@ -526,22 +526,21 @@ namespace YoutubeRPG
                         s = selectedEnemy + " reacts with Oxygen to produce Carbondioxide and Water! [row] Releases Enthalpy of Combustion of " + chemical.Damage.ToString() + "kJ/mol";
                         infoImage = scrollingDescription(s, Color.SaddleBrown);
                         spxCombustion("CO2", chemical.Level, false);
-                        
-                        //add damage
+                        damagedCombustion(chemical, "red", false); //add damage from combustion
                     }
                     else if (chemical.GetProduct("carbonmonoxide") > 0)
                     {
                         s = selectedEnemy + " reacts with Oxygen to produce Carbonmonoxide and Water! [row] Incomplete Combustion releases " + chemical.Damage.ToString() + "kJ/mol";
                         infoImage = scrollingDescription(s, Color.SaddleBrown);
                         spxCombustion("CO", chemical.Level, false);
-                        //add damage
+                        damagedCombustion(chemical, "white", false); //add damage from combustion
                     }
                     else if (chemical.GetProduct("carbon") > 0)
                     {
                         s = selectedEnemy + " reacts with Oxygen to produce Soot and Water! [row] Incomplete Combustion releases " + chemical.Damage.ToString() + "kJ/mol";
                         infoImage = scrollingDescription(s, Color.SaddleBrown);
                         spxCombustion("C", chemical.Level, false);
-                        //add damage
+                        damagedCombustion(chemical, "black", false); //add damage from combustion
                     }
                     else
                         infoImage = scrollingDescription(selectedEnemy + " tries to combust! But insufficient Oxygen.", Color.SaddleBrown);
@@ -856,7 +855,15 @@ namespace YoutubeRPG
                     else
                         infoImageClear();
                 }
-            if (!isMultiStepMove)
+            if (checkWinCondition(true))
+            {
+                MenuItem item = new MenuItem();
+                item.Image = new Image();
+                item.Image.Text = " ";
+                item.LinkID = "Content/Load/Menu/EndBattleMenu.xml";
+                menu.Items.Add(item);
+            } 
+            else if (!isMultiStepMove)
             {
                 generateMoveList(chemical);
                 foreach (string move in moveList)
@@ -1492,7 +1499,7 @@ namespace YoutubeRPG
             {
                 foreach (string damaged in getRandomChemicals(isPlayer, Math.Min(chemical.Level, player.ChemicalManager.BattlePartySize())))
                 {
-                    s += damaged + " takes " + calculateDamage(selectedEnemy, damaged, chemical.Damage, true).ToString() + " kJ/mol of damage! [row] ";
+                    s += damaged + " takes " + calculateDamage(damaged, selectedEnemy, chemical.Damage, false).ToString() + " kJ/mol of damage! [row] ";
                     spxImage.Add(new SPX("Content/Load/SPX/" + color + "2.xml", player.ChemicalManager.GetBattleChemical(damaged).Image.Position));
                 }
                 continueDescription(s, Color.Black);
@@ -1501,7 +1508,6 @@ namespace YoutubeRPG
         int calculateDamage(string playerName, string enemyName, float damage, bool isPlayer)
         {
             float damageTaken = 0;
-            // Formula: 2 * BoilingPoint / EnemyBaseDamage * modifier
             if (isPlayer)
             {
                 float damageReduction = 1 + (1 / (player.ChemicalManager.GetBattleChemical(playerName).MaxDamage / enemy.ChemicalManager.GetBattleChemical(enemyName).BoilingPoint));
@@ -1559,7 +1565,7 @@ namespace YoutubeRPG
                         randomIndex = rnd.Next(0, aliveChemicals.Count);
                         n = player.ChemicalManager.battleChemicalName[randomIndex];
                     }
-                    names.Add(enemy.ChemicalManager.battleChemicalName[randomIndex]);
+                    names.Add(player.ChemicalManager.battleChemicalName[randomIndex]);
                 }
             }
             return names;

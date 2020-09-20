@@ -32,7 +32,7 @@ namespace YoutubeRPG
             LoadContent();
             targetPosition = Image.Position;
             if (Image.Path.Contains("enemy"))
-                Image.Position = new Vector2(1280 + Image.SourceRect.Width, targetPosition.Y);
+                Image.Position = new Vector2(1280, targetPosition.Y);
             else if (Image.Path.Contains("player"))
                 Image.Position = new Vector2(-Image.SourceRect.Width, targetPosition.Y);
         }
