@@ -245,6 +245,7 @@ namespace YoutubeRPG
             bool win = false;
             int deadCount = 0;
             int battleCount = 0;
+            if (isPlayer)
             {
                 foreach (string n in enemy.ChemicalManager.battleChemicalName)
                 {
@@ -261,7 +262,7 @@ namespace YoutubeRPG
                     isWin = true;
                 }
             }
-            if (!win)
+            else
             {
                 foreach (string n in player.ChemicalManager.battleChemicalName)
                 {
@@ -273,9 +274,7 @@ namespace YoutubeRPG
                     }
                 }
                 if (deadCount == battleCount)
-                {
                     win = true;
-                }
             }
             return win;
         }
@@ -442,7 +441,8 @@ namespace YoutubeRPG
                 item.Image = new Image();
                 item.Image.Position = new Vector2(-5, -5);
                 item.Image.Text = ".";
-                if (checkWinCondition(false))
+                
+                if (checkWinCondition(false) || checkWinCondition(true))
                 {   //if EnemyWins
                     item.LinkID = "Content/Load/Menu/EndBattleMenu.xml";
                 }
@@ -484,7 +484,10 @@ namespace YoutubeRPG
                 if (c.InBattle)
                     EXP += c.Mass;
             }
-            EXP = EXP / player.ChemicalManager.BattlePartySize();
+            if (player.ChemicalManager.BattlePartySize() > 0)
+                EXP = EXP / player.ChemicalManager.BattlePartySize();
+            else
+                EXP = 0;
             if (isWin)
                 infoImage = scrollingDescription("Marie has won the battle! [row] Each Party member gains " + EXP.ToString() + " of Atomic Mass!", Color.Black);
             else
@@ -552,16 +555,78 @@ namespace YoutubeRPG
         #region Enemy Logic
         void enemyMenu()
         {
+            //Menu Items
+            if (checkWinCondition(false))
+            {
+                menu.Items.Clear();
+                MenuItem item = new MenuItem();
+                item.Image = new Image();
+                item.LinkID = "Content/Load/Menu/EndBattleMenu.xml";
+                menu.Items.Add(item);
+            }
+            //InfoImage
             infoImageClear();
             Chemical chemical = enemy.ChemicalManager.GetBattleChemical(selectedEnemy);
             string s = String.Empty;
+            string tempChemicalName = String.Empty;
             string randomChemical = String.Empty;
             List<string> randomChemicals = new List<string>();
             bool isMultiStepMove = false;
+            string[] multiStepMoves = { "Free Radical Sub", "Addition Polymeriz", "Oxidation", "SN2 Nucleophil Sub" };
+
+            foreach (string str in multiStepMoves)
+                if (!isMultiStepMove && chemical.GetMoveHistory(1, str))
+                {
+                    isMultiStepMove = true;
+                    enemy.ChemicalManager.GetBattleChemical(selectedEnemy).BattleMove = str;
+                    enemy.ChemicalManager.GetBattleChemical(selectedEnemy).RecordMove(str);
+                    switch (str)
+                    {
+                        case "Free Radical Sub": //alkane to halogenoalkane
+                            if (chemical.CheckMoveCount(str) > 3)
+                                exitMultiStep(ref isMultiStepMove, false);
+                            else if (chemical.GetMoveHistory(3, str))
+                            {
+                                tempChemicalName = getTempName("Bromo" + chemical.Name.ToLower(), String.Empty, String.Empty);
+                                string intermediate = chemical.ChemicalFormula.Substring(0, chemical.ChemicalFormula.Length - 1) + (chemical.GetElement(Element.H) - 1).ToString();
+                                infoImage = scrollingDescription("Last step of Free Radical Substitution. [row] Termination: [row] Br* + Br* -> Br2 [row] Br* + *" + intermediate + " -> " + intermediate + "Br [row] " + tempChemicalName + " joins the battle!", Color.SaddleBrown);
+                                enemy.ChemicalManager.LoadTempChemical(tempChemicalName, "Halogenoalkane");
+                            }
+                            else
+                            {
+                                infoImage = scrollingDescription(chemical.Name + " enters second step of Free Radical Substitution. [row] Propagation: [row] Br* " + chemical.ChemicalFormula + " -> HBr + *" + chemical.ChemicalFormula.Substring(0, chemical.ChemicalFormula.Length - 1) + (chemical.GetElement(Element.H) - 1).ToString(), Color.SaddleBrown);
+                            }
+                            break;
+                        case "Addition Polymeriz": //alkene to alkane
+                            if (chemical.CheckMoveCount(str) > 2)
+                                exitMultiStep(ref isMultiStepMove, false);
+                            else
+                            {
+                                tempChemicalName = getTempName(chemical.Name, "ene", "ane");
+                                enemy.ChemicalManager.LoadTempChemical(tempChemicalName, "Alkane");
+                                infoImage = scrollingDescription(tempChemicalName + " joins the battle!", Color.SaddleBrown);
+                            }
+                            break;
+                        case "SN2 Nucleophil Sub":
+                            if (chemical.CheckMoveCount(str) > 2)
+                                exitMultiStep(ref isMultiStepMove, false);
+                            else
+                            {
+                                tempChemicalName = chemical.Name.Replace("Bromo", String.Empty);
+                                tempChemicalName = getTempName(tempChemicalName, "ane", "anol");
+                                tempChemicalName = tempChemicalName[0].ToString().ToUpper() + tempChemicalName.Substring(1);
+                                enemy.ChemicalManager.LoadTempChemical(tempChemicalName, "Alcohol");
+                                infoImage = scrollingDescription(tempChemicalName + " joins the battle!", Color.SaddleBrown);
+                            }
+                            break;
+                    }
+                }
 
             if (!isMultiStepMove)
             { 
                 string move = enemyMoveName(selectedEnemy);
+                enemy.ChemicalManager.GetBattleChemical(selectedEnemy).BattleMove = move;
+                enemy.ChemicalManager.GetBattleChemical(selectedEnemy).RecordMove(move);
                 switch (move)
                 {
                     case "Formation":
@@ -635,8 +700,8 @@ namespace YoutubeRPG
                         spxImage.Add(new SPX(spxManager.EnvironmentXml("Extinguisher")));
                         break;
                 }
+                infoImage = scrollingDescription(s, Color.SaddleBrown);
             }
-            infoImage = scrollingDescription(s, Color.SaddleBrown);
             foreach (Image image in infoImage)
                 image.LoadContent();
         }
@@ -819,8 +884,6 @@ namespace YoutubeRPG
             player.ChemicalManager.GetBattleChemical(selectedChemical).RecordMove(player.ChemicalManager.GetBattleChemical(selectedChemical).BattleMove);
             foreach (Image img in infoImage)
                 img.LoadContent();
-
-            
         }
         void moveMenu()
         {
@@ -834,7 +897,6 @@ namespace YoutubeRPG
             #endregion
 
             foreach (string str in multiStepMoves)
-                //FIX: need to remove restriction after move is followed up
                 if (!isMultiStepMove && chemical.GetMoveHistory(1, str))
                 {
                     isMultiStepMove = true;
@@ -845,7 +907,7 @@ namespace YoutubeRPG
                     {
                         case "Free Radical Sub": //alkane to halogenoalkane
                             if (chemical.CheckMoveCount(str) > 3)
-                                exitMultiStep(ref isMultiStepMove);
+                                exitMultiStep(ref isMultiStepMove, true);
                             else if (chemical.GetMoveHistory(3, str))
                             {
                                 tempChemicalName = getTempName("Bromo" + chemical.Name.ToLower(), String.Empty, String.Empty);
@@ -860,7 +922,7 @@ namespace YoutubeRPG
                             break;
                         case "Addition Polymeriz": //alkene to alkane
                             if (chemical.CheckMoveCount(str) > 2)
-                                exitMultiStep(ref isMultiStepMove);
+                                exitMultiStep(ref isMultiStepMove, true);
                             else
                             {
                                 tempChemicalName = getTempName(chemical.Name, "ene", "ane");
@@ -870,7 +932,7 @@ namespace YoutubeRPG
                             break;
                         case "Oxidation": //alcohol to alkanal
                             if (chemical.CheckMoveCount(str) > 2)
-                                exitMultiStep(ref isMultiStepMove);
+                                exitMultiStep(ref isMultiStepMove, true);
                             else
                             {
                                 tempChemicalName = getTempName(chemical.Name, "anol", "anal");
@@ -880,7 +942,7 @@ namespace YoutubeRPG
                             break;
                         case "SN2 Nucleophil Sub":
                             if (chemical.CheckMoveCount(str) > 2)
-                                exitMultiStep(ref isMultiStepMove);
+                                exitMultiStep(ref isMultiStepMove, true);
                             else
                             {
                                 tempChemicalName = chemical.Name.Replace("Bromo", String.Empty);
@@ -964,6 +1026,15 @@ namespace YoutubeRPG
                     
                     menu.Items.Add(item);
                 }
+            }
+            if (checkWinCondition(true))
+            {
+                menu.Items.Clear();
+                MenuItem item = new MenuItem();
+                item.Image = new Image();
+                item.Image.Text = ".";
+                item.LinkID = "Content/Load/Menu/EndBattleMenu.xml";
+                menu.Items.Add(item);
             }
         }
         void optionItemMenu()
@@ -1663,11 +1734,19 @@ namespace YoutubeRPG
             }
             return tempName;
         }
-        void exitMultiStep(ref bool bMultiStep)
+        void exitMultiStep(ref bool bMultiStep, bool isPlayer)
         {
             bMultiStep = false;
-            player.ChemicalManager.GetBattleChemical(selectedItem).BattleMove = String.Empty;
-            player.ChemicalManager.GetBattleChemical(selectedItem).RecordMove(String.Empty);
+            if (isPlayer)
+            {
+                player.ChemicalManager.GetBattleChemical(selectedItem).BattleMove = String.Empty;
+                player.ChemicalManager.GetBattleChemical(selectedItem).RecordMove(String.Empty);
+            }
+            else
+            {
+                enemy.ChemicalManager.GetBattleChemical(selectedEnemy).BattleMove = String.Empty;
+                enemy.ChemicalManager.GetBattleChemical(selectedEnemy).RecordMove(String.Empty);
+            }
         }
         void spxImageFade()
         {
