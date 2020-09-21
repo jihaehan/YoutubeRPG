@@ -297,6 +297,10 @@ namespace YoutubeRPG
         {
             return battleChemicals.Count;
         }
+        public int PartySize()
+        {
+            return chemicals.Count;
+        }
         public void BattleReady(string name)
         {
             chemicals[name].InBattle = true;

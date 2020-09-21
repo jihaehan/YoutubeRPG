@@ -61,8 +61,8 @@ namespace YoutubeRPG
         public void UnloadContent()
         {
             Image.UnloadContent();
-            if (ChemicalManager != null)
-                ChemicalManager.UnloadContent();
+            //if (ChemicalManager != null)
+                //ChemicalManager.UnloadContent();
             if (ItemManager != null)
                 ItemManager.UnloadContent();
             if (CharacterManager != null)

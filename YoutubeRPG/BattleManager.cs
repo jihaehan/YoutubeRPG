@@ -191,6 +191,7 @@ namespace YoutubeRPG
         }
         public void UnloadContent()
         {
+            player.ChemicalManager.SaveParty();
             //First save player content into another file before unloading...
             //and then redirect screen to level up screen depending on EXP gains
             player.UnloadContent();
@@ -1648,7 +1649,13 @@ namespace YoutubeRPG
         {
             XmlManager<Player> playerLoader = new XmlManager<Player>();
             player = playerLoader.Load("Content/Load/Gameplay/Player.xml");
+            if (ScreenManager.Instance.Party.Count > 0)
+            {
+                player.ChemicalManager.UnloadContent();
+                player.ChemicalManager.LoadParty();
+            }
             player.LoadContent();
+
             player.Image.Position = new Vector2(128, 360);
             player.Image.SpriteSheetEffect.CurrentFrame.Y = 7;
             player.Image.SpriteSheetEffect.SwitchFrame = 500;
