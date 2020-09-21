@@ -32,6 +32,7 @@ namespace YoutubeRPG
         int levellingCount;
         float EXP;
         List<Image> infoImage; //for visual text distinct from menuButtons
+        List<Image> levellingImage;
         List<SPX> spxImage;    //for special effects distinct from menuButtons
 
         List<string> moveList; //for individual chemicals
@@ -71,6 +72,7 @@ namespace YoutubeRPG
             spxManager = new SPXManager();
             spxImage = new List<SPX>();
             infoImage = new List<Image>();
+            levellingImage = new List<Image>();
             originalDefense = new Dictionary<string, float>();
             moveList = environmentEffects = new List<string>();
             levellingChemicals = new List<string>();
@@ -209,6 +211,8 @@ namespace YoutubeRPG
                 spx.UnloadContent();
             foreach (Image i in infoImage)
                 i.UnloadContent();
+            foreach (Image i in levellingImage)
+                i.UnloadContent();
         }
         public void Update(GameTime gameTime)
         {
@@ -225,6 +229,12 @@ namespace YoutubeRPG
                 spx.Update(gameTime);
             foreach (Image i in infoImage)
                 i.Update(gameTime);
+            foreach (Image i in levellingImage)
+            {
+                if (i.Alpha >= 1.0f)
+                    i.IsActive = false;
+                i.Update(gameTime);
+            }
 
             for (int count = 0; count < levellingCount; count++)
             {
@@ -248,11 +258,14 @@ namespace YoutubeRPG
                 m.Draw(spriteBatch);
             menu.Draw(spriteBatch);
             if (!isLevelling)
-            { 
+            {
                 cardDown.Draw(spriteBatch);
                 cardUp.Draw(spriteBatch);
                 drawOxygen(spriteBatch);
             }
+            else
+                foreach (Image img in levellingImage)
+                    img.Draw(spriteBatch);
             foreach (string n in levelledChemicals)
                 player.ChemicalManager.GetChemical(n).Draw(spriteBatch);
 
@@ -556,15 +569,17 @@ namespace YoutubeRPG
         void levellingMenu()
         {
             isLevelling = true;
-            //needs more work
             infoImageClear();
             string s = String.Empty;
             string evolvedName = String.Empty;
             Chemical chemical = new Chemical();
             XmlManager<Chemical> chemicalLoader = new XmlManager<Chemical>();
-
+            
             if (levellingCount < levellingChemicals.Count)
             {
+                foreach (Image img in levellingImage)
+                    img.UnloadContent();
+                levellingImage.Clear();
                 string n = levellingChemicals[levellingCount];
                 chemical = player.ChemicalManager.GetBattleChemical(n);
                 evolvedName = getTempName(n, chemical.NameLevel(chemical.Level), chemical.NameLevel(chemical.Level + 1));
@@ -576,13 +591,14 @@ namespace YoutubeRPG
                     player.ChemicalManager.AddChemical(c);
                     player.ChemicalManager.LevellingTransition(n, evolvedName);
                     levelledChemicals.Add(evolvedName);
-                    
+                    displayLevellingInfo(chemical, c);
                 }
                 else
                 {
                     s += n + " has reached Level Cap. Expand your knowledge of chemistry to unlock next levels! [row] ";
                     player.ChemicalManager.LevellingStop(n);
                     levelledChemicals.Add(n);
+                    displayLevellingInfo(chemical, chemical);
                 }
                 infoImage = scrollingDescription(s, Color.Black);
                 //move other chemicals elsewhere
@@ -590,6 +606,8 @@ namespace YoutubeRPG
                     if (name != n && player.ChemicalManager.chemicalName.Contains(name))
                         player.ChemicalManager.GetBattleChemical(name).Image.Position = new Vector2(-128, -128);
                 levellingCount++;
+                foreach (Image i in levellingImage)
+                    i.LoadContent();
             }
             else
             {
@@ -603,6 +621,7 @@ namespace YoutubeRPG
             }
             foreach (Image i in infoImage)
                 i.LoadContent();
+
         }
         string enemyMoveName(string name) //NPC logic
         {
@@ -1265,6 +1284,114 @@ namespace YoutubeRPG
         #endregion
 
         #region Misc Functions
+        void displayLevellingInfo(Chemical chemical, Chemical c)
+        {
+            int gap1 = 8 - chemical.ChemicalFormula.Length;
+            int gap2 = 8 - c.ChemicalFormula.Length;
+            string g1, g2;
+            g1 = g2 = String.Empty;
+            for (int g = 0; g < gap1; g++)
+                g1 += " ";
+            for (int g = 0; g < gap2; g++)
+                g2 += " ";
+            c.SetOxygen(100);
+            c.Combustion();
+            string combustionFormula = c.ChemicalFormula + " + " + c.CalculateOxygen("carbondioxide") + "O2 -> " + c.GetProduct("carbondioxide").ToString() + "CO2 + " + c.GetProduct("water").ToString() + "H2O";
+            generateMoveList(c);
+            List<string> specialMove = new List<string>();
+            string[] moveInfo = { "Free Radical Sub", "Addition Polymeriz", "Oxidation", "SN2 Nucleophil Sub" };
+            bool safetyCheck = false;
+            foreach (string info in moveInfo)
+                if (moveList.Contains(info) && !safetyCheck)
+                {
+                    safetyCheck = true;
+                    switch (info)
+                    {
+                        case "Free Radical Sub":
+                            specialMove.Add("Free Radical Substitution");
+                            specialMove.Add(removeAsterisk(c.Name) + " + Br2 + UV -> Bromo" + removeAsterisk(c.Name.ToLower()));
+                            break;
+                        case "Addition Polymeriz":
+                            specialMove.Add("Addition Polymerisation:");
+                            specialMove.Add(removeAsterisk(c.Name) + " + NiH2 + HEAT -> " + getTempName(c.Name, "ene", "ane"));
+                            break;
+                        case "Oxidation":
+                            specialMove.Add("Oxidation");
+                            specialMove.Add(removeAsterisk(c.Name) + " + Chromate + HEAT -> " + "Alkanal");
+                            break;
+                        case "SN2 Nucleophil Sub":
+                            specialMove.Add("SN2 Nucleophilic Substitution");
+                            specialMove.Add(removeAsterisk(c.Name) + " + NaOH + HEAT -> " + getTempName(getTempName(c.Name, "Bromo", String.Empty), "ane", "anol"));
+                            break;
+                    }
+                }
+            if (specialMove.Count > 1) //make new line if possible for special Move
+                if (specialMove[1].Length > 25)
+                {
+                    int count = 0;
+                    string[] words = specialMove[1].Split(' ');
+                    specialMove[1] = String.Empty;
+                    specialMove.Add(String.Empty);
+                    foreach (string w in words)
+                    {
+                        count += w.Length + 1;
+                        if (count < 25)
+                            specialMove[1] += w + " ";
+                        else
+                            specialMove[2] += w + " ";
+                    }
+                }
+
+            string[] levellingInfo = { c.Series.ToString().ToUpper() + " SERIES:", " ", chemical.ChemicalFormula + g1 + chemical.Name, c.ChemicalFormula + g2 + c.Name, " ", "Isomers:", c.Isomers.ToString(), "Complete Combustion:", combustionFormula, specialMove[0], specialMove[1] };
+
+            int infoCount = 0;
+            Vector2 dimensions = new Vector2(711, 141);
+            foreach (string info in levellingInfo)
+            {
+                Image i = new Image();
+                i.FontName = "Fonts/OCRAsmall";
+                i.Text = info;
+                i.Position = dimensions;
+                i.Effects = "FadeEffect";
+                i.IsActive = true;
+                i.TextColor.R = 255;
+                i.Alpha = 0;
+                if (infoCount == 6)
+                {
+                    i.TextColor.G = 189;
+                    i.TextColor.B = 0;
+                }
+                else if (infoCount == 8)
+                {
+                    i.TextColor.G = 235;
+                    i.TextColor.B = 79;
+                }
+                else if (infoCount == 10)
+                {
+                    i.TextColor.G = 241;
+                    i.TextColor.B = 160;
+                }
+                else
+                    i.TextColor = Color.Black;
+                infoCount++;
+                dimensions.Y += 30f;
+                levellingImage.Add(i);
+            }
+            if (specialMove.Count > 2)
+            {
+                Image i = new Image();
+                i.FontName = "Fonts/OCRAsmall";
+                i.Text = specialMove[2];
+                i.Position = dimensions;
+                i.Effects = "FadeEffect";
+                i.IsActive = true;
+                i.Alpha = 0;
+                i.TextColor.R = 255;
+                i.TextColor.G = 241;
+                i.TextColor.B = 160;
+                levellingImage.Add(i);
+            }
+        }
         void spxCombustion(string combustionType, int level, bool isPlayer)
         {
             if (level > 5 && combustionType == "CO2")
@@ -1798,6 +1925,15 @@ namespace YoutubeRPG
             if (infoImage.Count % 3 == 0)
                 foreach (Image img in scrollingDescriptionContinued(description, color))
                     infoImage.Add(img);
+        }
+        string removeAsterisk(string name)
+        {
+            if (name.Contains("*"))
+            {
+                string[] str = name.Split('*');
+                name = str[0];
+            }
+            return name;
         }
         string getTempName(string tempName, string delete, string replace)
         {

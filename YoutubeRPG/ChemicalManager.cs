@@ -22,6 +22,7 @@ namespace YoutubeRPG
 
         Dictionary<string, Chemical> battleChemicals;
         public List<string> battleChemicalName;
+        Dictionary<string, Image> diagram;
         public List<string> tempChemicalName;
         public List<string> deadChemicalName;
         List<Chemical> clone;
@@ -46,6 +47,7 @@ namespace YoutubeRPG
             tag = new Image();
             shadow = new Image();
             clone = new List<Chemical>();
+            diagram = new Dictionary<string, Image>();
              
         }
         #region Temp Chemical Methods
@@ -72,6 +74,7 @@ namespace YoutubeRPG
                 chemicals.Remove(name);
             }
             tempChemicalName.Clear();
+            
         }
         public void LoadTempChemical(string name, string series)
         {
@@ -90,20 +93,32 @@ namespace YoutubeRPG
         #endregion
         public void LevellingTransition(string original, string evolved)
         {
-            chemicals[original].Image.Position = new Vector2(200, 278);
             chemicals[evolved].Image.Position = new Vector2(420, 278);
             chemicals[evolved].Image.Alpha = 0.0f;
+            chemicals[evolved].IsLevelling = true;
+            chemicals[original].Image.Position = new Vector2(200, 278);
             chemicals[original].Image.Alpha = 0.1f;
             chemicals[original].IsLevelling = true;
-            chemicals[evolved].IsLevelling = true;
             chemicals[original].Image.ActivateEffect("FadeEffect");
             chemicals[original].Image.FadeEffect.Increase = true;
+            Image i = new Image();
+            i.Path = "Chemical/Diagram/" + removeAsterisk(original);
+            diagram.Add(original, i);
+            i = new Image();
+            i.Path = "Chemical/Diagram/" + removeAsterisk(evolved);
+            diagram.Add(evolved, i);
+            diagram[original].LoadContent();
+            diagram[evolved].LoadContent();
         }
         public void LevellingStop(string original)
         {
             chemicals[original].Image.Position = new Vector2(420, 278);
             chemicals[original].Image.Alpha = 0.0f;
             chemicals[original].IsLevelling = true;
+            Image i = new Image();
+            i.Path = "Chemical/Diagram/" + removeAsterisk(original);
+            diagram.Add(original, i);
+            diagram[original].LoadContent();
         }
         public void LevellingHide(GameTime gameTime, string original, string evolved)
         {
@@ -157,6 +172,9 @@ namespace YoutubeRPG
             shadow.Position = chemicals[name].Image.Position + new Vector2(-11, 100);
             shadow.Alpha = chemicals[name].Image.Alpha;
             shadow.Draw(spriteBatch);
+            diagram[name].Position = chemicals[name].Image.Position + new Vector2(-126, -170);
+            diagram[name].Alpha = chemicals[name].Image.Alpha;
+            diagram[name].Draw(spriteBatch);
             chemicals[name].Draw(spriteBatch);
         }
         public void LoadIsomer(string chemicalName, int branches)
@@ -197,6 +215,8 @@ namespace YoutubeRPG
         {
             foreach (string name in chemicalName)           
                 chemicals[name].UnloadContent();
+            foreach (string name in diagram.Keys)
+                diagram[name].UnloadContent();
             tag.UnloadContent();
             shadow.UnloadContent();
             UnloadTempChemicals();
@@ -218,7 +238,6 @@ namespace YoutubeRPG
                 }
                 else if (Vector2.Distance(player.Image.Position, chemicals[chemicalName[count]].Image.Position) > chemicals[chemicalName[count]].Dimensions.X * 3)
                     chemicals[chemicalName[count]].Image.Position = player.Image.Position;
-
                 chemicals[chemicalName[count]].Update(gameTime, ref player, chemical, count);
             }
         }
@@ -411,7 +430,6 @@ namespace YoutubeRPG
                     deadChemicalName.Add(deadTemp[i]);
             }
             deadTemp.Clear();
-
         }
         public void BattleDraw(SpriteBatch spriteBatch)
         {
@@ -503,6 +521,18 @@ namespace YoutubeRPG
                 return;
             }
             throw new Exception("Chemical not found.");
+        }
+        #endregion
+
+        #region Misc Funtions
+        string removeAsterisk(string name)
+        {
+            if (name.Contains("*"))
+            {
+                string[] str = name.Split('*');
+                name = str[0];
+            }
+            return name;
         }
         #endregion
     }
