@@ -448,7 +448,7 @@ namespace YoutubeRPG
             
             i.Text += "Boiling Pt:\n\r";
             i.Text += "Atomic Mass:\n\r";
-            i.Text += "Solubility:\n\r\n\r";
+            i.Text += "Experience:\n\r\n\r";
             i.Text += "INFO: ";
 
             switch(chemical.Series.ToString())
@@ -494,10 +494,7 @@ namespace YoutubeRPG
             i.Text = "              " + chemical.BoilingPoint + " K\n\r";
             i.Text += "              " + chemical.Mass + "\n\r";
             i.Text += "              ";
-            if (chemical.Solubility)
-                i.Text += "polar";
-            else
-                i.Text += "nonpolar";
+            i.Text += chemical.Experience;
             i.Text += "\n\r\n\r";
             i.FontName = "Fonts/OCRAExt";
             i.TextColor = Color.CornflowerBlue;

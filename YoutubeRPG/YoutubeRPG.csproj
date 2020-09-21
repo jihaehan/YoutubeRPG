@@ -56,6 +56,7 @@
     <Compile Include="ConversationItem.cs" />
     <Compile Include="ConversationManager.cs" />
     <Compile Include="DataSheet\DataSheet.cs" />
+    <Compile Include="DialogueManager.cs" />
     <Compile Include="FadeEffect.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameplayScreen.cs" />

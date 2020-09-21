@@ -47,7 +47,7 @@ namespace YoutubeRPG
         {
             base.UnloadContent();
             player.UnloadContent();
-            chemical.UnloadContent();
+            //chemical.UnloadContent();
             world.UnloadContent();
             menuManager.UnloadContent();
 
@@ -59,7 +59,7 @@ namespace YoutubeRPG
             player.Velocity = Vector2.Zero;
             base.Update(gameTime);
             player.Update(gameTime, world);
-            chemical.Update(gameTime);
+            //chemical.Update(gameTime);
             world.Update(gameTime);
             menuManager.Update(gameTime, ref player);
             camera.LockToSprite(world.CurrentMap.Layer[0], player.Image);
@@ -78,7 +78,7 @@ namespace YoutubeRPG
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, camera.Transformation);
             world.Draw(spriteBatch, "Underlay");
             player.Draw(spriteBatch);
-            chemical.Draw(spriteBatch);
+            //chemical.Draw(spriteBatch);
             mole.Draw(spriteBatch);
             world.Draw(spriteBatch, "Overlay");
             spriteBatch.End();
