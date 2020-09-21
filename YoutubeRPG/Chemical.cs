@@ -524,6 +524,44 @@ namespace YoutubeRPG
             }
             return Damage;
         }
+        public string NameLevel(int level)
+        {
+            string s = String.Empty;
+            switch (level)
+            {
+                case 1:
+                    s = "Meth";
+                    break;
+                case 2:
+                    s = "Eth";
+                    break;
+                case 3:
+                    s = "Prop";
+                    break;
+                case 4:
+                    s = "But";
+                    break;
+                case 5:
+                    s = "Pent";
+                    break;
+                case 6:
+                    s = "Hex";
+                    break;
+                case 7:
+                    s = "Hept";
+                    break;
+                case 8:
+                    s = "Oct";
+                    break;
+                case 9:
+                    s = "Non";
+                    break;
+                case 10:
+                    s = "Dec";
+                    break;
+            }
+            return s;
+        }
         public void NameChemical()
         {
             //necessary 

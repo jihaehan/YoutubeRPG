@@ -21,6 +21,7 @@ namespace YoutubeRPG
         bool isPlayerTurn;
         bool isDescription;
         bool isWin;
+        bool isLevelling;
 
         string prevMenuID;
         string currentMenuID;
@@ -28,6 +29,7 @@ namespace YoutubeRPG
         string selectedEnemy;
         int prevSelectedItem, battleMenuSelectedItem;
         int turnCount;
+        int levellingCount;
         float EXP;
         List<Image> infoImage; //for visual text distinct from menuButtons
         List<SPX> spxImage;    //for special effects distinct from menuButtons
@@ -52,10 +54,12 @@ namespace YoutubeRPG
             prevSelectedItem = battleMenuSelectedItem = 0;
             turnCount = 1;
             EXP = 0;
+            levellingCount = 0;
             prevMenuID = currentMenuID = selectedItem = selectedEnemy =  String.Empty;
             pageText = "1/3";
             isPlayerTurn = true;
             isDescription = false;
+            isLevelling = false;
             isWin = false;
             page = new Image();
             cardDown = new Image();
@@ -219,16 +223,22 @@ namespace YoutubeRPG
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            enemy.BattleDraw(spriteBatch);
-            player.BattleDraw(spriteBatch);
-            foreach (SPX spx in spxImage)
-                spx.Draw(spriteBatch);
-            foreach (Menu m in clone)
-                m.Draw(spriteBatch);
+            if (!isLevelling)
+            {
+                enemy.BattleDraw(spriteBatch);
+                player.BattleDraw(spriteBatch);
+                foreach (SPX spx in spxImage)
+                    spx.Draw(spriteBatch);
+                foreach (Menu m in clone)
+                    m.Draw(spriteBatch);
+            }
             menu.Draw(spriteBatch);
-            cardDown.Draw(spriteBatch);
-            cardUp.Draw(spriteBatch);
-            drawOxygen(spriteBatch);
+            if (!isLevelling)
+            { 
+                cardDown.Draw(spriteBatch);
+                cardUp.Draw(spriteBatch);
+                drawOxygen(spriteBatch);
+            }
             if (menu.Type.Contains("Option") || menu.Type == "Move")
             {
                 page.Draw(spriteBatch);
@@ -493,6 +503,9 @@ namespace YoutubeRPG
             else
                 infoImage = scrollingDescription(enemy.Name + " has won the battle! [row] Each Party gains " + (EXP/3).ToString() + " of Atomic Mass!", Color.SaddleBrown);
 
+            //TO BE DELETED:
+            EXP = 1000;
+
             foreach (string n in player.ChemicalManager.battleChemicalName)
             {
                 if (isWin)
@@ -518,14 +531,30 @@ namespace YoutubeRPG
         }
         void levellingMenu()
         {
+            isLevelling = true;
             //needs more work
             infoImageClear();
             string s = String.Empty;
             string evolvedName = String.Empty;
+            Chemical chemical = new Chemical();
+            XmlManager<Chemical> chemicalLoader = new XmlManager<Chemical>();
             foreach (string n in levellingChemicals)
-                s += n + " has levelled up! Has gained enough atomic mass to evolve into a " + evolvedName + " [row] ";
+            {
+                chemical = player.ChemicalManager.GetBattleChemical(n);
+                evolvedName = getTempName(n, chemical.NameLevel(chemical.Level), chemical.NameLevel(chemical.Level + 1));
+                if ((chemical.Level + 1 < 6 && chemical.Series != Series.Alkene) || (chemical.Level + 1 < 7 && chemical.Series == Series.Alkene))
+                {
+                    s += n + " has levelled up! Has gained enough atomic mass to evolve into a " + evolvedName + ". [row] ";
+                    Chemical c = chemicalLoader.Load("Content/Load/Chemical/" + chemical.Series.ToString() + "/" + evolvedName + ".xml");
+                    player.ChemicalManager.AddChemical(c);
+                }
+                else
+                    s += n + " has reached Level Cap. Expand your knowledge of chemistry to unlock next levels! [row] ";
+            }
             infoImage = scrollingDescription(s, Color.Black);
             //evolution animation = true!
+            //change chemicals in party
+
             foreach (Image i in infoImage)
                 i.LoadContent();
         }
@@ -555,6 +584,7 @@ namespace YoutubeRPG
         #region Enemy Logic
         void enemyMenu()
         {
+            #region setup
             //Menu Items
             if (checkWinCondition(false))
             {
@@ -573,7 +603,7 @@ namespace YoutubeRPG
             List<string> randomChemicals = new List<string>();
             bool isMultiStepMove = false;
             string[] multiStepMoves = { "Free Radical Sub", "Addition Polymeriz", "Oxidation", "SN2 Nucleophil Sub" };
-
+            #endregion
             foreach (string str in multiStepMoves)
                 if (!isMultiStepMove && chemical.GetMoveHistory(1, str))
                 {

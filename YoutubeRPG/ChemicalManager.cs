@@ -404,6 +404,18 @@ namespace YoutubeRPG
             else 
                 return null;
         }
+        public void AddChemical(Chemical chemical)
+        {
+            while (chemicals.ContainsKey(chemical.Name))
+                chemical.Name += "*";
+            chemicals.Add(chemical.Name, chemical);
+            chemicals[chemical.Name].LoadContent();
+        }
+        public void RemoveChemical(string name)
+        {
+            //chemicals[name].UnloadContent();
+            chemicals.Remove(name);
+        }
         public Chemical GetBattleChemical(string chemicalName)
         {
             if (battleChemicals.ContainsKey(chemicalName))

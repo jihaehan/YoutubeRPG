@@ -8,7 +8,11 @@
     <Y>-5</Y>
   </Alignment> 
   <Image>
-    <Path>Misc/levelling_menu</Path>
+    <Path>Misc/battle_menu</Path>
+    <Position>
+      <X>0</X>
+      <Y>562.5</Y>
+    </Position>
     <FontName>Fonts/OCRAsmall</FontName>
   </Image>
 
