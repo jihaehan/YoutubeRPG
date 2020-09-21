@@ -160,35 +160,34 @@ namespace YoutubeRPG
         }
 
         #region Main Methods
-        public void LoadContent(string menuPath)
+        public void LoadContent(string enemyXml, string enemyPartyXml)
         {
-            initializeParties();
-            if (menuPath != String.Empty)
-            {    
-                menu.ID = menuPath;
-                prevMenuID = currentMenuID = menuPath;
-                page.FontName = "Fonts/OCRAExt";
-                page.Path = "Misc/page";
-                page.Position = new Vector2(307, ScreenManager.Instance.Dimensions.Y - 21);
-                page.LoadContent();
-                cardDown.FontName = cardUp.FontName = "Fonts/OCRAsmall";
-                cardDown.Position = cardUp.Position = new Vector2(928.5f, 636f);
-                cardUp.Path = "Misc/card_up";
-                cardUp.TextColor = Color.SaddleBrown;
-                cardUp.IsVisible = false;
-                cardUp.LoadContent();
-                cardDown.Path = "Misc/card_down";
-                cardDown.IsVisible = true;
-                cardDown.LoadContent();
-                O2Empty.Path = "Misc/oxygen_empty";
-                O2Empty.LoadContent();   
-                O2Filled.Path = "Misc/oxygen_filled";
-                O2Filled.LoadContent();
-                O2Label.Path = "Misc/oxygen_label";
-                O2Label.FontName = "Fonts/OCRAsmall";
-                O2Label.Position = new Vector2(1151, 586);
-                O2Label.LoadContent();
-            }
+            initializeParties(enemyXml, enemyPartyXml);
+
+            menu.ID = "Content/Load/Menu/BattleMenu.xml";
+            prevMenuID = currentMenuID = "Content/Load/Menu/BattleMenu.xml";
+            page.FontName = "Fonts/OCRAExt";
+            page.Path = "Misc/page";
+            page.Position = new Vector2(307, ScreenManager.Instance.Dimensions.Y - 21);
+            page.LoadContent();
+            cardDown.FontName = cardUp.FontName = "Fonts/OCRAsmall";
+            cardDown.Position = cardUp.Position = new Vector2(928.5f, 636f);
+            cardUp.Path = "Misc/card_up";
+            cardUp.TextColor = Color.SaddleBrown;
+            cardUp.IsVisible = false;
+            cardUp.LoadContent();
+            cardDown.Path = "Misc/card_down";
+            cardDown.IsVisible = true;
+            cardDown.LoadContent();
+            O2Empty.Path = "Misc/oxygen_empty";
+            O2Empty.LoadContent();
+            O2Filled.Path = "Misc/oxygen_filled";
+            O2Filled.LoadContent();
+            O2Label.Path = "Misc/oxygen_label";
+            O2Label.FontName = "Fonts/OCRAsmall";
+            O2Label.Position = new Vector2(1151, 586);
+            O2Label.LoadContent();
+
         }
         public void UnloadContent()
         {
@@ -481,6 +480,7 @@ namespace YoutubeRPG
 
             //Manage enemyTurn
             string e = enemy.ChemicalManager.EnemyInstance();
+
             if (e != String.Empty)
             {
                 menu.Items.Clear();
@@ -502,6 +502,16 @@ namespace YoutubeRPG
             }
             else //manage end of turn
             {
+                if (checkWinCondition(true))
+                {
+                    menu.Items.Clear();
+                    MenuItem item = new MenuItem();
+                    item.Image = new Image();
+                    item.Image.Position = new Vector2(-5, -5);
+                    item.Image.Text = " ";
+                    item.LinkID = "Content/Load/Menu/EndBattleMenu.xml";
+                    menu.Items.Add(item);
+                }
                 //Refresh values for player and enemy turn
                 EndTurn();
                 //clear special effects and manage Extinguisher effect
@@ -520,7 +530,6 @@ namespace YoutubeRPG
                 battleCard();
                 enemyCard();
             }
-           
         }
         void endBattleMenu()
         {
@@ -539,9 +548,6 @@ namespace YoutubeRPG
                 infoImage = scrollingDescription("Marie has won the battle! [row] Each Party member gains " + EXP.ToString() + " of Atomic Mass!", Color.Black);
             else
                 infoImage = scrollingDescription(enemy.Name + " has won the battle! [row] Each Party gains " + (EXP/3).ToString() + " of Atomic Mass!", Color.SaddleBrown);
-
-            //TO BE DELETED:
-            EXP = 1000;
 
             foreach (string n in player.ChemicalManager.battleChemicalName)
             {
@@ -1054,8 +1060,11 @@ namespace YoutubeRPG
                             img.LoadContent();
                         MenuItem item = new MenuItem();
                         item.Image = new Image();
-                        item.Image.Text = ".";
-                        item.LinkID = checkPlayableChemicals();
+                        item.Image.Text = " ";
+                        if (checkWinCondition(true))
+                            item.LinkID = "Content/Load/Menu/EndBattleMenu.xml";
+                        else
+                            item.LinkID = checkPlayableChemicals();
                         menu.Items.Add(item);
                     }
                     else
@@ -1635,7 +1644,7 @@ namespace YoutubeRPG
         #endregion
 
         #region Initializations
-        void initializeParties()
+        void initializeParties(string enemyXml, string enemyPartyXml)
         {
             XmlManager<Player> playerLoader = new XmlManager<Player>();
             player = playerLoader.Load("Content/Load/Gameplay/Player.xml");
@@ -1647,8 +1656,8 @@ namespace YoutubeRPG
             player.InitializeBattle();
 
             XmlManager<Character> characterLoader = new XmlManager<Character>();
-            enemy = characterLoader.Load("Content/Load/Gameplay/Markovnikov.xml");
-            enemy.LoadContent("Content/Load/Gameplay/Battle/Markovnikov.xml");
+            enemy = characterLoader.Load(enemyXml);
+            enemy.LoadContent(enemyPartyXml);
             enemy.Image.Position = new Vector2(1064, 175);
             enemy.Image.SpriteSheetEffect.CurrentFrame.Y = 1;
             enemy.Image.IsActive = true;
