@@ -37,6 +37,7 @@ namespace YoutubeRPG
         List<string> moveList; //for individual chemicals
         List<string> environmentEffects; //for AOE effects for all chemicals
         List<string> levellingChemicals; //for chemicals that level up
+        List<string> levelledChemicals;
         Dictionary<string, float> originalDefense; //originalDefense for extinguisher effect
         SpriteFont font;
         Image page;
@@ -73,6 +74,7 @@ namespace YoutubeRPG
             originalDefense = new Dictionary<string, float>();
             moveList = environmentEffects = new List<string>();
             levellingChemicals = new List<string>();
+            levelledChemicals = new List<string>();
             clone = new List<Menu>();
             menu = new Menu();
             menu.OnMenuChanged += menu_OnMenuChange;
@@ -210,8 +212,11 @@ namespace YoutubeRPG
         }
         public void Update(GameTime gameTime)
         {
-            player.BattleUpdate(gameTime);
-            enemy.BattleUpdate(gameTime);
+            if (!isLevelling)
+            {
+                player.BattleUpdate(gameTime);
+                enemy.BattleUpdate(gameTime);
+            }
             if (!isTransitioning)
                menu.Update(gameTime);
             Transition(gameTime);
@@ -220,6 +225,15 @@ namespace YoutubeRPG
                 spx.Update(gameTime);
             foreach (Image i in infoImage)
                 i.Update(gameTime);
+
+            for (int count = 0; count < levellingCount; count++)
+            {
+                if (count != levellingCount - 1)
+                    player.ChemicalManager.LevellingHide(gameTime, levellingChemicals[count], levelledChemicals[count]);
+                else 
+                    player.ChemicalManager.LevellingTransitionUpdate(gameTime, levellingChemicals[count], levelledChemicals[count]);
+            }
+            
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -229,9 +243,9 @@ namespace YoutubeRPG
                 player.BattleDraw(spriteBatch);
                 foreach (SPX spx in spxImage)
                     spx.Draw(spriteBatch);
-                foreach (Menu m in clone)
-                    m.Draw(spriteBatch);
             }
+            foreach (Menu m in clone)
+                m.Draw(spriteBatch);
             menu.Draw(spriteBatch);
             if (!isLevelling)
             { 
@@ -239,6 +253,20 @@ namespace YoutubeRPG
                 cardUp.Draw(spriteBatch);
                 drawOxygen(spriteBatch);
             }
+            foreach (string n in levelledChemicals)
+                player.ChemicalManager.GetChemical(n).Draw(spriteBatch);
+
+            if (levellingCount > 0 && levellingChemicals.Count >= levellingCount)
+            {
+                string n = levellingChemicals[levellingCount - 1];
+                string n1 = levelledChemicals[levellingCount - 1];
+                if (player.ChemicalManager.chemicalName.Contains(n))
+                    player.ChemicalManager.LevellingDraw(spriteBatch, n);
+                else if (player.ChemicalManager.chemicalName.Contains(n1))
+                    player.ChemicalManager.LevellingDraw(spriteBatch, n1);
+            }
+
+
             if (menu.Type.Contains("Option") || menu.Type == "Move")
             {
                 page.Draw(spriteBatch);
@@ -338,19 +366,15 @@ namespace YoutubeRPG
             {
                 case "Free Radical Sub":     //alkane to halogenoalkane
                     req = "Bromine";
-                    //requires +UV Light
                     break;
                 case "Addition Polymeriz":
                     req = "Nickeldihydride"; //alkene to alkane
-                    //requires +HEAT
                     break;
                 case "Oxidation":
                     req = "Chromate";        //alcohol to alkanal
-                    //requires +HEAT
                     break;
                 case "SN2 Nucleophil Sub":   //halogenoalkane to alcohol
                     req = "Sodiumhydroxide";
-                    //requires +HEAT
                     break;
             }
             //check itemManager for items
@@ -538,23 +562,45 @@ namespace YoutubeRPG
             string evolvedName = String.Empty;
             Chemical chemical = new Chemical();
             XmlManager<Chemical> chemicalLoader = new XmlManager<Chemical>();
-            foreach (string n in levellingChemicals)
+
+            if (levellingCount < levellingChemicals.Count)
             {
+                string n = levellingChemicals[levellingCount];
                 chemical = player.ChemicalManager.GetBattleChemical(n);
                 evolvedName = getTempName(n, chemical.NameLevel(chemical.Level), chemical.NameLevel(chemical.Level + 1));
                 if ((chemical.Level + 1 < 6 && chemical.Series != Series.Alkene) || (chemical.Level + 1 < 7 && chemical.Series == Series.Alkene))
                 {
-                    s += n + " has levelled up! Has gained enough atomic mass to evolve into a " + evolvedName + ". [row] ";
+                    s += n + " has levelled up! Has gained enough atomic mass to evolve into a " + evolvedName + ".";
                     Chemical c = chemicalLoader.Load("Content/Load/Chemical/" + chemical.Series.ToString() + "/" + evolvedName + ".xml");
+                    c.LoadContent();
                     player.ChemicalManager.AddChemical(c);
+                    player.ChemicalManager.LevellingTransition(n, evolvedName);
+                    levelledChemicals.Add(evolvedName);
+                    
                 }
                 else
+                {
                     s += n + " has reached Level Cap. Expand your knowledge of chemistry to unlock next levels! [row] ";
+                    player.ChemicalManager.LevellingStop(n);
+                    levelledChemicals.Add(n);
+                }
+                infoImage = scrollingDescription(s, Color.Black);
+                //move other chemicals elsewhere
+                foreach (string name in levellingChemicals)
+                    if (name != n && player.ChemicalManager.chemicalName.Contains(name))
+                        player.ChemicalManager.GetBattleChemical(name).Image.Position = new Vector2(-128, -128);
+                levellingCount++;
             }
-            infoImage = scrollingDescription(s, Color.Black);
-            //evolution animation = true!
-            //change chemicals in party
-
+            else
+            {
+                menu.Items.Clear();
+                MenuItem item = new MenuItem();
+                item.Image = new Image();
+                item.Image.Text = " ";
+                item.LinkType = "Screen";
+                item.LinkID = "GameplayScreen_Blue";
+                menu.Items.Add(item);
+            }
             foreach (Image i in infoImage)
                 i.LoadContent();
         }

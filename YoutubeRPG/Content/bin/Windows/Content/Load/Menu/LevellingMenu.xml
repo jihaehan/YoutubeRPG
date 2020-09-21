@@ -17,8 +17,8 @@
   </Image>
 
   <Item>
-    <LinkType>Screen</LinkType> 
-    <LinkID>GameplayScreen_Blue</LinkID>
+    <LinkType>Menu</LinkType> 
+    <LinkID>Content/Load/Menu/LevellingMenu.xml</LinkID>
     <Image>
       <Text>.</Text>
     </Image>

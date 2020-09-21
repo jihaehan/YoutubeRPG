@@ -51,6 +51,7 @@ namespace YoutubeRPG
         public int TempCount;       //Chance that temporary chemical will leave
         public bool TurnTaken;      //did the chemical take a turn?
         public bool IsDead;         //is the player chemical dead?
+        public bool IsLevelling;
         public Rectangle TagRectangle; 
 
         Dictionary<Element, int> Elements;  
@@ -59,6 +60,7 @@ namespace YoutubeRPG
         List<float> FormationEnthalpy;
         List<string> MoveHistory;
         string isomerPath;
+        
 
         #region Fields
         public void RecordMove(string move)
@@ -161,6 +163,7 @@ namespace YoutubeRPG
             TurnTaken = false;
             IsTemp = false;
             IsDead = false;
+            IsLevelling = false;
             Elements = new Dictionary<Element, int>();
             Products = new Dictionary<string, int>();
             Reactants = new Dictionary<string, float>();

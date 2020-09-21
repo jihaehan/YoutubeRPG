@@ -7,7 +7,6 @@
     <X>-5</X>
     <Y>-5</Y>
   </Alignment> 
-
   <Item>
     <LinkType>Menu</LinkType> 
     <LinkID>Content/Load/Menu/BattleMenu.xml</LinkID>

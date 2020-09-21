@@ -15,6 +15,7 @@ namespace YoutubeRPG
         [XmlElement("ChemicalSource")]
         public List<string> ChemicalSource;
         public string CurrentChemicalName;
+        public string levellingChemicalPath;
 
         Dictionary<string, Chemical> chemicals;
         public List<string> chemicalName;
@@ -34,6 +35,7 @@ namespace YoutubeRPG
         {
             ChemicalSource = new List<string>();
             CurrentChemicalName = String.Empty;
+            levellingChemicalPath = String.Empty;
             chemicals = new Dictionary<string, Chemical>();
             chemicalName = new List<string>();
             maxVisibleChemicals = 3;
@@ -86,7 +88,77 @@ namespace YoutubeRPG
             tempChemicalName.Add(name);
         }
         #endregion
+        public void LevellingTransition(string original, string evolved)
+        {
+            chemicals[original].Image.Position = new Vector2(200, 278);
+            chemicals[evolved].Image.Position = new Vector2(420, 278);
+            chemicals[evolved].Image.Alpha = 0.0f;
+            chemicals[original].Image.Alpha = 0.1f;
+            chemicals[original].IsLevelling = true;
+            chemicals[evolved].IsLevelling = true;
+            chemicals[original].Image.ActivateEffect("FadeEffect");
+            chemicals[original].Image.FadeEffect.Increase = true;
+        }
+        public void LevellingStop(string original)
+        {
+            chemicals[original].Image.Position = new Vector2(420, 278);
+            chemicals[original].Image.Alpha = 0.0f;
+            chemicals[original].IsLevelling = true;
+        }
+        public void LevellingHide(GameTime gameTime, string original, string evolved)
+        {
+            if (chemicalName.Contains(original))
+            {
+                chemicals[original].Image.Update(gameTime);
+                chemicals[original].Image.Position = new Vector2(-128, -128);
 
+            }
+            if (chemicalName.Contains(evolved))
+            {
+                chemicals[evolved].Image.Update(gameTime);
+                chemicals[evolved].Image.Position  = new Vector2(-128, -128);
+            }
+        }
+        public void LevellingTransitionUpdate(GameTime gameTime, string original, string evolved)
+        {
+            chemicals[evolved].Image.Update(gameTime);
+            if (chemicalName.Contains(original) && original != evolved)
+            {
+                chemicals[original].Image.Update(gameTime);
+                if (chemicals[original].Image.Position.X < 420)
+                {
+                    chemicals[original].Image.Position.X += 120f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                else
+                {
+                    chemicals[original].Image.Position.X = 420;
+                }
+                if (chemicals[original].Image.FadeEffect.IsActive && chemicals[original].Image.Alpha <= 0.0f)
+                {
+                    chemicals[original].Image.IsVisible = false;
+                    chemicals.Remove(original);
+                    chemicalName.Remove(original);
+                }
+            }
+            else 
+            {
+                chemicals[evolved].Image.ActivateEffect("FadeEffect");
+                chemicals[evolved].Image.IsActive = true;
+                if (chemicals[evolved].Image.Alpha >= 1.0f)
+                    chemicals[evolved].Image.FadeEffect.IsActive = false;
+                else
+                {
+                    chemicals[evolved].IsLevelling = false;
+                }
+            }
+        }
+        public void LevellingDraw(SpriteBatch spriteBatch, string name)
+        {
+            shadow.Position = chemicals[name].Image.Position + new Vector2(-11, 100);
+            shadow.Alpha = chemicals[name].Image.Alpha;
+            shadow.Draw(spriteBatch);
+            chemicals[name].Draw(spriteBatch);
+        }
         public void LoadIsomer(string chemicalName, int branches)
         {
             battleChemicals[chemicalName].IsomerTransition(branches);
@@ -409,7 +481,7 @@ namespace YoutubeRPG
             while (chemicals.ContainsKey(chemical.Name))
                 chemical.Name += "*";
             chemicals.Add(chemical.Name, chemical);
-            chemicals[chemical.Name].LoadContent();
+            chemicalName.Add(chemical.Name);
         }
         public void RemoveChemical(string name)
         {
