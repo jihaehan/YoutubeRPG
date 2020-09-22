@@ -1,21 +1,14 @@
 ﻿<?xml version ="1.0" encoding="utf-8"?>
 <Menu>
-  <Active>false</Active>
+  <Active>true</Active>
+  <Type>Description</Type>
   <Axis>Y</Axis>
-  <Spacing>
-    <X>30</X>
-    <Y>12</Y>
-  </Spacing>
   <Alignment>
-    <X>-555</X>
-    <Y>327</Y>
+    <X>-5</X>
+    <Y>-5</Y>
   </Alignment> 
-  <Grid>
-    <X>2</X>
-    <Y>2</Y>
-  </Grid>
   <Image>
-    <Path>Misc/gameplay_menu</Path>
+    <Path>Misc/battle_menu</Path>
     <Position>
       <X>0</X>
       <Y>562.5</Y>
@@ -24,62 +17,11 @@
   </Image>
 
   <Item>
-    <LinkType>Info</LinkType> 
-    <LinkID>Content/Load/Menu/OptionInfoMenu.xml</LinkID>
+    <LinkType>Menu</LinkType> 
+    <LinkID>Content/Load/Menu/LevellingMenu.xml</LinkID>
     <Image>
-      <Text>INFO</Text>
-      <FontName>Fonts/OCRA</FontName>  
-      <TextColor>
-        <R>0</R>
-        <G>0</G>
-        <B>0</B>
-        <A>255</A>
-      </TextColor>
+      <Text>.</Text>
     </Image>
   </Item>
 
-  <Item>
-    <LinkType>Item</LinkType> 
-    <LinkID>Content/Load/Menu/OptionItemMenu.xml</LinkID>
-    <Image>
-      <Text>ITEM</Text>
-      <FontName>Fonts/OCRA</FontName>  
-      <TextColor>
-        <R>0</R>
-        <G>0</G>
-        <B>0</B>
-        <A>255</A>
-      </TextColor>      
-    </Image>
-  </Item>
-
-  <Item>
-    <LinkType>Plan</LinkType> 
-    <LinkID>Content/Load/Menu/OptionPlanMenu.xml</LinkID>
-    <Image>
-      <Text>PLAN</Text>
-      <FontName>Fonts/OCRA</FontName>  
-      <TextColor>
-        <R>0</R>
-        <G>0</G>
-        <B>0</B>
-        <A>255</A>
-      </TextColor>
-    </Image>
-  </Item>
-
-  <Item>
-    <LinkType>Book</LinkType> 
-    <LinkID>Content/Load/Menu/BookMenu.xml</LinkID>
-    <Image>
-      <Text>BOOK</Text>
-      <FontName>Fonts/OCRA</FontName>  
-      <TextColor>
-        <R>0</R>
-        <G>0</G>
-        <B>0</B>
-        <A>255</A>
-      </TextColor>
-    </Image>
-  </Item>
 </Menu>

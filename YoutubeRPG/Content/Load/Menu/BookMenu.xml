@@ -51,9 +51,9 @@
 
   <Item>
     <LinkType>Book</LinkType> 
-    <LinkID>Redoxreaction</LinkID>
+    <LinkID>Thermodynamics</LinkID>
     <Image>
-      <Text>REDOX REACT</Text>
+      <Text>THERMO REACT</Text>
       <FontName>Fonts/OCRAsmall</FontName>  
       <TextColor>
         <R>0</R>

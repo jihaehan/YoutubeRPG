@@ -193,82 +193,62 @@ namespace YoutubeRPG
             {
                 case "Series":
                     i = new Image();
-                    i.FontName = "Fonts/OCRAExt";
-                    i.Text = "PLACEHOLDER";
-                    i.TextColor = Color.Black;
-                    i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f + 15f, 182);
+                    i.Path = "Book/series";
+                    i.Position = new Vector2(1280 - 376, 0);
                     infoImage.Add(i); 
                     break;
                 case "Chemicals":
                     i = new Image();
-                    i.FontName = "Fonts/OCRAExt";
-                    i.Text = "PLACEHOLDER";
-                    i.TextColor = Color.Black;
-                    i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f + 15f, 182);
+                    i.Path = "Book/chemical";
+                    i.Position = new Vector2(1280 - 376, 0);
                     infoImage.Add(i);
                     break;
-                case "Redoxreaction":
+                case "Thermodynamics":
                     i = new Image();
-                    i.FontName = "Fonts/OCRAExt";
-                    i.Text = "PLACEHOLDER";
-                    i.TextColor = Color.Black;
-                    i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f + 15f, 182);
+                    i.Path = "Book/thermo_reactions";
+                    i.Position = new Vector2(1280 - 376, 0);
                     infoImage.Add(i);
                     break;
                 case "Organicreaction":
                     i = new Image();
-                    i.FontName = "Fonts/OCRAExt";
-                    i.Text = "PLACEHOLDER";
-                    i.TextColor = Color.Black;
-                    i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f + 15f, 182);
+                    i.Path = "Book/organic_reactions";
+                    i.Position = new Vector2(1280 - 376, 0);
                     infoImage.Add(i);
                     break;
                 case "Journal":
                     i = new Image();
-                    i.FontName = "Fonts/OCRAExt";
-                    i.Text = "PLACEHOLDER";
-                    i.TextColor = Color.Black;
-                    i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f + 15f, 182);
+                    i.Path = "Book/temp_journal";
+                    i.Position = new Vector2(1280 - 376, 0);
                     infoImage.Add(i);
                     break;
                 case "People":
                     i = new Image();
-                    i.FontName = "Fonts/OCRAExt";
-                    i.Text = "PLACEHOLDER";
-                    i.TextColor = Color.Black;
-                    i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f + 15f, 182);
+                    i.Path = "Book/people";
+                    i.Position = new Vector2(1280 - 376, 0);
                     infoImage.Add(i);
                     break;
                 case "Saving":
                     i = new Image();
-                    i.FontName = "Fonts/OCRAExt";
-                    i.Text = "PLACEHOLDER";
-                    i.TextColor = Color.Black;
-                    i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f + 15f, 182);
+                    i.Path = "Book/coming_soon";
+                    i.Position = new Vector2(1280 - 376, 0);
                     infoImage.Add(i);
                     break;
                 case "Controls":
                     i = new Image();
-                    i.FontName = "Fonts/OCRAExt";
-                    i.Text = "WASD  = MOVE\n\r\n\rENTER = INTERACT\n\r        MENU\n\r\n\rX     = BACK";
-                    i.TextColor = Color.Black;
-                    i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f + 15f, 182);
+                    i.Path = "Book/controls";
+                    i.Position = new Vector2(1280 - 376, 0);
                     infoImage.Add(i);
                     break;
                 case "Settings":
                     i = new Image();
-                    i.FontName = "Fonts/OCRAExt";
-                    i.Text = "Coming Soon!";
-                    i.TextColor = Color.Black;
-                    i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f, 230);
+                    i.Path = "Book/coming_soon";
+                    i.Position = new Vector2(1280 - 376, 0);
                     infoImage.Add(i);
                     break;
                 case "Credits":
                     i = new Image();
-                    i.FontName = "Fonts/OCRAExt";
-                    i.Text = "Demo Developed\n\rby Jihae Han";
-                    i.TextColor = Color.Black;
-                    i.Position = new Vector2(dimensions.X - menu.Image.Font.MeasureString(i.Text).X / 2f, 230);
+                    i.Path = "Book/credits";
+                    i.Position = new Vector2(1280 - 376, 0);
                     infoImage.Add(i);
                     break;
             }
