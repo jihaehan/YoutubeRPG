@@ -21,7 +21,7 @@ namespace YoutubeRPG
         string currentMenuID;
         List<Image> scrollingText;
         Dictionary<string, MenuItem> dialogue; //LinkID, Text
-        string currentDialogue;
+        string currentDialogue, previousDialogue;
         Image arrow;
         Image background;
 
@@ -31,6 +31,7 @@ namespace YoutubeRPG
             isDescription = false;
             background = new Image();
             currentMenuID = currentDialogue = ID = String.Empty;
+            previousDialogue = ".";
             arrow = new Image();
             scrollingText = new List<Image>();
             dialogue = new Dictionary<string, MenuItem>();
@@ -71,8 +72,9 @@ namespace YoutubeRPG
                     questionMenu();
                 }
             }
-            if (currentDialogue != String.Empty)// && !currentMenuID.Contains("Question"))
-                scrollingDialogue();
+            if (currentDialogue != String.Empty && currentDialogue != previousDialogue)// && !currentMenuID.Contains("Question"))
+                scrollingDescription(Color.Black);
+                //scrollingDialogue();
 
 
             foreach (MenuItem item in menu.Items)
@@ -160,7 +162,8 @@ namespace YoutubeRPG
                 foreach (MenuItem item in menu.Items)
                     dialogue.Add(item.LinkID, item);
                 currentDialogue = dialogue["0"].Image.Text;
-                scrollingDialogue();
+                //scrollingDialogue();
+                scrollingDescription(Color.Black);
                 currentMenuID = menu.Items[0].LinkID;
                 menu.Items.Clear();
                 menu.Items.Add(dialogue["0"]);
@@ -169,6 +172,7 @@ namespace YoutubeRPG
             {
                 menu.Items.Clear();
                 menu.Items.Add(dialogue[ID]);
+                previousDialogue = currentDialogue;
                 currentDialogue = dialogue[ID].Image.Text;
                 menu.Items[0].Image.Text = " ";
                 menu.Items[0].Image.FontName = "Fonts/OCRA";
@@ -177,6 +181,7 @@ namespace YoutubeRPG
             {
                 menu.Items.Clear();
                 menu.Active = false;
+                previousDialogue = ".";
                 currentDialogue = String.Empty;
                 dialogue.Clear();
             }
@@ -186,6 +191,7 @@ namespace YoutubeRPG
         {
             if (ID != String.Empty && dialogue.ContainsKey(ID))
             {
+                previousDialogue = currentDialogue;
                 currentDialogue = dialogue[ID].Image.Text;
                 switch (dialogue[ID].LinkType)
                 {
@@ -260,7 +266,7 @@ namespace YoutubeRPG
                 image.LoadContent();
         }
         #endregion
-        #region Misc Functions
+        #region Helper Functions
         void Transition(GameTime gameTime)
         {
             if (isTransitioning)
@@ -329,15 +335,25 @@ namespace YoutubeRPG
         {
             if (buttonState == eButtonState.DOWN && !isTransitioning && IsActive)
             {
+                if (isDescription)
+                {
+                    scrollingText.RemoveRange(0, Math.Min(3, scrollingText.Count));
+                    for (int i = 0; i < Math.Min(scrollingText.Count, 3); i++)
+                        scrollingText[i].IsVisible = true;
+                    
+                    if (scrollingText.Count < 3)
+                        isDescription = false;
+                }
                 if (menu.Items[menu.ItemNumber].LinkType == "Screen")
                     ScreenManager.Instance.ChangeScreens(menu.Items[menu.ItemNumber].LinkID);
                 else if (menu.Items[menu.ItemNumber].LinkType == "None")
                 {/*no action*/}
-                else
+                else if (scrollingText.Count < 3)
                 {
                     currentMenuID = menu.Items[menu.ItemNumber].LinkID;
                     if (!ID.Contains(".xml") && currentMenuID!= String.Empty)
                         ID = currentMenuID;
+
                     setDialogue();
 
                     isTransitioning = true;
@@ -367,15 +383,16 @@ namespace YoutubeRPG
             foreach (Image i in scrollingText)
                 i.LoadContent();
         }
-        List<Image> scrollingDescription(string description, Color textColor)
+        void scrollingDescription(Color textColor)
         {
+            scrollingTextClear();
             List<Image> imageList = new List<Image>();
             Image i = new Image();
             Vector2 dimensions = new Vector2(570, 580f);
             i.FontName = "Fonts/OCRAsmall";
             i.TextColor = textColor;
             i.Position = dimensions;
-            string[] parts = description.Split(' ');
+            string[] parts = currentDialogue.Split(' ');
             string text = String.Empty;
             int rowLength = 0;
             int count = 1;
@@ -449,17 +466,19 @@ namespace YoutubeRPG
                     imageList[j].IsVisible = false;
                 isDescription = true;
             }
-            return imageList;
+            scrollingText = imageList;
+            scrollingTextLoadContent();
         }
-        List<Image> scrollingDescriptionContinued(string description, Color textColor)
+        void scrollingDescriptionContinued(Color textColor)
         {
+            scrollingTextClear();
             List<Image> imageList = new List<Image>();
             Image i = new Image();
             Vector2 dimensions = new Vector2(570, 580);
             i.FontName = "Fonts/OCRAsmall";
             i.TextColor = textColor;
             i.Position = dimensions;
-            string[] parts = description.Split(' ');
+            string[] parts = currentDialogue.Split(' ');
             string text = String.Empty;
             int rowLength = 0;
             int count = 1;
@@ -530,7 +549,8 @@ namespace YoutubeRPG
             for (int j = 0; j < imageList.Count; j++)
                 imageList[j].IsVisible = false;
             isDescription = true;
-            return imageList;
+            scrollingText = imageList;
+            scrollingTextLoadContent();
         }
 
         #endregion
