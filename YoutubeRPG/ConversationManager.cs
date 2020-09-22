@@ -12,28 +12,28 @@ namespace YoutubeRPG
     public class ConversationManager
     {
         Menu menu;
-        List<Menu> clone;
 
         CharacterManager characterManager;
         bool isTransitioning;
+        bool isDescription;
 
-        int exit;
         string ID;
         string currentMenuID;
         List<Image> scrollingText;
         Dictionary<string, MenuItem> dialogue; //LinkID, Text
         string currentDialogue;
         Image arrow;
+        Image background;
 
 
         public ConversationManager()
         {
-            exit = 1;
+            isDescription = false;
+            background = new Image();
             currentMenuID = currentDialogue = ID = String.Empty;
             arrow = new Image();
             scrollingText = new List<Image>();
             dialogue = new Dictionary<string, MenuItem>();
-            clone = new List<Menu>();
             menu = new Menu();
             menu.OnMenuChanged += menu_OnMenuChange;    //OnMenuChanged = event;
                                                         //Adds the method, "menu_OnMenuChanged" into event OnMenuChanged
@@ -45,19 +45,12 @@ namespace YoutubeRPG
         #region Event
         public void menu_OnMenuChange(object sender, EventArgs e)
         {
-            if (currentMenuID != String.Empty)
-                clone.Add(menu);
-            else
-                clone.Clear();
-
             XmlManager<Menu> XmlMenuManager = new XmlManager<Menu>();
             if (!currentMenuID.Contains(".xml"))
             {
                 menu.UnloadContent();
                 menu = XmlMenuManager.Load("Content/Load/Conversation/Intro.xml");
-                menu.Active = true;
                 conversationMenu();
-                //scrollingDialogue();
                 menu.LoadContent();
                 menu.OnMenuChanged += menu_OnMenuChange;
                 menu.Transition(0.0f);
@@ -104,16 +97,19 @@ namespace YoutubeRPG
                 arrow.Effects = "FadeEffect";
                 arrow.IsActive = true;
                 arrow.LoadContent();
+                background = new Image();
+                background.Path = "Misc/conversation_menu";
+                background.Position = new Vector2(540, 562);
+                background.LoadContent();
             }
         }
         public void UnloadContent()
         {
+            background.UnloadContent();
             menu.UnloadContent();
             arrow.UnloadContent();
             if (characterManager != null)
                 characterManager.UnloadContent();
-            foreach (Menu m in clone)
-                m.UnloadContent();
             foreach (Image i in scrollingText)
                 i.UnloadContent();
         }
@@ -123,6 +119,7 @@ namespace YoutubeRPG
                 menu.Update(gameTime);
             Transition(gameTime);
             arrow.Update(gameTime);
+            background.Update(gameTime);
             characterManager = player.CharacterManager;
             foreach (Image i in scrollingText)
                 i.Update(gameTime);
@@ -131,8 +128,7 @@ namespace YoutubeRPG
         {
             if (IsActive)
             {
-                foreach (Menu m in clone)
-                    m.Draw(spriteBatch);   
+                background.Draw(spriteBatch); 
                 menu.Draw(spriteBatch);
                 if (menu.Type.Contains("Conversation"))
                 {
@@ -144,6 +140,7 @@ namespace YoutubeRPG
         }
         #endregion
         #region Option Menus
+
         void questionMenu()
         {
             //Yes:
@@ -168,7 +165,7 @@ namespace YoutubeRPG
                 menu.Items.Clear();
                 menu.Items.Add(dialogue["0"]);
             }
-            else
+            else if (dialogue.ContainsKey(ID))
             {
                 menu.Items.Clear();
                 menu.Items.Add(dialogue[ID]);
@@ -176,11 +173,18 @@ namespace YoutubeRPG
                 menu.Items[0].Image.Text = " ";
                 menu.Items[0].Image.FontName = "Fonts/OCRA";
             }
+            else if (menu.Active)
+            {
+                menu.Items.Clear();
+                menu.Active = false;
+                currentDialogue = String.Empty;
+                dialogue.Clear();
+            }
         }
 
         void setDialogue()
         {
-            if (ID != String.Empty)
+            if (ID != String.Empty && dialogue.ContainsKey(ID))
             {
                 currentDialogue = dialogue[ID].Image.Text;
                 switch (dialogue[ID].LinkType)
@@ -189,10 +193,10 @@ namespace YoutubeRPG
                         currentMenuID = "Content/Load/Menu/QuestionMenu.xml";
                         break;
                     case "End":
-                        menu.Active = false;
-                        clone.Clear();
+                        currentMenuID = "Content/Load/Menu/EndMenu.xml";
                         break;
                     case "Battle":
+                        ScreenManager.Instance.ChangeScreens("BattleScreen");
                         break;
                     case "Party":
                         break;
@@ -308,11 +312,15 @@ namespace YoutubeRPG
             if (buttonState == eButtonState.DOWN)
             {
                 if (menu.Active)
+                {
                     menu.Active = false;
+                }
                 else
                 {
-                    currentMenuID = "Content/Load/Conversation/Intro.xml";
-                    menu.ID = currentMenuID;
+                    currentMenuID = String.Empty;
+                    currentDialogue = String.Empty;
+                    dialogue.Clear();
+                    menu.ID = "Content/Load/Conversation/Intro.xml";
                     menu.Active = true;
                 }
             }
@@ -345,6 +353,186 @@ namespace YoutubeRPG
                 Activate(buttonState);
             }
         }
+        #endregion
+
+        #region Misc Functions
+        void scrollingTextClear()
+        {
+            foreach (Image i in scrollingText)
+                i.UnloadContent();
+            scrollingText.Clear();
+        }
+        void scrollingTextLoadContent()
+        {
+            foreach (Image i in scrollingText)
+                i.LoadContent();
+        }
+        List<Image> scrollingDescription(string description, Color textColor)
+        {
+            List<Image> imageList = new List<Image>();
+            Image i = new Image();
+            Vector2 dimensions = new Vector2(570, 580f);
+            i.FontName = "Fonts/OCRAsmall";
+            i.TextColor = textColor;
+            i.Position = dimensions;
+            string[] parts = description.Split(' ');
+            string text = String.Empty;
+            int rowLength = 0;
+            int count = 1;
+            foreach (string s in parts)
+            {
+                if (s == "[row]")
+                {
+                    i.Text = text;
+                    imageList.Add(i);
+                    i = new Image();
+                    rowLength = 0;
+                    dimensions.Y += 42f;
+                    if (count % 3 == 0)
+                    {
+                        count = 0;
+                        dimensions = new Vector2(570, 580);
+                    }
+                    count++;
+                    i.FontName = "Fonts/OCRAsmall";
+                    i.TextColor = textColor;
+                    i.Position = dimensions;
+                    text = String.Empty;
+                }
+                else if ((rowLength + s.Length) < 30)
+                {
+                    rowLength += s.Length + 1;
+                    text += s + " ";
+                    if (s == parts[parts.Length - 1]) //if string is last word in dialogue
+                    {
+                        i = new Image();
+                        i.Text = text;
+                        i.FontName = "Fonts/OCRAsmall";
+                        i.TextColor = textColor;
+                        i.Position = dimensions;
+                        imageList.Add(i);
+                    }
+                }
+                else
+                {
+                    i.Text = text;
+                    imageList.Add(i);
+                    i = new Image();
+                    dimensions.Y += 42;
+                    if (count % 3 == 0)
+                    {
+                        count = 0;
+                        dimensions = new Vector2(570, 580);
+                    }
+                    count++;
+                    i.Position = dimensions;
+                    i.TextColor = textColor;
+                    i.FontName = "Fonts/OCRAsmall";
+
+                    text = s + " ";
+                    rowLength = s.Length + 1;
+
+                    if (s == parts[parts.Length - 1]) //if string is last word in dialogue
+                    {
+                        i = new Image();
+                        i.Text = text;
+                        i.FontName = "Fonts/OCRAsmall";
+                        i.TextColor = textColor;
+                        i.Position = dimensions;
+                        imageList.Add(i);
+                    }
+                }
+            }
+            if (imageList.Count > 3)
+            {
+                for (int j = 3; j < imageList.Count; j++)
+                    imageList[j].IsVisible = false;
+                isDescription = true;
+            }
+            return imageList;
+        }
+        List<Image> scrollingDescriptionContinued(string description, Color textColor)
+        {
+            List<Image> imageList = new List<Image>();
+            Image i = new Image();
+            Vector2 dimensions = new Vector2(570, 580);
+            i.FontName = "Fonts/OCRAsmall";
+            i.TextColor = textColor;
+            i.Position = dimensions;
+            string[] parts = description.Split(' ');
+            string text = String.Empty;
+            int rowLength = 0;
+            int count = 1;
+            foreach (string s in parts)
+            {
+                if (s == "[row]")
+                {
+                    i.Text = text;
+                    imageList.Add(i);
+                    i = new Image();
+                    rowLength = 0;
+                    dimensions.Y += 42f;
+                    if (count % 3 == 0)
+                    {
+                        count = 0;
+                        dimensions = new Vector2(570, 580);
+                    }
+                    count++;
+                    i.FontName = "Fonts/OCRAsmall";
+                    i.TextColor = textColor;
+                    i.Position = dimensions;
+                    text = String.Empty;
+                }
+                else if ((rowLength + s.Length) < 30)
+                {
+                    rowLength += s.Length + 1;
+                    text += s + " ";
+                    if (s == parts[parts.Length - 1]) //if string is last word in dialogue
+                    {
+                        i = new Image();
+                        i.Text = text;
+                        i.FontName = "Fonts/OCRAsmall";
+                        i.TextColor = textColor;
+                        i.Position = dimensions;
+                        imageList.Add(i);
+                    }
+                }
+                else
+                {
+                    i.Text = text;
+                    imageList.Add(i);
+                    i = new Image();
+                    dimensions.Y += 42;
+                    if (count % 3 == 0)
+                    {
+                        count = 0;
+                        dimensions = new Vector2(570, 580);
+                    }
+                    count++;
+                    i.Position = dimensions;
+                    i.TextColor = textColor;
+                    i.FontName = "Fonts/OCRAsmall";
+
+                    text = s + " ";
+                    rowLength = s.Length + 1;
+
+                    if (s == parts[parts.Length - 1]) //if string is last word in dialogue
+                    {
+                        i = new Image();
+                        i.Text = text;
+                        i.FontName = "Fonts/OCRAsmall";
+                        i.TextColor = textColor;
+                        i.Position = dimensions;
+                        imageList.Add(i);
+                    }
+                }
+            }
+            for (int j = 0; j < imageList.Count; j++)
+                imageList[j].IsVisible = false;
+            isDescription = true;
+            return imageList;
+        }
+
         #endregion
     }
 }

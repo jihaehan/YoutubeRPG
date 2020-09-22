@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Menu>
+  <Active>false</Active>
+  <Axis>Left</Axis>
+  <Type>Dialogue</Type>
+  <Spacing>
+    <X>0</X>
+    <Y>10</Y>
+  </Spacing>
+  <Alignment>
+    <X>570</X>
+    <Y>580</Y>
+  </Alignment> 
+  <Image>
+    <Path>Misc/conversation_menu</Path>
+    <Position>
+      <X>540</X>
+      <Y>562</Y>
+    </Position>
+    <FontName>Fonts/OCRAExt</FontName>
+  </Image>
+
+
+</Menu>

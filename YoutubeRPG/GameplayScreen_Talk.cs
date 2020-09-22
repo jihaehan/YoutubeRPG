@@ -16,8 +16,8 @@ namespace YoutubeRPG
         World world;
         Camera camera;
         MenuManager menuManager;
-        //Character mole;
-        Chemical chemical;
+        //DialogueManager dialogue;
+        ConversationManager dialogue;
 
         public override void LoadContent()
         {
@@ -33,27 +33,22 @@ namespace YoutubeRPG
             camera = new Camera();
             menuManager = new MenuManager();
             menuManager.LoadContent("Content/Load/Menu/GameplayMenu.xml");
-
+            dialogue = new ConversationManager();
+            dialogue.LoadContent("Content/Load/Conversation/Intro.xml");
             player.Image.Position = world.CurrentMap.StartingPoint;
             InitializeBindings();
 
-            //TEST:character
-            /*
-            XmlManager<Character> characterLoader = new XmlManager<Character>();
-            mole = characterLoader.Load("Content/Load/Gameplay/Mole.xml");
-            mole.LoadContent();
-            mole.Image.Position = player.Image.Position + new Vector2(128, -128);*/
+            //TEST:Dialogue
+            dialogue = new ConversationManager();
         }
         public override void UnloadContent()
         {
             base.UnloadContent();
             player.UnloadContent();
-            //chemical.UnloadContent();
             world.UnloadContent();
             menuManager.UnloadContent();
+            dialogue.UnloadContent();
 
-            //TEST:character
-            //mole.UnloadContent();
         }
         public override void Update(GameTime gameTime)
         {
@@ -63,8 +58,8 @@ namespace YoutubeRPG
             //chemical.Update(gameTime);
             world.Update(gameTime);
             menuManager.Update(gameTime, ref player);
+            dialogue.Update(gameTime, ref player);
             camera.LockToSprite(world.CurrentMap.Layer[0], player.Image);
-
             //TEST:character
             //mole.Update(gameTime);
         }
@@ -87,6 +82,7 @@ namespace YoutubeRPG
 
             spriteBatch.Begin();
             menuManager.Draw(spriteBatch);
+            dialogue.Draw(spriteBatch);
             spriteBatch.End();
         }
         private void InitializeBindings()
@@ -101,37 +97,53 @@ namespace YoutubeRPG
         }
         private void Toggle_Select(eButtonState buttonState)
         {
-            menuManager.MenuSelect_Test(buttonState);
+            if (!dialogue.IsActive)
+                dialogue.Activate(buttonState);
+            else if (dialogue.IsActive)
+                dialogue.MenuSelect(buttonState);
+            else 
+                menuManager.MenuSelect_Test(buttonState);
         }
         private void Toggle_Activate(eButtonState buttonState)
         {
-            menuManager.Activate(buttonState);
+            if (!dialogue.IsActive)
+                dialogue.Activate(buttonState);
+            else
+                menuManager.Activate(buttonState);
         }
 
         private void Toggle_Up(eButtonState buttonState)
         {
-            if (menuManager.IsActive)
+            if (dialogue.IsActive)
+                dialogue.SelectUp(buttonState);
+            else if (menuManager.IsActive)
                 menuManager.SelectUp(buttonState);
             else
                 player.MoveUp(buttonState);
         }
         private void Toggle_Down(eButtonState buttonState)
         {
-            if (menuManager.IsActive)
+            if (dialogue.IsActive)
+                dialogue.SelectDown(buttonState);
+            else if (menuManager.IsActive)
                 menuManager.SelectDown(buttonState);
             else               
                 player.MoveDown(buttonState);
         }
         private void Toggle_Left(eButtonState buttonState)
         {
-            if (menuManager.IsActive)
+            if (dialogue.IsActive)
+                dialogue.SelectLeft(buttonState);
+            else if (menuManager.IsActive)
                 menuManager.SelectLeft(buttonState);
             else
                 player.MoveLeft(buttonState);
         }
         private void Toggle_Right(eButtonState buttonState)
         {
-            if (menuManager.IsActive)
+            if (dialogue.IsActive)
+                dialogue.SelectRight(buttonState);
+            else if (menuManager.IsActive)
                 menuManager.SelectRight(buttonState);
             else
                 player.MoveRight(buttonState);

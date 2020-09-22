@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Menu>
+  <Axis>Left</Axis>
+  <Type>End</Type>
+  <Spacing>
+    <X>0</X>
+    <Y>5</Y>
+  </Spacing>
+  <Alignment>
+    <X>-5</X>
+    <Y>-5</Y>
+  </Alignment> 
+
+  <Item>
+    <LinkType>End</LinkType> 
+    <LinkID>Exit</LinkID>
+    <Image>
+      <Text>.</Text>  
+    </Image>
+  </Item>
+  
+</Menu>

@@ -14,6 +14,7 @@ namespace YoutubeRPG
     {
         public Image Image;
         public Vector2 Velocity;
+        public bool IsDialogue;
      
         public float MoveSpeed;
         public int TileLength;
@@ -27,6 +28,7 @@ namespace YoutubeRPG
         public ItemManager ItemManager;
         public CharacterManager CharacterManager;
         public List<string> ReactionHistory;
+        public DialogueManager Dialogue;
 
         public List<string> Keys
         {
@@ -36,6 +38,8 @@ namespace YoutubeRPG
 
         public Player()
         {
+            IsDialogue = false;
+            Dialogue = new DialogueManager();
             ReactionHistory = new List<string>();
             Velocity = Vector2.Zero;
             TileLength = 128;

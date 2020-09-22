@@ -37,6 +37,8 @@ namespace YoutubeRPG
         public Dictionary<string, Chemical> Party;
         [XmlIgnore]
         public int Experience;
+        [XmlIgnore]
+        public string Enemy;
 
         public static ScreenManager Instance
         {
@@ -55,7 +57,7 @@ namespace YoutubeRPG
         {
             Dimensions = new Vector2(1280, 720);
             //currentScreen = new BattleScreen();
-            currentScreen = new GameplayScreen_Talk();
+            currentScreen = new GameplayScreen_Blue();
             //currentScreen = new SplashScreen();
             xmlGameScreenManager = new XmlManager<GameScreen>();
             xmlGameScreenManager.Type = currentScreen.Type;
@@ -64,6 +66,7 @@ namespace YoutubeRPG
             /*TEMP SOLUTION*/
             Party = new Dictionary<string, Chemical>();
             Experience = 0;
+            Enemy = String.Empty;
         }
         public void ChangeScreens(string screenName)
         {

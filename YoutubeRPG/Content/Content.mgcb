@@ -1425,6 +1425,9 @@
 #begin Load/Conversation/Intro.xml
 /copy:Load/Conversation/Intro.xml
 
+#begin Load/Dialogue/Intro.xml
+/copy:Load/Dialogue/Intro.xml
+
 #begin Load/Gameplay/Backpack.xml
 /copy:Load/Gameplay/Backpack.xml
 
@@ -1523,6 +1526,9 @@
 
 #begin Load/Menu/EndBattleMenu.xml
 /copy:Load/Menu/EndBattleMenu.xml
+
+#begin Load/Menu/EndMenu.xml
+/copy:Load/Menu/EndMenu.xml
 
 #begin Load/Menu/EnemyMenu.xml
 /copy:Load/Menu/EnemyMenu.xml
