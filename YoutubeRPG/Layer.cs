@@ -28,15 +28,25 @@ namespace YoutubeRPG
 
         public Image Water;
         public Image Image;
-        public string OverlayTiles, PortalTiles, WaterTiles;
+        public string OverlayTiles, PortalTiles, WaterTiles, NpcTiles;
         public string SolidTiles, LeftEdge, RightEdge, TopEdge, LeftCorner, RightCorner, NWCorner, NECorner, SWCorner, SECorner, RightWall, LeftWall, TopWall, BottomWall, BottomDoor, SEWallCorner, SWWallCorner, NEWallCorner, NWWallCorner, LeftHalf, RightHalf; 
         
         List<Tile> underlayTiles;
         List<Tile> overlayTiles;
+        Dictionary<string, Vector2> npcName;
         Dictionary<Vector2, string> portalTiles;
+        Dictionary<Vector2, string> npcTiles;
         List<TileCollision> tilesCount;
+        
         int rowLength;
         int tileLength;
+
+        #region getter/setter
+        public Dictionary<string, Vector2> NpcName()
+        {
+            return npcName;
+        }
+        #endregion
 
         public Layer()
         {
@@ -45,15 +55,18 @@ namespace YoutubeRPG
             underlayTiles = new List<Tile>();
             overlayTiles = new List<Tile>();
             portalTiles = new Dictionary<Vector2, string>();
+            npcTiles = new Dictionary<Vector2, string>();
+            npcName = new Dictionary<string, Vector2>();
 
             tilesCount = new List<TileCollision>();
             OverlayTiles = PortalTiles = String.Empty;
             
-            SolidTiles = LeftEdge = RightEdge = TopEdge = LeftCorner = RightCorner = NWCorner = NECorner = SWCorner = SECorner = RightWall = LeftWall = TopWall = BottomWall = BottomDoor = SEWallCorner = SWWallCorner = NEWallCorner = NWWallCorner = LeftHalf = RightHalf = WaterTiles = String.Empty;
+            SolidTiles = LeftEdge = RightEdge = TopEdge = LeftCorner = RightCorner = NWCorner = NECorner = SWCorner = SECorner = RightWall = LeftWall = TopWall = BottomWall = BottomDoor = SEWallCorner = SWWallCorner = NEWallCorner = NWWallCorner = LeftHalf = RightHalf = WaterTiles = NpcTiles = String.Empty;
         }
 
         public void LoadContent(Vector2 tileDimensions)
         {
+
             Image.LoadContent();
             if (Water.Path != String.Empty)
                 Water.LoadContent();
@@ -109,6 +122,23 @@ namespace YoutubeRPG
                             {
                                 tilesCount[tilesCount.Count() - 1] = TileCollision.Water;
                                 Water.IsActive = true;
+                            }
+                            else if (NpcTiles.Contains("[" + value1.ToString() + ":" + value2.ToString() + "-"))
+                            {
+                                string[] p = NpcTiles.Split(']');
+                                string name = String.Empty;
+                                foreach (string pstr in p)
+                                {
+                                    if (pstr.Contains("[" + value1.ToString() + ":" + value2.ToString() + "-"))
+                                    {
+                                        name = pstr.Substring(pstr.IndexOf('-') + 1);
+                                        tilesCount[tilesCount.Count() - 1] = TileCollision.NPC;
+                                        Vector2 npcLocation = new Vector2((int)Math.Floor(position.X / tileDimensions.X),
+                                            (int)Math.Floor(position.Y / tileDimensions.Y));
+                                        npcTiles.Add(npcLocation, name);
+                                        npcName.Add(name, npcLocation);
+                                    }
+                                }
                             }
                             else if (PortalTiles.Contains("[" + value1.ToString() + ":" + value2.ToString() + "-"))
                             {
@@ -189,6 +219,10 @@ namespace YoutubeRPG
         public Dictionary<Vector2, string> Portals()
         {
             return portalTiles;
+        }
+        public Dictionary<Vector2, string> NPCs()
+        {
+            return npcTiles;
         }
         public int Width()
         {

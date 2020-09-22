@@ -21,6 +21,7 @@ namespace YoutubeRPG
         string portalDestination; 
         Vector2 portalArrival;
         bool isPortal;
+        bool isNPC;
 
         public ChemicalManager ChemicalManager;
         public ItemManager ItemManager;
@@ -39,6 +40,7 @@ namespace YoutubeRPG
             Velocity = Vector2.Zero;
             TileLength = 128;
             isPortal = false;
+            isNPC = false;
             portalDestination = String.Empty;
             portalArrival = Vector2.Zero;
             keys = new List<string>();
@@ -192,6 +194,7 @@ namespace YoutubeRPG
                         TileCollision tileCollision = layer.GetTile(x, y);
                         List<Rectangle> rectCollisions = new List<Rectangle>();
                         List<Rectangle> portalCollisions = new List<Rectangle>();
+                        List<Rectangle> npcCollisions = new List<Rectangle>();
                         List<Triangle> triCollisions = new List<Triangle>();
 
                         switch (tileCollision)
@@ -259,6 +262,9 @@ namespace YoutubeRPG
                             case TileCollision.RightHalf:
                                 rectCollisions.Add(new Rectangle(x * TileLength + TileLength / 2, y * TileLength, TileLength / 2, TileLength));
                                 break;
+                            case TileCollision.NPC:
+                                rectCollisions.Add(new Rectangle(x * TileLength + TileLength / 4, y * TileLength + (int)(TileLength/6), TileLength / 2, (int)TileLength * 3/4));
+                                break;
                             case TileCollision.Portal:
                                 if ((x + 2) > layer.Width() / TileLength)
                                 {
@@ -311,7 +317,26 @@ namespace YoutubeRPG
                             if (rectangleIntersectTriangle(boundingBox, t))
                                 Velocity = Vector2.Zero;
                         }
+                        foreach (Rectangle r in npcCollisions)
+                        {
+                            if (boundingBox.Intersects(r) && !isNPC)
+                            {
+                                Vector2 npcLocation = new Vector2(x, y);
+                                if ((r.Center.X > boundingBox.Center.X && Velocity.X > 0)
+                                    || (r.Center.X < boundingBox.Center.X && Velocity.X < 0))
+                                    Velocity.X = 0;
 
+                                if ((r.Center.Y > boundingBox.Center.Y && Velocity.Y > 0)
+                                    || (r.Center.Y < boundingBox.Center.Y && Velocity.Y < 0))
+                                    Velocity.Y = 0;
+                                if (layer.NPCs().ContainsKey(npcLocation))
+                                {
+                                    Character character = CharacterManager.GetCharacter(layer.NPCs()[npcLocation]);
+                                    //Trigger the ConversationManager here...
+                                    //conversationManager = character.GetConversation();
+                                }
+                            }
+                        }
                         foreach (Rectangle p in portalCollisions)
                         {
                             if (boundingBox.Intersects(p) && !isPortal)

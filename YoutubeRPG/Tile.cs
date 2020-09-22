@@ -39,7 +39,7 @@ namespace YoutubeRPG
         LeftHalf,
         RightHalf,
         Chemical,
-
+        NPC,
     }
     public class Tile
     {

@@ -1428,8 +1428,17 @@
 #begin Load/Gameplay/Backpack.xml
 /copy:Load/Gameplay/Backpack.xml
 
+#begin Load/Gameplay/Battle/Bondbrothers.xml
+/copy:Load/Gameplay/Battle/Bondbrothers.xml
+
 #begin Load/Gameplay/Battle/Markovnikov.xml
 /copy:Load/Gameplay/Battle/Markovnikov.xml
+
+#begin Load/Gameplay/Battle/Methane.xml
+/copy:Load/Gameplay/Battle/Methane.xml
+
+#begin Load/Gameplay/Battle/Mole.xml
+/copy:Load/Gameplay/Battle/Mole.xml
 
 #begin Load/Gameplay/Bondbrothers.xml
 /copy:Load/Gameplay/Bondbrothers.xml
@@ -1469,6 +1478,18 @@
 
 #begin Load/Gameplay/Mole.xml
 /copy:Load/Gameplay/Mole.xml
+
+#begin Load/Gameplay/Npc/Bondbrothers.xml
+/copy:Load/Gameplay/Npc/Bondbrothers.xml
+
+#begin Load/Gameplay/Npc/Markovnikov.xml
+/copy:Load/Gameplay/Npc/Markovnikov.xml
+
+#begin Load/Gameplay/Npc/Methane.xml
+/copy:Load/Gameplay/Npc/Methane.xml
+
+#begin Load/Gameplay/Npc/Mole.xml
+/copy:Load/Gameplay/Npc/Mole.xml
 
 #begin Load/Gameplay/Party.xml
 /copy:Load/Gameplay/Party.xml

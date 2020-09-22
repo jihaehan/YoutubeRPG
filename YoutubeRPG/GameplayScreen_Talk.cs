@@ -16,7 +16,7 @@ namespace YoutubeRPG
         World world;
         Camera camera;
         MenuManager menuManager;
-        Character mole;
+        //Character mole;
         Chemical chemical;
 
         public override void LoadContent()
@@ -38,10 +38,11 @@ namespace YoutubeRPG
             InitializeBindings();
 
             //TEST:character
+            /*
             XmlManager<Character> characterLoader = new XmlManager<Character>();
             mole = characterLoader.Load("Content/Load/Gameplay/Mole.xml");
             mole.LoadContent();
-            mole.Image.Position = player.Image.Position + new Vector2(128, -128);
+            mole.Image.Position = player.Image.Position + new Vector2(128, -128);*/
         }
         public override void UnloadContent()
         {
@@ -52,7 +53,7 @@ namespace YoutubeRPG
             menuManager.UnloadContent();
 
             //TEST:character
-            mole.UnloadContent();
+            //mole.UnloadContent();
         }
         public override void Update(GameTime gameTime)
         {
@@ -65,7 +66,7 @@ namespace YoutubeRPG
             camera.LockToSprite(world.CurrentMap.Layer[0], player.Image);
 
             //TEST:character
-            mole.Update(gameTime);
+            //mole.Update(gameTime);
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
@@ -77,9 +78,10 @@ namespace YoutubeRPG
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, camera.Transformation);
             world.Draw(spriteBatch, "Underlay");
+            
             player.Draw(spriteBatch);
             //chemical.Draw(spriteBatch);
-            mole.Draw(spriteBatch);
+            //mole.Draw(spriteBatch);
             world.Draw(spriteBatch, "Overlay");
             spriteBatch.End();
 

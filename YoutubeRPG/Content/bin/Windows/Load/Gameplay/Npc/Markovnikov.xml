@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<NPC>
+  <Name>Markovnikov</Name>
+  <NpcXml>Content/Load/Gameplay/Markovnikov.xml</NpcXml>
+  <PartyXml>Content/Load/Gameplay/Battle/Markovnikov.xml</PartyXml>
+</NPC>
+

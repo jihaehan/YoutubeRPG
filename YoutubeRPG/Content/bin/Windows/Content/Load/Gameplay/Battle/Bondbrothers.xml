@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ChemicalManager>
+  <ChemicalSource>Content/Load/Chemical/Alkane/Ethane.xml</ChemicalSource>
+  <ChemicalSource>Content/Load/Chemical/Alkene/Ethene.xml</ChemicalSource>
+  <ChemicalSource>Content/Load/Chemical/Halogenoalkane/Bromoethane.xml</ChemicalSource>
+  <ChemicalSource>Content/Load/Chemical/Alcohol/Ethanol.xml</ChemicalSource>
+  <ChemicalSource>Content/Load/Chemical/Alkane/Propane.xml</ChemicalSource>
+</ChemicalManager>
+

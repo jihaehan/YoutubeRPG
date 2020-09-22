@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<NPC>
+  <Name>Bondbrothers</Name>
+  <NpcXml>Content/Load/Gameplay/Bondbrothers.xml</NpcXml>
+  <PartyXml>Content/Load/Gameplay/Battle/Bondbrothers.xml</PartyXml>
+</NPC>
+

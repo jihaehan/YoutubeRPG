@@ -15,14 +15,13 @@ namespace YoutubeRPG
     {
         [XmlElement("MapSource")]
         public List<string> MapSource;
+
         //[XmlElement("BattleMapSource")]
         //public List<string> BattleMapSource;
 
         public string CurrentMapName;
-
         Dictionary<string, Map> maps;
         List<string> mapName;
-
         public World()
         {
             //BattleMapSource = new List<string>();
@@ -35,6 +34,7 @@ namespace YoutubeRPG
         {
             get { return maps[CurrentMapName]; }
         }
+
         public void LoadContent()
         {
             XmlManager<Map> mapLoader = new XmlManager<Map>();
