@@ -28,9 +28,14 @@ namespace YoutubeRPG
         SpriteFont font;
         Image page;
         string pageText;
+        bool isIntroduction;
+        string id;
 
         public MenuManager()
         {
+            isIntroduction = false;
+            id = String.Empty;
+            isIntroduction = false; 
             prevSelectedItem = gameplayMenuSelectedItem = 0;
             prevMenuID = currentMenuID = selectedItem = String.Empty;
             pageText = "1/3";
@@ -41,6 +46,14 @@ namespace YoutubeRPG
             menu = new Menu();
             menu.OnMenuChanged += menu_OnMenuChange;    //OnMenuChanged = event;
                                                         //Adds the method, "menu_OnMenuChanged" into event OnMenuChanged
+        }
+        public void SetIntroduction()
+        {
+            isIntroduction = true;
+        }
+        public string ID()
+        {
+            return id;
         }
         public bool IsActive
         {

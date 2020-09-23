@@ -1431,6 +1431,9 @@
 #begin Load/Conversation/Intro.xml
 /copy:Load/Conversation/Intro.xml
 
+#begin Load/Conversation/Introduction.xml
+/copy:Load/Conversation/Introduction.xml
+
 #begin Load/Conversation/Markovnikov.xml
 /copy:Load/Conversation/Markovnikov.xml
 
@@ -1478,6 +1481,9 @@
 
 #begin Load/Gameplay/Map/Room1_1.xml
 /copy:Load/Gameplay/Map/Room1_1.xml
+
+#begin Load/Gameplay/Map/Room1_11.xml
+/copy:Load/Gameplay/Map/Room1_11.xml
 
 #begin Load/Gameplay/Map/Room1_2.xml
 /copy:Load/Gameplay/Map/Room1_2.xml

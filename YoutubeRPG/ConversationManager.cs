@@ -13,6 +13,7 @@ namespace YoutubeRPG
     {
         public string newPartyMember;
         public string DialoguePath, PrevDialoguePath;
+        public string DialogueLinkType;
         Menu menu;
         bool isTransitioning;
         bool isDescription;
@@ -23,10 +24,12 @@ namespace YoutubeRPG
         string currentDialogue, previousDialogue;
         Image arrow;
         Image background;
-
+        bool isIntroduction; 
 
         public ConversationManager()
         {
+            isIntroduction = false;
+            DialogueLinkType = String.Empty;
             newPartyMember = String.Empty;
             DialoguePath = String.Empty;
             PrevDialoguePath = String.Empty;//".";
@@ -54,7 +57,9 @@ namespace YoutubeRPG
                 menu.UnloadContent();
                 if (DialoguePath != String.Empty)
                     menu = XmlMenuManager.Load("Content/Load/Conversation/"+DialoguePath+".xml");
-                else 
+                else if (isIntroduction)
+                    menu = XmlMenuManager.Load("Content/Load/Conversation/Introduction.xml");
+                else
                     menu = XmlMenuManager.Load("Content/Load/Conversation/Intro.xml");
                 conversationMenu();
                 menu.LoadContent();
@@ -97,6 +102,11 @@ namespace YoutubeRPG
             {
                 if (menuPath.Contains(".xml"))
                 {
+                    if (menuPath.Contains("Introduction"))
+                    {
+                        menu.Active = true;
+                        isIntroduction = true;
+                    }
                     menu.ID = menuPath;
                     currentMenuID = menuPath;
                 }
@@ -148,6 +158,21 @@ namespace YoutubeRPG
                 }
             }
         }
+        public void DrawIntroduction(SpriteBatch spriteBatch)
+        {
+            if (IsActive)
+            {
+                background.Draw(spriteBatch);
+                
+                //menu.Draw(spriteBatch);
+                if (menu.Type.Contains("Conversation"))
+                {
+                    arrow.Draw(spriteBatch);
+                }
+                foreach (Image i in scrollingText)
+                    i.Draw(spriteBatch);
+            }
+        }
         public void Draw(SpriteBatch spriteBatch)
         {
             if (IsActive)
@@ -172,7 +197,10 @@ namespace YoutubeRPG
             menu.Items[0].LinkID = id;
             //menu.Items[0].LinkType = dialogue[id].LinkType;
             //No:
-            id = ID + "0";
+            if (isIntroduction)
+                id = ID;
+            else 
+                id = ID + "0";
             menu.Items[1].LinkID = id;
             //menu.Items[1].LinkType = dialogue[id].LinkType;
 
@@ -303,6 +331,47 @@ namespace YoutubeRPG
                         menu.ID = "Content/Load/Conversation/" + DialoguePath + ".xml";
                     menu.Active = true;
                 }
+            }
+        }
+        public void MenuSelect_Intro(eButtonState buttonState)
+        {
+            if (buttonState == eButtonState.DOWN && !isTransitioning && IsActive)
+            {
+                if (isDescription)
+                {
+                    if (scrollingText.Count > 3)
+                        scrollingText.RemoveRange(0, Math.Min(3, scrollingText.Count));
+                    for (int i = 0; i < Math.Min(scrollingText.Count, 3); i++)
+                        scrollingText[i].IsVisible = true;
+                    if (scrollingText.Count < 3)
+                        isDescription = false;
+                }
+                else if (menu.Items[menu.ItemNumber].LinkType == "Screen")
+                    ScreenManager.Instance.ChangeScreens(menu.Items[menu.ItemNumber].LinkID);
+                else if (menu.Items[menu.ItemNumber].LinkType == "None")
+                {/*no action*/}
+                else if (scrollingText.Count < 3)
+                {
+                    currentMenuID = menu.Items[menu.ItemNumber].LinkID;
+                    if (!ID.Contains(".xml") && currentMenuID != String.Empty)
+                    {
+                        ID = currentMenuID;
+                        DialogueLinkType = ID;
+                    }
+
+                    setDialogue();
+
+                    isTransitioning = true;
+                    if (isTransitioning)
+                    {
+                        menu.ID = currentMenuID;
+                        isTransitioning = false;
+                    }
+                }
+            }
+            else if (!IsActive)
+            {
+                Activate(buttonState);
             }
         }
         public void MenuSelect(eButtonState buttonState)
