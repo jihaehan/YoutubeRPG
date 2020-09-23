@@ -59,10 +59,11 @@
     <Image>
       <Path>TileSheets/interior1</Path>
     </Image>
+    <NpcTiles>[0:4-Methane]</NpcTiles>
     <TileMap>
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
-      <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
+      <Row>[x:x][x:x][x:x][x:x][x:x][0:4][x:x][x:x][x:x][x:x][x:x]</Row>
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][1:7][3:7][2:1][2:1][4:7]</Row>

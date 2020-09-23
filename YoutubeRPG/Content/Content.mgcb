@@ -2418,6 +2418,18 @@
 /processorParam:TextureFormat=Color
 /build:TileSheets/building1.png
 
+#begin TileSheets/building2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:TileSheets/building2.png
+
 #begin TileSheets/interior1.png
 /importer:TextureImporter
 /processor:TextureProcessor

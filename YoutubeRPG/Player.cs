@@ -336,10 +336,17 @@ namespace YoutubeRPG
                         }
                         foreach (Rectangle r in randomCollisions)
                         {
-                            if (!ScreenManager.Instance.IsTransitioning)
+                            if (boundingBox.Intersects(r))
                             {
-                                ScreenManager.Instance.Enemy = "Anonymous";
-                                ScreenManager.Instance.ChangeScreens("BattleScreen");
+                                Random rnd = new Random();
+                                if (!ScreenManager.Instance.IsTransitioning)
+                                {
+                                    if (rnd.Next(100) < 1) //10% chance of triggering battle
+                                    {
+                                        ScreenManager.Instance.Enemy = "Anonymous";
+                                        ScreenManager.Instance.ChangeScreens("BattleScreen");
+                                    }
+                                }
                             }
                         }
                         foreach (Rectangle r in npcCollisions)
