@@ -52,5 +52,84 @@
     </Image>
   </Item>
 
+  <Item>
+    <LinkType>Question</LinkType> 
+    <LinkID>01111</LinkID>
+    <Image>
+      <Text>Through your INFO menu, you'll have info about your party members. Namely me!</Text>
+    </Image>
+  </Item>
 
+  <Item>
+    <LinkType>Question</LinkType> 
+    <LinkID>011111</LinkID>
+    <Image>
+      <Text>Higher Boiling Point means higher defense, and higher Combustion Enthalpy means higher offense.</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Question</LinkType> 
+    <LinkID>0111111</LinkID>
+    <Image>
+      <Text>Your ITEM menu will have items in your backpack.</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Question</LinkType> 
+    <LinkID>01111111</LinkID>
+    <Image>
+      <Text>You already have quite a few chemical reactants, which are required to pull off certain reactions in Chemical Battles!</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Question</LinkType> 
+    <LinkID>011111111</LinkID>
+    <Image>
+      <Text>As a Methane I can undergo Free Radical Substition in the presence of UV light and Bromine. You'll find out what that does soon enough!</Text>
+    </Image>
+  </Item>
+  
+   <Item>
+    <LinkType>Question</LinkType> 
+    <LinkID>0111111111</LinkID>
+    <Image>
+      <Text>The BOOK menu is your cheat sheet... ahem, research log on chemical compounds.</Text>
+    </Image>
+  </Item>  
+
+  <Item>
+    <LinkType>Question</LinkType> 
+    <LinkID>01111111111</LinkID>
+    <Image>
+      <Text>You can even access your BOOK in battle! After all, knowledge is power.</Text>
+    </Image>
+  </Item> 
+  
+  <Item>
+    <LinkType>Question</LinkType> 
+    <LinkID>011111111111</LinkID>
+    <Image>
+      <Text>And lastly the PLAN menu lists the Chemists, or Chemicals you can meet and talk to in world of ChemCraft.</Text>
+    </Image>
+  </Item>  
+  
+  <Item>
+    <LinkType>Question</LinkType> 
+    <LinkID>0111111111111</LinkID>
+    <Image>
+      <Text>Whew. That's a lot of info. Well, I've been doing all the talking, so try talking to me this time!</Text>
+    </Image>
+  </Item>  
+
+  <Item>
+    <LinkType>End</LinkType> 
+    <LinkID>01111111111111</LinkID>
+    <Image>
+      <Text>Just walk up real close and cosy using 'WASD' and hit 'ENTER' to get my attention! By the way if you're too far away you'll only open your Journal.</Text>
+    </Image>
+  </Item>  
+  
 </Menu>

@@ -55,6 +55,10 @@ namespace YoutubeRPG
         {
             return id;
         }
+        public string Type()
+        {
+            return menu.Type;
+        }
         public bool IsActive
         {
             get { return menu.Active; }
@@ -108,6 +112,12 @@ namespace YoutubeRPG
             }
             else if (menu.Type.Contains("Option"))
             {
+                if (isIntroduction)
+                {
+                    foreach (MenuItem m in menu.Items)
+                        m.Image.Position -= menu.Image.Position;
+                    menu.Image.Position = Vector2.Zero;
+                }
                 menu.ItemNumber = prevSelectedItem; 
                 optionMenuPage();
             }
@@ -764,6 +774,7 @@ namespace YoutubeRPG
                         gameplayMenuSelectedItem = menu.ItemNumber;
                     prevSelectedItem = menu.ItemNumber;
                     currentMenuID = menu.Items[menu.ItemNumber].LinkID;
+                    id = currentMenuID;
 
                     if (menu.Type.Contains("Option"))
                     {

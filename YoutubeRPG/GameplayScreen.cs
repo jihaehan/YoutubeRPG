@@ -21,6 +21,12 @@ namespace YoutubeRPG
         Character methane;
         List<SPX> spxImage;
         SPXManager spxManager;
+        int planCount = 0;
+        bool moveLeft;
+        bool moveUp;
+        bool moveRight;
+        bool moved;
+        Vector2 pt1, pt2, pt3, pt4, pt5;
 
         public override void LoadContent()
         {
@@ -36,9 +42,9 @@ namespace YoutubeRPG
             camera = new Camera();
             menuManager = new MenuManager();
             menuManager.LoadContent("Content/Load/Menu/GameplayMenu.xml");
+            menuManager.SetIntroduction();
             conversationManager = new ConversationManager();
             conversationManager.LoadContent("Content/Load/Conversation/Introduction.xml");
-            bool test = conversationManager.IsActive;
             InitializeBindings();
 
             XmlManager<Character> characterLoader = new XmlManager<Character>();
@@ -49,6 +55,15 @@ namespace YoutubeRPG
 
             spxManager = new SPXManager();
             spxImage = new List<SPX>();
+            moveLeft = false;
+            moveUp = false;
+            moveRight = false;
+            moved = false;
+            pt1 = new Vector2(7.5f, 2f) * 128;
+            pt2 = new Vector2(5f, 2f) * 128;
+            pt3 = new Vector2(5f, -1f) * 128;
+            pt4 = new Vector2(4f, 5f) * 128;
+            pt5 = new Vector2(8f, 5f) * 128;
 
         }
         public override void UnloadContent()
@@ -70,6 +85,46 @@ namespace YoutubeRPG
             player.Update(gameTime, world);
             world.Update(gameTime);
             menuManager.Update(gameTime, ref player);
+            if (moveLeft)
+            {
+                if (methane.Image.Position.Y > pt1.Y)
+                    methane.Image.Position.Y -= 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                else if (methane.Image.Position.X > pt2.X)
+                    methane.Image.Position.X -= 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                else
+                    moveLeft = false;
+            }
+            if (moveUp)
+            {
+                if (methane.Image.Position.Y > pt3.Y)
+                    methane.Image.Position.Y -= 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                else
+                    moveUp = false;
+            }
+            if (world.CurrentMapName.Contains("Room1_3") && !moved)
+            {
+                moveRight = true;
+                moved = true;
+                methane.Image.Position.Y = 7 * 128;
+                methane.Image.SpriteSheetEffect.CurrentFrame.Y = 0;
+            }
+            if (moveRight)
+            {
+                if (methane.Image.Position.Y > pt4.Y)
+                    methane.Image.Position.Y -= 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                else if (methane.Image.Position.X < pt5.X)
+                    methane.Image.Position.X += 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                else
+                {
+                    if (methane.Image.Alpha > 0)
+                        methane.Image.Alpha -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    else
+                    {
+                        methane.Image.Alpha = 0;
+                        moveRight = false;
+                    }
+                }
+            }
             methane.Update(gameTime);
             foreach (SPX spx in spxImage)
                 spx.Update(gameTime);
@@ -87,7 +142,7 @@ namespace YoutubeRPG
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, camera.Transformation);
             world.Draw(spriteBatch, "Underlay");
-            player.Draw(spriteBatch);
+            player.Image.Draw(spriteBatch);
             if (world.CurrentMapName.Contains("_"))
                 methane.Draw(spriteBatch);
             foreach (SPX spx in spxImage)
@@ -114,7 +169,24 @@ namespace YoutubeRPG
         }
         private void Toggle_Select(eButtonState buttonState)
         {
-            if (conversationManager.IsActive)
+            if (!conversationManager.IsActive && player.DialoguePathName() != String.Empty)
+            {
+                conversationManager.LoadContent(player.DialoguePathName());
+                conversationManager.Activate(buttonState);
+                player.IsNPC = false;
+            }
+            else if (conversationManager.IsActive && conversationManager.DialoguePath != String.Empty)
+            {
+                conversationManager.MenuSelect(buttonState);
+                if (conversationManager.DialoguePath == "Methane")
+                {
+                    world.ChangeMap("Room1_1");
+                    methane.Image.IsVisible = true;
+                    moveUp = true;
+                    conversationManager.Activate(buttonState);
+                }
+            }
+            else if (conversationManager.IsActive && conversationManager.DialoguePath == String.Empty)
             {
                 conversationManager.MenuSelect_Intro(buttonState);
                 
@@ -139,6 +211,62 @@ namespace YoutubeRPG
                                 menuManager.MenuSelect_Test(buttonState);
                             break;
                         case "01111":  //infoMenu
+                            if (!menuManager.Type().Contains("ChemicalInfo"))
+                                menuManager.MenuSelect_Test(buttonState);
+                            else if (!menuManager.Type().Contains("PropertyInfo"))
+                                menuManager.SelectRight(buttonState);
+                            break;
+                        case "011111":  //property menu
+                                menuManager.SelectRight(buttonState); 
+                            break;
+                        case "0111111": //ITEMS menu
+                            if (!menuManager.ID().Contains("Gameplay"))
+                            {
+                                menuManager.PrevMenuSelect(buttonState);
+                                menuManager.PrevMenuSelect(buttonState);
+                            }
+                            menuManager.SelectDown(buttonState);
+                            break;
+                        case "01111111":  //property menu
+                            menuManager.MenuSelect_Test(buttonState);
+                            for (int count = 0; count < 3; count++)
+                                menuManager.SelectDown(buttonState);
+                            break;
+                        case "0111111111": //BookMenu
+                            if (!menuManager.ID().Contains("Gameplay"))
+                            {
+                                menuManager.PrevMenuSelect(buttonState);
+                                menuManager.PrevMenuSelect(buttonState);
+                            }
+                            menuManager.SelectRight(buttonState);
+                            break;
+                        case "01111111111":
+                            menuManager.MenuSelect_Test(buttonState);
+                            menuManager.MenuSelect_Test(buttonState);
+                            break;
+                        case "011111111111":
+                            if (planCount == 0)
+                            {
+                                menuManager.PrevMenuSelect(buttonState);
+                                menuManager.PrevMenuSelect(buttonState);
+                                menuManager.SelectUp(buttonState);
+                                planCount++;
+                            }
+                            else if (planCount > 0)
+                                menuManager.MenuSelect_Test(buttonState);
+                            break;
+                        case "0111111111111": //Move chemical here 
+                            if (menuManager.IsActive)
+                            {
+                                menuManager.PrevMenuSelect(buttonState);
+                                menuManager.PrevMenuSelect(buttonState);
+                            }
+                            methane.Image.SpriteSheetEffect.CurrentFrame.Y = 0;
+                            moveLeft = true;
+                            break;
+                        case "01111111111111": //Talk to chemical quest
+                            methane.Image.IsVisible = false;
+                            world.ChangeMap("Room1_11");
                             break;
                         default:
                             if (methane.Image.Effects.Contains("FadeEffect"))

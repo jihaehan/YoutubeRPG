@@ -343,14 +343,14 @@ namespace YoutubeRPG
                         scrollingText.RemoveRange(0, Math.Min(3, scrollingText.Count));
                     for (int i = 0; i < Math.Min(scrollingText.Count, 3); i++)
                         scrollingText[i].IsVisible = true;
-                    if (scrollingText.Count < 3)
+                    if (scrollingText.Count <= 3)
                         isDescription = false;
                 }
                 else if (menu.Items[menu.ItemNumber].LinkType == "Screen")
                     ScreenManager.Instance.ChangeScreens(menu.Items[menu.ItemNumber].LinkID);
                 else if (menu.Items[menu.ItemNumber].LinkType == "None")
                 {/*no action*/}
-                else if (scrollingText.Count < 3)
+                else if (scrollingText.Count <= 3)
                 {
                     currentMenuID = menu.Items[menu.ItemNumber].LinkID;
                     if (!ID.Contains(".xml") && currentMenuID != String.Empty)
