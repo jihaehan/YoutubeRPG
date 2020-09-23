@@ -28,6 +28,12 @@ namespace YoutubeRPG
             if (ScreenManager.Instance.Party.Count > 0)
             {
                 player.ChemicalManager.LoadParty();
+                foreach (string name in player.ChemicalManager.chemicalName)
+                {
+                    player.ChemicalManager.GetChemical(name).Image.FadeEffect.IsActive = false;
+                    player.ChemicalManager.GetChemical(name).Image.SpriteSheetEffect.IsActive = true;
+                    player.ChemicalManager.GetChemical(name).Image.Alpha = 1.0f;
+                }
             }
             //If player save exists, load Save files here
             world = worldLoader.Load("Content/Load/Gameplay/World/Blue_Test.xml");

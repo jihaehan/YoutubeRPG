@@ -193,6 +193,7 @@ namespace YoutubeRPG
         }
         public void UnloadContent()
         {
+            foreach (string name in player.ChemicalManager.chemicalName)                    player.ChemicalManager.GetChemical(name).Image.FadeEffect.IsActive = false;
             player.ChemicalManager.SaveParty();
             //First save player content into another file before unloading...
             //and then redirect screen to level up screen depending on EXP gains
