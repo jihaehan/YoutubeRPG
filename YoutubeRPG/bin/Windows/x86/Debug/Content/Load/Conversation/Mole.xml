@@ -53,10 +53,10 @@
   </Item>
 
   <Item>
-    <LinkType>End</LinkType> 
+    <LinkType>Party</LinkType> 
     <LinkID>00</LinkID>
     <Image>
-      <Text>Oh, that's too bad...</Text>
+      <Text>Alkane/Methane:Methane joins your party! [test]</Text>
     </Image>
   </Item>
 

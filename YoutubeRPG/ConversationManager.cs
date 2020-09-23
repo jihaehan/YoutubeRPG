@@ -11,6 +11,7 @@ namespace YoutubeRPG
 {
     public class ConversationManager
     {
+        string newPartyMember;
         public string DialoguePath, PrevDialoguePath;
         Menu menu;
         bool isTransitioning;
@@ -26,6 +27,7 @@ namespace YoutubeRPG
 
         public ConversationManager()
         {
+            newPartyMember = String.Empty;
             DialoguePath = String.Empty;
             PrevDialoguePath = String.Empty;//".";
             isDescription = false;
@@ -75,10 +77,9 @@ namespace YoutubeRPG
                     questionMenu();
                 }
             }
-            if (currentDialogue != String.Empty && currentDialogue != previousDialogue)// && !currentMenuID.Contains("Question"))
+            if (currentDialogue != String.Empty && currentDialogue != previousDialogue)
                 scrollingDescription(Color.Black);
-                //scrollingDialogue();
-
+                
 
             foreach (MenuItem item in menu.Items)
             {
@@ -126,20 +127,6 @@ namespace YoutubeRPG
         }
         public void Update(GameTime gameTime, ref Player player)
         {
-            /*
-            DialoguePath = player.DialoguePath;
-            if (DialoguePath != PrevDialoguePath && DialoguePath != String.Empty)
-            {
-                currentMenuID = String.Empty;
-                currentDialogue = String.Empty;
-                dialogue.Clear();
-                //menu.ID = "Content/Load/Conversation/" + DialoguePath + ".xml";
-                LoadContent("Content/Load/Conversation/" + DialoguePath + ".xml");
-                menu.Active = true;
-
-            }
-            PrevDialoguePath = DialoguePath;*/
-
             if (IsActive)
             { 
                 if (!isTransitioning)
@@ -149,6 +136,20 @@ namespace YoutubeRPG
                 background.Update(gameTime);
                 foreach (Image i in scrollingText)
                     i.Update(gameTime);
+                if (newPartyMember != String.Empty)
+                {
+                    XmlManager<Chemical> chemicalLoader = new XmlManager<Chemical>();
+                    Chemical chemical = chemicalLoader.Load("Content/Load/Chemical/" + newPartyMember + ".xml");
+                    chemical.LoadContent();
+                    string[] str = newPartyMember.Split('/');
+                    string chemicalName = str[str.Length - 1];
+                    player.ChemicalManager.chemicalName.Add(chemicalName);
+                    player.ChemicalManager.AddChemical(chemical);
+                }
+                else
+                {
+                    newPartyMember = String.Empty;
+                }
             }
         }
         public void Draw(SpriteBatch spriteBatch)
@@ -231,67 +232,16 @@ namespace YoutubeRPG
                         ScreenManager.Instance.ChangeScreens("BattleScreen");
                         break;
                     case "Party":
-                        
+                        string[] str = currentDialogue.Split(':');
+                        currentDialogue = str[1];
+                        newPartyMember = str[0];
+                        currentMenuID = "Content/Load/Menu/EndMenu.xml";
                         break;
                 }
             }
                 
         }
-        void scrollingDialogue()
-        {
-            //Unload images from previous scrolling Text
-            foreach (Image image in scrollingText)
-                image.UnloadContent();
-            scrollingText.Clear();
-            Vector2 dimensions = new Vector2(570, 580);
-            Image i = new Image();
-
-            //Cut dialogue into individual bits
-            string[] parts = currentDialogue.Split(' ');
-            string text = String.Empty;
-            int rowLength = 0;
-            int count = 0;
-            foreach (string s in parts)
-            {
-                if ((rowLength + s.Length) < 36)
-                {
-                    rowLength += s.Length + 1;
-                    text += s + " "; 
-                    if (s == parts[parts.Length - 1]) //if string is last word in dialogue
-                    {
-                        i = new Image();
-                        i.Text = text;
-                        i.FontName = "Fonts/OCRAsmall";
-                        i.TextColor = Color.Black;
-                        i.Position = dimensions;
-                        scrollingText.Add(i);
-                        text = String.Empty;
-                    }
-                }
-                else
-                {
-                    if (count < 3)
-                    {
-                        count++;
-                        text += "\n\r" + s + " ";
-                    }
-                    else
-                    {
-                        count = 0;
-                        i = new Image();
-                        i.Text = text;
-                        i.FontName = "Fonts/OCRAsmall";
-                        i.TextColor = Color.Black;
-                        i.Position = dimensions;
-                        scrollingText.Add(i);
-                        text = s;
-                    }
-                    rowLength = s.Length + 1;
-                }
-            }
-            foreach (Image image in scrollingText)
-                image.LoadContent();
-        }
+        
         #endregion
         #region Helper Functions
         void Transition(GameTime gameTime)
