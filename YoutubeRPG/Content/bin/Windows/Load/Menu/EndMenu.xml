@@ -7,15 +7,15 @@
     <Y>5</Y>
   </Spacing>
   <Alignment>
-    <X>440</X>
-    <Y>580</Y>
+    <X>-5</X>
+    <Y>-5</Y>
   </Alignment> 
 
   <Item>
     <LinkType>End</LinkType> 
-    <LinkID>End</LinkID>
+    <LinkID>Exit</LinkID>
     <Image>
-      <Text> </Text>  
+      <Text>.</Text>  
     </Image>
   </Item>
   

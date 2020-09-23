@@ -11,12 +11,10 @@ namespace YoutubeRPG
 {
     public class ConversationManager
     {
+        public string DialoguePath, PrevDialoguePath;
         Menu menu;
-
-        CharacterManager characterManager;
         bool isTransitioning;
         bool isDescription;
-
         string ID;
         string currentMenuID;
         List<Image> scrollingText;
@@ -28,6 +26,8 @@ namespace YoutubeRPG
 
         public ConversationManager()
         {
+            DialoguePath = String.Empty;
+            PrevDialoguePath = String.Empty;//".";
             isDescription = false;
             background = new Image();
             currentMenuID = currentDialogue = ID = String.Empty;
@@ -50,7 +50,10 @@ namespace YoutubeRPG
             if (!currentMenuID.Contains(".xml"))
             {
                 menu.UnloadContent();
-                menu = XmlMenuManager.Load("Content/Load/Conversation/Intro.xml");
+                if (DialoguePath != String.Empty)
+                    menu = XmlMenuManager.Load("Content/Load/Conversation/"+DialoguePath+".xml");
+                else 
+                    menu = XmlMenuManager.Load("Content/Load/Conversation/Intro.xml");
                 conversationMenu();
                 menu.LoadContent();
                 menu.OnMenuChanged += menu_OnMenuChange;
@@ -91,8 +94,16 @@ namespace YoutubeRPG
         {
             if (menuPath != String.Empty)
             {
-                menu.ID = menuPath;
-                currentMenuID = menuPath;
+                if (menuPath.Contains(".xml"))
+                {
+                    menu.ID = menuPath;
+                    currentMenuID = menuPath;
+                }
+                else
+                {
+                    DialoguePath = menuPath;
+                    menu.ID = "Content/Load/Conversation/" + DialoguePath + ".xml";
+                }
                 arrow.FontName = "Fonts/OCRAsmall";
                 arrow.Path = "Misc/arrow_down";
                 arrow.Position = new Vector2(ScreenManager.Instance.Dimensions.X -35, ScreenManager.Instance.Dimensions.Y - 19);
@@ -110,21 +121,35 @@ namespace YoutubeRPG
             background.UnloadContent();
             menu.UnloadContent();
             arrow.UnloadContent();
-            if (characterManager != null)
-                characterManager.UnloadContent();
             foreach (Image i in scrollingText)
                 i.UnloadContent();
         }
         public void Update(GameTime gameTime, ref Player player)
         {
-            if (!isTransitioning)
-                menu.Update(gameTime);
-            Transition(gameTime);
-            arrow.Update(gameTime);
-            background.Update(gameTime);
-            characterManager = player.CharacterManager;
-            foreach (Image i in scrollingText)
-                i.Update(gameTime);
+            /*
+            DialoguePath = player.DialoguePath;
+            if (DialoguePath != PrevDialoguePath && DialoguePath != String.Empty)
+            {
+                currentMenuID = String.Empty;
+                currentDialogue = String.Empty;
+                dialogue.Clear();
+                //menu.ID = "Content/Load/Conversation/" + DialoguePath + ".xml";
+                LoadContent("Content/Load/Conversation/" + DialoguePath + ".xml");
+                menu.Active = true;
+
+            }
+            PrevDialoguePath = DialoguePath;*/
+
+            if (IsActive)
+            { 
+                if (!isTransitioning)
+                    menu.Update(gameTime);
+                Transition(gameTime);
+                arrow.Update(gameTime);
+                background.Update(gameTime);
+                foreach (Image i in scrollingText)
+                    i.Update(gameTime);
+            }
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -205,6 +230,7 @@ namespace YoutubeRPG
                         ScreenManager.Instance.ChangeScreens("BattleScreen");
                         break;
                     case "Party":
+                        
                         break;
                 }
             }
@@ -326,7 +352,8 @@ namespace YoutubeRPG
                     currentMenuID = String.Empty;
                     currentDialogue = String.Empty;
                     dialogue.Clear();
-                    menu.ID = "Content/Load/Conversation/Intro.xml";
+                    if (DialoguePath != String.Empty)
+                        menu.ID = "Content/Load/Conversation/" + DialoguePath + ".xml";
                     menu.Active = true;
                 }
             }
@@ -337,10 +364,10 @@ namespace YoutubeRPG
             {
                 if (isDescription)
                 {
-                    scrollingText.RemoveRange(0, Math.Min(3, scrollingText.Count));
+                    if (scrollingText.Count > 3)
+                        scrollingText.RemoveRange(0, Math.Min(3, scrollingText.Count));
                     for (int i = 0; i < Math.Min(scrollingText.Count, 3); i++)
                         scrollingText[i].IsVisible = true;
-                    
                     if (scrollingText.Count < 3)
                         isDescription = false;
                 }

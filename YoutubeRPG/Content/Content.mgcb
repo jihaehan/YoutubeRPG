@@ -1422,11 +1422,23 @@
 #begin Load/Chemical/Item/Water.xml
 /copy:Load/Chemical/Item/Water.xml
 
+#begin Load/Conversation/Bondbrothers.xml
+/copy:Load/Conversation/Bondbrothers.xml
+
 #begin Load/Conversation/Intro.xml
 /copy:Load/Conversation/Intro.xml
 
-#begin Load/Dialogue/Intro.xml
-/copy:Load/Dialogue/Intro.xml
+#begin Load/Conversation/Markovnikov.xml
+/copy:Load/Conversation/Markovnikov.xml
+
+#begin Load/Conversation/Methane.xml
+/copy:Load/Conversation/Methane.xml
+
+#begin Load/Conversation/Mole.xml
+/copy:Load/Conversation/Mole.xml
+
+#begin Load/Conversation/Welcome.xml
+/copy:Load/Conversation/Welcome.xml
 
 #begin Load/Gameplay/Backpack.xml
 /copy:Load/Gameplay/Backpack.xml

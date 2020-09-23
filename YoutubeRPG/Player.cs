@@ -15,14 +15,15 @@ namespace YoutubeRPG
         public Image Image;
         public Vector2 Velocity;
         public bool IsDialogue;
+        public bool IsNPC;
      
         public float MoveSpeed;
         public int TileLength;
+        public string DialoguePath;
         
         string portalDestination; 
         Vector2 portalArrival;
         bool isPortal;
-        bool isNPC;
 
         public ChemicalManager ChemicalManager;
         public ItemManager ItemManager;
@@ -38,13 +39,14 @@ namespace YoutubeRPG
 
         public Player()
         {
+            DialoguePath = String.Empty;
             IsDialogue = false;
             Dialogue = new DialogueManager();
             ReactionHistory = new List<string>();
             Velocity = Vector2.Zero;
             TileLength = 128;
             isPortal = false;
-            isNPC = false;
+            IsNPC = false;
             portalDestination = String.Empty;
             portalArrival = Vector2.Zero;
             keys = new List<string>();
@@ -174,7 +176,13 @@ namespace YoutubeRPG
                     Image.SpriteSheetEffect.CurrentFrame.Y = 7;
             }
         }
-
+        public string DialoguePathName()
+        {
+            if (IsNPC)
+                return DialoguePath;
+            else
+                return String.Empty;
+        }
         void HandleCollisions(Map map)
         {
             for (int i = 0; i < map.Layer.Count(); ++i)
@@ -267,7 +275,7 @@ namespace YoutubeRPG
                                 rectCollisions.Add(new Rectangle(x * TileLength + TileLength / 2, y * TileLength, TileLength / 2, TileLength));
                                 break;
                             case TileCollision.NPC:
-                                rectCollisions.Add(new Rectangle(x * TileLength + TileLength / 4, y * TileLength + (int)(TileLength/6), TileLength / 2, (int)TileLength * 3/4));
+                                npcCollisions.Add(new Rectangle(x * TileLength + TileLength / 10, y * TileLength + (int)(TileLength/6), TileLength / 2, (int)TileLength * 4/5));
                                 break;
                             case TileCollision.Portal:
                                 if ((x + 2) > layer.Width() / TileLength)
@@ -323,7 +331,7 @@ namespace YoutubeRPG
                         }
                         foreach (Rectangle r in npcCollisions)
                         {
-                            if (boundingBox.Intersects(r) && !isNPC)
+                            if (boundingBox.Intersects(r))
                             {
                                 Vector2 npcLocation = new Vector2(x, y);
                                 if ((r.Center.X > boundingBox.Center.X && Velocity.X > 0)
@@ -335,9 +343,14 @@ namespace YoutubeRPG
                                     Velocity.Y = 0;
                                 if (layer.NPCs().ContainsKey(npcLocation))
                                 {
-                                    Character character = CharacterManager.GetCharacter(layer.NPCs()[npcLocation]);
-                                    //Trigger the ConversationManager here...
-                                    //conversationManager = character.GetConversation();
+                                    string npcName = layer.NPCs()[npcLocation];
+                                    Character character = map.Npcs[npcName].GetCharacter();
+                                    if (Image.Position.X < character.Image.Position.X)
+                                        map.Npcs[npcName].GetCharacter().Image.SpriteSheetEffect.CurrentFrame.Y = 0;
+                                    else
+                                        map.Npcs[npcName].GetCharacter().Image.SpriteSheetEffect.CurrentFrame.Y = 1;
+                                    DialoguePath = layer.NPCs()[npcLocation];
+                                    IsNPC = true;
                                 }
                             }
                         }
