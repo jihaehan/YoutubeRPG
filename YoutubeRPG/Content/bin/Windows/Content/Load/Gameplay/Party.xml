@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ChemicalManager>
-  <ChemicalSource>Content/Load/Chemical/Alkene/Pentene.xml</ChemicalSource>
-  <ChemicalSource>Content/Load/Chemical/Alcohol/Pentanol.xml</ChemicalSource>
+  <ChemicalSource>Content/Load/Chemical/Alkane/Methane.xml</ChemicalSource>
 </ChemicalManager>
 

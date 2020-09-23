@@ -52,6 +52,7 @@
     <Compile Include="CharacterManager.cs" />
     <Compile Include="Chemical.cs" />
     <Compile Include="ChemicalManager.cs" />
+    <Compile Include="ControlScreen.cs" />
     <Compile Include="Conversation.cs" />
     <Compile Include="ConversationItem.cs" />
     <Compile Include="ConversationManager.cs" />

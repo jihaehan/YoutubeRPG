@@ -1422,6 +1422,9 @@
 #begin Load/Chemical/Item/Water.xml
 /copy:Load/Chemical/Item/Water.xml
 
+#begin Load/ControlScreen.xml
+/copy:Load/ControlScreen.xml
+
 #begin Load/Conversation/Bondbrothers.xml
 /copy:Load/Conversation/Bondbrothers.xml
 
@@ -1535,6 +1538,12 @@
 
 #begin Load/Menu/BookMenu.xml
 /copy:Load/Menu/BookMenu.xml
+
+#begin Load/Menu/ComingSoonMenu.xml
+/copy:Load/Menu/ComingSoonMenu.xml
+
+#begin Load/Menu/CreditsMenu.xml
+/copy:Load/Menu/CreditsMenu.xml
 
 #begin Load/Menu/DescriptionMenu.xml
 /copy:Load/Menu/DescriptionMenu.xml
@@ -2462,6 +2471,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:TileSheets/water.png
+
+#begin TitleScreen/controls.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:TitleScreen/controls.png
 
 #begin TitleScreen/menuscreen.png
 /importer:TextureImporter

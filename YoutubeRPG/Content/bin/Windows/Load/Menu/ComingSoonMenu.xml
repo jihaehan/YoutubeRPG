@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Menu>
+  <Axis>Y</Axis>
+  <Effects>FadeEffect</Effects>
+  <Spacing>
+    <X>0</X>
+    <Y>10</Y>
+  </Spacing>
+  <Alignment>
+    <X>0</X>
+    <Y>0</Y>
+  </Alignment>
+
+  <Item>
+    <LinkType>Screen</LinkType> 
+    <LinkID>TitleScreen</LinkID>
+    <Image>
+      <TextColor>
+        <R>100</R>
+        <G>100</G>
+        <B>100</B>
+        <A>255</A>
+      </TextColor>
+      <Text>Coming Soon!</Text>
+    </Image>
+  </Item>
+
+</Menu>

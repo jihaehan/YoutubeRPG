@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/ControlScreen/controlscreen.png</SourceFile>
-  <SourceTime>2020-09-23T12:57:14.4101568+01:00</SourceTime>
-  <DestFile>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/bin/Windows/Content/ControlScreen/controlscreen.xnb</DestFile>
-  <DestTime>2020-09-23T12:57:24.9987479+01:00</DestTime>
+  <SourceFile>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/TitleScreen/controls.png</SourceFile>
+  <SourceTime>2020-09-23T12:43:38.8817714+01:00</SourceTime>
+  <DestFile>C:/Users/jihae/Desktop/MSc_Games/Dissertation/Tutorials/YoutubeRPG/Content/bin/Windows/TitleScreen/controls.xnb</DestFile>
+  <DestTime>2020-09-23T12:50:04.8352662+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2018-12-08T16:35:54+00:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

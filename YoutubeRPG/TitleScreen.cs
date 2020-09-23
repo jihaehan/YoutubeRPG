@@ -50,8 +50,7 @@ namespace YoutubeRPG
         private void InitializeBindings()
         {
             InputManager.AddKeyboardBinding(Keys.Enter, menuManager.MenuSelect);
-            InputManager.AddKeyboardBinding(Keys.X, menuManager.PrevMenuSelect);
-
+            
             InputManager.AddKeyboardBinding(Keys.W, menuManager.SelectUp);
             InputManager.AddKeyboardBinding(Keys.S, menuManager.SelectDown);
             InputManager.AddKeyboardBinding(Keys.A, menuManager.SelectLeft);

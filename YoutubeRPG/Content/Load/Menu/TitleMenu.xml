@@ -27,6 +27,8 @@
   </Item>
 
   <Item>
+    <LinkType>Menu</LinkType> 
+    <LinkID>Content/Load/Menu/ComingSoonMenu.xml</LinkID>
     <Image>
       <TextColor>
         <R>100</R>
@@ -40,6 +42,8 @@
   </Item>
 
   <Item>
+    <LinkType>Screen</LinkType> 
+    <LinkID>ControlScreen</LinkID>
     <Image>
       <TextColor>
         <R>100</R>
@@ -48,13 +52,13 @@
         <A>255</A>
       </TextColor>
       <Path>Misc/testtube_button</Path>
-      <Text>Options</Text>
+      <Text>Controls</Text>
     </Image>
   </Item>
 
   <Item>
     <LinkType>Menu</LinkType> 
-    <LinkID>Content/Load/Menu/TestMenu.xml</LinkID>
+    <LinkID>Content/Load/Menu/CreditsMenu.xml</LinkID>
     <Image>
       <TextColor>
         <R>100</R>

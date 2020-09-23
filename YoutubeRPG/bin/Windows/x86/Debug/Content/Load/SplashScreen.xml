@@ -15,4 +15,14 @@
         <FadeSpeed>0.5</FadeSpeed>
       </FadeEffect>
    </Image>
+  <TextImage>
+     <Effects>FadeEffect</Effects>
+     <IsActive>true</IsActive>
+     <Position>
+       <X>540</X>
+       <Y>540</Y>
+     </Position>
+     <FontName>Fonts/OCRAExt</FontName>
+     <Text>Press ENTER to Play</Text>
+   </TextImage>
 </SplashScreen>

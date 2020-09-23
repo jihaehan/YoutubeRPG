@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SplashScreen>
+<ControlScreen>
     <Image>
-      <Path>SplashScreen/Image</Path>
+      <Path>ControlScreen/controlscreen</Path>
       <IsActive>false</IsActive>
       <Position>
         <X>0</X>
@@ -23,6 +23,6 @@
        <Y>540</Y>
      </Position>
      <FontName>Fonts/OCRAExt</FontName>
-     <Text>Press ENTER to Play</Text>
+     <Text>Press 'X' for BACK</Text>
    </TextImage>
-</SplashScreen>
+</ControlScreen>
