@@ -41,6 +41,16 @@ namespace YoutubeRPG
             Image.LoadContent();
             Image.IsActive = true;
         }
+        public void LoadRandomContent()
+        {
+            Image.LoadContent();
+            if (!Battled)
+            {
+                ChemicalManager = new ChemicalManager();
+            }
+            Image.IsActive = true;
+            hasParty = true;
+        }
         public void UnloadContent()
         {
             Image.UnloadContent();

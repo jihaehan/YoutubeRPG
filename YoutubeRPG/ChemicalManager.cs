@@ -27,7 +27,7 @@ namespace YoutubeRPG
         public List<string> deadChemicalName;
         List<Chemical> clone;
         Image tag;
-        Image shadow;
+        public Image shadow;
         int maxVisibleChemicals;
         int[] percentage = { 3, 10 }; //percentage chance for Temporary Chemical to stay
 
@@ -437,7 +437,8 @@ namespace YoutubeRPG
         }
         public void BattleDraw(SpriteBatch spriteBatch)
         {
-            shadow.Draw(spriteBatch);
+            if (ScreenManager.Instance.Enemy != "Anonymous")    
+                shadow.Draw(spriteBatch);
             for (int i = battleChemicalName.Count - 1; i >= 0; i-- )
             {
                 shadow.Position = battleChemicals[battleChemicalName[i]].Image.Position + new Vector2(-11, 100);
@@ -446,7 +447,7 @@ namespace YoutubeRPG
             }
             foreach (Chemical c in clone)
                 c.Draw(spriteBatch);
-        }
+        }   
         public void DrawVerticalTag(SpriteBatch spriteBatch)
         {
             foreach (string name in battleChemicalName)

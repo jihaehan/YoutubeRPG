@@ -164,7 +164,10 @@ namespace YoutubeRPG
         #region Main Methods
         public void LoadContent(string enemyXml, string enemyPartyXml)
         {
-            initializeParties(enemyXml, enemyPartyXml);
+            if (ScreenManager.Instance.Enemy != "Anonymous")
+                initializeParties(enemyXml, enemyPartyXml);
+            else
+                initializeRandomParty();
 
             menu.ID = "Content/Load/Menu/BattleMenu.xml";
             prevMenuID = currentMenuID = "Content/Load/Menu/BattleMenu.xml";
@@ -1654,6 +1657,51 @@ namespace YoutubeRPG
             enemy.Image.Position = new Vector2(1064, 175);
             enemy.Image.SpriteSheetEffect.CurrentFrame.Y = 1;
             enemy.Image.IsActive = true;
+            enemy.InitializeBattle();
+        }
+        void initializeRandomParty()
+        {
+            XmlManager<Player> playerLoader = new XmlManager<Player>();
+            player = playerLoader.Load("Content/Load/Gameplay/Player.xml");
+            player.LoadContent();
+            if (ScreenManager.Instance.Party.Count > 0)
+                player.ChemicalManager.LoadParty();
+            player.Image.Position = new Vector2(128, 360);
+            player.Image.SpriteSheetEffect.CurrentFrame.Y = 7;
+            player.Image.SpriteSheetEffect.SwitchFrame = 500;
+            player.Image.IsActive = true;
+            player.InitializeBattle();
+
+            XmlManager<Character> characterLoader = new XmlManager<Character>();
+            enemy = characterLoader.Load("Content/Load/Gameplay/Anonymous.xml");
+            ChemicalManager chemicalManager = new ChemicalManager();
+            Random rnd = new Random();
+            int rndPartySize = rnd.Next(Math.Min(1, player.ChemicalManager.PartySize() - 2), Math.Min(player.ChemicalManager.PartySize() + 2, 7));
+            Series[] rndSeries = { Series.Alkane, Series.Alkene, Series.Alcohol, Series.Halogenoalkane};
+            for (int i = 0; i < rndPartySize; i++)
+            {
+                int rndPartyLevel = 1; 
+                for (int j = 0; j < player.ChemicalManager.chemicalName.Count; j++)
+                    rndPartyLevel += player.ChemicalManager.GetChemical(player.ChemicalManager.chemicalName[j]).Level;
+                rndPartyLevel = rnd.Next(1, Math.Min((int)(rndPartyLevel / player.ChemicalManager.chemicalName.Count),5));
+                //Add random chemicals
+                Chemical rndChemical = new Chemical();
+                rndChemical.Level = rndPartyLevel;
+                rndChemical.Series = rndSeries[rnd.Next(0, rndSeries.Length)];
+                if (rndChemical.Level == 1 && rndChemical.Series == Series.Alkene)
+                    rndChemical.Series = Series.Alkane;
+                if (rndChemical.Series == Series.Halogenoalkane)
+                    rndChemical.Halogen = Halogen.Bromo;
+                rndChemical.InitializeFormationEnthalpyList();
+                rndChemical.NameChemical();
+                chemicalManager.ChemicalSource.Add("Content/Load/Chemical/" + rndChemical.Series.ToString() + "/" + rndChemical.Name + ".xml"); ;
+            }
+            enemy.ChemicalManager = chemicalManager;
+            enemy.ChemicalManager.LoadContent();
+            enemy.Image.Position = new Vector2(1064, 175);
+            enemy.Image.SpriteSheetEffect.CurrentFrame.Y = 1;
+            enemy.Image.IsActive = true;
+            enemy.LoadContent();
             enemy.InitializeBattle();
         }
         #endregion

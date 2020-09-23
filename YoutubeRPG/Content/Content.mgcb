@@ -1440,6 +1440,9 @@
 #begin Load/Conversation/Welcome.xml
 /copy:Load/Conversation/Welcome.xml
 
+#begin Load/Gameplay/Anonymous.xml
+/copy:Load/Gameplay/Anonymous.xml
+
 #begin Load/Gameplay/Backpack.xml
 /copy:Load/Gameplay/Backpack.xml
 
@@ -1679,6 +1682,18 @@
 
 #begin Load/SPX/white2.xml
 /copy:Load/SPX/white2.xml
+
+#begin Misc/anonymous.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Misc/anonymous.png
 
 #begin Misc/arrow_down.png
 /importer:TextureImporter

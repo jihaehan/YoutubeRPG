@@ -37,7 +37,7 @@ namespace YoutubeRPG
             string enemy = ScreenManager.Instance.Enemy;
             battleManager = new BattleManager();
             battleManager.LoadContent("Content/Load/Gameplay/" + enemy + ".xml", "Content/Load/Gameplay/Battle/" + enemy + ".xml");
-
+            
             InitializeBindings();
 
         }

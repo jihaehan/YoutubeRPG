@@ -207,6 +207,7 @@ namespace YoutubeRPG
                         List<Rectangle> rectCollisions = new List<Rectangle>();
                         List<Rectangle> portalCollisions = new List<Rectangle>();
                         List<Rectangle> npcCollisions = new List<Rectangle>();
+                        List<Rectangle> randomCollisions = new List<Rectangle>();
                         List<Triangle> triCollisions = new List<Triangle>();
 
                         switch (tileCollision)
@@ -274,8 +275,11 @@ namespace YoutubeRPG
                             case TileCollision.RightHalf:
                                 rectCollisions.Add(new Rectangle(x * TileLength + TileLength / 2, y * TileLength, TileLength / 2, TileLength));
                                 break;
+                            case TileCollision.Battle:
+                                randomCollisions.Add(new Rectangle(x * TileLength + TileLength / 2, y * TileLength, TileLength / 2, TileLength / 2));
+                                break;
                             case TileCollision.NPC:
-                                npcCollisions.Add(new Rectangle(x * TileLength + TileLength / 10, y * TileLength + (int)(TileLength/6), TileLength / 2, (int)TileLength * 4/5));
+                                npcCollisions.Add(new Rectangle(x * TileLength + TileLength / 10, y * TileLength + (int)(TileLength/6), (int) TileLength * 4 / 5, (int)TileLength * 4/5));
                                 break;
                             case TileCollision.Portal:
                                 if ((x + 2) > layer.Width() / TileLength)
@@ -328,6 +332,17 @@ namespace YoutubeRPG
                         {
                             if (rectangleIntersectTriangle(boundingBox, t))
                                 Velocity = Vector2.Zero;
+                        }
+                        foreach (Rectangle r in randomCollisions)
+                        {
+                            if ((r.Center.X > boundingBox.Center.X && Velocity.X > 0) || (r.Center.X < boundingBox.Center.X && Velocity.X < 0))
+                                Velocity.X = 0;
+
+                            if ((r.Center.Y > boundingBox.Center.Y && Velocity.Y > 0)
+                                || (r.Center.Y < boundingBox.Center.Y && Velocity.Y < 0))
+                                Velocity.Y = 0;
+                            ScreenManager.Instance.Enemy = "Anonymous";
+                            ScreenManager.Instance.ChangeScreens("BattleScreen");
                         }
                         foreach (Rectangle r in npcCollisions)
                         {

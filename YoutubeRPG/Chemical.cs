@@ -360,7 +360,7 @@ namespace YoutubeRPG
         #endregion
 
         #region Misc Methods
-        private void InitializeFormationEnthalpyList()
+        public void InitializeFormationEnthalpyList()
         {
             FormationEnthalpy.Clear();
             switch (Series)

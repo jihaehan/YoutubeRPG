@@ -28,7 +28,7 @@ namespace YoutubeRPG
 
         public Image Water;
         public Image Image;
-        public string OverlayTiles, PortalTiles, WaterTiles, NpcTiles;
+        public string OverlayTiles, PortalTiles, WaterTiles, NpcTiles, BattleTiles;
         public string SolidTiles, LeftEdge, RightEdge, TopEdge, LeftCorner, RightCorner, NWCorner, NECorner, SWCorner, SECorner, RightWall, LeftWall, TopWall, BottomWall, BottomDoor, SEWallCorner, SWWallCorner, NEWallCorner, NWWallCorner, LeftHalf, RightHalf; 
         
         List<Tile> underlayTiles;
@@ -61,7 +61,7 @@ namespace YoutubeRPG
             tilesCount = new List<TileCollision>();
             OverlayTiles = PortalTiles = String.Empty;
             
-            SolidTiles = LeftEdge = RightEdge = TopEdge = LeftCorner = RightCorner = NWCorner = NECorner = SWCorner = SECorner = RightWall = LeftWall = TopWall = BottomWall = BottomDoor = SEWallCorner = SWWallCorner = NEWallCorner = NWWallCorner = LeftHalf = RightHalf = WaterTiles = NpcTiles = String.Empty;
+            SolidTiles = LeftEdge = RightEdge = TopEdge = LeftCorner = RightCorner = NWCorner = NECorner = SWCorner = SECorner = RightWall = LeftWall = TopWall = BottomWall = BottomDoor = SEWallCorner = SWWallCorner = NEWallCorner = NWWallCorner = LeftHalf = RightHalf = BattleTiles = WaterTiles = NpcTiles = String.Empty;
         }
 
         public void LoadContent(Vector2 tileDimensions)
@@ -118,6 +118,8 @@ namespace YoutubeRPG
                                 tilesCount[tilesCount.Count() - 1] = TileCollision.RightHalf;
                             else if (LeftHalf.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
                                 tilesCount[tilesCount.Count() - 1] = TileCollision.LeftHalf;
+                            else if (BattleTiles.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
+                                tilesCount[tilesCount.Count() - 1] = TileCollision.Battle;
                             else if (WaterTiles.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
                             {
                                 tilesCount[tilesCount.Count() - 1] = TileCollision.Water;

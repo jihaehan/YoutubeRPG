@@ -40,6 +40,7 @@ namespace YoutubeRPG
         RightHalf,
         Chemical,
         NPC,
+        Battle,
     }
     public class Tile
     {
