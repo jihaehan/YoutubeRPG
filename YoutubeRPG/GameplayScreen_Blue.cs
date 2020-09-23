@@ -63,10 +63,10 @@ namespace YoutubeRPG
         {
             player.Velocity = Vector2.Zero;
             base.Update(gameTime);
+            conversationManager.Update(gameTime, ref player);
             player.Update(gameTime, world);
             world.Update(gameTime);
             menuManager.Update(gameTime, ref player);
-            conversationManager.Update(gameTime, ref player);
 
             camera.LockToSprite(world.CurrentMap.Layer[0], player.Image);
 

@@ -97,6 +97,7 @@ namespace YoutubeRPG
 
             Image.Update(gameTime);
             ChemicalManager.Update(gameTime, this);
+            
             portalTransition(gameTime, world);
         }
         public void Draw(SpriteBatch spriteBatch)

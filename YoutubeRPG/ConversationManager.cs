@@ -11,7 +11,7 @@ namespace YoutubeRPG
 {
     public class ConversationManager
     {
-        string newPartyMember;
+        public string newPartyMember;
         public string DialoguePath, PrevDialoguePath;
         Menu menu;
         bool isTransitioning;
@@ -143,11 +143,7 @@ namespace YoutubeRPG
                     chemical.LoadContent();
                     string[] str = newPartyMember.Split('/');
                     string chemicalName = str[str.Length - 1];
-                    player.ChemicalManager.chemicalName.Add(chemicalName);
                     player.ChemicalManager.AddChemical(chemical);
-                }
-                else
-                {
                     newPartyMember = String.Empty;
                 }
             }
