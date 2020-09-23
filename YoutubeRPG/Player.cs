@@ -335,14 +335,11 @@ namespace YoutubeRPG
                         }
                         foreach (Rectangle r in randomCollisions)
                         {
-                            if ((r.Center.X > boundingBox.Center.X && Velocity.X > 0) || (r.Center.X < boundingBox.Center.X && Velocity.X < 0))
-                                Velocity.X = 0;
-
-                            if ((r.Center.Y > boundingBox.Center.Y && Velocity.Y > 0)
-                                || (r.Center.Y < boundingBox.Center.Y && Velocity.Y < 0))
-                                Velocity.Y = 0;
-                            ScreenManager.Instance.Enemy = "Anonymous";
-                            ScreenManager.Instance.ChangeScreens("BattleScreen");
+                            if (!ScreenManager.Instance.IsTransitioning)
+                            {
+                                ScreenManager.Instance.Enemy = "Anonymous";
+                                ScreenManager.Instance.ChangeScreens("BattleScreen");
+                            }
                         }
                         foreach (Rectangle r in npcCollisions)
                         {

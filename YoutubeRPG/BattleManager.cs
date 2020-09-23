@@ -545,6 +545,7 @@ namespace YoutubeRPG
         void endBattleMenu()
         {
             infoImageClear();
+
             foreach (string n in enemy.ChemicalManager.deadChemicalName)
             {
                 Chemical c = enemy.ChemicalManager.GetChemical(n);
@@ -563,9 +564,11 @@ namespace YoutubeRPG
             foreach (string n in player.ChemicalManager.battleChemicalName)
             {
                 if (isWin)
-                    player.ChemicalManager.GetBattleChemical(n).Experience += (int)EXP;
+                    //player.ChemicalManager.GetBattleChemical(n).Experience += (int)EXP;
+                    player.ChemicalManager.GetBattleChemical(n).Experience += (int)EXP/ player.ChemicalManager.GetBattleChemical(n).Level;
                 else
-                    player.ChemicalManager.GetBattleChemical(n).Experience += (int)(EXP/3);
+                    //player.ChemicalManager.GetBattleChemical(n).Experience += (int)(EXP/ 3);
+                    player.ChemicalManager.GetBattleChemical(n).Experience += (int)(EXP/ player.ChemicalManager.GetBattleChemical(n).Level/3);
                 //check if levelling conditions are met
                 if (player.ChemicalManager.GetBattleChemical(n).Experience > player.ChemicalManager.GetBattleChemical(n).Mass)
                 {
@@ -1676,7 +1679,7 @@ namespace YoutubeRPG
             enemy = characterLoader.Load("Content/Load/Gameplay/Anonymous.xml");
             ChemicalManager chemicalManager = new ChemicalManager();
             Random rnd = new Random();
-            int rndPartySize = rnd.Next(Math.Min(1, player.ChemicalManager.PartySize() - 2), Math.Min(player.ChemicalManager.PartySize() + 2, 7));
+            int rndPartySize = rnd.Next(Math.Max(1, player.ChemicalManager.PartySize() - 2), Math.Min(player.ChemicalManager.PartySize() + 2, 7));
             Series[] rndSeries = { Series.Alkane, Series.Alkene, Series.Alcohol, Series.Halogenoalkane};
             for (int i = 0; i < rndPartySize; i++)
             {

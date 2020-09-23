@@ -23,10 +23,14 @@ namespace YoutubeRPG
             base.LoadContent();
             XmlManager<Player> playerLoader = new XmlManager<Player>();
             XmlManager<World> worldLoader = new XmlManager<World>();
+            world = worldLoader.Load("Content/Load/Gameplay/World/Blue_Test.xml");
+            world.LoadContent();
             player = playerLoader.Load("Content/Load/Gameplay/Player.xml");
             player.LoadContent();
+            player.Image.Position = world.CurrentMap.StartingPoint;
             if (ScreenManager.Instance.Party.Count > 0)
             {
+                player.Image.Position = ScreenManager.Instance.PlayerPosition;
                 player.ChemicalManager.LoadParty();
                 foreach (string name in player.ChemicalManager.chemicalName)
                 {
@@ -35,24 +39,21 @@ namespace YoutubeRPG
                     player.ChemicalManager.GetChemical(name).Image.Alpha = 1.0f;
                 }
             }
-            //If player save exists, load Save files here
-            world = worldLoader.Load("Content/Load/Gameplay/World/Blue_Test.xml");
-            world.LoadContent();
-
             camera = new Camera();
             menuManager = new MenuManager();
             menuManager.LoadContent("Content/Load/Menu/GameplayMenu.xml");
             conversationManager = new ConversationManager();
             conversationManager.LoadContent("Content/Load/Conversation/Intro.xml");
 
-            player.Image.Position = world.CurrentMap.StartingPoint;
             InitializeBindings();
 
         }
         public override void UnloadContent()
         {
             base.UnloadContent();
+            
             player.ChemicalManager.SaveParty();
+            ScreenManager.Instance.PlayerPosition = player.Image.Position;
             player.UnloadContent();
             world.UnloadContent();
             menuManager.UnloadContent();
