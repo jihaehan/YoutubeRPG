@@ -378,13 +378,16 @@ namespace YoutubeRPG
                                     if (portalDestination.Contains("Screen"))
                                     {
                                         if (keys.Contains(portalDestination))
+                                        {
+                                            isPortal = true;
                                             ScreenManager.Instance.ChangeScreens(portalDestination);
+                                        }
                                         else
                                             break;
                                     }
                                     else
                                         ScreenManager.Instance.FadeScreen();
-                                    isPortal = true;
+                                    
                                 }
                             }
                         }

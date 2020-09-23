@@ -26,6 +26,7 @@ namespace YoutubeRPG
         bool moveUp;
         bool moveRight;
         bool moved;
+        bool leaveRoom;
         Vector2 pt1, pt2, pt3, pt4, pt5;
 
         public override void LoadContent()
@@ -59,6 +60,7 @@ namespace YoutubeRPG
             moveUp = false;
             moveRight = false;
             moved = false;
+            leaveRoom = false;
             pt1 = new Vector2(7.5f, 2f) * 128;
             pt2 = new Vector2(5f, 2f) * 128;
             pt3 = new Vector2(5f, -1f) * 128;
@@ -83,6 +85,8 @@ namespace YoutubeRPG
             base.Update(gameTime);
             conversationManager.Update(gameTime, ref player);
             player.Update(gameTime, world);
+
+            
             world.Update(gameTime);
             menuManager.Update(gameTime, ref player);
             if (moveLeft)
@@ -184,6 +188,7 @@ namespace YoutubeRPG
                     methane.Image.IsVisible = true;
                     moveUp = true;
                     conversationManager.Activate(buttonState);
+                    AddKey(buttonState);
                 }
             }
             else if (conversationManager.IsActive && conversationManager.DialoguePath == String.Empty)
