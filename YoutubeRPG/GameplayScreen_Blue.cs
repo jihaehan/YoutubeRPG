@@ -25,6 +25,10 @@ namespace YoutubeRPG
             XmlManager<World> worldLoader = new XmlManager<World>();
             player = playerLoader.Load("Content/Load/Gameplay/Player.xml");
             player.LoadContent();
+            if (ScreenManager.Instance.Party.Count > 0)
+            {
+                player.ChemicalManager.LoadParty();
+            }
             //If player save exists, load Save files here
             world = worldLoader.Load("Content/Load/Gameplay/World/Blue_Test.xml");
             world.LoadContent();
@@ -42,6 +46,7 @@ namespace YoutubeRPG
         public override void UnloadContent()
         {
             base.UnloadContent();
+            player.ChemicalManager.SaveParty();
             player.UnloadContent();
             world.UnloadContent();
             menuManager.UnloadContent();

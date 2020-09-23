@@ -34,8 +34,9 @@ namespace YoutubeRPG
             background.LoadContent();
 
             //Setup BattleManager
+            string enemy = ScreenManager.Instance.Enemy;
             battleManager = new BattleManager();
-            battleManager.LoadContent("Content/Load/Gameplay/Markovnikov.xml", "Content/Load/Gameplay/Battle/Markovnikov.xml");
+            battleManager.LoadContent("Content/Load/Gameplay/" + enemy + ".xml", "Content/Load/Gameplay/Battle/" + enemy + ".xml");
 
             InitializeBindings();
 

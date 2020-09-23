@@ -22,6 +22,7 @@ namespace YoutubeRPG
         bool isDescription;
         bool isWin;
         bool isLevelling;
+        string isLevelled;
 
         string prevMenuID;
         string currentMenuID;
@@ -62,6 +63,7 @@ namespace YoutubeRPG
             isPlayerTurn = true;
             isDescription = false;
             isLevelling = false;
+            isLevelled = String.Empty;
             isWin = false;
             page = new Image();
             cardDown = new Image();
@@ -240,8 +242,12 @@ namespace YoutubeRPG
             {
                 if (count != levellingCount - 1)
                     player.ChemicalManager.LevellingHide(gameTime, levellingChemicals[count], levelledChemicals[count]);
-                else 
+                else
+                {
+
                     player.ChemicalManager.LevellingTransitionUpdate(gameTime, levellingChemicals[count], levelledChemicals[count]);
+                    isLevelled = levelledChemicals[count];
+                }
             }
             
         }
@@ -1629,13 +1635,12 @@ namespace YoutubeRPG
         {
             XmlManager<Player> playerLoader = new XmlManager<Player>();
             player = playerLoader.Load("Content/Load/Gameplay/Player.xml");
+            player.LoadContent();
             if (ScreenManager.Instance.Party.Count > 0)
             {
-                player.ChemicalManager.UnloadContent();
+                //player.ChemicalManager.UnloadContent();
                 player.ChemicalManager.LoadParty();
             }
-            player.LoadContent();
-
             player.Image.Position = new Vector2(128, 360);
             player.Image.SpriteSheetEffect.CurrentFrame.Y = 7;
             player.Image.SpriteSheetEffect.SwitchFrame = 500;
@@ -1732,7 +1737,7 @@ namespace YoutubeRPG
                     ScreenManager.Instance.ChangeScreens(menu.Items[menu.ItemNumber].LinkID);
                 else if (menu.Items[menu.ItemNumber].LinkType == "None")
                 {/*no action*/}
-                else
+                else if ((isLevelled == String.Empty) || (player.ChemicalManager.chemicalName.Contains(isLevelled) && !player.ChemicalManager.GetChemical(isLevelled).IsLevelling))
                 {
                     prevMenuID = currentMenuID;
                     if (prevMenuID.Contains("BattleMenu"))

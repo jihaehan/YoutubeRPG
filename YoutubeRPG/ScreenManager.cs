@@ -36,6 +36,8 @@ namespace YoutubeRPG
         [XmlIgnore]
         public Dictionary<string, Chemical> Party;
         [XmlIgnore]
+        public List<string> PartyName;
+        [XmlIgnore]
         public int Experience;
         [XmlIgnore]
         public string Enemy;
@@ -65,6 +67,7 @@ namespace YoutubeRPG
 
             /*TEMP SOLUTION*/
             Party = new Dictionary<string, Chemical>();
+            PartyName = new List<string>();
             Experience = 0;
             Enemy = String.Empty;
         }

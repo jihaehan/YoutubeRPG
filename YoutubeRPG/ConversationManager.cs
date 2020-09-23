@@ -227,6 +227,7 @@ namespace YoutubeRPG
                         currentMenuID = "Content/Load/Menu/EndMenu.xml";
                         break;
                     case "Battle":
+                        ScreenManager.Instance.Enemy = DialoguePath;
                         ScreenManager.Instance.ChangeScreens("BattleScreen");
                         break;
                     case "Party":

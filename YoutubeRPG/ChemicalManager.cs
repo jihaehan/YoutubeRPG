@@ -484,11 +484,13 @@ namespace YoutubeRPG
         #region Getter/Setter Methods
         public void SaveParty()
         {
+            ScreenManager.Instance.PartyName = chemicalName;
             ScreenManager.Instance.Party = chemicals;
         }
         public void LoadParty()
         {
             ScreenManager.Instance.Experience = 0;
+            chemicalName = ScreenManager.Instance.PartyName;
             chemicals = ScreenManager.Instance.Party;
         }
         public Chemical GetChemical(string chemicalName)
