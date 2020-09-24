@@ -24,47 +24,39 @@
     <LinkType>Question</LinkType> 
     <LinkID>0</LinkID>
     <Image>
-      <Text>Hello young Chemist. I am Avogadro Mole. [row]   [row] No, I am not an anthromorphic subterranean creature. [row]   [row] Then what is a mole you ask?</Text>
-    </Image>
-  </Item>
-
-  <Item>
-    <LinkType>End</LinkType> 
-    <LinkID>01</LinkID>
-    <Image>
-      <Text>A mole is a standard unit of measurement in chemistry. A mole of a substance or a mole of particles is defined as 6.022 x 10^23 (3 s.f.) particles. [row] Let me tell you something good. You can find wild chemical compounds on checkered tiles!</Text>
+      <Text>!!! [row] What are you doing all alone out here? Don't you know that chemistry in uncontrolled lab environments can be dangerous??</Text>
     </Image>
   </Item>
 
   <Item>
     <LinkType>Question</LinkType> 
-    <LinkID>00</LinkID>
+    <LinkID>01</LinkID>
     <Image>
-      <Text>Since you already know, let us have a battle of knowledge. Shall we begin?</Text>
+      <Text>Well, you still haven't convinced me that you know what you're doing. [row] I challenge you to a battle of knowledge.</Text>
     </Image>
   </Item>
 
   <Item>
     <LinkType>Battle</LinkType> 
-    <LinkID>001</LinkID>
-    <Image>
-      <Text>Hope your reaction speed can keep up with mine!</Text>
-    </Image>
-  </Item>
-
-  <Item>
-    <LinkType>End</LinkType> 
-    <LinkID>000</LinkID>
-    <Image>
-      <Text>Come back when you're ready.</Text>
-    </Image>
-  </Item>
-
-  <Item>
-    <LinkType>End</LinkType> 
     <LinkID>011</LinkID>
     <Image>
-      <Text>Let me tell you something good. </Text>
+      <Text>Let the experiment begin.</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>End</LinkType> 
+    <LinkID>010</LinkID>
+    <Image>
+      <Text>Come back when you can practice better lab safety.</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>End</LinkType> 
+    <LinkID>00</LinkID>
+    <Image>
+      <Text>Hurry back home then.</Text>
     </Image>
   </Item>
 

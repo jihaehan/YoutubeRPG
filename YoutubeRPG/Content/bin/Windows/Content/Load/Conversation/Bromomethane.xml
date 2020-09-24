@@ -21,11 +21,60 @@
   </Image>
 
   <Item>
-    <LinkType>End</LinkType> 
+    <LinkType>Question</LinkType> 
     <LinkID>0</LinkID>
     <Image>
-      <Text>You just can't resist my forces of attraction huh. Well, Follow me!</Text>
+      <Text>Hiyo! I'm Bromomethane! Want to be my friend?</Text>
     </Image>
   </Item>
 
+  <Item>
+    <LinkType>Question</LinkType> 
+    <LinkID>01</LinkID>
+    <Image>
+      <Text>PSYCH! Actually we already met before, back when I used to be a Methane. I underwent Free Radical Substitution to become a Bromomethane. [row] Would you like to know how that works?</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Question</LinkType> 
+    <LinkID>011</LinkID>
+    <Image>
+      <Text>Alkanes react with Halogens in the presence of UV light. Free Radical Substution with Alkanes will yield Halogenoalkanes. I reacted with Bromine, so I'm a Bromomethane! [row] Got that?</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Party</LinkType> 
+    <LinkID>0111</LinkID>
+    <Image>
+      <Text>Halogenoalkane/Bromomethane:Great, I'll be joining your Party then!</Text>
+    </Image>
+  </Item>
+
+
+  <Item>
+    <LinkType>End</LinkType> 
+    <LinkID>0110</LinkID>
+    <Image>
+      <Text>Oh, if you had understood I was going to join your party...</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>End</LinkType> 
+    <LinkID>010</LinkID>
+    <Image>
+      <Text>...oh ...and here I was super excited to be talking to you.</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>End</LinkType> 
+    <LinkID>00</LinkID>
+    <Image>
+      <Text>Aren't you the rude one.</Text>
+    </Image>
+  </Item>
+  
 </Menu>
