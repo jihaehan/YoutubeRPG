@@ -24,10 +24,12 @@ namespace YoutubeRPG
         string currentDialogue, previousDialogue;
         Image arrow;
         Image background;
-        bool isIntroduction; 
+        bool isIntroduction;
+        bool partied;
 
         public ConversationManager()
         {
+            partied = false; 
             isIntroduction = false;
             DialogueLinkType = String.Empty;
             newPartyMember = String.Empty;
@@ -256,9 +258,15 @@ namespace YoutubeRPG
                         ScreenManager.Instance.ChangeScreens("BattleScreen");
                         break;
                     case "Party":
-                        string[] str = currentDialogue.Split(':');
-                        currentDialogue = str[1];
-                        newPartyMember = str[0];
+                        if (!partied)
+                        {
+                            string[] str = currentDialogue.Split(':');
+                            currentDialogue = str[1];
+                            newPartyMember = str[0];
+                            partied = true;
+                        }
+                        else
+                            currentDialogue = "I've already joined your party!";
                         currentMenuID = "Content/Load/Menu/EndMenu.xml";
                         break;
                 }
@@ -334,6 +342,47 @@ namespace YoutubeRPG
             }
         }
         public void MenuSelect_Intro(eButtonState buttonState)
+        {
+            if (buttonState == eButtonState.DOWN && !isTransitioning && IsActive)
+            {
+                if (isDescription)
+                {
+                    if (scrollingText.Count > 3)
+                        scrollingText.RemoveRange(0, Math.Min(3, scrollingText.Count));
+                    for (int i = 0; i < Math.Min(scrollingText.Count, 3); i++)
+                        scrollingText[i].IsVisible = true;
+                    if (scrollingText.Count <= 3)
+                        isDescription = false;
+                }
+                else if (menu.Items[menu.ItemNumber].LinkType == "Screen")
+                    ScreenManager.Instance.ChangeScreens(menu.Items[menu.ItemNumber].LinkID);
+                else if (menu.Items[menu.ItemNumber].LinkType == "None")
+                {/*no action*/}
+                else if (scrollingText.Count <= 3)
+                {
+                    currentMenuID = menu.Items[menu.ItemNumber].LinkID;
+                    if (!ID.Contains(".xml") && currentMenuID != String.Empty)
+                    {
+                        ID = currentMenuID;
+                        DialogueLinkType = ID;
+                    }
+
+                    setDialogue();
+
+                    isTransitioning = true;
+                    if (isTransitioning)
+                    {
+                        menu.ID = currentMenuID;
+                        isTransitioning = false;
+                    }
+                }
+            }
+            else if (!IsActive)
+            {
+                Activate(buttonState);
+            }
+        }
+        public void MenuSelect_Gameplay(eButtonState buttonState)
         {
             if (buttonState == eButtonState.DOWN && !isTransitioning && IsActive)
             {

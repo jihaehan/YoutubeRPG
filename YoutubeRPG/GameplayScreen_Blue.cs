@@ -31,6 +31,7 @@ namespace YoutubeRPG
             player.Image.Position = world.CurrentMap.StartingPoint;// new Vector2(6, 5) * 128;
             player.Keys.Add("GameplayScreen_Blue");
             player.Keys.Add("GameplayScreen_Heal");
+            player.Keys.Add("GameplayScreen_Hall");
             if (ScreenManager.Instance.Party.Count > 0)
             {
                 player.Image.Position = ScreenManager.Instance.PlayerPosition;
@@ -112,14 +113,15 @@ namespace YoutubeRPG
                 player.IsNPC = false;
             }
             else if (conversationManager.IsActive)
-                conversationManager.MenuSelect(buttonState);
+            {
+                conversationManager.MenuSelect_Gameplay(buttonState);
+            }
             else 
                 menuManager.MenuSelect_Test(buttonState);
         }
         private void Toggle_Activate(eButtonState buttonState)
         {
             conversationManager.Activate(buttonState);
-            //menuManager.Activate(buttonState);
         }
 
         private void Toggle_Up(eButtonState buttonState)

@@ -44,6 +44,7 @@ namespace YoutubeRPG
         public override void UnloadContent()
         {
             base.UnloadContent();
+            battleManager.UnloadContent();
             background.UnloadContent();
             foreach (Image spx in specialEffects)
                 spx.UnloadContent();

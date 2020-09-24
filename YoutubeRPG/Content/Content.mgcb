@@ -1506,6 +1506,9 @@
 #begin Load/Gameplay/Map/City1.xml
 /copy:Load/Gameplay/Map/City1.xml
 
+#begin Load/Gameplay/Map/Hall1.xml
+/copy:Load/Gameplay/Map/Hall1.xml
+
 #begin Load/Gameplay/Map/Map1.xml
 /copy:Load/Gameplay/Map/Map1.xml
 
@@ -1583,6 +1586,9 @@
 
 #begin Load/Gameplay/World/Blue_Test.xml
 /copy:Load/Gameplay/World/Blue_Test.xml
+
+#begin Load/Gameplay/World/City_Heal.xml
+/copy:Load/Gameplay/World/City_Heal.xml
 
 #begin Load/Gameplay/World/Intro.xml
 /copy:Load/Gameplay/World/Intro.xml
@@ -2076,6 +2082,18 @@
 /processorParam:TextureFormat=Color
 /build:ScreenBackground/interiorBackground1.png
 
+#begin ScreenBackground/interiorBackground2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:ScreenBackground/interiorBackground2.png
+
 #begin ScreenManager/FadeImage.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -2495,6 +2513,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:TileSheets/interior1.png
+
+#begin TileSheets/interior2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:TileSheets/interior2.png
 
 #begin TileSheets/interiorFurniture1.png
 /importer:TextureImporter

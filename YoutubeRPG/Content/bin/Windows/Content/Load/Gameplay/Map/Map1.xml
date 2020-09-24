@@ -91,7 +91,7 @@
     </Image>
     <OverlayTiles>[2:6][3:6]</OverlayTiles>
     <NWWallCorner>[2:7][3:7]</NWWallCorner>
-    <NpcTiles>[7:7-Mole]</NpcTiles>
+    <NpcTiles>[7:7-Mole][7:6-Ethene]</NpcTiles>
     <TileMap>
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row> 
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row> 
@@ -102,7 +102,7 @@
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row> 
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row> 
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row> 
-      <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row> 
+      <Row>[x:x][x:x][x:x][x:x][x:x][x:x][7:6][x:x][x:x][x:x][x:x]</Row> 
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row> 
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row> 
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row> 

@@ -24,39 +24,31 @@
     <LinkType>Question</LinkType> 
     <LinkID>0</LinkID>
     <Image>
-      <Text>Hello young Chemist. I am Avogadro Mole.</Text>
-    </Image>
-  </Item>
-
-  <Item>
-    <LinkType>Question</LinkType> 
-    <LinkID>01</LinkID>
-    <Image>
-      <Text>Let us have a battle of knowledge. Shall we begin?</Text>
+      <Text>Hello young Chemist. I am Avogadro Mole. [row]   [row] No, I am not an anthromorphic subterranean creature. [row]   [row] Then what is a mole you ask?</Text>
     </Image>
   </Item>
 
   <Item>
     <LinkType>End</LinkType> 
-    <LinkID>010</LinkID>
+    <LinkID>01</LinkID>
     <Image>
-      <Text>No? That's a pity.</Text>
+      <Text>A mole is a standard unit of measurement in chemistry. A mole of a substance or a mole of particles is defined as 6.022 x 10^23 (3 s.f.) particles. [row] Let me tell you something good. You can find wild chemical compounds on checkered tiles!</Text>
     </Image>
   </Item>
 
   <Item>
     <LinkType>Battle</LinkType> 
-    <LinkID>011</LinkID>
+    <LinkID>00</LinkID>
     <Image>
-      <Text>Hope your reaction speed can keep up with mine!</Text>
+      <Text>Since you already know, let us have a battle of knowledge. Shall we begin?</Text>
     </Image>
   </Item>
 
   <Item>
-    <LinkType>Party</LinkType> 
-    <LinkID>00</LinkID>
+    <LinkType>End</LinkType> 
+    <LinkID>011</LinkID>
     <Image>
-      <Text>Alkane/Methane:Methane joins your party! [test]</Text>
+      <Text>Let me tell you something good. </Text>
     </Image>
   </Item>
 

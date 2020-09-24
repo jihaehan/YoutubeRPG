@@ -499,7 +499,7 @@ namespace YoutubeRPG
                 item.Image = new Image();
                 item.Image.Position = new Vector2(-5, -5);
                 item.Image.Text = ".";
-                
+
                 if (checkWinCondition(false) || checkWinCondition(true))
                 {   //if EnemyWins
                     item.LinkID = "Content/Load/Menu/EndBattleMenu.xml";
@@ -753,6 +753,7 @@ namespace YoutubeRPG
                         spxImage.Add(new SPX(spxManager.TargetXml(), player.ChemicalManager.GetBattleChemical(randomChemical).Image.Position));
                         break;
                     case "Combustion":
+                        chemical.ClearProducts();
                         chemical.SetOxygen(currentOxygen);
                         chemical.Combustion();
                         if (chemical.GetProduct("carbondioxide") > 0)
@@ -917,6 +918,7 @@ namespace YoutubeRPG
                     spxImage.Add(new SPX(spxManager.TargetXml(), enemy.ChemicalManager.GetBattleChemical(enemyChemical).Image.Position));
                     break;
                 case "Combustion":
+                    chemical.ClearProducts();
                     chemical.SetOxygen(currentOxygen);
                     chemical.Combustion();
                     if (chemical.GetProduct("carbondioxide") > 0)
@@ -1777,13 +1779,22 @@ namespace YoutubeRPG
                         infoImage[i].IsVisible = true;
                     if (infoImage.Count < 3)
                         isDescription = false;
-                }
+                } 
                 else if (menu.Items.Count < 1)
                 {
-                    if (isPlayerTurn)
-                        isPlayerTurn = false;
-                    else
-                        isPlayerTurn = true;
+                    if (player.ChemicalManager.BattlePartySize() < 1)
+                    {
+                        if (!checkWinCondition(true))
+                        {
+                            currentMenuID = "Content/Load/Menu/EndBattleMenu.xml";
+                            isTransitioning = true;
+                            if (isTransitioning)
+                            {
+                                menu.ID = currentMenuID;
+                                isTransitioning = false;
+                            }
+                        }
+                    }
                 }
                 else if (menu.Items[menu.ItemNumber].LinkType == "Screen")
                     ScreenManager.Instance.ChangeScreens(menu.Items[menu.ItemNumber].LinkID);

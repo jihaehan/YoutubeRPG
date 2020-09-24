@@ -713,6 +713,10 @@ namespace YoutubeRPG
             }
             return O2;
         }
+        public void ClearProducts()
+        {
+            Products.Clear();
+        }
         public void Combustion() //choose what combustion
         {
             string o = "oxygen";

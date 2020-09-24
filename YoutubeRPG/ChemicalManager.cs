@@ -486,11 +486,17 @@ namespace YoutubeRPG
         public void HealParty()
         {
             foreach (Chemical c in chemicals.Values)
+            {
+                c.BattleMove = String.Empty;
                 c.CurrentHealth = c.Health;
+                c.IsDead = false;
+            }
             ScreenManager.Instance.Party = chemicals;
         }
         public void SaveParty()
         {
+            foreach (Chemical c in chemicals.Values)
+                c.BattleMove = String.Empty;
             ScreenManager.Instance.PartyName = chemicalName;
             ScreenManager.Instance.Party = chemicals;
         }
@@ -541,6 +547,7 @@ namespace YoutubeRPG
         #endregion
 
         #region Misc Funtions
+
         string removeAsterisk(string name)
         {
             if (name.Contains("*"))

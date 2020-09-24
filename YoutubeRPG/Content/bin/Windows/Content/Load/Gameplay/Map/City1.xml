@@ -80,7 +80,7 @@
     <Image>
       <Path>TileSheets/building1</Path>
     </Image>
-    <PortalTiles>[5:7-Room1]</PortalTiles>
+    <PortalTiles>[5:7-GameplayScreen_Hall]</PortalTiles>
     <TopWall></TopWall>
     <LeftHalf>[6:6][3:6][3:7][6:7]</LeftHalf>
     <RightHalf>[0:6][0:7]</RightHalf>

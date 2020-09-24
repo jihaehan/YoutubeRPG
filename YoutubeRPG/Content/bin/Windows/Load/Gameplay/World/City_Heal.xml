@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<World>
+  <MapSource>Content/Load/Gameplay/Map/Hall1.xml</MapSource>
+</World>

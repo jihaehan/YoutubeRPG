@@ -21,11 +21,84 @@
   </Image>
 
   <Item>
-    <LinkType>End</LinkType> 
+    <LinkType>Question</LinkType> 
     <LinkID>0</LinkID>
     <Image>
-      <Text>You just can't resist my forces of attraction huh. Well, Follow me!</Text>
+      <Text>Having trouble defeating ol' Avogadro?</Text>
     </Image>
   </Item>
+
+  <Item>
+    <LinkType>Question</LinkType> 
+    <LinkID>01</LinkID>
+    <Image>
+      <Text>Having trouble defeating ol' Avogadro?</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Question</LinkType> 
+    <LinkID>011</LinkID>
+    <Image>
+      <Text>Here's a hint. You'll gain atomic mass from winning battles. When you have enough atomic mass, your chemical will gain an additional Carbon and Level Up! [row] Want to know more? </Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Question</LinkType> 
+    <LinkID>0111</LinkID>
+    <Image>
+      <Text>Most organic chemical compounds can combust, a reaction that requires oxygen. Complete Combustion will yield higher damage than Incomplete Combustion, so manage your available oxygen properly! [row] Want to know more? </Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Question</LinkType> 
+    <LinkID>01111</LinkID>
+    <Image>
+      <Text>Some chemical reactions, like Free Radical Substitution, requires reactants beyond Oxygen. These reactants will already need to be in your ITEMS backpack when you go into battle! [row] Want to know more?</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Party</LinkType> 
+    <LinkID>011111</LinkID>
+    <Image>
+      <Text>Alkene/Ethene: Man, looks like you really need help. I'll join your party!</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>End</LinkType> 
+    <LinkID>00</LinkID>
+    <Image>
+      <Text>Go on ahead! You'll reach the City of Chemists soon. By the way, there's no turning back after this point.</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Party</LinkType> 
+    <LinkID>011110</LinkID>
+    <Image>
+      <Text>Good luck defeating Avogadro!</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>End</LinkType> 
+    <LinkID>01110</LinkID>
+    <Image>
+      <Text>Good luck defeating Avogadro!</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Question</LinkType> 
+    <LinkID>0110</LinkID>
+    <Image>
+      <Text>Good luck defeating Avogadro!</Text>
+    </Image>
+  </Item>
+
 
 </Menu>
