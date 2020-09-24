@@ -37,10 +37,26 @@
   </Item>
 
   <Item>
-    <LinkType>Battle</LinkType> 
+    <LinkType>Question</LinkType> 
     <LinkID>00</LinkID>
     <Image>
       <Text>Since you already know, let us have a battle of knowledge. Shall we begin?</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Battle</LinkType> 
+    <LinkID>001</LinkID>
+    <Image>
+      <Text>Hope your reaction speed can keep up with mine!</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>End</LinkType> 
+    <LinkID>000</LinkID>
+    <Image>
+      <Text>Come back when you're ready.</Text>
     </Image>
   </Item>
 
