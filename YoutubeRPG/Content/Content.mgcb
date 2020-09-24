@@ -205,6 +205,18 @@
 /processorParam:TextureFormat=Color
 /build:Characters/Description/Mole.png
 
+#begin Characters/healer.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Characters/healer.png
+
 #begin Characters/mark.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -240,6 +252,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Characters/player.png
+
+#begin Characters/sabatier.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Characters/sabatier.png
 
 #begin Chemical/Alcohol/Butanol.png
 /importer:TextureImporter
@@ -1455,6 +1479,9 @@
 #begin Load/Conversation/Mole.xml
 /copy:Load/Conversation/Mole.xml
 
+#begin Load/Conversation/Sabatier.xml
+/copy:Load/Conversation/Sabatier.xml
+
 #begin Load/Conversation/Welcome.xml
 /copy:Load/Conversation/Welcome.xml
 
@@ -1487,6 +1514,9 @@
 
 #begin Load/Gameplay/Battle/Mole.xml
 /copy:Load/Gameplay/Battle/Mole.xml
+
+#begin Load/Gameplay/Battle/Sabatier.xml
+/copy:Load/Gameplay/Battle/Sabatier.xml
 
 #begin Load/Gameplay/Bondbrothers.xml
 /copy:Load/Gameplay/Bondbrothers.xml
@@ -1572,11 +1602,17 @@
 #begin Load/Gameplay/Npc/Mole.xml
 /copy:Load/Gameplay/Npc/Mole.xml
 
+#begin Load/Gameplay/Npc/Sabatier.xml
+/copy:Load/Gameplay/Npc/Sabatier.xml
+
 #begin Load/Gameplay/Party.xml
 /copy:Load/Gameplay/Party.xml
 
 #begin Load/Gameplay/Player.xml
 /copy:Load/Gameplay/Player.xml
+
+#begin Load/Gameplay/Sabatier.xml
+/copy:Load/Gameplay/Sabatier.xml
 
 #begin Load/Gameplay/World/Blue.xml
 /copy:Load/Gameplay/World/Blue.xml

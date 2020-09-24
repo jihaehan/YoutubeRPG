@@ -79,6 +79,7 @@ namespace YoutubeRPG
             if (maps.ContainsKey(mapName))
             {
                 CurrentMapName = mapName;
+                ScreenManager.Instance.CurrentMapName = CurrentMapName;
                 return;
             }
             throw new Exception("Map name or portal name not found.");

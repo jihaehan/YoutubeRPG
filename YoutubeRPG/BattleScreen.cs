@@ -28,7 +28,10 @@ namespace YoutubeRPG
             base.LoadContent();
 
             //Setup background, menu, etc.
-            background.Path = "BattleBackground/Interior";
+            if (ScreenManager.Instance.CurrentMapName.Contains("Wild"))
+                background.Path = "BattleBackground/Exterior";
+            else 
+                background.Path = "BattleBackground/Interior";
             background.Position = Vector2.Zero;
             background.FontName = "Fonts/OCRAExt";
             background.LoadContent();

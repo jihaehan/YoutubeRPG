@@ -3,7 +3,7 @@
   <Name>The Healer</Name>
   <QuestName>The Healer</QuestName>
   <Image>
-      <Path>Chemical/Alkane/Methane</Path>
+      <Path>Characters/healer</Path>
       <Effects>SpriteSheetEffect</Effects>
       <SpriteSheetEffect>
         <AmountOfFrames>

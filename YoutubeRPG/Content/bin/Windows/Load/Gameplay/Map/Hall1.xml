@@ -14,7 +14,7 @@
 
   <Layer>
     <Image>
-      <Path>TileSheets/interior1</Path>
+      <Path>TileSheets/interior2</Path>
     </Image>
     <SolidTiles>[7:6][7:0][7:7]</SolidTiles>                         
     <LeftWall>[7:1][0:5][0:6][5:7]</LeftWall>

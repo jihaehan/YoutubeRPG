@@ -43,6 +43,8 @@ namespace YoutubeRPG
         public string Enemy;
         [XmlIgnore]
         public Vector2 PlayerPosition;
+        [XmlIgnore]
+        public string CurrentMapName;
 
         public static ScreenManager Instance
         {
@@ -72,6 +74,7 @@ namespace YoutubeRPG
             Experience = 0;
             Enemy = String.Empty;
             PlayerPosition = Vector2.Zero;
+            CurrentMapName = String.Empty;
         }
         public void ChangeScreens(string screenName)
         {
