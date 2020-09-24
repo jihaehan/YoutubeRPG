@@ -8,7 +8,7 @@
       <SpriteSheetEffect>
         <AmountOfFrames>
           <X>2</X>
-          <Y>2</Y>
+          <Y>3</Y>
         </AmountOfFrames>
         <SwitchFrame>500</SwitchFrame>
       </SpriteSheetEffect>

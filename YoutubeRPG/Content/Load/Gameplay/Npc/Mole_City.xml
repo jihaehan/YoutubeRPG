@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<NPC>
+  <Name>Mole_City</Name>
+  <NpcXml>Content/Load/Gameplay/Mole_City.xml</NpcXml>
+  <PartyXml>Content/Load/Gameplay/Battle/Mole_City.xml</PartyXml>
+</NPC>
+

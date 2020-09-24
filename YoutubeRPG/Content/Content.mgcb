@@ -241,6 +241,18 @@
 /processorParam:TextureFormat=Color
 /build:Characters/mole.png
 
+#begin Characters/mole_city.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Characters/mole_city.png
+
 #begin Characters/player.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1479,6 +1491,9 @@
 #begin Load/Conversation/Mole.xml
 /copy:Load/Conversation/Mole.xml
 
+#begin Load/Conversation/Mole_City.xml
+/copy:Load/Conversation/Mole_City.xml
+
 #begin Load/Conversation/Sabatier.xml
 /copy:Load/Conversation/Sabatier.xml
 
@@ -1514,6 +1529,9 @@
 
 #begin Load/Gameplay/Battle/Mole.xml
 /copy:Load/Gameplay/Battle/Mole.xml
+
+#begin Load/Gameplay/Battle/Mole_City.xml
+/copy:Load/Gameplay/Battle/Mole_City.xml
 
 #begin Load/Gameplay/Battle/Sabatier.xml
 /copy:Load/Gameplay/Battle/Sabatier.xml
@@ -1578,6 +1596,9 @@
 #begin Load/Gameplay/Mole.xml
 /copy:Load/Gameplay/Mole.xml
 
+#begin Load/Gameplay/Mole_City.xml
+/copy:Load/Gameplay/Mole_City.xml
+
 #begin Load/Gameplay/Npc/Bondbrothers.xml
 /copy:Load/Gameplay/Npc/Bondbrothers.xml
 
@@ -1601,6 +1622,9 @@
 
 #begin Load/Gameplay/Npc/Mole.xml
 /copy:Load/Gameplay/Npc/Mole.xml
+
+#begin Load/Gameplay/Npc/Mole_City.xml
+/copy:Load/Gameplay/Npc/Mole_City.xml
 
 #begin Load/Gameplay/Npc/Sabatier.xml
 /copy:Load/Gameplay/Npc/Sabatier.xml

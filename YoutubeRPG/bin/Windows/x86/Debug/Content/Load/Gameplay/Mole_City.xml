@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Character>
-  <Name>Bond Brothers</Name>
-  <QuestName>Bond Brothers</QuestName>
+  <Name>The Mole</Name>
+  <QuestName>The Mole</QuestName>
   <Image>
-      <Path>Characters/bondbros</Path>
+      <Path>Characters/mole_city</Path>
       <Effects>SpriteSheetEffect</Effects>
       <SpriteSheetEffect>
         <AmountOfFrames>
           <X>2</X>
-          <Y>3</Y>
+          <Y>2</Y>
         </AmountOfFrames>
         <SwitchFrame>500</SwitchFrame>
       </SpriteSheetEffect>

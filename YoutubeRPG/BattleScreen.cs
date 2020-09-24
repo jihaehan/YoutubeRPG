@@ -28,6 +28,9 @@ namespace YoutubeRPG
             base.LoadContent();
 
             //Setup background, menu, etc.
+            //DELETELATER
+            ScreenManager.Instance.CurrentMapName = "Wild";
+            //Don't delete from here
             if (ScreenManager.Instance.CurrentMapName.Contains("Wild"))
                 background.Path = "BattleBackground/Exterior";
             else 
