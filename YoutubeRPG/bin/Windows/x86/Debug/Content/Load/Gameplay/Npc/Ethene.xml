@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<NPC>
+  <Name>Ethene</Name>
+  <NpcXml>Content/Load/Gameplay/Ethene.xml</NpcXml>
+  <PartyXml>Content/Load/Gameplay/Battle/Ethene.xml</PartyXml>
+</NPC>
+

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Character>
+  <Name>The Methanol</Name>
+  <QuestName>The Methanol</QuestName>
+  <Image>
+      <Path>Chemical/Alcohol/Methanol</Path>
+      <Effects>SpriteSheetEffect</Effects>
+      <SpriteSheetEffect>
+        <AmountOfFrames>
+          <X>2</X>
+          <Y>2</Y>
+        </AmountOfFrames>
+        <CurrentFrame>
+          <X>0</X>
+          <Y>0</Y>
+        </CurrentFrame>
+        <SwitchFrame>500</SwitchFrame>
+      </SpriteSheetEffect>
+    </Image>
+</Character>

@@ -1428,6 +1428,15 @@
 #begin Load/Conversation/Bondbrothers.xml
 /copy:Load/Conversation/Bondbrothers.xml
 
+#begin Load/Conversation/Bromomethane.xml
+/copy:Load/Conversation/Bromomethane.xml
+
+#begin Load/Conversation/Ethene.xml
+/copy:Load/Conversation/Ethene.xml
+
+#begin Load/Conversation/Healer.xml
+/copy:Load/Conversation/Healer.xml
+
 #begin Load/Conversation/Intro.xml
 /copy:Load/Conversation/Intro.xml
 
@@ -1439,6 +1448,9 @@
 
 #begin Load/Conversation/Methane.xml
 /copy:Load/Conversation/Methane.xml
+
+#begin Load/Conversation/Methanol.xml
+/copy:Load/Conversation/Methanol.xml
 
 #begin Load/Conversation/Mole.xml
 /copy:Load/Conversation/Mole.xml
@@ -1455,11 +1467,23 @@
 #begin Load/Gameplay/Battle/Bondbrothers.xml
 /copy:Load/Gameplay/Battle/Bondbrothers.xml
 
+#begin Load/Gameplay/Battle/Bromomethane.xml
+/copy:Load/Gameplay/Battle/Bromomethane.xml
+
+#begin Load/Gameplay/Battle/Ethene.xml
+/copy:Load/Gameplay/Battle/Ethene.xml
+
+#begin Load/Gameplay/Battle/Healer.xml
+/copy:Load/Gameplay/Battle/Healer.xml
+
 #begin Load/Gameplay/Battle/Markovnikov.xml
 /copy:Load/Gameplay/Battle/Markovnikov.xml
 
 #begin Load/Gameplay/Battle/Methane.xml
 /copy:Load/Gameplay/Battle/Methane.xml
+
+#begin Load/Gameplay/Battle/Methanol.xml
+/copy:Load/Gameplay/Battle/Methanol.xml
 
 #begin Load/Gameplay/Battle/Mole.xml
 /copy:Load/Gameplay/Battle/Mole.xml
@@ -1467,8 +1491,17 @@
 #begin Load/Gameplay/Bondbrothers.xml
 /copy:Load/Gameplay/Bondbrothers.xml
 
+#begin Load/Gameplay/Bromomethane.xml
+/copy:Load/Gameplay/Bromomethane.xml
+
 #begin Load/Gameplay/Character/IntroWorld.xml
 /copy:Load/Gameplay/Character/IntroWorld.xml
+
+#begin Load/Gameplay/Ethene.xml
+/copy:Load/Gameplay/Ethene.xml
+
+#begin Load/Gameplay/Healer.xml
+/copy:Load/Gameplay/Healer.xml
 
 #begin Load/Gameplay/Map/City1.xml
 /copy:Load/Gameplay/Map/City1.xml
@@ -1491,6 +1524,9 @@
 #begin Load/Gameplay/Map/Room1_3.xml
 /copy:Load/Gameplay/Map/Room1_3.xml
 
+#begin Load/Gameplay/Map/Room1_Heal.xml
+/copy:Load/Gameplay/Map/Room1_Heal.xml
+
 #begin Load/Gameplay/Map/Wild1.xml
 /copy:Load/Gameplay/Map/Wild1.xml
 
@@ -1503,17 +1539,32 @@
 #begin Load/Gameplay/Methane.xml
 /copy:Load/Gameplay/Methane.xml
 
+#begin Load/Gameplay/Methanol.xml
+/copy:Load/Gameplay/Methanol.xml
+
 #begin Load/Gameplay/Mole.xml
 /copy:Load/Gameplay/Mole.xml
 
 #begin Load/Gameplay/Npc/Bondbrothers.xml
 /copy:Load/Gameplay/Npc/Bondbrothers.xml
 
+#begin Load/Gameplay/Npc/Bromomethane.xml
+/copy:Load/Gameplay/Npc/Bromomethane.xml
+
+#begin Load/Gameplay/Npc/Ethene.xml
+/copy:Load/Gameplay/Npc/Ethene.xml
+
+#begin Load/Gameplay/Npc/Healer.xml
+/copy:Load/Gameplay/Npc/Healer.xml
+
 #begin Load/Gameplay/Npc/Markovnikov.xml
 /copy:Load/Gameplay/Npc/Markovnikov.xml
 
 #begin Load/Gameplay/Npc/Methane.xml
 /copy:Load/Gameplay/Npc/Methane.xml
+
+#begin Load/Gameplay/Npc/Methanol.xml
+/copy:Load/Gameplay/Npc/Methanol.xml
 
 #begin Load/Gameplay/Npc/Mole.xml
 /copy:Load/Gameplay/Npc/Mole.xml
@@ -1526,6 +1577,9 @@
 
 #begin Load/Gameplay/World/Blue.xml
 /copy:Load/Gameplay/World/Blue.xml
+
+#begin Load/Gameplay/World/Blue_Heal.xml
+/copy:Load/Gameplay/World/Blue_Heal.xml
 
 #begin Load/Gameplay/World/Blue_Test.xml
 /copy:Load/Gameplay/World/Blue_Test.xml

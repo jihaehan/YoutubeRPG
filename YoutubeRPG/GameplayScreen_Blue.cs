@@ -27,7 +27,10 @@ namespace YoutubeRPG
             world.LoadContent();
             player = playerLoader.Load("Content/Load/Gameplay/Player.xml");
             player.LoadContent();
-            player.Image.Position = world.CurrentMap.StartingPoint;
+            player.Velocity = Vector2.Zero;
+            player.Image.Position = new Vector2(6, 5) * 128;
+            player.Keys.Add("GameplayScreen_Blue");
+            player.Keys.Add("GameplayScreen_Heal");
             if (ScreenManager.Instance.Party.Count > 0)
             {
                 player.Image.Position = ScreenManager.Instance.PlayerPosition;

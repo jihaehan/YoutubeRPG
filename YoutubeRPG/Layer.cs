@@ -96,8 +96,6 @@ namespace YoutubeRPG
                             //Set TileTypes
                             if (SolidTiles.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
                                 tilesCount[tilesCount.Count() - 1] = TileCollision.Solid;
-                            else if (LeftWall.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
-                                tilesCount[tilesCount.Count() - 1] = TileCollision.LeftWall;
                             else if (RightWall.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
                                 tilesCount[tilesCount.Count() - 1] = TileCollision.RightWall;
                             else if (TopWall.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
@@ -118,6 +116,14 @@ namespace YoutubeRPG
                                 tilesCount[tilesCount.Count() - 1] = TileCollision.RightHalf;
                             else if (LeftHalf.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
                                 tilesCount[tilesCount.Count() - 1] = TileCollision.LeftHalf;
+                            else if (SECorner.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
+                                tilesCount[tilesCount.Count() - 1] = TileCollision.SECorner;
+                            else if (SWCorner.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
+                                tilesCount[tilesCount.Count() - 1] = TileCollision.SWCorner;
+                            else if (NECorner.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
+                                tilesCount[tilesCount.Count() - 1] = TileCollision.NECorner;
+                            else if (NWCorner.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
+                                tilesCount[tilesCount.Count() - 1] = TileCollision.NWCorner;
                             else if (BattleTiles.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))
                                 tilesCount[tilesCount.Count() - 1] = TileCollision.Battle;
                             else if (WaterTiles.Contains("[" + value1.ToString() + ":" + value2.ToString() + "]"))

@@ -483,6 +483,12 @@ namespace YoutubeRPG
 
 
         #region Getter/Setter Methods
+        public void HealParty()
+        {
+            foreach (Chemical c in chemicals.Values)
+                c.CurrentHealth = c.Health;
+            ScreenManager.Instance.Party = chemicals;
+        }
         public void SaveParty()
         {
             ScreenManager.Instance.PartyName = chemicalName;

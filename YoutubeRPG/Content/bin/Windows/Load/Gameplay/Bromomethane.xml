@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Character>
+  <Name>The Bromomethane</Name>
+  <QuestName>The Bromomethane</QuestName>
+  <Image>
+      <Path>Chemical/Halogenoalkane/Bromomethane</Path>
+      <Effects>SpriteSheetEffect</Effects>
+      <SpriteSheetEffect>
+        <AmountOfFrames>
+          <X>2</X>
+          <Y>2</Y>
+        </AmountOfFrames>
+        <CurrentFrame>
+          <X>0</X>
+          <Y>0</Y>
+        </CurrentFrame>
+        <SwitchFrame>500</SwitchFrame>
+      </SpriteSheetEffect>
+    </Image>
+</Character>
