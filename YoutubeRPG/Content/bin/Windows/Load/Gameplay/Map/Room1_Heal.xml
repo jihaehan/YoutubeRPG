@@ -9,12 +9,8 @@
   </TileDimensions>
   <StartingPoint>
     <X>6</X>
-    <Y>4</Y>
+    <Y>5</Y>
   </StartingPoint>
-  <PortalBottom>
-    <X>6</X>
-    <Y>3</Y>
-  </PortalBottom>
 
   <Layer>
     <Image>

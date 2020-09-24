@@ -24,6 +24,7 @@ namespace YoutubeRPG
         string portalDestination; 
         Vector2 portalArrival;
         bool isPortal;
+        bool isDownBug;
 
         public ChemicalManager ChemicalManager;
         public ItemManager ItemManager;
@@ -50,6 +51,7 @@ namespace YoutubeRPG
             portalDestination = String.Empty;
             portalArrival = Vector2.Zero;
             keys = new List<string>();
+            isDownBug = false;
         }
         #region Main Methods
         public void LoadContent()
@@ -238,10 +240,10 @@ namespace YoutubeRPG
                                 triCollisions.Add(new Triangle((x + 1) * TileLength, y * TileLength, -TileLength * 3 / 4, TileLength / 4, 1));
                                 break;
                             case TileCollision.SECorner:
-                                triCollisions.Add(new Triangle((x + 1) * TileLength, (y + 1) * TileLength, -TileLength, TileLength, -1));
+                                triCollisions.Add(new Triangle((x + 1) * TileLength, (y + 1) * TileLength + 25, -TileLength, TileLength, -1));
                                 break;
                             case TileCollision.SWCorner:
-                                triCollisions.Add(new Triangle(x * TileLength, (y + 1) * TileLength, -TileLength, TileLength, 1));
+                                triCollisions.Add(new Triangle(x * TileLength, (y + 1) * TileLength + 25, -TileLength, TileLength, 1));
                                 break;
                             case TileCollision.RightWall:
                                 rectCollisions.Add(new Rectangle(x * TileLength - TileLength / 5, y * TileLength, (int)(TileLength * 1.2), TileLength));
@@ -317,21 +319,20 @@ namespace YoutubeRPG
 
                         foreach (Rectangle r in rectCollisions)
                         {
-                            if (boundingBox.Intersects(r))
+                            if (boundingBox.Intersects(r) && Velocity != Vector2.Zero)
                             {
                                 if ((r.Center.X > boundingBox.Center.X && Velocity.X > 0)
                                     || (r.Center.X < boundingBox.Center.X && Velocity.X < 0))
                                     Velocity.X = 0;
 
-                                if ((r.Center.Y > boundingBox.Center.Y && Velocity.Y > 0)
-                                    || (r.Center.Y < boundingBox.Center.Y && Velocity.Y < 0))
-                                    Velocity.Y = 0;
+                                if ((r.Center.Y > boundingBox.Center.Y && Velocity.Y > 0) || (r.Center.Y < boundingBox.Center.Y && Velocity.Y < 0))
+                                    Velocity.Y = 0;                                
                             }
                         }
 
                         foreach (Triangle t in triCollisions)
                         {
-                            if (rectangleIntersectTriangle(boundingBox, t))
+                            if (rectangleIntersectTriangle(boundingBox, t) && Velocity != Vector2.Zero)
                                 Velocity = Vector2.Zero;
                         }
                         foreach (Rectangle r in randomCollisions)
@@ -351,7 +352,7 @@ namespace YoutubeRPG
                         }
                         foreach (Rectangle r in npcCollisions)
                         {
-                            if (boundingBox.Intersects(r))
+                            if (boundingBox.Intersects(r) && Velocity != Vector2.Zero)
                             {
                                 Vector2 npcLocation = new Vector2(x, y);
                                 if ((r.Center.X > boundingBox.Center.X && Velocity.X > 0)

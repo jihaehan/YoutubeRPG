@@ -15,17 +15,12 @@
     <X>3</X>
     <Y>3</Y>
   </PortalMid>
-  <PortalTop>
-    <X>6</X>
-    <Y>5</Y>
-  </PortalTop>
 
   <Layer>
     <Image>
       <Path>TileSheets/tilesheet1</Path>
     </Image>
     <BattleTiles>[3:4]</BattleTiles>
-    <NpcTiles>[7:7-Mole]</NpcTiles>
     <TopWall>[2:1][4:1][2:4]</TopWall>
     <NWCorner>[1:0]</NWCorner>
     <NECorner>[2:0]</NECorner>
@@ -41,7 +36,7 @@
       <Row>[1:1][0:0][3:4][0:0][0:0][0:0][0:0][0:0][0:0][2:0][4:1]</Row>
       <Row>[1:1][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:1]</Row>
       <Row>[x:x][0:2][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:1]</Row>
-      <Row>[x:x][1:2][0:0][0:0][0:0][0:0][7:7][0:0][0:0][0:0][0:1]</Row>
+      <Row>[x:x][1:2][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:1]</Row>
       <Row>[x:x][1:x][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:1]</Row> 
       <Row>[x:x][x:x][0:2][0:2][0:0][0:0][0:2][0:2][0:2][0:2][x:x]</Row>
       <Row>[x:x][x:x][1:2][1:2][0:0][0:0][0:0][1:2][1:2][1:2][x:x]</Row>
@@ -96,13 +91,14 @@
     </Image>
     <OverlayTiles>[2:6][3:6]</OverlayTiles>
     <NWWallCorner>[2:7][3:7]</NWWallCorner>
+    <NpcTiles>[7:7-Mole]</NpcTiles>
     <TileMap>
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row> 
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row> 
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row> 
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][2:6][3:6][x:x][x:x][x:x]</Row> 
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][2:7][3:7][x:x][x:x][x:x]</Row> 
-      <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row> 
+      <Row>[x:x][x:x][x:x][7:7][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row> 
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row> 
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row> 
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row> 
