@@ -16,8 +16,8 @@
     <Y>3</Y>
   </PortalRight>
   <PortalMid>
-    <X>11</X>
-    <Y>5</Y>
+    <X>5</X>
+    <Y>11</Y>
   </PortalMid>
 
   <Layer>
@@ -77,7 +77,7 @@
     </Image>
     <SolidTiles>[2:7]</SolidTiles>
     <OverlayTiles>[1:4][1:5][0:4][0:5][1:6]</OverlayTiles>
-    <PortalTiles>[7:7-City1]</PortalTiles>
+    <PortalTiles>[7:7-City1][1:7-Map1]</PortalTiles>
     <BattleTiles>[3:4]</BattleTiles>
     <NpcTiles>[6:7-Sabatier][5:7-Bromomethane][4:7-Methanol]</NpcTiles>
     <TileMap>
@@ -99,7 +99,7 @@
       <Row>[x:x][x:x][x:x][x:x][1:3][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
       <Row>[x:x][x:x][1:4][x:x][x:x][x:x][x:x][2:2][2:2][x:x][x:x][2:2][2:2][2:7][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
       <Row>[x:x][x:x][1:5][0:4][3:4][3:4][x:x][x:x][1:3][x:x][x:x][3:5][x:x][2:7][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
-      <Row>[x:x][x:x][1:6][0:5][3:4][5:7][x:x][x:x][x:x][x:x][2:6][x:x][4:6][2:7][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
+      <Row>[x:x][x:x][1:6][0:5][3:4][5:7][x:x][x:x][x:x][x:x][2:6][1:7][4:6][2:7][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
       <Row>[x:x][x:x][x:x][0:6][x:x][x:x][x:x][1:4][x:x][x:x][x:x][3:7][x:x][2:7][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][0:4][1:5][x:x][x:x][x:x][x:x][x:x][2:7][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>
       <Row>[x:x][x:x][x:x][x:x][x:x][x:x][0:5][1:6][x:x][x:x][x:x][x:x][x:x][2:7][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x][x:x]</Row>

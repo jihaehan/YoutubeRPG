@@ -554,8 +554,6 @@ namespace YoutubeRPG
                 EXP = EXP / player.ChemicalManager.BattlePartySize();
             else
                 EXP = 0;
-            //TO DELETE
-            EXP = 100;
             if (isWin)
                 infoImage = scrollingDescription("Marie has won the battle! [row] Each Party member gains " + EXP.ToString() + " of Atomic Mass!", Color.Black);
             else
@@ -602,11 +600,10 @@ namespace YoutubeRPG
                 levellingImage.Clear();
                 string n = levellingChemicals[levellingCount];
                 chemical = player.ChemicalManager.GetBattleChemical(n);
-                //TO DELETE
                 if (n.Contains("Bromo"))
                     evolvedName = getTempName(n, chemical.NameLevel(chemical.Level).ToLower(), chemical.NameLevel(chemical.Level + 1).ToLower());
                 else
-                evolvedName = getTempName(n, chemical.NameLevel(chemical.Level), chemical.NameLevel(chemical.Level + 1));
+                    evolvedName = getTempName(n, chemical.NameLevel(chemical.Level), chemical.NameLevel(chemical.Level + 1));
                 if ((chemical.Level + 1 < 6 && chemical.Series != Series.Alkene) || (chemical.Level + 1 < 7 && chemical.Series == Series.Alkene))
                 {
                     s += n + " has levelled up! Has gained enough atomic mass to evolve into a " + evolvedName + ".";

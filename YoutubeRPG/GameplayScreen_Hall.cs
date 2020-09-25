@@ -58,7 +58,7 @@ namespace YoutubeRPG
         public override void UnloadContent()
         {
             base.UnloadContent();
-            ScreenManager.Instance.PlayerPosition = new Vector2(16, 11) * 128;
+            ScreenManager.Instance.PlayerPosition = new Vector2(16, 12) * 128;
             //TO DELETE LATER...
             player.ChemicalManager.HealParty();
             player.ChemicalManager.SaveParty();
