@@ -24,47 +24,39 @@
     <LinkType>Question</LinkType> 
     <LinkID>0</LinkID>
     <Image>
-      <Text>Hello young Chemist. I am Avogadro Mole. [row]   [row] No, I am not an anthromorphic subterranean creature. [row]   [row] Then what is a mole you ask?</Text>
-    </Image>
-  </Item>
-
-  <Item>
-    <LinkType>End</LinkType> 
-    <LinkID>01</LinkID>
-    <Image>
-      <Text>A mole is a standard unit of measurement in chemistry. A mole of a substance or a mole of particles is defined as 6.022 x 10^23 (3 s.f.) particles. [row] Let me tell you something good. You can find wild chemical compounds on checkered tiles!</Text>
+      <Text>Hello again young Chemist. Congratulations for making it to the City of Chemists. [row] Have you had a look around the city yet?</Text>
     </Image>
   </Item>
 
   <Item>
     <LinkType>Question</LinkType> 
-    <LinkID>00</LinkID>
+    <LinkID>01</LinkID>
     <Image>
-      <Text>Since you already know, let us have a battle of knowledge. Shall we begin?</Text>
+      <Text>In that case, would you fancy another Battle of Knowledge with me? I will not be going easy on you this time.</Text>
     </Image>
   </Item>
 
   <Item>
     <LinkType>Battle</LinkType> 
-    <LinkID>001</LinkID>
-    <Image>
-      <Text>Hope your reaction speed can keep up with mine!</Text>
-    </Image>
-  </Item>
-
-  <Item>
-    <LinkType>End</LinkType> 
-    <LinkID>000</LinkID>
-    <Image>
-      <Text>Come back when you're ready.</Text>
-    </Image>
-  </Item>
-
-  <Item>
-    <LinkType>End</LinkType> 
     <LinkID>011</LinkID>
     <Image>
-      <Text>Let me tell you something good. </Text>
+      <Text>Let us commence.</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>End</LinkType> 
+    <LinkID>010</LinkID>
+    <Image>
+      <Text>Come by again.</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>End</LinkType>
+    <LinkID>00</LinkID>
+    <Image>
+      <Text>Sadly we're still under construction, so many chemists have yet to move in. Nevertheless, please feel free to meet with Markovnikov and Bond while you are here.</Text>
     </Image>
   </Item>
 

@@ -24,39 +24,79 @@
     <LinkType>Question</LinkType> 
     <LinkID>0</LinkID>
     <Image>
-      <Text>Do you love chemistry? Welcome to the a world where chemical compounds are alive and concious.. and more stuff and this is the part where it actually eneds. and lets write more stuff until i reach the next paragraph</Text>
+      <Text>Oh, a new face! Welcome, welcome. [row] I am Markovnikov, and you may know me by my research on Electrophilic Substitution?</Text>
     </Image>
   </Item>
 
   <Item>
     <LinkType>Question</LinkType> 
-    <LinkID>01</LinkID>
-    <Image>
-      <Text>A great anomaly will occur... what will you do next?</Text>
-    </Image>
-  </Item>
-
-  <Item>
-    <LinkType>End</LinkType> 
-    <LinkID>010</LinkID>
-    <Image>
-      <Text>Guess it's safer to stay at home.</Text>
-    </Image>
-  </Item>
-
-  <Item>
-    <LinkType>End</LinkType> 
-    <LinkID>011</LinkID>
-    <Image>
-      <Text>Methane:A Methane joins your party!</Text>
-    </Image>
-  </Item>
-
-  <Item>
-    <LinkType>End</LinkType> 
     <LinkID>00</LinkID>
     <Image>
-      <Text>Oh, that's too bad...</Text>
+      <Text>Markovnikov's Rule observes chemical behaviour during Electrophilic Substitution. For instance, An Alkene can react with Hydrogen Halides to produce HalogenoAlkanes. The rule determines which Carbon atom the H-species and the Halogen-speces will go to! [row] But enough about that, would you like to know more about Alkenes?</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Question</LinkType> 
+    <LinkID>001</LinkID>
+    <Image>
+      <Text>Markovnikov's Rule observes chemical behaviour during Electrophilic Substitution. For instance, An Alkene can react with Hydrogen Halides to produce HalogenoAlkanes. The rule determines which Carbon atom the H-species and the Halogen-speces will go to! [row] But enough about that, would you like to know more about Alkenes?</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Question</LinkType> 
+    <LinkID>0011</LinkID>
+    <Image>
+      <Text>Alkenes are incredibly useful organic compounds! They can undergo Addition Polymerization to create polymers, aka plastics! Depending on the reactant they can become Alkanes, Halogenoalkanes, Alcohols, etc. [row] Let us test your knowledge, shall we?</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Battle</LinkType> 
+    <LinkID>00111</LinkID>
+    <Image>
+      <Text>I like your spirit lass! Let the experiment begin.</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>End</LinkType> 
+    <LinkID>00110</LinkID>
+    <Image>
+      <Text>Another time then. Hope you enjoy our city!</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Question</LinkType> 
+    <LinkID>000</LinkID>
+    <Image>
+      <Text>No? Perhaps a Battle then?</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>End</LinkType> 
+    <LinkID>0000</LinkID>
+    <Image>
+      <Text>Another time then. Hope you enjoy our city lass!</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>Battle</LinkType> 
+    <LinkID>0001</LinkID>
+    <Image>
+      <Text>That's the spirit! Let's begin the experiment!</Text>
+    </Image>
+  </Item>
+
+  <Item>
+    <LinkType>End</LinkType> 
+    <LinkID>01</LinkID>
+    <Image>
+      <Text>Absolutely amazing young chemist. You have a lot of potential in you!</Text>
     </Image>
   </Item>
 

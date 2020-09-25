@@ -1797,7 +1797,9 @@ namespace YoutubeRPG
                     }
                 }
                 else if (menu.Items[menu.ItemNumber].LinkType == "Screen")
+                {
                     ScreenManager.Instance.ChangeScreens(menu.Items[menu.ItemNumber].LinkID);
+                }
                 else if (menu.Items[menu.ItemNumber].LinkType == "None")
                 {/*no action*/}
                 else if ((isLevelled == String.Empty) || (player.ChemicalManager.chemicalName.Contains(isLevelled) && !player.ChemicalManager.GetChemical(isLevelled).IsLevelling))

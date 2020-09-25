@@ -25,6 +25,8 @@ namespace YoutubeRPG
             XmlManager<World> worldLoader = new XmlManager<World>();
             world = worldLoader.Load("Content/Load/Gameplay/World/Blue_Test.xml");
             world.LoadContent();
+            if (ScreenManager.Instance.CurrentMapName != String.Empty && !ScreenManager.Instance.CurrentMapName.Contains("Room"))
+                world.CurrentMapName = ScreenManager.Instance.CurrentMapName;
             player = playerLoader.Load("Content/Load/Gameplay/Player.xml");
             player.LoadContent();
             player.Velocity = Vector2.Zero;

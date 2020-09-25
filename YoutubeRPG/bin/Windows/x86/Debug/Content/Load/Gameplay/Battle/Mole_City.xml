@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ChemicalManager>
-  <ChemicalSource>Content/Load/Chemical/Alkane/Ethane.xml</ChemicalSource>
-  <ChemicalSource>Content/Load/Chemical/Alcohol/Methanol.xml</ChemicalSource>
-  <ChemicalSource>Content/Load/Chemical/Alcohol/Ethanol.xml</ChemicalSource>
-  <ChemicalSource>Content/Load/Chemical/Alkane/Butane.xml</ChemicalSource>
-  <ChemicalSource>Content/Load/Chemical/Halogenoalkane/Bromopropane.xml</ChemicalSource>
+  <ChemicalSource>Content/Load/Chemical/Alkane/Propane.xml</ChemicalSource>
+  <ChemicalSource>Content/Load/Chemical/Alcohol/Propanol.xml</ChemicalSource>
   <ChemicalSource>Content/Load/Chemical/Alcohol/Butanol.xml</ChemicalSource>
+  <ChemicalSource>Content/Load/Chemical/Alkane/Pentane.xml</ChemicalSource>
+  <ChemicalSource>Content/Load/Chemical/Halogenoalkane/Bromobutane.xml</ChemicalSource>
+  <ChemicalSource>Content/Load/Chemical/Alcohol/Pentanol.xml</ChemicalSource>
 </ChemicalManager>
 
