@@ -18,7 +18,6 @@ namespace YoutubeRPG
         ItemManager itemManager;
         SPXManager spxManager;
         bool isTransitioning;
-        bool isPlayerTurn;
         bool isDescription;
         bool isWin;
         bool isLevelling;
@@ -60,7 +59,6 @@ namespace YoutubeRPG
             levellingCount = 0;
             prevMenuID = currentMenuID = selectedItem = selectedEnemy =  String.Empty;
             pageText = "1/3";
-            isPlayerTurn = true;
             isDescription = false;
             isLevelling = false;
             isLevelled = String.Empty;
@@ -556,6 +554,8 @@ namespace YoutubeRPG
                 EXP = EXP / player.ChemicalManager.BattlePartySize();
             else
                 EXP = 0;
+            //TO DELETE
+            EXP = 100;
             if (isWin)
                 infoImage = scrollingDescription("Marie has won the battle! [row] Each Party member gains " + EXP.ToString() + " of Atomic Mass!", Color.Black);
             else
@@ -602,6 +602,10 @@ namespace YoutubeRPG
                 levellingImage.Clear();
                 string n = levellingChemicals[levellingCount];
                 chemical = player.ChemicalManager.GetBattleChemical(n);
+                //TO DELETE
+                if (n.Contains("Bromo"))
+                    evolvedName = getTempName(n, chemical.NameLevel(chemical.Level).ToLower(), chemical.NameLevel(chemical.Level + 1).ToLower());
+                else
                 evolvedName = getTempName(n, chemical.NameLevel(chemical.Level), chemical.NameLevel(chemical.Level + 1));
                 if ((chemical.Level + 1 < 6 && chemical.Series != Series.Alkene) || (chemical.Level + 1 < 7 && chemical.Series == Series.Alkene))
                 {
@@ -676,150 +680,171 @@ namespace YoutubeRPG
                 menu.Items.Clear();
                 MenuItem item = new MenuItem();
                 item.Image = new Image();
+                item.Image.Text = "  ";
                 item.LinkID = "Content/Load/Menu/EndBattleMenu.xml";
                 menu.Items.Add(item);
             }
             //InfoImage
             infoImageClear();
+           
             Chemical chemical = enemy.ChemicalManager.GetBattleChemical(selectedEnemy);
-            string s = String.Empty;
-            string tempChemicalName = String.Empty;
-            string randomChemical = String.Empty;
-            List<string> randomChemicals = new List<string>();
-            bool isMultiStepMove = false;
-            string[] multiStepMoves = { "Free Radical Sub", "Addition Polymeriz", "Oxidation", "SN2 Nucleophil Sub" };
-            #endregion
-            foreach (string str in multiStepMoves)
-                if (!isMultiStepMove && chemical.GetMoveHistory(1, str))
+            if (chemical == null)
+            {
+                selectedEnemy = enemy.ChemicalManager.EnemyInstance();
+                if (selectedEnemy == String.Empty)
                 {
-                    isMultiStepMove = true;
-                    enemy.ChemicalManager.GetBattleChemical(selectedEnemy).BattleMove = str;
-                    enemy.ChemicalManager.GetBattleChemical(selectedEnemy).RecordMove(str);
-                    switch (str)
+                    menu.Items.Clear();
+                    MenuItem item = new MenuItem();
+                    item.Image = new Image();
+                    item.Image.Text = "  ";
+                    item.LinkID = "Content/Load/Menu/BattlingMenu.xml";
+                    menu.Items.Add(item);
+                }
+                else 
+                    chemical = enemy.ChemicalManager.GetBattleChemical(selectedEnemy);
+            }
+            if (chemical != null)
+            {
+                string s = String.Empty;
+                string tempChemicalName = String.Empty;
+                string randomChemical = String.Empty;
+                List<string> randomChemicals = new List<string>();
+                bool isMultiStepMove = false;
+                string[] multiStepMoves = { "Free Radical Sub", "Addition Polymeriz", "Oxidation", "SN2 Nucleophil Sub" };
+                #endregion
+                foreach (string str in multiStepMoves)
+                    if (!isMultiStepMove && chemical != null && chemical.GetMoveHistory(1, str))
                     {
-                        case "Free Radical Sub": //alkane to halogenoalkane
-                            if (chemical.CheckMoveCount(str) > 3)
-                                exitMultiStep(ref isMultiStepMove, false);
-                            else if (chemical.GetMoveHistory(3, str))
-                            {
-                                tempChemicalName = getTempName("Bromo" + chemical.Name.ToLower(), String.Empty, String.Empty);
-                                string intermediate = chemical.ChemicalFormula.Substring(0, chemical.ChemicalFormula.Length - 1) + (chemical.GetElement(Element.H) - 1).ToString();
-                                infoImage = scrollingDescription("Last step of Free Radical Substitution. [row] Termination: [row] Br* + Br* -> Br2 [row] Br* + *" + intermediate + " -> " + intermediate + "Br [row] " + tempChemicalName + " joins the battle!", Color.SaddleBrown);
-                                enemy.ChemicalManager.LoadTempChemical(tempChemicalName, "Halogenoalkane");
-                            }
-                            else
-                            {
-                                infoImage = scrollingDescription(chemical.Name + " enters second step of Free Radical Substitution. [row] Propagation: [row] Br* " + chemical.ChemicalFormula + " -> HBr + *" + chemical.ChemicalFormula.Substring(0, chemical.ChemicalFormula.Length - 1) + (chemical.GetElement(Element.H) - 1).ToString(), Color.SaddleBrown);
-                            }
+                        isMultiStepMove = true;
+                        enemy.ChemicalManager.GetBattleChemical(selectedEnemy).BattleMove = str;
+                        enemy.ChemicalManager.GetBattleChemical(selectedEnemy).RecordMove(str);
+                        switch (str)
+                        {
+                            case "Free Radical Sub": //alkane to halogenoalkane
+                                if (chemical.CheckMoveCount(str) > 3)
+                                    exitMultiStep(ref isMultiStepMove, false);
+                                else if (chemical.GetMoveHistory(3, str))
+                                {
+                                    tempChemicalName = getTempName("Bromo" + chemical.Name.ToLower(), String.Empty, String.Empty);
+                                    string intermediate = chemical.ChemicalFormula.Substring(0, chemical.ChemicalFormula.Length - 1) + (chemical.GetElement(Element.H) - 1).ToString();
+                                    infoImage = scrollingDescription("Last step of Free Radical Substitution. [row] Termination: [row] Br* + Br* -> Br2 [row] Br* + *" + intermediate + " -> " + intermediate + "Br [row] " + tempChemicalName + " joins the battle!", Color.SaddleBrown);
+                                    enemy.ChemicalManager.LoadTempChemical(tempChemicalName, "Halogenoalkane");
+                                }
+                                else
+                                {
+                                    infoImage = scrollingDescription(chemical.Name + " enters second step of Free Radical Substitution. [row] Propagation: [row] Br* " + chemical.ChemicalFormula + " -> HBr + *" + chemical.ChemicalFormula.Substring(0, chemical.ChemicalFormula.Length - 1) + (chemical.GetElement(Element.H) - 1).ToString(), Color.SaddleBrown);
+                                }
+                                break;
+                            case "Addition Polymeriz": //alkene to alkane
+                                if (chemical.CheckMoveCount(str) > 2)
+                                    exitMultiStep(ref isMultiStepMove, false);
+                                else
+                                {
+                                    tempChemicalName = getTempName(chemical.Name, "ene", "ane");
+                                    enemy.ChemicalManager.LoadTempChemical(tempChemicalName, "Alkane");
+                                    infoImage = scrollingDescription(tempChemicalName + " joins the battle!", Color.SaddleBrown);
+                                }
+                                break;
+                            case "SN2 Nucleophil Sub":
+                                if (chemical.CheckMoveCount(str) > 2)
+                                    exitMultiStep(ref isMultiStepMove, false);
+                                else
+                                {
+                                    tempChemicalName = chemical.Name.Replace("Bromo", String.Empty);
+                                    tempChemicalName = getTempName(tempChemicalName, "ane", "anol");
+                                    tempChemicalName = tempChemicalName[0].ToString().ToUpper() + tempChemicalName.Substring(1);
+                                    enemy.ChemicalManager.LoadTempChemical(tempChemicalName, "Alcohol");
+                                    infoImage = scrollingDescription(tempChemicalName + " joins the battle!", Color.SaddleBrown);
+                                }
+                                break;
+                        }
+                    }
+
+                if (!isMultiStepMove)
+                {
+                    string move = enemyMoveName(selectedEnemy);
+                    enemy.ChemicalManager.GetBattleChemical(selectedEnemy).BattleMove = move;
+                    enemy.ChemicalManager.GetBattleChemical(selectedEnemy).RecordMove(move);
+                    switch (move)
+                    {
+                        case "Formation":
+                            randomChemical = getRandomChemical(false);
+                            s = selectedEnemy + " releases an Enthalpy of Formation of " + chemical.BaseDamage.ToString() + " kJ/mol";
+                            infoImage = scrollingDescription(s, Color.SaddleBrown);
+                            s = randomChemical + " takes " + calculateDamage(randomChemical, selectedEnemy, chemical.BaseDamage, false).ToString() + " kJ/mol of damage!";
+                            continueDescription(s, Color.Black);
+                            spxImage.Add(new SPX(spxManager.TargetXml(), player.ChemicalManager.GetBattleChemical(randomChemical).Image.Position));
                             break;
-                        case "Addition Polymeriz": //alkene to alkane
-                            if (chemical.CheckMoveCount(str) > 2)
-                                exitMultiStep(ref isMultiStepMove, false);
+                        case "Combustion":
+                            chemical.ClearProducts();
+                            chemical.SetOxygen(currentOxygen);
+                            chemical.Combustion();
+                            if (chemical.GetProduct("carbondioxide") > 0)
+                            {
+                                s = selectedEnemy + " reacts with Oxygen to produce Carbondioxide and Water! [row] Releases Enthalpy of Combustion of " + chemical.Damage.ToString() + "kJ/mol";
+                                infoImage = scrollingDescription(s, Color.SaddleBrown);
+                                spxCombustion("CO2", chemical.Level, false);
+                                damagedCombustion(chemical, "red", false); //add damage from combustion
+                            }
+                            else if (chemical.GetProduct("carbonmonoxide") > 0)
+                            {
+                                s = selectedEnemy + " reacts with Oxygen to produce Carbonmonoxide and Water! [row] Incomplete Combustion releases " + chemical.Damage.ToString() + "kJ/mol";
+                                infoImage = scrollingDescription(s, Color.SaddleBrown);
+                                spxCombustion("CO", chemical.Level, false);
+                                damagedCombustion(chemical, "white", false); //add damage from combustion
+                            }
+                            else if (chemical.GetProduct("carbon") > 0)
+                            {
+                                s = selectedEnemy + " reacts with Oxygen to produce Soot and Water! [row] Incomplete Combustion releases " + chemical.Damage.ToString() + "kJ/mol";
+                                infoImage = scrollingDescription(s, Color.SaddleBrown);
+                                spxCombustion("C", chemical.Level, false);
+                                damagedCombustion(chemical, "black", false); //add damage from combustion
+                            }
+                            else
+                                infoImage = scrollingDescription(selectedEnemy + " tries to combust! But insufficient Oxygen.", Color.SaddleBrown);
+                            break;
+                        case "Branching":
+                            int isomerState = Math.Min(chemical.Isomers, chemical.CheckMoveCount("Branching") + 1);
+                            if (chemical.CheckMoveCount("Branching") + 1 > chemical.Isomers)
+                                infoImage = scrollingDescription(selectedEnemy + " attempts to branch but fails!", Color.SaddleBrown);
                             else
                             {
-                                tempChemicalName = getTempName(chemical.Name, "ene", "ane");
-                                enemy.ChemicalManager.LoadTempChemical(tempChemicalName, "Alkane");
-                                infoImage = scrollingDescription(tempChemicalName + " joins the battle!", Color.SaddleBrown);
+                                infoImage = scrollingDescription(selectedEnemy + " conforms into a branched isomer: " + isomerState.ToString() + " branch.", Color.SaddleBrown);
+                                enemy.ChemicalManager.LoadIsomer(chemical.Name, isomerState);
                             }
+                            //increase defense rating of chemical
+                            break;
+                        case "Free Radical Sub":
+                            s = selectedEnemy + " begins Free Radical Substitution. [row] Initiation: [row] Br2-> 2Cl * ";
+                            infoImage = scrollingDescription(s, Color.SaddleBrown);
+                            break;
+                        case "Addition Polymeriz":
+                            s = selectedEnemy + " begins Addition Polymerisation. [row] Reacts with Nickel Catalyst and HEAT!";
+                            infoImage = scrollingDescription(s, Color.SaddleBrown);
+                            break;
+                        case "Oxidation": //alcohol to alkanal
+                                          //FIX later on...
+                            s = selectedEnemy + " begins Oxidation. [row]";
+                            infoImage = scrollingDescription(s, Color.SaddleBrown);
                             break;
                         case "SN2 Nucleophil Sub":
-                            if (chemical.CheckMoveCount(str) > 2)
-                                exitMultiStep(ref isMultiStepMove, false);
-                            else
-                            {
-                                tempChemicalName = chemical.Name.Replace("Bromo", String.Empty);
-                                tempChemicalName = getTempName(tempChemicalName, "ane", "anol");
-                                tempChemicalName = tempChemicalName[0].ToString().ToUpper() + tempChemicalName.Substring(1);
-                                enemy.ChemicalManager.LoadTempChemical(tempChemicalName, "Alcohol");
-                                infoImage = scrollingDescription(tempChemicalName + " joins the battle!", Color.SaddleBrown);
-                            }
+                            s = selectedEnemy + " begins SN2 Nucleophilic Substitution. [row] Reacts with Sodium Hydroxide and HEAT!";
+                            infoImage = scrollingDescription(s, Color.SaddleBrown);
+                            break;
+                        case "Extinguisher":
+                            s = "Bromomethane interrupts chain reactions propogating combustion! Defense of all party members increases dramatically.";
+                            infoImage = scrollingDescription(s, Color.SaddleBrown);
+                            if (!environmentEffects.Contains(move))
+                                environmentEffects.Add("Extinguisher");
+                            spxImage.Add(new SPX(spxManager.EnvironmentXml("Extinguisher")));
                             break;
                     }
+                    infoImage = scrollingDescription(s, Color.SaddleBrown);
                 }
-
-            if (!isMultiStepMove)
-            { 
-                string move = enemyMoveName(selectedEnemy);
-                enemy.ChemicalManager.GetBattleChemical(selectedEnemy).BattleMove = move;
-                enemy.ChemicalManager.GetBattleChemical(selectedEnemy).RecordMove(move);
-                switch (move)
-                {
-                    case "Formation":
-                        randomChemical = getRandomChemical(false);
-                        s = selectedEnemy + " releases an Enthalpy of Formation of " + chemical.BaseDamage.ToString() + " kJ/mol";
-                        infoImage = scrollingDescription(s, Color.SaddleBrown);
-                        s = randomChemical + " takes " + calculateDamage(randomChemical, selectedEnemy, chemical.BaseDamage, false).ToString() + " kJ/mol of damage!";
-                        continueDescription(s, Color.Black);
-                        spxImage.Add(new SPX(spxManager.TargetXml(), player.ChemicalManager.GetBattleChemical(randomChemical).Image.Position));
-                        break;
-                    case "Combustion":
-                        chemical.ClearProducts();
-                        chemical.SetOxygen(currentOxygen);
-                        chemical.Combustion();
-                        if (chemical.GetProduct("carbondioxide") > 0)
-                        {
-                            s = selectedEnemy + " reacts with Oxygen to produce Carbondioxide and Water! [row] Releases Enthalpy of Combustion of " + chemical.Damage.ToString() + "kJ/mol";
-                            infoImage = scrollingDescription(s, Color.SaddleBrown);
-                            spxCombustion("CO2", chemical.Level, false);
-                            damagedCombustion(chemical, "red", false); //add damage from combustion
-                        }
-                        else if (chemical.GetProduct("carbonmonoxide") > 0)
-                        {
-                            s = selectedEnemy + " reacts with Oxygen to produce Carbonmonoxide and Water! [row] Incomplete Combustion releases " + chemical.Damage.ToString() + "kJ/mol";
-                            infoImage = scrollingDescription(s, Color.SaddleBrown);
-                            spxCombustion("CO", chemical.Level, false);
-                            damagedCombustion(chemical, "white", false); //add damage from combustion
-                        }
-                        else if (chemical.GetProduct("carbon") > 0)
-                        {
-                            s = selectedEnemy + " reacts with Oxygen to produce Soot and Water! [row] Incomplete Combustion releases " + chemical.Damage.ToString() + "kJ/mol";
-                            infoImage = scrollingDescription(s, Color.SaddleBrown);
-                            spxCombustion("C", chemical.Level, false);
-                            damagedCombustion(chemical, "black", false); //add damage from combustion
-                        }
-                        else
-                            infoImage = scrollingDescription(selectedEnemy + " tries to combust! But insufficient Oxygen.", Color.SaddleBrown);
-                        break;
-                    case "Branching":
-                        int isomerState = Math.Min(chemical.Isomers, chemical.CheckMoveCount("Branching") + 1);
-                        if (chemical.CheckMoveCount("Branching") + 1 > chemical.Isomers)
-                            infoImage = scrollingDescription(selectedEnemy + " attempts to branch but fails!", Color.SaddleBrown);
-                        else
-                        {
-                            infoImage = scrollingDescription(selectedEnemy + " conforms into a branched isomer: " + isomerState.ToString() + " branch.", Color.SaddleBrown);
-                            enemy.ChemicalManager.LoadIsomer(chemical.Name, isomerState);
-                        }
-                        //increase defense rating of chemical
-                        break;
-                    case "Free Radical Sub":
-                        s = selectedEnemy + " begins Free Radical Substitution. [row] Initiation: [row] Br2-> 2Cl * ";
-                        infoImage = scrollingDescription(s, Color.SaddleBrown);
-                        break;
-                    case "Addition Polymeriz":
-                        s = selectedEnemy + " begins Addition Polymerisation. [row] Reacts with Nickel Catalyst and HEAT!";
-                        infoImage = scrollingDescription(s, Color.SaddleBrown);
-                        break;
-                    case "Oxidation": //alcohol to alkanal
-                                      //FIX later on...
-                        s = selectedEnemy + " begins Oxidation. [row]";
-                        infoImage = scrollingDescription(s, Color.SaddleBrown);
-                        break;
-                    case "SN2 Nucleophil Sub":
-                        s = selectedEnemy + " begins SN2 Nucleophilic Substitution. [row] Reacts with Sodium Hydroxide and HEAT!";
-                        infoImage = scrollingDescription(s, Color.SaddleBrown);
-                        break;
-                    case "Extinguisher":
-                        s = "Bromomethane interrupts chain reactions propogating combustion! Defense of all party members increases dramatically.";
-                        infoImage = scrollingDescription(s, Color.SaddleBrown);
-                        if (!environmentEffects.Contains(move))
-                            environmentEffects.Add("Extinguisher");
-                        spxImage.Add(new SPX(spxManager.EnvironmentXml("Extinguisher")));
-                        break;
-                }
-                infoImage = scrollingDescription(s, Color.SaddleBrown);
+                foreach (Image image in infoImage)
+                    image.LoadContent();
             }
-            foreach (Image image in infoImage)
-                image.LoadContent();
+            
         }
 
         string pickMove(Chemical chemical)

@@ -103,9 +103,13 @@ namespace YoutubeRPG
             chemicals[original].Image.FadeEffect.Increase = true;
             Image i = new Image();
             i.Path = "Chemical/Diagram/" + removeAsterisk(original);
+            while (diagram.ContainsKey(original))
+                original += "*";
             diagram.Add(original, i);
             i = new Image();
             i.Path = "Chemical/Diagram/" + removeAsterisk(evolved);
+            while (diagram.ContainsKey(evolved))
+                evolved += "*";
             diagram.Add(evolved, i);
             diagram[original].LoadContent();
             diagram[evolved].LoadContent();
@@ -276,9 +280,11 @@ namespace YoutubeRPG
             for (int i = 0; i < battleChemicalName.Count; i++)
             {
                 string name = battleChemicalName[i];
-                if (battleChemicals[name].TurnTaken)
+                if (battleChemicals[name].CurrentHealth <= 0)
+                    battleChemicals[name].IsDead = true;
+                if (battleChemicals[name].TurnTaken || battleChemicals[name].IsDead)
                     count++;
-                else if (enemyButton == String.Empty && !battleChemicals[name].TurnTaken)
+                else if (enemyButton == String.Empty && !battleChemicals[name].TurnTaken && !battleChemicals[name].IsDead)
                     enemyButton = name;
             }
             if (enemyButton != String.Empty)
@@ -505,6 +511,9 @@ namespace YoutubeRPG
             ScreenManager.Instance.Experience = 0;
             chemicalName = ScreenManager.Instance.PartyName;
             chemicals = ScreenManager.Instance.Party;
+            foreach (Chemical c in chemicals.Values)
+                if (c.Image.Effects.Contains("SpriteSheetEffect"))
+                    c.Image.SpriteSheetEffect.IsActive = true;
         }
         public Chemical GetChemical(string chemicalName)
         {

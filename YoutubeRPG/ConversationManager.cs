@@ -20,16 +20,18 @@ namespace YoutubeRPG
         string ID;
         string currentMenuID;
         List<Image> scrollingText;
+        List<string> partiedMembers;
         Dictionary<string, MenuItem> dialogue; //LinkID, Text
         string currentDialogue, previousDialogue;
         Image arrow;
         Image background;
         bool isIntroduction;
-        bool partied;
+        string partied;
 
         public ConversationManager()
         {
-            partied = false; 
+            partiedMembers = new List<string>();
+            partied = String.Empty; 
             isIntroduction = false;
             DialogueLinkType = String.Empty;
             newPartyMember = String.Empty;
@@ -258,12 +260,13 @@ namespace YoutubeRPG
                         ScreenManager.Instance.ChangeScreens("BattleScreen");
                         break;
                     case "Party":
-                        if (!partied)
+                        string[] str = currentDialogue.Split(':');
+                        if (!ScreenManager.Instance.Partied.Contains(str[0]))
                         {
-                            string[] str = currentDialogue.Split(':');
                             currentDialogue = str[1];
                             newPartyMember = str[0];
-                            partied = true;
+                            ScreenManager.Instance.Partied.Add(str[0]);
+                            //partied = str[0];
                         }
                         else
                             currentDialogue = "I've already joined your party!";
